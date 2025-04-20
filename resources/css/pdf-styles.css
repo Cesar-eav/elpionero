@@ -1,0 +1,109 @@
+body {
+    font-family: 'Merriweather', serif; /* Usamos la misma fuente para todo para simplificar el PDF */
+    line-height: 1.4;
+    font-size: 10pt; /* Tamaño de fuente más pequeño para ajustar más contenido */
+}
+.container {
+    width: 100%;
+    margin: 0 auto;
+}
+.header {
+    text-align: center;
+    margin-bottom: 10px;
+}
+.titulo-periodico {
+    font-family: 'Noto Serif', serif;
+    font-size: 20pt;
+    font-weight: bold;
+    margin-bottom: 5px;
+}
+.bajada {
+    font-style: italic;
+    font-size: 12pt;
+    color: #555;
+    margin-bottom: 8px;
+}
+.fecha {
+    font-size: 9pt;
+    color: #777;
+    margin-bottom: 15px;
+}
+.column-container {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    margin-bottom: 15px;
+}
+.column {
+    width: 48%; /* Ajustamos para dejar espacio entre columnas */
+    vertical-align: top;
+    text-align: justify;
+}
+.articulo-titulo {
+    font-family: 'Noto Serif', serif;
+    font-size: 14pt;
+    font-weight: bold;
+    margin-top: 10px;
+    margin-bottom: 5px;
+}
+.articulo-autor {
+    font-size: 8pt;
+    color: #333;
+    margin-bottom: 8px;
+    font-style: italic;
+}
+.publicidad {
+    border: 1px solid #ccc;
+    padding: 10px;
+    text-align: center;
+    font-size: 8pt;
+    color: #666;
+    margin-top: 20px;
+}
+.footer {
+    text-align: center;
+    font-size: 8pt;
+    color: #777;
+    margin-top: 20px;
+}
+.ver-revista-link {
+    display: block;
+    margin-top: 20px;
+    text-align: center;
+    font-size: 10pt;
+}
+.ver-revista-button {
+    background-color: #4CAF50; /* Un color verde atractivo */
+    color: white;
+    padding: 8px 15px;
+    text-decoration: none;
+    border-radius: 5px;
+}
+.ver-revista-button:hover {
+    background-color: #45a049;
+}
+/* Estilos para la tipografía */
+@font-face {
+    font-family: 'Noto Serif';
+    src: url('{{ public_path('fonts/NotoSerif-Regular.ttf') }}') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+}
+@font-face {
+    font-family: 'Noto Serif';
+    src: url('{{ public_path('fonts/NotoSerif-Bold.ttf') }}') format('truetype');
+    font-weight: bold;
+    font-style: normal;
+}
+@font-face {
+    font-family: 'Merriweather';
+    src: url('{{ public_path('fonts/Merriweather-Regular.ttf') }}') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+}
+@font-face {
+    font-family: 'Merriweather';
+    src: url('{{ public_path('fonts/Merriweather-Italic.ttf') }}') format('truetype');
+    font-weight: normal;
+    font-style: italic;
+}
