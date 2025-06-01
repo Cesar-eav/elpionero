@@ -4,12 +4,21 @@ use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\RevistaController;
 use App\Http\Controllers\ArticuloController;
+use App\Http\Controllers\ContactoController;
+
 
 
 
 Route::get('/', function () {
+    
     return view('welcome');
 });
+
+
+Route::get('/contacto', [ContactoController::class, 'mostrarFormulario'])->name('contacto.formulario');
+Route::post('/contacto', [ContactoController::class, 'enviarFormulario'])->name('contacto.enviar');
+
+
 
 Route::get('/dashboard', function () {
     return view('dashboard');
