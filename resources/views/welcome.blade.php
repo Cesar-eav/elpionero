@@ -104,7 +104,7 @@
                   </div>
                     
                   <div class="mt-8 text-center lg:text-left hidden md:block">
-                    <a href="https://drive.google.com/file/d/1gc7qyD1ZsgybNgxBKDPIwM5unrskqQXf/view?usp=sharing" target="_blank" class="inline-block bg-red-600 hover:bg-red-700 text-white font-bold py-3 px-6 rounded-full shadow-md transition duration-300">Descargar Edición Actual</a>
+                    <a href="https://drive.google.com/file/d/1b304pV29d66y29Ib36fhY589WE-2fIJn/view?usp=sharing" target="_blank" class="inline-block bg-red-600 hover:bg-red-700 text-white font-bold py-3 px-6 rounded-full shadow-md transition duration-300">Descargar Edición Actual</a>
                     <a href="#" class="inline-block ml-4 text-gray-700 hover:text-gray-900 font-medium">Archivo de Revistas</a>
                   </div>
           
