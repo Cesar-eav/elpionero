@@ -15,7 +15,6 @@
             @vite(['resources/css/app.css', 'resources/js/app.js'])
 
 
-
         <script type="text/javascript">
           (function(c,l,a,r,i,t,y){
               c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
@@ -27,7 +26,7 @@
     </head>
     <body class="bg-[#FDFDFC] dark:bg-[#0a0a0a] text-[#1b1b18] flex p-6 lg:pl-3 items-center lg:justify-center min-h-screen flex-col">
         <header class="w-full lg:max-w-4xl max-w-[335px] text-sm mb-6 not-has-[nav]:hidden">
-            @if (Route::has('login'))
+            {{-- @if (Route::has('login')) --}}
                 {{-- <nav class="flex items-center justify-end gap-4">
                     @auth
                         <a
@@ -53,7 +52,7 @@
                         @endif
                     @endauth
                 </nav> --}}
-            @endif
+            {{-- @endif --}}
         </header>
 
         <div class="fixed bottom-20 left-0 w-40 py-2 px-4 md:hidden z-50">
