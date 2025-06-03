@@ -72,14 +72,14 @@
               <div class="lg:flex lg:items-start lg:justify-between">
           
                 <div class="flex mb-8 lg:mb-0 lg:w-1/3  justify-center ">
-                  <img src="/storage/pionero_grande.png" 
+                <img src="{{ asset('storage/pionero_grande.png')}}"
                   alt="Logo El Pionero de Valparaíso" 
                   class="logo w-60 md:w-full md:max-w-full h-auto" >
                   {{-- <p >Decidimos tomar la consigna "Menos postales, más realidad", creadad por la Agrupación de Usuarios de Ascensores, por signifcar una aspiración</p> --}}
                 </div>
           
                 <div class="lg:w-2/3 lg:ml-8">
-                  <h1 class="md:text-center text-4xl md:text-5xl lg:text-6xl font-bold text-gray-800 mb-4">El Pionero de Valparaíso</h1>
+                  <h1 class="md:text-center text-center text-4xl md:text-5xl lg:text-6xl font-bold text-gray-800 mb-4">El Pionero de Valparaíso</h1>
                   <h2 class="text-xl md:text-2xl text-gray-600 mb-6">¡Menos postales, más realidad!</h2>
           
                   <div class="mb-8 text-gray-700">
