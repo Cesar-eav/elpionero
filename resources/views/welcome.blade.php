@@ -55,7 +55,7 @@
             {{-- @endif --}}
         </header>
 
-        <div class="fixed bottom-20 left-0 w-40 py-2 px-4 md:hidden z-50">
+        <div class="fixed bottom-0 left-0 w-full py-1 px-4 md:hidden z-50">
           <a href="https://drive.google.com/file/d/1gc7qyD1ZsgybNgxBKDPIwM5unrskqQXf/view?usp=sharing" download target="_blank" class="block w-full text-center bg-red-600 hover:bg-blue-700 text-white font-bold py-2 rounded">
               Descargar Revista
           </a>
@@ -66,7 +66,6 @@
             Contáctanos
         </a>
     </div>
-
         <div class="bg-gray-100 min-h-screen py-8">
             <div class="container mx-auto px-4 md:px-8 lg:px-12">
               <div class="lg:flex lg:items-start lg:justify-between">
