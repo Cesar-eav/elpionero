@@ -55,7 +55,7 @@
             {{-- @endif --}}
         </header>
 
-        <div class="fixed bottom-0 left-0 w-full py-1 px-4 md:hidden z-50">
+        <div class="fixed bottom-0 left-0 w-full py-2 px-4 md:hidden z-50">
           <a href="https://drive.google.com/file/d/1gc7qyD1ZsgybNgxBKDPIwM5unrskqQXf/view?usp=sharing" download target="_blank" class="block w-full text-center bg-red-600 hover:bg-blue-700 text-white font-bold py-2 rounded">
               Descargar Revista
           </a>
@@ -66,6 +66,7 @@
             Contáctanos
         </a>
     </div>
+
         <div class="bg-gray-100 min-h-screen py-8">
             <div class="container mx-auto px-4 md:px-8 lg:px-12">
               <div class="lg:flex lg:items-start lg:justify-between">
@@ -94,12 +95,14 @@
                   </div>
           
                   <div class="bg-gray-200 border border-gray-300 rounded-md p-6 mb-8">
-                    <h3 class="text-lg font-semibold text-gray-700 mb-2">Próxima Portada</h3>
+                    <h3 class="text-lg font-semibold text-gray-700 mb-2">Revista Nº1</h3>
                     <div class="w-32 h-48 bg-gray-400 rounded-md shadow-md flex items-center justify-center text-white font-bold">
-                      <img src="/storage/Portada_ED1.jpg"> </img>
+                      <a href="https://drive.google.com/file/d/1b304pV29d66y29Ib36fhY589WE-2fIJn/view?usp=sharing" target="_blank">  
+                        <img src="/storage/Portada_ED1.jpg"> 
+                      </a>
                     </div>
                     
-                    <p class="text-sm text-gray-500 mt-2">Aquí se mostrará la portada de nuestra próxima edición en PDF.</p>
+                    <p class="text-sm text-gray-500 mt-2">Revistas disponibles para descargar</p>
                   </div>
                     
                   <div class="mt-8 text-center lg:text-left hidden md:block">
