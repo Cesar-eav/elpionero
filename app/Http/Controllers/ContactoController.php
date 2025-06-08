@@ -19,6 +19,13 @@ class ContactoController extends Controller
         return view('contacto.formulario');
     }
 
+    public function listarContactos()
+    {
+        $contactos = Contacto::orderBy('created_at', 'desc')->get(); 
+
+        return view('contacto.lista', compact('contactos'));
+    }
+
     /**
      * Procesa el envío del formulario de contacto.
      *

@@ -18,6 +18,7 @@ Route::get('/', function () {
 Route::get('/contacto', [ContactoController::class, 'mostrarFormulario'])->name('contacto.formulario');
 Route::post('/contacto', [ContactoController::class, 'enviarFormulario'])->name('contacto.enviar');
 
+Route::get('/contactos2', [ContactoController::class, 'listarContactos'])->name('contactos.listar');
 
 
 Route::get('/dashboard', function () {
