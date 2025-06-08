@@ -10,15 +10,6 @@
             /* Tu CSS de Tailwind compilado */
         </style>
     @endif
-
-    <script type="text/javascript">
-        (function(c,l,a,r,i,t,y){
-            c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
-            t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
-            y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
-        })(window, document, "clarity", "script", "rsqwi6wyvd");
-    </script>
-    
 </head>
 <body class="font-sans antialiased bg-gray-100">
 
@@ -30,7 +21,7 @@
 
                     @if (session('success'))
                         <div class="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded relative mb-4" role="alert">
-                            <strong class="font-bold">Éxito!</strong>
+                            <strong class="font-bold">¡Éxito!</strong>
                             <span class="block sm:inline">{{ session('success') }}</span>
                         </div>
                     @endif
@@ -41,7 +32,7 @@
                             <span class="block sm:inline">Aún no hay mensajes de contacto.</span>
                         </div>
                     @else
-                        <div class="overflow-x-auto">
+                        <div class="hidden lg:block overflow-x-auto shadow-md sm:rounded-lg">
                             <table class="min-w-full divide-y divide-gray-200">
                                 <thead class="bg-gray-50">
                                     <tr>
@@ -72,12 +63,13 @@
                                                 {{ $contacto->nombre }} {{ $contacto->apellido }}
                                             </td>
                                             <td class="px-6 py-4 whitespace-nowrap text-sm text-blue-600">
-                                                <a href="mailto:{{ $contacto->correo }}">{{ $contacto->correo }}</a>
+                                                <a href="mailto:{{ $contacto->correo }}" class="hover:underline">{{ $contacto->correo }}</a>
                                             </td>
                                             <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
                                                 {{ $contacto->telefono ?? 'N/A' }}
                                             </td>
-                                            <td class="px-6 py-4 text-sm text-gray-500 max-w-xs overflow-hidden truncate hover:whitespace-normal hover:overflow-visible hover:max-w-none">
+                                            {{-- Motivo se muestra completo en escritorio --}}
+                                            <td class="px-6 py-4 text-sm text-gray-500 break-words">
                                                 {{ $contacto->motivo }}
                                             </td>
                                         </tr>
@@ -85,6 +77,30 @@
                                 </tbody>
                             </table>
                         </div>
+
+                        <div class="lg:hidden space-y-6">
+                            @foreach ($contactos as $contacto)
+                                <div class="bg-white shadow-md rounded-lg p-5 border border-gray-200">
+                                    <div class="text-sm text-gray-500 mb-2">
+                                        <span class="font-semibold text-gray-700">Fecha:</span> {{ $contacto->created_at->format('d/m/Y H:i') }}
+                                    </div>
+                                    <div class="mb-2">
+                                        <span class="font-semibold text-gray-700">Nombre:</span> {{ $contacto->nombre }} {{ $contacto->apellido }}
+                                    </div>
+                                    <div class="mb-2">
+                                        <span class="font-semibold text-gray-700">Correo:</span> <a href="mailto:{{ $contacto->correo }}" class="text-blue-600 hover:underline">{{ $contacto->correo }}</a>
+                                    </div>
+                                    <div class="mb-3">
+                                        <span class="font-semibold text-gray-700">Teléfono:</span> {{ $contacto->telefono ?? 'N/A' }}
+                                    </div>
+                                    <div>
+                                        <span class="font-semibold text-gray-700 block mb-1">Motivo:</span>
+                                        <p class="text-sm text-gray-800 leading-relaxed">{{ $contacto->motivo }}</p>
+                                    </div>
+                                </div>
+                            @endforeach
+                        </div>
+
                         @if ($contactos instanceof \Illuminate\Pagination\LengthAwarePaginator)
                             <div class="mt-4">
                                 {{ $contactos->links() }}
