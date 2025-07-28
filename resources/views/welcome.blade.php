@@ -64,7 +64,7 @@
     </header>
 
     <div class="fixed bottom-0 left-0 w-full py-2 px-4 md:hidden z-50">
-        <a href="https://drive.google.com/file/d/1pZVsG8imcYlP76l3Eas_k-31ONYWxCZA/view?usp=sharing" download
+        <a href="https://drive.google.com/file/d/1Dj_RuAkSLy-0vzvLMseaw1ggPaakpEQY/view?usp=sharing" download
             target="_blank"
             class="block w-full text-center bg-red-600 hover:bg-blue-700 text-white font-bold py-2 rounded">
             Descargar Revista
@@ -141,7 +141,7 @@
                             <h3 class="text-lg font-semibold text-gray-700 mb-2">Revista Nº3</h3>
                             <div
                                 class="w-32 h-48 bg-gray-400 rounded-md shadow-md flex items-center justify-center text-white font-bold">
-                                <a href="https://drive.google.com/file/d/1pZVsG8imcYlP76l3Eas_k-31ONYWxCZA/view?usp=sharing"
+                                <a href="https://drive.google.com/file/d/1Dj_RuAkSLy-0vzvLMseaw1ggPaakpEQY/view?usp=sharing"
                                     target="_blank">
                                     <img src="/storage/Portada_ED3.jpeg">
                                 </a>
@@ -152,7 +152,7 @@
                     </div>
 
                     <div class="mt-8 text-center lg:text-left hidden md:block">
-                        <a href="https://drive.google.com/file/d/1pZVsG8imcYlP76l3Eas_k-31ONYWxCZA/view?usp=sharing"
+                        <a href="https://drive.google.com/file/d/1Dj_RuAkSLy-0vzvLMseaw1ggPaakpEQY/view?usp=sharing" 
                             target="_blank"
                             class="inline-block bg-red-600 hover:bg-red-700 text-white font-bold py-3 px-6 rounded-full shadow-md transition duration-300">Descargar
                             Edición Actual</a>
