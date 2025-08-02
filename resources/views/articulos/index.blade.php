@@ -1,14 +1,14 @@
 <x-app-layout>
     <x-slot name="header">
-        <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
+        <h2 class="font-semibold text-xl text-gray-800 leading-tight">
             {{ __('Artículos') }}
         </h2>
     </x-slot>
 
     <div class="py-12">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-            <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg">
-                <div class="p-6 text-gray-900 dark:text-gray-100">
+            <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
+                <div class="p-6 text-gray-900">
                     <div class="mb-4">
                         <a href="{{ route('articulos.create') }}" class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded">
                             {{ __('Crear Nuevo Artículo') }}
@@ -24,12 +24,12 @@
 
                     <ul class="space-y-2">
                         @forelse ($articulos as $articulo)
-                            <li class="bg-gray-100 dark:bg-gray-700 rounded-md p-4 flex justify-between items-center">
+                            <li class="bg-gray-100 rounded-md p-4 flex justify-between items-center">
                                 <div>
                                     <a href="{{ route('articulos.show', $articulo) }}" class="hover:underline">
                                         {{ $articulo->titulo }}
                                     </a>
-                                    <p class="text-sm text-gray-500 dark:text-gray-400">{{ __('Autor') }}: {{ $articulo->autor ?? 'Anónimo' }}</p>
+                                    <p class="text-sm text-gray-500">{{ __('Autor') }}: {{ $articulo->autor ?? 'Anónimo' }}</p>
                                 </div>
                                 <div>
                                     <a href="{{ route('articulos.edit', $articulo) }}" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-1 px-2 rounded text-sm">{{ __('Editar') }}</a>
@@ -41,7 +41,7 @@
                                 </div>
                             </li>
                         @empty
-                            <li class="text-gray-500 dark:text-gray-400">{{ __('No hay artículos creados aún.') }}</li>
+                            <li class="text-gray-500">{{ __('No hay artículos creados aún.') }}</li>
                         @endforelse
                     </ul>
 

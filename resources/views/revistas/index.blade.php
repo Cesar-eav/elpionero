@@ -1,14 +1,14 @@
 <x-app-layout>
     <x-slot name="header">
-        <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
+        <h2 class="font-semibold text-xl text-gray-800  leading-tight">
             {{ __('Revistas') }}
         </h2>
     </x-slot>
 
     <div class="py-12">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-            <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg">
-                <div class="p-6 text-gray-900 dark:text-gray-100">
+            <div class="bg-white  overflow-hidden shadow-sm sm:rounded-lg">
+                <div class="p-6 text-gray-900">
                     <div class="mb-4">
                         <a href="{{ route('revistas.create') }}" class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded">
                             {{ __('Crear Nueva Revista') }}
@@ -24,7 +24,7 @@
 
                     <ul class="space-y-2">
                         @forelse ($revistas as $revista)
-                            <li class="bg-gray-100 dark:bg-gray-700 rounded-md p-4 flex justify-between items-center">
+                            <li class="bg-gray-100  rounded-md p-4 flex justify-between items-center">
                                 <a href="{{ route('revistas.show', $revista) }}" class="hover:underline">
                                     {{ $revista->titulo }} ({{ $revista->fecha_publicacion ? $revista->fecha_publicacion->format('Y-m-d') : 'Sin fecha' }})
                                 </a>
@@ -43,7 +43,7 @@
                                 </div>
                             </li>
                         @empty
-                            <li class="text-gray-500 dark:text-gray-400">{{ __('No hay revistas creadas aún.') }}</li>
+                            <li class="text-gray-500" >{{ __('No hay revistas creadas aún.') }}</li>
                         @endforelse
                     </ul>
 

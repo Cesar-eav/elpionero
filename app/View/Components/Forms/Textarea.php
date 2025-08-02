@@ -12,7 +12,7 @@ class Textarea extends Component
     public $name;
     public $rows;
 
-    public function __construct($id, $name, $rows = 3)
+    public function __construct($id, $name, $rows = 20)
     {
         $this->id = $id;
         $this->name = $name;

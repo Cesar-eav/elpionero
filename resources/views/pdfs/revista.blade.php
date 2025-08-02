@@ -146,7 +146,7 @@
             box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
         }
         .articulo-imagen {
-            max-width: 100%;
+            max-width: 20%;
             height: auto;
             margin-bottom: 15px;
             border-radius: 4px;
@@ -233,8 +233,8 @@
                 <p>Concejales discuten propuestas para mejorar la red de transporte en la ciudad.</p>
             </div>
             <h2 style="margin-top: 20px;">Publicidad</h2>
-            <div class="sidebar-ad"><img src="https://picsum.photos/120/90?random=2" alt="Anuncio Pequeño"></div>
-            <div class="sidebar-ad"><img src="https://picsum.photos/120/90?random=3" alt="Otro Anuncio Pequeño"></div>
+            <div ><img src="{{ asset('/storage/publicidad/manosalarte.jpeg') }}" alt="Anuncio Pequeño"></div>
+            {{-- <div class="sidebar-ad"><img src="https://picsum.photos/120/90?random=3" alt="Otro Anuncio Pequeño"></div> --}}
         </div>
 
         <div class="main-content">
@@ -248,16 +248,14 @@
                                     <div class="articulo-autor">
                                         @if ($articulo->imagen_autor)
                                             <div class="autor-imagen">
-                                                <img src="https://i.pravatar.cc/40?img={{ $loop->parent->index * 2 + $loop->index + 10 }}" alt="{{ $articulo->autor ?? 'Autor' }}">
+                                                <img src="{{ asset($articulo->imagen_autor) }}"  alt="{{ $articulo->autor ?? 'Autor' }}">
                                             </div>
                                         @endif
                                         Por: {{ $articulo->autor }}
                                     </div>
                                 @endif
-                                @if ($articulo->imagen_principal)
-                                    <img src="https://picsum.photos/600/300?random={{ $loop->index + 4 }}" alt="{{ $articulo->titulo }}" class="articulo-imagen">
-                                @endif
-                                <p>{!! nl2br(e($articulo->contenido)) !!}</p>
+
+                                <p class="text-gray-800">{!! nl2br(e($articulo->contenido)) !!}</p>
                             </div>
                         @endforeach
                     </div>
@@ -269,14 +267,38 @@
 
         <div class="sidebar-right">
             <h2>Columnas de Opinión</h2>
+
+
             <div class="sidebar-news">
-                <h4>La Visión del Alcalde</h4>
-                <p>El alcalde comparte sus perspectivas sobre el futuro del desarrollo urbano.</p>
+ @if ($articulos->isNotEmpty())
+                @foreach ($articulos->chunk(ceil($articulos->count() / 2)) as $columnArticulos)
+                    <div>
+                        @foreach ($columnArticulos as $articulo)
+                            <div class="articulo">
+                                <h4 class="articulo-titulo">{{ $articulo->titulo }}</h4>
+                                @if ($articulo->autor)
+                                    <div class="articulo-autor">
+                                        @if ($articulo->imagen_autor)
+                                            <div class="autor-imagen">
+                                                <img src="{{ asset($articulo->imagen_autor) }}"  alt="{{ $articulo->autor ?? 'Autor' }}">
+                                            </div>
+                                        @endif
+                                        Por: {{ $articulo->autor }}
+                                    </div>
+                                @endif
+
+                               
+                            </div>
+                        @endforeach
+                    </div>
+                @endforeach
+            @else
+                <p>No hay artículos en esta revista.</p>
+            @endif
+
+
             </div>
-            <div class="sidebar-news">
-                <h4>Crónica Cultural</h4>
-                <p>Un análisis de los eventos y tendencias culturales en la región.</p>
-            </div>
+
             <h2 style="margin-top: 20px;">Publicidad</h2>
             <div class="sidebar-ad"><img src="https://picsum.photos/160/160?random=7" alt="Anuncio Mediano"></div>
         </div>

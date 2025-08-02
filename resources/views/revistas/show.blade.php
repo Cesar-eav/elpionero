@@ -1,14 +1,14 @@
 <x-app-layout>
     <x-slot name="header">
-        <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
+        <h2 class="font-semibold text-xl text-gray-800 leading-tight">
             {{ __('Detalles de la Revista') }}
         </h2>
     </x-slot>
 
     <div class="py-12">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-            <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg">
-                <div class="p-6 text-gray-900 dark:text-gray-100">
+            <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
+                <div class="p-6 text-gray-900">
                     <h1 class="text-2xl font-bold mb-4">{{ $revista->titulo }}</h1>
                     @if ($revista->fecha_publicacion)
                         <p class="mb-2">{{ __('Fecha de Publicación') }}: {{ $revista->fecha_publicacion->format('Y-m-d') }}</p>
@@ -30,11 +30,11 @@
                     <h3 class="text-xl font-semibold mb-2">{{ __('Artículos en esta Revista') }}</h3>
                     <ul class="space-y-2">
                         @forelse ($revista->articulos as $articulo)
-                            <li class="bg-gray-100 dark:bg-gray-700 rounded-md p-3">
+                            <li class="bg-gray-100 rounded-md p-3">
                                 <a href="{{ route('articulos.show', $articulo) }}" class="hover:underline">{{ $articulo->titulo }}</a>
                             </li>
                         @empty
-                            <li class="text-gray-500 dark:text-gray-400">{{ __('No hay artículos en esta revista aún.') }}</li>
+                            <li class="text-gray-500">{{ __('No hay artículos en esta revista aún.') }}</li>
                         @endforelse
                     </ul>
 
