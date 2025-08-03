@@ -18,6 +18,16 @@ class ArticuloController extends Controller
         return view('articulos.index', compact('articulos'));
     }
 
+    public function showArticulo($id)
+    {
+        
+        $articulo = Articulo::where('id', $id)->first();
+        $articulos = Articulo::inRandomOrder()->limit(8)->get();
+
+
+        return view('pdfs.articulo', compact('articulo', 'articulos'));
+    }
+
     /**
      * Show the form for creating a new resource.
      */

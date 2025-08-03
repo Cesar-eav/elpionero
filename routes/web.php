@@ -11,6 +11,11 @@ use App\Http\Controllers\ContactoController;
 
 Route::get('/', function () {
     
+    return redirect('/previsualizar-revista/1/pdf');
+});
+
+Route::get('/nosotros', function () {
+    
     return view('welcome');
 });
 
@@ -19,6 +24,16 @@ Route::get('/contacto', [ContactoController::class, 'mostrarFormulario'])->name(
 Route::post('/contacto', [ContactoController::class, 'enviarFormulario'])->name('contacto.enviar');
 
 Route::get('/contactos2', [ContactoController::class, 'listarContactos'])->name('contactos.listar');
+
+Route::resource('articulos', ArticuloController::class);
+Route::get('articulo/{id}',[ArticuloController::class, 'showArticulo'])->name('inicio.articulo');
+
+
+
+Route::resource('revistas', RevistaController::class);
+Route::get('/revistas/{revista}/pdf', [RevistaController::class, 'generarPDF'])->name('revistas.generar-pdf');
+Route::get('/previsualizar-revista/{revista}/pdf', [RevistaController::class, 'previsualizarPDF'])->name('previsualizar.pdf');
+
 
 
 Route::get('/dashboard', function () {
@@ -32,11 +47,4 @@ Route::middleware('auth')->group(function () {
 });
 
 require __DIR__.'/auth.php';
-
-Route::resource('articulos', ArticuloController::class);
-
-Route::resource('revistas', RevistaController::class);
-Route::get('/revistas/{revista}/pdf', [RevistaController::class, 'generarPDF'])->name('revistas.generar-pdf');
-Route::get('/previsualizar-revista/{revista}/pdf', [RevistaController::class, 'previsualizarPDF'])->name('previsualizar.pdf');
-
 

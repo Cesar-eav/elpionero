@@ -114,11 +114,16 @@ class RevistaController extends Controller
     public function previsualizarPDF(Revista $revista)
     {
         // Cargar los artículos relacionados con la revista
-        $articulos = $revista->articulos;
+        $articulos = $revista->articulos()->inRandomOrder()->get();
+        $articulo_portada = $revista->articulos()->inRandomOrder()->first();
+
 
         // Compartir la ubicación actual para mostrarla en el PDF
         $ubicacion = 'Valparaíso, Valparaíso, Chile';
         $fechaGeneracion = now()->format('Y-m-d H:i:s');
+
+        return view('pdfs.revista', compact('revista', 'articulos', 'articulo_portada', 'ubicacion', 'fechaGeneracion'));
+
 
         // Renderizar la vista Blade del PDF
         $pdfView = View::make('pdfs.revista', compact('revista', 'articulos', 'ubicacion', 'fechaGeneracion'));
