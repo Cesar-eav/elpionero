@@ -3,6 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Models\Revista;
+use App\Models\Articulo;
+use Illuminate\Support\Facades\Log;
+
 use Illuminate\Http\Request;
 use Illuminate\Support\Str; // Para generar slugs
 use Barryvdh\DomPDF\Facade\Pdf; 
@@ -111,18 +114,18 @@ class RevistaController extends Controller
         return $pdf->download($nombreArchivo);
     }
 
-    public function previsualizarPDF(Revista $revista)
+    public function previsualizarPDF()
     {
         // Cargar los artículos relacionados con la revista
-        $articulos = $revista->articulos()->inRandomOrder()->get();
-        $articulo_portada = $revista->articulos()->inRandomOrder()->first();
+        $articulos = Articulo::inRandomOrder()->limit(5)->get();
+        $articulo_portada = Articulo::inRandomOrder()->first();
 
 
         // Compartir la ubicación actual para mostrarla en el PDF
         $ubicacion = 'Valparaíso, Valparaíso, Chile';
         $fechaGeneracion = now()->format('Y-m-d H:i:s');
 
-        return view('pdfs.revista', compact('revista', 'articulos', 'articulo_portada', 'ubicacion', 'fechaGeneracion'));
+        return view('pdfs.revista', compact('articulos', 'articulo_portada', 'ubicacion', 'fechaGeneracion'));
 
 
         // Renderizar la vista Blade del PDF

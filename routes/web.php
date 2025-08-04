@@ -11,7 +11,7 @@ use App\Http\Controllers\ContactoController;
 
 Route::get('/', function () {
     
-    return redirect('/previsualizar-revista/1/pdf');
+    return redirect('/previsualizar-revista/pdf');
 });
 
 Route::get('/nosotros', function () {
@@ -32,7 +32,7 @@ Route::get('articulo/{id}',[ArticuloController::class, 'showArticulo'])->name('i
 
 Route::resource('revistas', RevistaController::class);
 Route::get('/revistas/{revista}/pdf', [RevistaController::class, 'generarPDF'])->name('revistas.generar-pdf');
-Route::get('/previsualizar-revista/{revista}/pdf', [RevistaController::class, 'previsualizarPDF'])->name('previsualizar.pdf');
+Route::get('/previsualizar-revista/pdf', [RevistaController::class, 'previsualizarPDF'])->name('previsualizar.pdf');
 
 
 

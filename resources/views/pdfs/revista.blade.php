@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>{{ $revista->titulo }} - {{ now()->format('d de F de Y') }}</title>
+    <title>{{ now()->format('d de F de Y') }}</title>
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 
     @if (app()->environment('production'))
@@ -35,7 +35,7 @@
         <div>
 
         <div class="flex w-full flex-wrap bg-black border border-gray-300 text-[#fc5648] rounded-md px-6 py-3 mb-8 sticky top-0 z-50 gap-4 text-lg font-semibold">
-            <a href="{{ url('/previsualizar-revista/1/pdf') }}" class="hover:text-white transition-colors flex items-center gap-1">
+            <a href="{{ url('/previsualizar-revista/pdf') }}" class="hover:text-white transition-colors flex items-center gap-1">
                 Inicio
             </a>
             <a href="{{ route('contacto.formulario') }}" class="hover:text-white transition-colors">Contáctanos</a>
