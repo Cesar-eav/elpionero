@@ -118,10 +118,9 @@ class ArticuloController extends Controller
      */
     public function destroy(Articulo $articulo)
     {
+
         // Eliminar la imagen del autor si existe antes de eliminar el artículo
-        if ($articulo->imagen_autor) {
-            Storage::delete(str_replace('storage/', 'public/', $articulo->imagen_autor));
-        }
+
         $articulo->delete();
         return redirect()->route('articulos.index')->with('success', 'Artículo eliminado exitosamente.');
     }
