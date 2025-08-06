@@ -39,10 +39,12 @@
         x-show="open"
         x-transition
         class="absolute top-full left-0 w-full bg-black text-[#fc5648] border-t border-gray-300 md:hidden flex flex-col p-4 space-y-2">
-        <a href="{{ url('/previsualizar-revista/pdf') }}" class="hover:text-white transition-colors">Inicio</a>
-        <a href="{{ route('contacto.formulario') }}" class="hover:text-white transition-colors">Contáctanos</a>
+        <a href="{{ url('columnas') }}" class="hover:text-white transition-colors">Columnas</a>
+        <a href="{{ url('nosotros') }}" class="hover:text-white transition-colors">Nosotros</a>
         <a href="{{ url('nosotros') }}" class="hover:text-white transition-colors">Nosotros</a>
         <a href="#" class="hover:text-white transition-colors">Rincón Wanderino</a>
         <a href="#" class="hover:text-white transition-colors">Editoriales</a>
+        <a href="{{ route('contacto.formulario') }}" class="hover:text-white transition-colors">Contáctanos</a>
+
     </div>
 </div>
