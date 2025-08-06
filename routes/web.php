@@ -27,6 +27,7 @@ Route::get('/contactos2', [ContactoController::class, 'listarContactos'])->name(
 
 Route::resource('articulos', ArticuloController::class);
 Route::get('articulo/{id}',[ArticuloController::class, 'showArticulo'])->name('inicio.articulo');
+Route::get('/columnas',[ArticuloController::class, 'showColumnas'])->name('inicio.columnas');
 
 
 

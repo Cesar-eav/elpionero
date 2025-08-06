@@ -21,7 +21,8 @@
             })(window, document, "clarity", "script", "rsqwi6wyvd");
         </script>
     @endif
-    
+    <script src="//unpkg.com/alpinejs" defer></script>
+
 </head>
 
 <body class="bg-gray-100 text-gray-900 font-serif text-base">
@@ -34,15 +35,7 @@
         </header>
         <div>
 
-        <div class="flex w-full flex-wrap bg-black border border-gray-300 text-[#fc5648] rounded-md px-6 py-3 mb-8 sticky top-0 z-50 gap-4 text-lg font-semibold">
-            <a href="{{ url('/previsualizar-revista/pdf') }}" class="hover:text-white transition-colors flex items-center gap-1">
-                Inicio
-            </a>
-            <a href="{{ route('contacto.formulario') }}" class="hover:text-white transition-colors">Contáctanos</a>
-            <a href="{{ url('nosotros') }}" class="hover:text-white transition-colors">Nosotros</a>
-            <a href="#" class="hover:text-white transition-colors">Rincón Wanderino</a>
-            <a href="#" class="hover:text-white transition-colors">Editoriales</a>
-        </div>
+    <x-navbar /> 
 
             <!-- Layout principal -->
             <div class="flex flex-col md:flex-row gap-6">

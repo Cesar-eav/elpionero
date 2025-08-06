@@ -28,6 +28,14 @@ class ArticuloController extends Controller
         return view('pdfs.articulo', compact('articulo', 'articulos'));
     }
 
+    public function showColumnas()
+    {
+        $columnas = Articulo::get();
+
+
+        return view('pdfs.columnas', compact('columnas'));
+    }
+
     /**
      * Show the form for creating a new resource.
      */
