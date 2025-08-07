@@ -54,7 +54,7 @@
 
                                             <!-- Texto -->
                                             <div class="flex flex-col justify-center p-4 w-2/3">
-                                                <div class="text-xl  text-black flex items-center mb-5">
+                                                <div class="md:text-xl text-sm  text-black flex items-center md:mb-5 mb-2">
                                                      {{ $articulo->revista->titulo }}
                                                 </div>
                                                 <h4 class="text-lg font-bold text-black mb-2">
