@@ -11,7 +11,7 @@ use App\Http\Controllers\ContactoController;
 
 Route::get('/', function () {
     
-    return redirect('/previsualizar-revista/pdf');
+    return redirect('/columnas');
 });
 
 Route::get('/nosotros', function () {
