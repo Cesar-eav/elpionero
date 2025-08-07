@@ -30,7 +30,7 @@ class ArticuloController extends Controller
 
     public function showColumnas()
     {
-        $columnas = Articulo::get();
+        $columnas = Articulo::inRandomOrder()->get();
 
 
         return view('pdfs.columnas', compact('columnas'));
