@@ -54,12 +54,15 @@
 
                                             <!-- Texto -->
                                             <div class="flex flex-col justify-center p-4 w-2/3">
+                                                <div class="text-xl  text-black flex items-center mb-5">
+                                                     {{ $articulo->revista->titulo }}
+                                                </div>
                                                 <h4 class="text-lg font-bold text-black mb-2">
                                                     {{ $articulo->titulo }}
                                                 </h4>
                                                 @if ($articulo->autor)
                                                     <div class="text-sm italic text-gray-600 flex items-center">
-                                                        Por: {{ $articulo->autor }}
+                                                        {{ $articulo->autor }} 
                                                     </div>
                                                 @endif
                                             </div>
@@ -93,9 +96,10 @@
                     <!-- Título -->
                     <div class="text-4xl font-extrabold tracking-wide font-serif text-center md:text-left">
                         <div class="md:hidden block text-center text-white text-3xl mb-4">
-                            <span class="text-[#fc5648]">RE</span><span class="text-[#eba81d]">VIS</span><span class="text-white">TAS</span>
+                            <span class="text-[#fc5648]">RE</span><span class="text-[#eba81d]">VIS</span><span
+                                class="text-white">TAS</span>
                         </div>
-                        
+
                         <div class="hidden md:block">
                             <span class="text-[#fc5648]">RE</span><br />
                             <span class="text-[#eba81d]">VIS</span><br />
