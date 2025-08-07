@@ -23,9 +23,9 @@
 </head>
 
 <body class="bg-gray-100 text-gray-900 font-serif text-base">
-    <div class="w-full mx-auto p-4">
+    <div class="w-full  mx-auto p-4">
         <!-- Encabezado -->
-        <header class="text-center mb-8">
+        <header class="text-center mb-1">
             <img src="{{ asset('storage/portada.png') }}" alt="Portada de Periódico"
                 class="w-full  mx-auto mb-4 rounded shadow" />
 
