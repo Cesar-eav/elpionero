@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\RevistaController;
 use App\Http\Controllers\ArticuloController;
 use App\Http\Controllers\ContactoController;
+use App\Http\Controllers\NewsletterController;
 
 
 
@@ -18,6 +19,7 @@ Route::get('/nosotros', function () {
     
     return view('welcome');
 });
+Route::post('/newsletter', [NewsletterController::class, 'subscribe'])->name('newsletter.subscribe');
 
 
 Route::get('/contacto', [ContactoController::class, 'mostrarFormulario'])->name('contacto.formulario');

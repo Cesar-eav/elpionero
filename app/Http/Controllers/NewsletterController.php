@@ -1,13 +1,9 @@
 <?php
 
 namespace App\Http\Controllers;
-
-use Illuminate\Http\Request;
-
-namespace App\Http\Controllers;
-
-use Illuminate\Http\Request;
 use App\Models\Suscriptor;
+
+use Illuminate\Http\Request;
 
 class NewsletterController extends Controller
 {
@@ -24,4 +20,3 @@ class NewsletterController extends Controller
         return back()->with('success', '¡Gracias por suscribirte al newsletter!');
     }
 }
-
