@@ -136,7 +136,8 @@
                 <div class="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-center gap-10">
                     <!-- Título -->
                     <div class="text-4xl font-extrabold tracking-wide font-serif text-center md:text-left">
-                        <div class="md:hidden block text-center text-white text-3xl mb-4">REVISTAS</div>
+                            <span class="text-[#fc5648]">RE</span><span class="text-[#eba81d]">VIS</span><span class="text-white">TAS</span>
+
                         <div class="hidden md:block">
                             <span class="text-[#fc5648]">RE</span><br />
                             <span class="text-[#eba81d]">VIS</span><br />

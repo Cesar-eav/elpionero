@@ -40,49 +40,49 @@
 
 
                 <!-- Contenido principal -->
- 
+
                 <main class="w-full space-y-6 bg-gray-50 border border-gray-300 rounded-lg p-4 shadow-sm">
                     <div>
                         <h2 class="text-xl font-semibold text-gray-800 border-b pb-2">Columnas de Opinión</h2>
 
                         @if ($columnas->isNotEmpty())
-<div class="grid grid-cols-1 md:grid-cols-2 gap-6 mt-4">
-    @foreach ($columnas as $articulo)
-        <div class="flex flex-col border rounded-lg overflow-hidden bg-white shadow hover:shadow-lg transition-shadow">
-            <a href="{{ url('articulo/' . $articulo->id) }}" class="flex flex-row h-full">
-                
-                <!-- Texto -->
-                <div class="flex flex-col justify-center p-4 w-2/3">
-                    <h4 class="text-lg font-bold text-black mb-2">
-                        {{ $articulo->titulo }}
-                    </h4>
-                    @if ($articulo->autor)
-                        <div class="text-sm italic text-gray-600 flex items-center">
-                            Por: {{ $articulo->autor }}
-                        </div>
-                    @endif
-                </div>
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mt-4">
+                                @foreach ($columnas as $articulo)
+                                    <div
+                                        class="flex flex-col border rounded-lg overflow-hidden bg-white shadow hover:shadow-lg transition-shadow">
+                                        <a href="{{ url('articulo/' . $articulo->id) }}" class="flex flex-row h-full">
 
-                <!-- Imagen a la derecha -->
-                @if ($articulo->imagen_autor)
-                    <div class="w-1/3 flex items-center justify-center bg-gray-100">
-                        <img src="{{ asset($articulo->imagen_autor) }}"
-                             alt="{{ $articulo->autor ?? 'Autor' }}"
-                             class="w-full h-full object-cover" />
-                    </div>
-                @endif
+                                            <!-- Texto -->
+                                            <div class="flex flex-col justify-center p-4 w-2/3">
+                                                <h4 class="text-lg font-bold text-black mb-2">
+                                                    {{ $articulo->titulo }}
+                                                </h4>
+                                                @if ($articulo->autor)
+                                                    <div class="text-sm italic text-gray-600 flex items-center">
+                                                        Por: {{ $articulo->autor }}
+                                                    </div>
+                                                @endif
+                                            </div>
 
-            </a>
-        </div>
-    @endforeach
-</div>
+                                            <!-- Imagen a la derecha -->
+                                            @if ($articulo->imagen_autor)
+                                                <div class="w-1/3 flex items-center justify-center bg-gray-100">
+                                                    <img src="{{ asset($articulo->imagen_autor) }}"
+                                                        alt="{{ $articulo->autor ?? 'Autor' }}"
+                                                        class="w-full h-full object-cover" />
+                                                </div>
+                                            @endif
 
+                                        </a>
+                                    </div>
+                                @endforeach
+                            </div>
                         @else
                             <p>No hay artículos en esta revista.</p>
                         @endif
                     </div>
 
-  
+
                 </main>
             </div>
 
@@ -92,7 +92,10 @@
                 <div class="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-center gap-10">
                     <!-- Título -->
                     <div class="text-4xl font-extrabold tracking-wide font-serif text-center md:text-left">
-                        <div class="md:hidden block text-center text-white text-3xl mb-4">REVISTAS</div>
+                        <div class="md:hidden block text-center text-white text-3xl mb-4">
+                            <span class="text-[#fc5648]">RE</span><span class="text-[#eba81d]">VIS</span><span class="text-white">TAS</span>
+                        </div>
+                        
                         <div class="hidden md:block">
                             <span class="text-[#fc5648]">RE</span><br />
                             <span class="text-[#eba81d]">VIS</span><br />
