@@ -7,6 +7,13 @@ use Illuminate\Http\Request;
 
 class NewsletterController extends Controller
 {
+    public function index()
+    {
+        $suscriptores = Suscriptor::latest()->paginate(20); // Paginación
+
+        return view('admin.suscriptores.index', compact('suscriptores'));
+    }
+
     public function subscribe(Request $request)
     {
         $request->validate([
