@@ -48,45 +48,7 @@
                     <div>
                         <h2 class="text-xl font-semibold text-gray-800 border-b pb-2">Próximos números</h2>
 
-                        @if ($columnas->isNotEmpty())
-                            <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mt-4">
-                                @foreach ($columnas as $articulo)
-                                    <div
-                                        class="flex flex-col border rounded-lg overflow-hidden bg-white shadow hover:shadow-lg transition-shadow">
-                                        <a href="{{ url('articulo/' . $articulo->id) }}" class="flex flex-row h-full">
 
-                                            <!-- Texto -->
-                                            <div class="flex flex-col justify-center p-4 w-2/3">
-                                                <div
-                                                    class="md:text-xl text-sm  text-black flex items-center md:mb-5 mb-2">
-                                                    {{ $articulo->revista->titulo }}
-                                                </div>
-                                                <h4 class="text-lg font-bold text-black mb-2">
-                                                    {{ $articulo->titulo }}
-                                                </h4>
-                                                @if ($articulo->autor)
-                                                    <div class="text-sm italic text-gray-600 flex items-center">
-                                                        {{ $articulo->autor }}
-                                                    </div>
-                                                @endif
-                                            </div>
-
-                                            <!-- Imagen a la derecha -->
-                                            @if ($articulo->imagen_autor)
-                                                <div class="w-1/3 flex items-center justify-center bg-gray-100">
-                                                    <img src="{{ asset($articulo->imagen_autor) }}"
-                                                        alt="{{ $articulo->autor ?? 'Autor' }}"
-                                                        class="w-full h-full object-cover" />
-                                                </div>
-                                            @endif
-
-                                        </a>
-                                    </div>
-                                @endforeach
-                            </div>
-                        @else
-                            <p>No hay artículos en esta revista.</p>
-                        @endif
                     </div>
 
 

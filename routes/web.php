@@ -20,7 +20,7 @@ Route::get('/proximos-numeros',[InicioController::class, 'proximosNumeros'])->na
 
 Route::get('/nosotros', function () {
     
-    return view('welcome');
+    return view('nosotros');
 });
 Route::post('/newsletter', [NewsletterController::class, 'subscribe'])->name('newsletter.subscribe');
 
