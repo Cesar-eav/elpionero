@@ -6,14 +6,17 @@ use App\Http\Controllers\RevistaController;
 use App\Http\Controllers\ArticuloController;
 use App\Http\Controllers\ContactoController;
 use App\Http\Controllers\NewsletterController;
+use App\Http\Controllers\InicioController;
+use App\Http\Controllers\ColumnistaController;
 
 
 
 
-Route::get('/', function () {
-    
-    return redirect('/columnas');
-});
+
+Route::get('/',[InicioController::class, 'inicio'])->name('inicio');
+Route::get('/proximos-numeros',[InicioController::class, 'proximosNumeros'])->name('proximos-numeros');
+
+
 
 Route::get('/nosotros', function () {
     
@@ -27,13 +30,13 @@ Route::post('/contacto', [ContactoController::class, 'enviarFormulario'])->name(
 
 Route::get('/contactos2', [ContactoController::class, 'listarContactos'])->name('contactos.listar');
 
-Route::resource('articulos', ArticuloController::class);
+
+
 Route::get('articulo/{id}',[ArticuloController::class, 'showArticulo'])->name('inicio.articulo');
 Route::get('/columnas',[ArticuloController::class, 'showColumnas'])->name('inicio.columnas');
 
 
 
-Route::resource('revistas', RevistaController::class);
 Route::get('/revistas/{revista}/pdf', [RevistaController::class, 'generarPDF'])->name('revistas.generar-pdf');
 Route::get('/previsualizar-revista/pdf', [RevistaController::class, 'previsualizarPDF'])->name('previsualizar.pdf');
 
@@ -48,6 +51,12 @@ Route::middleware('auth')->group(function () {
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
     Route::get('/admin/suscriptores', [NewsletterController::class, 'index'])->name('newsletter.index');
+
+    Route::resource('articulos', ArticuloController::class);
+    Route::resource('revistas', RevistaController::class);
+    Route::resource('columnistas', ColumnistaController::class);        
+
+    //Route::get('/admin/', [NewsletterController::class, 'index'])->name('admin.index');
     
 });
 

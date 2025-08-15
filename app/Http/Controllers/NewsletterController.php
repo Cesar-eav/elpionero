@@ -11,7 +11,7 @@ class NewsletterController extends Controller
     {
         $suscriptores = Suscriptor::latest()->paginate(20); // Paginación
 
-        return view('admin.suscriptores.index', compact('suscriptores'));
+        return view('admin.suscriptores.suscriptores', compact('suscriptores'));
     }
 
     public function subscribe(Request $request)

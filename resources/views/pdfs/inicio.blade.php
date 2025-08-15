@@ -1,3 +1,7 @@
+@php
+    use Illuminate\Support\Str;
+@endphp
+
 <!DOCTYPE html>
 <html lang="es">
 
@@ -26,10 +30,15 @@
     <div class="w-full  mx-auto p-4">
         <!-- Encabezado -->
         <header class="text-center mb-1">
-            <img src="{{ asset('storage/portada.png') }}" alt="Portada de Periódico"
-                class="w-full  mx-auto mb-4 rounded shadow" />
+            <!-- Visible en pantallas medianas y grandes -->
+            <img src="{{ asset('storage/portada.png') }}" class="w-full mx-auto mb-4 rounded shadow  md:block hidden" />
 
+            <!-- Visible solo en móviles -->
+            <img src="{{ asset('storage/logo_m.png') }}" class="w-full mx-auto mb-4 rounded shadow  block md:hidden" />
         </header>
+
+
+
         <div>
 
             <x-navbar />
@@ -83,55 +92,126 @@
 
             <!-- Layout principal -->
             <div class="flex flex-col md:flex-row gap-6">
+                <!-- Sidebar izquierda -->
+                <aside
+                    class="w-full md:w-2/6 hidden md:block space-y-6 bg-gray-50 border border-gray-300 rounded-lg p-4 shadow-sm">
+                    <div>
+                        <h2 class="text-xl font-semibold text-gray-800 border-b pb-2">Noticias</h2>
+                        <div class="mt-4 border-gray-300 border p-2">
+                            <h4 class="text-md font-bold text-gray-700">Parque Barón</h4>
+                            <p class="text-sm text-gray-700">
+                                Aún no hay modelo de gestión para el funcionamiento de la Bodega Simón Bolivar.
+                            </p>
+                        </div>
+                        <div class="mt-4 border-gray-300 border p-2">
+                            <h4 class="text-md font-bold text-gray-700">Proponen ciclovía en Av. España</h4>
+                            <a href="https://www.pucv.cl/pucv/investigadores-proponen" target="_blank">
+                                <p class="text-sm text-gray-700">Académicos de la PUCV elaboran propuesta para mejorar
+                                    la movilidad entre Viña del Mar
+                                    y Valparaíso.
+                                </p>
+                            </a>
+                        </div>
 
+                        <div class="mt-2">
+                            <a href="https://www.instagram.com/manos_.alarte/" target="_blank">
+                                <img src="{{ asset('storage/manosalarte.jpeg') }}" alt="Anuncio Mediano"
+                                    class="w-full rounded border shadow" /></a>
+                        </div>
+
+                        <div class="mt-4 border-gray-300 border p-2">
+                            <h4 class="text-md font-bold text-gray-700">Dos buenas noticias para Valparaíso</h4>
+                            <a href="https://www.pucv.cl/pucv/investigadores-proponen" target="_blank">
+                                <p class="text-sm text-gray-700">Pronto se inagurará <a href="https://www.instagram.com/destinovalpo/" target="_blank" class="font-bold">Destino Valparaíso</a>, un proyecto
+                                    que albergará el Museo del Inmigrante. Admeás,  <a href="https://www.instagram.com/bancoestado/reel/DNTO6l1x1_s/" target="_blank" class="font-bold">Banco Estado</a>  ha remodelado el edificio patrimonial de calle Prat, al cual se podrá acceder mediante un ascensor desde el Paseo Yugoslavo.
+                                </p>
+                            </a>
+                        </div>
+
+                </aside>
 
                 <!-- Contenido principal -->
 
                 <main class="w-full space-y-6 bg-gray-50 border border-gray-300 rounded-lg p-4 shadow-sm">
-                    <div>
-                        <h2 class="text-xl font-semibold text-gray-800 border-b pb-2">Columnas de Opinión</h2>
 
-                        @if ($columnas->isNotEmpty())
-                            <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mt-4">
-                                @foreach ($columnas as $articulo)
+                    @if ($columnas->isNotEmpty())
+                        @php
+                            $destacada = $columnas->last();
+                            $resto = $columnas->take(4);
+                        @endphp
+
+                        {{-- DESTACADA --}}
+                        <section class="mt-4">
+                            <div
+                                class="border rounded-lg overflow-hidden bg-white shadow hover:shadow-lg transition-shadow">
+                                <a href="{{ url('articulo/' . $destacada->id) }}" class="flex flex-col md:flex-row">
+                                    {{-- Texto --}}
+                                    <div class="w-full md:w-2/3 p-5 flex flex-col justify-center">
+                                        <div class="text-sm md:text-base text-gray-700 mb-2">
+                                            {{ $destacada->revista->titulo ?? '' }}
+                                        </div>
+                                        <h3 class="text-2xl md:text-3xl font-bold text-black leading-tight mb-3">
+                                            {{ $destacada->titulo }}
+                                        </h3>
+                                        @if ($destacada->autor)
+                                            <p class="text-sm md:text-base italic text-gray-600">Por
+                                                {{ $destacada->autor }}</p>
+                                        @endif
+                                        <p class="text-gray-800 text-base leading-relaxed">
+                                            {!! nl2br(e(Str::limit($destacada->contenido, 300))) !!}
+                                        </p>
+                                    </div>
+                                    {{-- Imagen a la derecha, grande --}}
+                                    @if ($destacada->imagen_autor)
+                                        <div class="w-full md:w-1/3 bg-gray-100">
+                                            <img src="{{ asset($destacada->imagen_autor) }}"
+                                                alt="{{ $destacada->autor ?? 'Autor' }}"
+                                                class="w-full h-64 md:h-full object-cover" />
+                                        </div>
+                                    @endif
+                                </a>
+                            </div>
+                        </section>
+                        <div>
+                            <img src="{{ asset('storage/cafe.png') }}" alt="Anuncio Mediano"
+                                class="w-full rounded border shadow" />
+                        </div>
+                        {{-- RESTO (tarjetas más pequeñas) --}}
+                        @if ($resto->isNotEmpty())
+                            <section class="grid grid-cols-1 md:grid-cols-2 gap-6 mt-6">
+                                @foreach ($resto as $articulo)
                                     <div
-                                        class="flex flex-col border rounded-lg overflow-hidden bg-white shadow hover:shadow-lg transition-shadow">
-                                        <a href="{{ url('articulo/' . $articulo->id) }}" class="flex flex-row h-full">
-
-                                            <!-- Texto -->
-                                            <div class="flex flex-col justify-center p-4 w-2/3">
-                                                <div
-                                                    class="md:text-xl text-sm  text-black flex items-center md:mb-5 mb-2">
-                                                    {{ $articulo->revista->titulo }}
+                                        class="flex border rounded-lg overflow-hidden bg-white shadow hover:shadow-lg transition-shadow">
+                                        <a href="{{ url('articulo/' . $articulo->id) }}" class="flex w-full">
+                                            {{-- Texto --}}
+                                            <div class="w-2/3 p-4 flex flex-col justify-center">
+                                                <div class="text-xs md:text-sm text-gray-700 mb-1">
+                                                    {{ $articulo->revista->titulo ?? '' }}
                                                 </div>
-                                                <h4 class="text-lg font-bold text-black mb-2">
+                                                <h4 class="text-lg font-bold text-black mb-1 line-clamp-2">
                                                     {{ $articulo->titulo }}
                                                 </h4>
                                                 @if ($articulo->autor)
-                                                    <div class="text-sm italic text-gray-600 flex items-center">
-                                                        {{ $articulo->autor }}
+                                                    <div class="text-sm italic text-gray-600">{{ $articulo->autor }}
                                                     </div>
                                                 @endif
                                             </div>
-
-                                            <!-- Imagen a la derecha -->
+                                            {{-- Imagen a la derecha --}}
                                             @if ($articulo->imagen_autor)
-                                                <div class="w-1/3 flex items-center justify-center bg-gray-100">
+                                                <div class="w-1/3 bg-gray-100">
                                                     <img src="{{ asset($articulo->imagen_autor) }}"
                                                         alt="{{ $articulo->autor ?? 'Autor' }}"
-                                                        class="w-full h-full object-cover" />
+                                                        class="w-full h-full object-cover">
                                                 </div>
                                             @endif
-
                                         </a>
                                     </div>
                                 @endforeach
-                            </div>
-                        @else
-                            <p>No hay artículos en esta revista.</p>
+                            </section>
                         @endif
-                    </div>
-
+                    @else
+                        <p>No hay artículos en esta revista.</p>
+                    @endif
 
                 </main>
             </div>

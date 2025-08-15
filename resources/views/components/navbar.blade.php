@@ -11,11 +11,11 @@
     <!-- Navegación escritorio -->
     <nav class="hidden md:flex gap-4">
         <a href="{{ url('columnas') }}" class="hover:text-white transition-colors">Columnas</a>
+        <a href="{{ url('proximos-numeros') }}" class="hover:text-white transition-colors">Próximos Números</a>
         <a href="{{ url('nosotros') }}" class="hover:text-white transition-colors">Nosotros</a>
         <a href="#" class="hover:text-white transition-colors">Rincón Wanderino</a>
         <a href="#" class="hover:text-white transition-colors">Editoriales</a>
         <a href="{{ route('contacto.formulario') }}" class="hover:text-white transition-colors">Contáctanos</a>
-
     </nav>
 
     <!-- Botón hamburguesa (solo en móvil) -->
