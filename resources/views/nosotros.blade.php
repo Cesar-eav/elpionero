@@ -109,7 +109,7 @@
                                     <h3 class="text-white text-2xl font-extrabold tracking-tight">
                                         Macarena Gómez Acevedo
                                     </h3>
-                                    <a href="https://www.linkedin.com/in/tu-perfil" target="_blank" rel="noopener"
+                                    <a href="https://www.linkedin.com/in/macarena-g%C3%B3mez-acevedo-010828b8/" target="_blank" rel="noopener"
                                         class="inline-flex items-center gap-2 rounded-full bg-white/90 px-3 py-1 text-sm font-semibold text-gray-900 hover:bg-white transition"
                                         aria-label="LinkedIn de Macarena Gómez Acevedo" title="LinkedIn">
                                         <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" viewBox="0 0 24 24"
@@ -200,7 +200,7 @@
                             <div class="w-full md:w-1/2 p-5 md:h-80 overflow-y-auto">
                                 <div class="md:hidden mb-3">
                                     <h3 class="text-2xl font-extrabold text-gray-900">César Andrade Valdebenito</h3>
-                                    <a href="https://www.linkedin.com/in/tu-perfil" target="_blank" rel="noopener"
+                                    <a href="https://www.linkedin.com/in/cesar-andrade-chile/" target="_blank" rel="noopener"
                                         class="mt-2 inline-flex items-center gap-2 rounded-full bg-gray-900 text-white px-3 py-1 text-sm font-semibold"
                                         aria-label="LinkedIn de César Andrade Valdebenito" title="LinkedIn">
                                         <svg xmlns="http://www.w3.org/2000/svg" class="h-3.5 w-3.5" viewBox="0 0 24 24"
