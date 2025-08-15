@@ -22,6 +22,11 @@ Route::get('/nosotros', function () {
     
     return view('nosotros');
 });
+
+Route::get('/noticias', function () {
+    
+    return view('noticias');
+});
 Route::post('/newsletter', [NewsletterController::class, 'subscribe'])->name('newsletter.subscribe');
 
 

@@ -5,7 +5,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <title>El Pionero de Valparaíso</title>
+    <title>Noticias - El Pionero de Valparaíso</title>
 
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.bunny.net">
@@ -33,7 +33,7 @@
 
 </head>
 
-<body class="bg-gray-100 flex p-6 lg:pl-3 items-center lg:justify-center min-h-screen flex-col">
+<body class="bg-gray-100 flex items-center lg:justify-center min-h-screen flex-col">
 
 
     <div class="w-full  mx-auto p-4">
