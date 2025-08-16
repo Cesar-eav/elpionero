@@ -216,7 +216,12 @@
                     @else
                         <p>No hay artículos en esta revista.</p>
                     @endif
-
+                        <div>
+                            <img src="{{ asset('storage/cafe.png') }}" alt="Anuncio Mediano"
+                                class="w-full rounded border shadow  md:block hidden" />
+                            <img src="{{ asset('storage/publicidad_movil_2.png') }}" alt="Anuncio Mediano"
+                                class="w-full rounded border shadow  block md:hidden" />
+                        </div>
                 </main>
             </div>
 
