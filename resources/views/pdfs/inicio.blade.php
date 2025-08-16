@@ -139,7 +139,11 @@
                             $destacada = $columnas->last();
                             $resto = $columnas->take(4);
                         @endphp
-
+                        <div>
+         
+                            <img src="{{ asset('storage/publicidad_movil_2.png') }}" alt="Anuncio Mediano"
+                                class="w-full rounded border shadow  block md:hidden" />
+                        </div>
                         {{-- DESTACADA --}}
                         <section class="mt-4">
                             <div

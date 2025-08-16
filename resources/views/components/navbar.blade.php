@@ -1,7 +1,7 @@
 <!-- Barra de navegación -->
 <div 
     x-data="{ open: false }" 
-    class="flex w-full font-mono items-center justify-between bg-black border border-gray-300 text-[#fc5648] rounded-md px-6 py-3 mb-8 sticky top-0 z-50 text-lg font-semibold">
+    class="flex w-full font-mono items-center justify-between bg-black border border-gray-300 text-[#fc5648] rounded-md px-6 py-3 md:mb-8 mb-0 sticky top-0 z-50 text-lg font-semibold">
 
     <!-- Logo o título -->
     <a href="{{ url('/') }}" class="hover:text-white transition-colors flex items-center gap-1">
