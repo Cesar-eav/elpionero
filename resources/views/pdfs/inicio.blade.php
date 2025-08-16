@@ -145,6 +145,15 @@
                             <div
                                 class="border rounded-lg overflow-hidden bg-white shadow hover:shadow-lg transition-shadow">
                                 <a href="{{ url('articulo/' . $destacada->id) }}" class="flex flex-col md:flex-row">
+
+                                                                        {{-- Imagen a la derecha, grande --}}
+                                    @if ($destacada->imagen_autor)
+                                        <div class="w-full md:w-1/3 bg-gray-100">
+                                            <img src="{{ asset($destacada->imagen_autor) }}"
+                                                alt="{{ $destacada->autor ?? 'Autor' }}"
+                                                class="w-full h-64 md:h-full object-cover" />
+                                        </div>
+                                    @endif
                                     {{-- Texto --}}
                                     <div class="w-full md:w-2/3 p-5 flex flex-col justify-center">
                                         <div class="text-sm md:text-base text-gray-700 mb-2">
@@ -161,20 +170,15 @@
                                             {!! nl2br(e(Str::limit($destacada->contenido, 300))) !!}
                                         </p>
                                     </div>
-                                    {{-- Imagen a la derecha, grande --}}
-                                    @if ($destacada->imagen_autor)
-                                        <div class="w-full md:w-1/3 bg-gray-100">
-                                            <img src="{{ asset($destacada->imagen_autor) }}"
-                                                alt="{{ $destacada->autor ?? 'Autor' }}"
-                                                class="w-full h-64 md:h-full object-cover" />
-                                        </div>
-                                    @endif
+
                                 </a>
                             </div>
                         </section>
                         <div>
                             <img src="{{ asset('storage/cafe.png') }}" alt="Anuncio Mediano"
-                                class="w-full rounded border shadow" />
+                                class="w-full rounded border shadow  md:block hidden" />
+                            <img src="{{ asset('storage/publicidad_movil_1.png') }}" alt="Anuncio Mediano"
+                                class="w-full rounded border shadow  block md:hidden" />
                         </div>
                         {{-- RESTO (tarjetas más pequeñas) --}}
                         @if ($resto->isNotEmpty())
