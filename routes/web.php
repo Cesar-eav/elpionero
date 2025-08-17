@@ -8,6 +8,8 @@ use App\Http\Controllers\ContactoController;
 use App\Http\Controllers\NewsletterController;
 use App\Http\Controllers\InicioController;
 use App\Http\Controllers\ColumnistaController;
+use App\Http\Controllers\NoticiaController;
+
 
 
 
@@ -23,10 +25,9 @@ Route::get('/nosotros', function () {
     return view('nosotros');
 });
 
-Route::get('/noticias', function () {
+Route::get('/noticias',[NoticiaController::class, 'noticiasIndex'])->name('noticias.index');
     
-    return view('noticias');
-});
+
 Route::post('/newsletter', [NewsletterController::class, 'subscribe'])->name('newsletter.subscribe');
 
 
@@ -60,9 +61,9 @@ Route::middleware('auth')->group(function () {
     Route::resource('articulos', ArticuloController::class);
     Route::resource('revistas', RevistaController::class);
     Route::resource('columnistas', ColumnistaController::class);        
+    Route::resource('admin/noticias', NoticiaController::class);
 
-    //Route::get('/admin/', [NewsletterController::class, 'index'])->name('admin.index');
-    
+
 });
 
 require __DIR__.'/auth.php';
