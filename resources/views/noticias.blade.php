@@ -161,8 +161,8 @@
                                                 <h4 class="text-lg font-bold text-black mb-1 line-clamp-2">
                                                     {{ $n->titulo }}
                                                 </h4>
-                                                <p class="text-sm text-gray-700 line-clamp-3">
-                                                    {{ Str::limit($n->resumen ?: strip_tags($n->cuerpo), 140) }}
+                                                <p class="text-sm text-gray-700 text-justify mt-2 flex-1">
+                                                    {{ $n->cuerpo}}
                                                 </p>
                                             </div>
                                         </div>
