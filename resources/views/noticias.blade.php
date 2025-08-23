@@ -104,11 +104,11 @@
                         @endphp
 
                         {{-- Destacada --}}
-                        <section class="mt-4">
-                            <a href="{{ route('noticias.show', $destacada) }}"
+                        {{-- <section class="mt-4">
+                            <div 
                                class="block border rounded-lg overflow-hidden bg-white shadow hover:shadow-lg transition-shadow">
                                 <div class="flex flex-col md:flex-row">
-                                    {{-- Imagen --}}
+                       
                                     <div class="w-full md:w-1/3 bg-gray-100">
                                         @if($destacada->imagen)
                                             <img src="{{ asset('storage/' . $destacada->imagen) }}"
@@ -120,7 +120,7 @@
                                             </div>
                                         @endif
                                     </div>
-                                    {{-- Texto --}}
+                   
                                     <div class="w-full md:w-2/3 p-5">
                                         <div class="text-sm text-gray-600 mb-2">
                                             {{ $destacada->fecha_publicacion?->format('d/m/Y') ?? '' }}
@@ -135,16 +135,16 @@
                                         @endif
                                     </div>
                                 </div>
-                            </a>
-                        </section>
+                            </div>
+                        </section> --}}
 
                         {{-- Resto en grilla --}}
                         @if($resto->count())
-                            <section class="grid grid-cols-4 sm:grid-cols-4 gap-6 mt-6">
+                            <section class="grid grid-cols-1 sm:grid-cols-3 gap-6 mt-6">
                                 @foreach ($resto as $n)
                                     <article class="flex flex-col border rounded-lg overflow-hidden bg-white shadow hover:shadow-lg transition-shadow">
-                                        <a href="{{ route('noticias.show', $n) }}" class="flex flex-col h-full">
-                                            @if($n->imagen)
+                                        <div class="flex flex-col h-full">
+                                            {{-- @if($n->imagen)
                                                 <img src="{{ asset('storage/' .$n->imagen) }}"
                                                      alt="Imagen de {{ $n->titulo }}"
                                                      class="w-full h-44 object-cover">
@@ -152,7 +152,7 @@
                                                 <div class="w-full h-30 bg-gradient-to-br from-gray-200 to-gray-300 flex items-center justify-center">
                                                     <span class="text-gray-500 text-xs">Sin imagen</span>
                                                 </div>
-                                            @endif
+                                            @endif --}}
 
                                             <div class="p-4 flex-1 flex flex-col">
                                                 <div class="text-xs text-gray-500 mb-1">
@@ -165,7 +165,7 @@
                                                     {{ Str::limit($n->resumen ?: strip_tags($n->cuerpo), 140) }}
                                                 </p>
                                             </div>
-                                        </a>
+                                        </div>
                                     </article>
                                 @endforeach
                             </section>
