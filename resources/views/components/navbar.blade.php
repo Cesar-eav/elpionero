@@ -16,7 +16,7 @@
         <a href="{{ url('nosotros') }}" class="hover:text-white transition-colors">Nosotros</a>
         {{-- <a href="#" class="hover:text-white transition-colors">Rincón Wanderino</a>
         <a href="#" class="hover:text-white transition-colors">Editoriales</a> --}}
-        <a href="{{ route('contacto.formulario') }}" class="hover:text-white transition-colors">Contáctanos</a>
+        {{-- <a href="{{ route('contacto.formulario') }}" class="hover:text-white transition-colors">Contáctanos</a> --}}
     </nav>
 
     <!-- Botón hamburguesa (solo en móvil) -->
@@ -43,9 +43,9 @@
         <a href="{{ url('columnas') }}" class="hover:text-white transition-colors">Columnas</a>
         <a href="{{ url('noticias') }}" class="hover:text-white transition-colors">Noticias</a>
         <a href="{{ url('nosotros') }}" class="hover:text-white transition-colors">Nosotros</a>
-        <a href="#" class="hover:text-white transition-colors">Rincón Wanderino</a>
+        {{-- <a href="#" class="hover:text-white transition-colors">Rincón Wanderino</a> --}}
         <a href="#" class="hover:text-white transition-colors">Editoriales</a>
-        <a href="{{ route('contacto.formulario') }}" class="hover:text-white transition-colors">Contáctanos</a>
+        {{-- <a href="{{ route('contacto.formulario') }}" class="hover:text-white transition-colors">Contáctanos</a> --}}
 
     </div>
 </div>
