@@ -252,7 +252,7 @@
                         <!-- Revista de Mayo -->
                         <div class="flex flex-col items-center text-center">
                             <p class="text-[#eba81d] font-semibold mb-2 font-mono">Mayo</p>
-                            <a href="https://drive.google.com/file/d/1b304pV29d66y29Ib36fhY589WE-2fIJn/view?usp=sharing"
+                            <a href="{{ asset('storage/Ediciones/EPDV_MAYO_2025.pdf') }}"
                                 target="_blank">
                                 <img src="/storage/Portada_ED1.jpg" alt="Revista Mayo"
                                     class="w-24 h-auto rounded shadow-md filter grayscale hover:grayscale-0 hover:scale-105 transition duration-300">
@@ -261,7 +261,7 @@
                         <!-- Revista de Junio -->
                         <div class="flex flex-col items-center text-center">
                             <p class="text-[#eba81d] font-semibold mb-2 font-mono">Junio</p>
-                            <a href="https://drive.google.com/file/d/1qTuBM4XDMgUnSHh9mKFtj4OeNmjvQ2pd/view?usp=sharing"
+                            <a href="{{ asset('storage/Ediciones/EPDV_JUNIO_2025.pdf') }}"
                                 target="_blank">
                                 <img src="/storage/Portada_ED2.jpeg" alt="Revista Junio"
                                     class="w-24 h-auto rounded shadow-md filter grayscale hover:grayscale-0 hover:scale-105 transition duration-300">
@@ -270,9 +270,19 @@
                         <!-- Revista de Julio -->
                         <div class="flex flex-col items-center text-center">
                             <p class="text-[#eba81d] font-semibold mb-2 font-mono">Julio</p>
-                            <a href="https://drive.google.com/file/d/1Dj_RuAkSLy-0vzvLMseaw1ggPaakpEQY/view?usp=sharing"
+                            <a href="{{ asset('storage/Ediciones/EPDV_JULIO_2025.pdf') }}"
                                 target="_blank">
                                 <img src="/storage/Portada_ED3.jpeg" alt="Revista Julio"
+                                    class="w-24 h-auto rounded shadow-md filter grayscale hover:grayscale-0 hover:scale-105 transition duration-300">
+                            </a>
+                        </div>
+
+                        <!-- Revista de Julio -->
+                        <div class="flex flex-col items-center text-center">
+                            <p class="text-[#eba81d] font-semibold mb-2 font-mono">Septiembre</p>
+                            <a href="{{ asset('storage/Ediciones/EPDV_SEPTIEMBRE_2025.pdf') }}"
+                                target="_blank">
+                                <img src="/storage/Portada_ED5.jpeg" alt="Revista Julio"
                                     class="w-24 h-auto rounded shadow-md filter grayscale hover:grayscale-0 hover:scale-105 transition duration-300">
                             </a>
                         </div>
