@@ -103,41 +103,6 @@
                             $resto = $noticias;
                         @endphp
 
-                        {{-- Destacada --}}
-                        {{-- <section class="mt-4">
-                            <div 
-                               class="block border rounded-lg overflow-hidden bg-white shadow hover:shadow-lg transition-shadow">
-                                <div class="flex flex-col md:flex-row">
-                       
-                                    <div class="w-full md:w-1/3 bg-gray-100">
-                                        @if($destacada->imagen)
-                                            <img src="{{ asset('storage/' . $destacada->imagen) }}"
-                                                 alt="Imagen de {{ $destacada->titulo }}"
-                                                 class="w-full h-56 md:h-full object-cover">
-                                        @else
-                                            <div class="w-full h-56 md:h-full bg-gradient-to-br from-gray-200 to-gray-300 flex items-center justify-center">
-                                                <span class="text-gray-500 text-sm">Sin imagen</span>
-                                            </div>
-                                        @endif
-                                    </div>
-                   
-                                    <div class="w-full md:w-2/3 p-5">
-                                        <div class="text-sm text-gray-600 mb-2">
-                                            {{ $destacada->fecha_publicacion?->format('d/m/Y') ?? '' }}
-                                        </div>
-                                        <h3 class="text-2xl md:text-3xl font-bold text-black leading-snug mb-2">
-                                            {{ $destacada->titulo }}
-                                        </h3>
-                                        @if($destacada->resumen)
-                                            <p class="text-gray-700">{{ Str::limit($destacada->resumen, 220) }}</p>
-                                        @else
-                                            <p class="text-gray-700">{{ Str::limit(strip_tags($destacada->cuerpo), 220) }}</p>
-                                        @endif
-                                    </div>
-                                </div>
-                            </div>
-                        </section> --}}
-
                         {{-- Resto en grilla --}}
                         @if($resto->count())
                             <section class="grid grid-cols-1 sm:grid-cols-3 gap-6 mt-6">

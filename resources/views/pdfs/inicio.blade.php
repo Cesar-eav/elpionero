@@ -96,38 +96,56 @@
                 <aside
                     class="w-full md:w-2/6 hidden md:block space-y-6 bg-gray-50 border border-gray-300 rounded-lg p-4 shadow-sm">
                     <div>
-                        <h2 class="text-xl font-semibold text-gray-800 border-b pb-2">Noticias</h2>
-                        <div class="mt-4 border-gray-300 border p-2">
-                            <h4 class="text-md font-bold text-gray-700">Parque Barón</h4>
-                            <p class="text-sm text-gray-700">
-                                Aún no hay modelo de gestión para el funcionamiento de la Bodega Simón Bolivar.
-                            </p>
+                 <!-- MAIN: Noticias dinámicas -->
+                <main class="md:col-span-2 w-full">
+                    <h2 class="text-xl font-semibold text-gray-800 border-b pb-2">Últimas noticias</h2>
+
+                {{$noticias }}
+
+                    @if ($noticias->count())
+                        {{-- Opcional: destacar la primera noticia --}}
+                        @php
+                            $destacada = $noticias->first();
+                            $resto = $noticias;
+                        @endphp
+
+                        {{-- Resto en grilla --}}
+                        @if($resto->count())
+                            <section class="grid grid-cols-1 sm:grid-cols-1 gap-6 mt-6">
+                                @foreach ($resto as $n)
+                                    <article class="flex flex-col border rounded-lg overflow-hidden bg-white shadow hover:shadow-lg transition-shadow">
+                                        <div class="flex flex-col h-full">
+                                            <div class="p-4 flex-1 flex flex-col">
+                                                <div class="text-xs text-gray-500 mb-1">
+                                                    {{ $n->fecha_publicacion?->format('d/m/Y') ?? '' }}
+                                                </div>
+                                                <h4 class="text-lg font-bold text-black mb-1 line-clamp-2">
+                                                    {{ $n->titulo }}
+                                                </h4>
+                                                <p class="text-sm text-gray-700 text-justify mt-2 flex-1">
+                                                    {{ $n->cuerpo}}
+                                                </p>
+                                            </div>
+                                        </div>
+                                    </article>
+                                @endforeach
+                            </section>
+                        @endif
+
+                        <div class="mt-6">
+                            {{ $noticias->links() }}
                         </div>
-                        <div class="mt-4 border-gray-300 border p-2">
-                            <h4 class="text-md font-bold text-gray-700">Proponen ciclovía en Av. España</h4>
-                            <a href="https://www.pucv.cl/pucv/investigadores-proponen" target="_blank">
-                                <p class="text-sm text-gray-700">Académicos de la PUCV elaboran propuesta para mejorar
-                                    la movilidad entre Viña del Mar
-                                    y Valparaíso.
-                                </p>
-                            </a>
-                        </div>
+                    @else
+                        <p class="mt-4 text-gray-600">No hay noticias publicadas aún.</p>
+                    @endif
+                </main>
+
 
                         <div class="mt-2">
                             <a href="https://www.instagram.com/manos_.alarte/" target="_blank">
                                 <img src="{{ asset('storage/manosalarte.jpeg') }}" alt="Anuncio Mediano"
                                     class="w-full rounded border shadow" /></a>
                         </div>
-
-                        <div class="mt-4 border-gray-300 border p-2">
-                            <h4 class="text-md font-bold text-gray-700">Dos buenas noticias para Valparaíso</h4>
-                            <a href="https://www.pucv.cl/pucv/investigadores-proponen" target="_blank">
-                                <p class="text-sm text-gray-700">Pronto se inagurará <a href="https://www.instagram.com/destinovalpo/" target="_blank" class="font-bold">Destino Valparaíso</a>, un proyecto
-                                    que albergará el Museo del Inmigrante. Admeás,  <a href="https://www.instagram.com/bancoestado/reel/DNTO6l1x1_s/" target="_blank" class="font-bold">Banco Estado</a>  ha remodelado el edificio patrimonial de calle Prat, al cual se podrá acceder mediante un ascensor desde el Paseo Yugoslavo.
-                                </p>
-                            </a>
-                        </div>
-
                 </aside>
 
                 <!-- Contenido principal -->
@@ -296,15 +314,9 @@
                 </div>
             </footer>
 
-
-
-
-
             <!-- Pie de página -->
             <footer class="text-center text-sm text-gray-600 mt-10 pt-4 border-t border-gray-300">
-
             </footer>
-
 
             <div class="fixed bottom-2 right-2 text-xs text-gray-400">1</div>
         </div>
