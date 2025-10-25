@@ -42,7 +42,7 @@
         <div class="bg-gray-100 w-full">
             <div class="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-6">
                 <!-- ASIDE -->
-                <aside class="md:col-span-1 w-full space-y-6 bg-gray-50 border border-gray-300 rounded-lg p-4 shadow-sm">
+                <aside class="hidden md:block md:col-span-1 w-full space-y-6 bg-gray-50 border border-gray-300 rounded-lg p-4 shadow-sm">
                     <div>
                         <h2 class="text-xl font-semibold text-gray-800 border-b pb-2">Noticias</h2>
 
@@ -92,7 +92,7 @@
 
                 <!-- MAIN: Noticias dinámicas -->
                 <main class="md:col-span-2 w-full">
-                    <h2 class="text-xl font-semibold text-gray-800 border-b pb-2">Últimas noticias</h2>
+                    <h2 class="mt-5 md:mt-0 text-xl font-semibold text-gray-800 border-b pb-2">Últimas noticias</h2>
 
                 {{$noticias }}
 
