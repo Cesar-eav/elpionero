@@ -304,6 +304,15 @@
                                     class="w-24 h-auto rounded shadow-md filter grayscale hover:grayscale-0 hover:scale-105 transition duration-300">
                             </a>
                         </div>
+
+                        <div class="flex flex-col items-center text-center">
+                            <p class="text-[#eba81d] font-semibold mb-2 font-mono">Octubre</p>
+                            <a href="{{ asset('storage/Ediciones/EPDV_OCTUBRE_2025.pdf') }}"
+                                target="_blank">
+                                <img src="/storage/Portada_ED5.jpeg" alt="Revista Julio"
+                                    class="w-24 h-auto rounded shadow-md filter grayscale hover:grayscale-0 hover:scale-105 transition duration-300">
+                            </a>
+                        </div>
                     </div>
 
                     <!-- Información adicional -->
