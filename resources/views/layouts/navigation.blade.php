@@ -33,6 +33,11 @@
                         {{ __('Noticias') }}
                     </x-nav-link>
                 </div>
+                <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
+                    <x-nav-link :href="route('newsletter.index')" :active="request()->routeIs('noticias.index')">
+                        {{ __('Suscriptores') }}
+                    </x-nav-link>
+                </div>
             </div>
 
             <!-- Settings Dropdown -->
