@@ -48,7 +48,7 @@
     id="ultimo-numero"
     x-data="{ visible: false }" 
     x-init="setTimeout(() => visible = true, 100)" 
-    x-show="visible" 
+    x-show="visible" -
     x-transition
     class="relative overflow-hidden rounded-2xl my-8 max-w-7xl mx-auto border border-gray-200 shadow-lg"
 >
@@ -226,7 +226,7 @@
                     @if ($columnas->isNotEmpty())
                         @php
                             $destacada = $columnas->last();
-                            $resto = $columnas->take(4);
+                            $resto = $columnas->take(6);
                         @endphp
                         <div>
          
@@ -285,7 +285,8 @@
                                                 <div class="text-xs md:text-sm text-gray-700 mb-1">
                                                     {{ $articulo->revista->titulo ?? '' }}
                                                 </div>
-                                                <h4 class="text-lg font-bold text-black mb-1 line-clamp-2">
+                                                 {{-- line-clamp-4 --}}
+                                                <h4 class="text-lg font-bold text-black mb-1">
                                                     {{ $articulo->titulo }}
                                                 </h4>
                                                 @if ($articulo->autor)
