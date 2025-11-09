@@ -18,10 +18,10 @@ class ArticuloController extends Controller
         return view('articulos.index', compact('articulos'));
     }
 
-    public function showArticulo($id)
+    public function showArticulo($slug)
     {
         
-        $articulo = Articulo::where('id', $id)->first();
+        $articulo = Articulo::where('slug', $slug)->first();
         $articulos = Articulo::inRandomOrder()->limit(8)->get();
 
 

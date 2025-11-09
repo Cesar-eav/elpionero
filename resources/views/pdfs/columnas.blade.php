@@ -96,7 +96,7 @@
                                 @foreach ($columnas as $articulo)
                                     <div
                                         class="flex flex-col border rounded-lg overflow-hidden bg-white shadow hover:shadow-lg transition-shadow">
-                                        <a href="{{ url('articulo/' . $articulo->id) }}" class="flex flex-row h-full">
+                                        <a href="{{ url('articulo/' . $articulo->slug) }}" class="flex flex-row h-full">
 
                                             <!-- Texto -->
                                             <div class="flex flex-col justify-center p-4 w-2/3">

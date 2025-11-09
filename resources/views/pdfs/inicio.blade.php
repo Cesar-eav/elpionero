@@ -237,7 +237,7 @@
                         <section class="mt-4">
                             <div
                                 class="border rounded-lg overflow-hidden bg-white shadow hover:shadow-lg transition-shadow">
-                                <a href="{{ url('articulo/' . $destacada->id) }}" class="flex flex-col md:flex-row">
+                                <a href="{{ url('articulo/' . $destacada->slug) }}" class="flex flex-col md:flex-row">
 
                                                                         {{-- Imagen a la derecha, grande --}}
                                     @if ($destacada->imagen_autor)
@@ -279,7 +279,7 @@
                                 @foreach ($resto as $articulo)
                                     <div
                                         class="flex border rounded-lg overflow-hidden bg-white shadow hover:shadow-lg transition-shadow">
-                                        <a href="{{ url('articulo/' . $articulo->id) }}" class="flex w-full">
+                                        <a href="{{ url('articulo/' . $articulo->slug) }}" class="flex w-full">
                                             {{-- Texto --}}
                                             <div class="w-2/3 p-4 flex flex-col justify-center">
                                                 <div class="text-xs md:text-sm text-gray-700 mb-1">
