@@ -92,7 +92,7 @@
                         <h2 class="text-xl font-semibold text-gray-800 border-b pb-2">Columnas de Opinión</h2>
 
                         @if ($columnas->isNotEmpty())
-                            <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mt-4">
+                            <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mt-4">
                                 @foreach ($columnas as $articulo)
                                     <div
                                         class="flex flex-col border rounded-lg overflow-hidden bg-white shadow hover:shadow-lg transition-shadow">
