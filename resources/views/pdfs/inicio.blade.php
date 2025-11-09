@@ -171,7 +171,7 @@
                 <main class="md:col-span-2 w-full">
                     <h2 class="text-xl font-semibold text-gray-800 border-b pb-2">Últimas noticias</h2>
 
-                {{$noticias }}
+                {{-- {{$noticias }} --}}
 
                     @if ($noticias->count())
                         {{-- Opcional: destacar la primera noticia --}}
@@ -202,10 +202,10 @@
                                 @endforeach
                             </section>
                         @endif
-
+{{-- 
                         <div class="mt-6">
                             {{ $noticias->links() }}
-                        </div>
+                        </div> --}}
                     @else
                         <p class="mt-4 text-gray-600">No hay noticias publicadas aún.</p>
                     @endif
