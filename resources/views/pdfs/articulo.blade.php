@@ -105,7 +105,7 @@
                                 <div class="space-y-4 mt-4">
                                     @foreach ($columnArticulos as $articulo)
                                         <div>
-                                            <a href="{{ url('articulo') . '/' . $articulo->id }}">
+                                            <a href="{{ url('articulo') . '/' . $articulo->slug }}">
                                                 <h4 class="text-base font-bold text-black mb-1">{{ $articulo->titulo }}
                                                 </h4>
                                             </a>
