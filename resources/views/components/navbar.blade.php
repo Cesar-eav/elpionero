@@ -5,7 +5,7 @@
 
     <!-- Logo o título -->
     <a href="{{ url('/') }}" class="hover:text-white transition-colors flex items-center gap-1">
-        El Pionero
+        Inicio
     </a>
 
     <!-- Navegación escritorio -->

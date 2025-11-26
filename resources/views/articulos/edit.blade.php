@@ -15,34 +15,34 @@
 
                         <div>
                             <x-input-label for="revista_id" :value="__('Revista')" />
-                            <x-select-input id="revista_id" class="block mt-1 w-full" name="revista_id" required>
+                            <select id="revista_id" class="block mt-1 w-full text-black" name="revista_id" required>
                                 <option value="">{{ __('Seleccionar Revista') }}</option>
                                 @foreach ($revistas as $revista)
                                     <option value="{{ $revista->id }}" {{ old('revista_id', $articulo->revista_id) == $revista->id ? 'selected' : '' }}>
                                         {{ $revista->titulo }}
                                     </option>
                                 @endforeach
-                            </x-select-input>
+                            </select>
                             <x-input-error :messages="$errors->get('revista_id')" class="mt-2" />
                         </div>
 
                         <div class="mt-4">
                             <x-input-label for="titulo" :value="__('Título')" />
-                            <x-text-input id="titulo" class="block mt-1 w-full" type="text" name="titulo" :value="old('titulo', $articulo->titulo)" required autofocus />
+                            <x-text-input id="titulo" class="block mt-1 w-full  text-black" type="text" name="titulo" :value="old('titulo', $articulo->titulo)" required autofocus />
                             <x-input-error :messages="$errors->get('titulo')" class="mt-2" />
                         </div>
 
                         <div class="mt-4">
                             <x-input-label for="contenido" :value="__('Contenido')" />
-                            <x-forms.textarea id="descripcion" class="block mt-1 w-full" name="descripcion">
-                                {{ old('descripcion') }}
+                            <x-forms.textarea id="descripcion" class="block mt-1 w-full text-black" name="descripcion">
+                                {{ old('contenido', $articulo->contenido) }}
                             </x-forms.textarea>
                         <x-input-error :messages="$errors->get('contenido')" class="mt-2" />
                         </div>
 
                         <div class="mt-4">
                             <x-input-label for="autor" :value="__('Autor (Opcional)')" />
-                            <x-text-input id="autor" class="block mt-1 w-full" type="text" name="autor" :value="old('autor', $articulo->autor)" />
+                            <x-text-input id="autor" class="block mt-1 w-full text-black" type="text" name="autor" :value="old('autor', $articulo->autor)" />
                             <x-input-error :messages="$errors->get('autor')" class="mt-2" />
                         </div>
 
