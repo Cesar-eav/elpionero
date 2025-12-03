@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Articulo;
 use App\Models\Revista;
+use App\Models\Columnista;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 
@@ -42,7 +43,8 @@ class ArticuloController extends Controller
     public function create()
     {
         $revistas = Revista::all(); // Obtener todas las revistas para el formulario
-        return view('articulos.create', compact('revistas'));
+        $columnistas = Columnista::all();
+        return view('articulos.create', compact(['revistas', 'columnistas']));
     }
 
     /**
@@ -50,6 +52,8 @@ class ArticuloController extends Controller
      */
     public function store(Request $request)
     {
+        //return $request;
+
         // return $request;
         $request->validate([
             'revista_id' => 'required|exists:revistas,id',
@@ -58,8 +62,8 @@ class ArticuloController extends Controller
             'autor' => 'nullable|string|max:255',
             'imagen_autor' => 'nullable|image|max:2048', // Validación para la imagen (opcional, debe ser una imagen, máximo 2MB)
             'seccion' => 'nullable|string|max:255',
+            'columnista_id' => 'required|exists:columnistas,id',
         ]);
-
         $articulo = new Articulo($request->all());
         $articulo->slug = Str::slug($request->titulo);
 

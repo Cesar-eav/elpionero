@@ -8,7 +8,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 
-class NewsletterController extends Controller
+class ContactoController extends Controller
 {
     public function subscribe(Request $request)
     {

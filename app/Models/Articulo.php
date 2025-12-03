@@ -18,7 +18,8 @@ class Articulo extends Model
         'contenido',
         'autor',
         'imagen_autor',
-        'seccion'
+        'seccion',
+        'columnista_id'
     ];
 
     /**

@@ -4,6 +4,7 @@
             {{ __('Crear Nuevo Artículo') }}
         </h2>
     </x-slot>
+    
 
     <div class="py-12">
         <div class="max-w-3xl mx-auto sm:px-6 lg:px-8">
@@ -25,6 +26,17 @@
                             <x-input-error :messages="$errors->get('revista_id')" class="mt-2" />
                         </div>
 
+                        <x-input-label for="columnista_id" :value="__('Columnista')" />
+                            <x-forms.select-input id="columnista_id" class="block mt-1 w-full" name="columnista_id" required>
+                                <option value="">{{ __('Seleccionar Columnista') }}</option>
+                                @foreach ($columnistas as $columnista)
+                                    <option value="{{ $columnista->id }}" {{ old('columnista_id') == $columnista->id ? 'selected' : '' }}>
+                                        {{ $columnista->nombre }}
+                                    </option>
+                                @endforeach
+                            </x-forms.select-input>
+                            <x-input-error :messages="$errors->get('columnista_id')" class="mt-2" />
+
                         <div class="mt-4">
                             <x-input-label for="titulo" :value="__('Título')" />
                             <x-text-input id="titulo" class="block mt-1 w-full" type="text" name="titulo" :value="old('titulo')" required autofocus />
@@ -37,12 +49,6 @@
                                 {{ old('descripcion') }}
                             </x-forms.textarea>                            
                             <x-input-error :messages="$errors->get('contenido')" class="mt-2" />
-                        </div>
-
-                        <div class="mt-4">
-                            <x-input-label for="autor" :value="__('Autor (Opcional)')" />
-                            <x-text-input id="autor" class="block mt-1 w-full" type="text" name="autor" :value="old('autor')" />
-                            <x-input-error :messages="$errors->get('autor')" class="mt-2" />
                         </div>
 
                          <div class="mt-4">
