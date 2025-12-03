@@ -14,7 +14,7 @@ class InicioController extends Controller
         $columnas = Articulo::inRandomOrder()->with('revista')->get();
         $noticias = Noticia::latest()->paginate(5);
 
-        return view('pdfs.inicio', compact([
+        return view('inicio.inicio', compact([
             'columnas', 'noticias'
         ]));
     }
@@ -23,6 +23,11 @@ class InicioController extends Controller
     {
         $columnas = Articulo::inRandomOrder()->with('revista')->get();
         return view('inicio.proxnumero', compact('columnas'));
+    }
+
+    public function nosotros()
+    {
+        return view('inicio.nosotros');
     }
 
 }

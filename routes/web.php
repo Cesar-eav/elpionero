@@ -20,10 +20,7 @@ Route::get('/proximos-numeros',[InicioController::class, 'proximosNumeros'])->na
 
 
 
-Route::get('/nosotros', function () {
-    
-    return view('nosotros');
-});
+Route::get('/nosotros', [InicioController::class, 'nosotros'])->name('nosotros');
 
 Route::get('/noticias',[NoticiaController::class, 'noticiasIndex'])->name('noticias.index');
     
