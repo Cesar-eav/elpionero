@@ -36,9 +36,10 @@
     </button>
 
     <!-- Menú móvil -->
-    <div 
+    <div
         x-show="open"
         x-transition
+        x-cloak
         class="absolute top-full left-0 w-full bg-black text-[#fc5648] border-t border-gray-300 md:hidden flex flex-col p-4 space-y-2">
         <a href="{{ url('columnas') }}" class="hover:text-white transition-colors">Columnas</a>
         <a href="{{ url('noticias') }}" class="hover:text-white transition-colors">Noticias</a>

@@ -9,6 +9,33 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>El Pionero de Valparaíso</title>
+
+    <script>
+        // Forzar redirección si estamos en www
+        if (window.location.hostname.startsWith('www.')) {
+            window.location.replace(window.location.href.replace('://www.', '://'));
+        }
+    </script>
+        
+    <!-- SEO Meta Tags -->
+    <meta name="description" content="El Pionero de Valparaíso - Revista digital con columnas y miradas diversas sobre la ciudad puerto" />
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="{{ config('app.url') }}" />
+    <meta property="og:title" content="El Pionero de Valparaíso" />
+    <meta property="og:description" content="Revista digital con columnas y miradas diversas sobre la ciudad puerto" />
+    <meta property="og:image" content="{{ asset('storage/Portada_Octubre.jpg') }}" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image" />
+    <meta property="twitter:url" content="{{ config('app.url') }}" />
+    <meta property="twitter:title" content="El Pionero de Valparaíso" />
+    <meta property="twitter:description" content="Revista digital con columnas y miradas diversas sobre la ciudad puerto" />
+    <meta property="twitter:image" content="{{ asset('storage/Portada_Octubre.jpg') }}" />
+
     @vite(['resources/css/app.css', 'resources/js/app.js'])
     @if (app()->environment('production'))
         <script type="text/javascript">
@@ -61,14 +88,14 @@
       <div class="relative w-full max-w-sm">
         <!-- Cinta "Nuevo" -->
         <span class="absolute -left-2 -top-2 z-10 bg-[#fc5648] text-white text-xs font-bold uppercase tracking-wide px-2 py-1 rounded">
-          Nuevo: Octubre 2025
+          Nuevo: Noviembre 2025
         </span>
 
         <!-- Portada -->
-        <a href="{{ asset('storage/Ediciones/EPDV_OCTUBRE_2025.pdf') }}" target="_blank" rel="noopener" class="block">
-          <img 
-            src="/storage/Portada_Octubre.jpeg" 
-            alt="Portada El Pionero - Octubre 2025" 
+        <a href="{{ asset('storage/Ediciones/EPDV_NOVIEMBRE_2025.pdf') }}" target="_blank" rel="noopener" class="block">
+          <img
+            src="{{ asset('storage/Portada_Octubre.jpg') }}"
+            alt="Portada El Pionero - Octubre 2025"
             class="w-full h-auto rounded-lg shadow-lg ring-1 ring-black/5 hover:scale-[1.02] transition-transform"
             loading="lazy"
           />
@@ -95,14 +122,14 @@
       </h2>
 
       <p class="mt-3 text-gray-700">
-        “¿Cómo recuperar los espacios públicos porteños?” — Columnas y miradas diversas sobre una pregunta urgente para la ciudad. 
+        “Propuestas para una reactivación económica en serio” — Columnas y miradas diversas sobre una pregunta urgente para la ciudad. 
         Llévatelo en PDF o léelo en línea.
       </p>
 
       <!-- Botones CTA -->
       <div class="mt-5 flex flex-col sm:flex-row gap-3">
         <a 
-          href="{{ asset('storage/Ediciones/EPDV_OCTUBRE_2025.pdf') }}" 
+          href="{{ asset('storage/Ediciones/EPDV_NOVIEMBRE_2025.pdf') }}" 
           target="_blank" 
           rel="noopener" 
           download 
@@ -113,7 +140,7 @@
         </a>
 
         <a 
-          href="{{ asset('storage/Ediciones/EPDV_OCTUBRE_2025.pdf') }}" 
+          href="{{ asset('storage/Ediciones/EPDV_NOVIEMBRE_2025.pdf') }}" 
           target="_blank" 
           rel="noopener" 
           class="inline-flex items-center justify-center gap-2 px-5 py-3 rounded-lg bg-white text-gray-900 border border-gray-300 font-semibold hover:bg-gray-50 shadow-sm transition"
@@ -380,6 +407,15 @@
                         <div class="flex flex-col items-center text-center">
                             <p class="text-[#eba81d] font-semibold mb-2 font-mono">Octubre</p>
                             <a href="{{ asset('storage/Ediciones/EPDV_OCTUBRE_2025.pdf') }}"
+                                target="_blank">
+                                <img src="/storage/Portada_ED5.jpeg" alt="Revista Julio"
+                                    class="w-24 h-auto rounded shadow-md filter grayscale hover:grayscale-0 hover:scale-105 transition duration-300">
+                            </a>
+                        </div>
+
+                        <div class="flex flex-col items-center text-center">
+                            <p class="text-[#eba81d] font-semibold mb-2 font-mono">Noviembre</p>
+                            <a href="{{ asset('storage/Ediciones/EPDV_NOVIEMBRE_2025.pdf') }}"
                                 target="_blank">
                                 <img src="/storage/Portada_ED5.jpeg" alt="Revista Julio"
                                     class="w-24 h-auto rounded shadow-md filter grayscale hover:grayscale-0 hover:scale-105 transition duration-300">
