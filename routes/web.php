@@ -45,18 +45,19 @@ Route::get('/dashboard', function () {
     return view('dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
 
+
+
+
+
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
     Route::get('/admin/suscriptores', [NewsletterController::class, 'index'])->name('newsletter.index');
-
     Route::resource('articulos', ArticuloController::class);
     Route::resource('revistas', RevistaController::class);
     Route::resource('columnistas', ColumnistaController::class);        
     Route::resource('admin/noticias', NoticiaController::class);
-
-
 });
 
 require __DIR__.'/auth.php';

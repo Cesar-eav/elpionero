@@ -31,4 +31,9 @@ class Articulo extends Model
     {
         return $this->belongsTo(Revista::class);
     }
+
+    public function columnista()
+    {
+        return $this->belongsTo(Columnista::class);
+    }
 }

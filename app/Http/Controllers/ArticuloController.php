@@ -7,6 +7,7 @@ use App\Models\Revista;
 use App\Models\Columnista;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
+use Illuminate\Support\Facades\Log;
 
 class ArticuloController extends Controller
 {
@@ -15,7 +16,12 @@ class ArticuloController extends Controller
      */
     public function index()
     {
-        $articulos = Articulo::latest()->paginate(15);
+        $articulos = Articulo::latest()
+        ->with('columnista')
+        ->paginate(15);
+
+        log::info(json_encode($articulos, JSON_PRETTY_PRINT));
+
         return view('articulos.index', compact('articulos'));
     }
 
@@ -91,7 +97,9 @@ class ArticuloController extends Controller
     public function edit(Articulo $articulo)
     {
         $revistas = Revista::all();
-        return view('articulos.edit', compact('articulo', 'revistas'));
+        $columnistas = Columnista::all();
+
+        return view('articulos.edit', compact('articulo', 'revistas','columnistas'));
     }
 
     /**
@@ -106,6 +114,7 @@ class ArticuloController extends Controller
             'autor' => 'nullable|string|max:255',
             'imagen_autor' => 'nullable|image|max:2048',
             'seccion' => 'nullable|string|max:255',
+            'columnista_id' => 'required|exists:columnistas,id'
         ]);
 
         $articulo->fill($request->all());

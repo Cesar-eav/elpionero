@@ -29,7 +29,7 @@
                                     <a href="{{ route('articulos.show', $articulo) }}" class="hover:underline">
                                         {{ $articulo->titulo }}
                                     </a>
-                                    <p class="text-sm text-gray-500">{{ __('Autor') }}: {{ $articulo->autor ?? 'Anónimo' }}</p>
+                                    <p class="text-sm text-gray-500">{{ __('Autor') }}: {{ $articulo->columnista->nombre ?? 'Anónimo' }}</p>
                                 </div>
                                 <div>
                                     <a href="{{ route('articulos.edit', $articulo) }}" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-1 px-2 rounded text-sm">{{ __('Editar') }}</a>

@@ -26,6 +26,19 @@
                             <x-input-error :messages="$errors->get('revista_id')" class="mt-2" />
                         </div>
 
+                                                <div>
+                            <x-input-label for="columnista_id" :value="__('Columnista')" />
+                            <select id="columnista_id" class="block mt-1 w-full text-black" name="columnista_id" required>
+                                <option value="">{{ __('Seleccionar columnista') }}</option>
+                                @foreach ($columnistas as $columnista)
+                                    <option value="{{ $columnista->id }}" {{ old('columnista_id', $articulo->columnista_id) == $columnista->id ? 'selected' : '' }}>
+                                        {{ $columnista->nombre }}
+                                    </option>
+                                @endforeach
+                            </select>
+                            <x-input-error :messages="$errors->get('revista_id')" class="mt-2" />
+                        </div>
+        
                         <div class="mt-4">
                             <x-input-label for="titulo" :value="__('Título')" />
                             <x-text-input id="titulo" class="block mt-1 w-full  text-black" type="text" name="titulo" :value="old('titulo', $articulo->titulo)" required autofocus />
