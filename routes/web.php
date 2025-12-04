@@ -56,8 +56,13 @@ Route::middleware('auth')->group(function () {
     Route::get('/admin/suscriptores', [NewsletterController::class, 'index'])->name('newsletter.index');
     Route::resource('articulos', ArticuloController::class);
     Route::resource('revistas', RevistaController::class);
-    Route::resource('columnistas', ColumnistaController::class);        
+    Route::resource('columnistas', ColumnistaController::class);
     Route::resource('admin/noticias', NoticiaController::class);
+
+    // Ruta para la versión Vue de artículos
+    Route::get('/articulos-vue', function () {
+        return view('articulos.vue-index');
+    })->name('articulos.vue');
 });
 
 require __DIR__.'/auth.php';
