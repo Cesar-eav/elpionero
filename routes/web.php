@@ -59,10 +59,22 @@ Route::middleware('auth')->group(function () {
     Route::resource('columnistas', ColumnistaController::class);
     Route::resource('admin/noticias', NoticiaController::class);
 
-    // Ruta para la versión Vue de artículos
+    // Rutas para las versiones Vue
+    Route::get('/dashboard-vue', function () {
+        return view('dashboard-vue');
+    })->name('dashboard.vue');
+
     Route::get('/articulos-vue', function () {
         return view('articulos.vue-index');
     })->name('articulos.vue');
+
+    Route::get('/revistas-vue', function () {
+        return view('revistas.vue-index');
+    })->name('revistas.vue');
+
+    Route::get('/columnistas-vue', function () {
+        return view('columnistas.vue-index');
+    })->name('columnistas.vue');
 });
 
 require __DIR__.'/auth.php';

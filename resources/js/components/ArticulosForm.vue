@@ -199,8 +199,8 @@ export default {
         async loadSelects() {
             try {
                 const [revistasRes, columnistasRes] = await Promise.all([
-                    axios.get('/api/revistas'),
-                    axios.get('/api/columnistas')
+                    axios.get('/api/revistas-list'),
+                    axios.get('/api/columnistas-list')
                 ]);
                 this.revistas = revistasRes.data;
                 this.columnistas = columnistasRes.data;

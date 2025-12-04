@@ -3,6 +3,8 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\ArticuloApiController;
+use App\Http\Controllers\Api\RevistaApiController;
+use App\Http\Controllers\Api\ColumnistaApiController;
 
 /*
 |--------------------------------------------------------------------------
@@ -28,11 +30,55 @@ Route::prefix('articulos')->group(function () {
     Route::delete('/{articulo}', [ArticuloApiController::class, 'destroy']);
 });
 
-// Rutas adicionales para obtener datos relacionados
-Route::get('/revistas', function () {
-    return \App\Models\Revista::all();
+// Rutas API para Revistas
+Route::prefix('revistas')->group(function () {
+    Route::get('/', [RevistaApiController::class, 'index']);
+    Route::get('/{revista}', [RevistaApiController::class, 'show']);
+    Route::post('/', [RevistaApiController::class, 'store']);
+    Route::put('/{revista}', [RevistaApiController::class, 'update']);
+    Route::delete('/{revista}', [RevistaApiController::class, 'destroy']);
 });
 
-Route::get('/columnistas', function () {
-    return \App\Models\Columnista::all();
+// Rutas API para Columnistas
+Route::prefix('columnistas')->group(function () {
+    Route::get('/', [ColumnistaApiController::class, 'index']);
+    Route::get('/{columnista}', [ColumnistaApiController::class, 'show']);
+    Route::post('/', [ColumnistaApiController::class, 'store']);
+    Route::put('/{columnista}', [ColumnistaApiController::class, 'update']);
+    Route::delete('/{columnista}', [ColumnistaApiController::class, 'destroy']);
+});
+
+// Rutas para obtener listas simples (sin paginación)
+Route::get('/revistas-list', function () {
+    return \App\Models\Revista::orderBy('titulo')->get();
+});
+
+Route::get('/columnistas-list', function () {
+    return \App\Models\Columnista::orderBy('nombre')->get();
+});
+
+// Dashboard Stats
+Route::get('/dashboard/stats', function () {
+    return response()->json([
+        'articulos' => [
+            'total' => \App\Models\Articulo::count(),
+            'recientes' => \App\Models\Articulo::with(['columnista', 'revista'])
+                ->latest()
+                ->limit(5)
+                ->get()
+        ],
+        'revistas' => [
+            'total' => \App\Models\Revista::count(),
+            'recientes' => \App\Models\Revista::withCount('articulos')
+                ->latest()
+                ->limit(5)
+                ->get()
+        ],
+        'columnistas' => [
+            'total' => \App\Models\Columnista::count(),
+            'recientes' => \App\Models\Columnista::latest()
+                ->limit(5)
+                ->get()
+        ]
+    ]);
 });

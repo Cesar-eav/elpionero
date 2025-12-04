@@ -14,11 +14,5 @@ class Columnista extends Model
         'foto',
         'bio',
         'participa_proximo_numero',
-        'revista_id',
     ];
-
-    public function revista()
-    {
-        return $this->belongsTo(Revista::class);
-    }
 }
