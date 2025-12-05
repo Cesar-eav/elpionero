@@ -11,7 +11,7 @@ class InicioController extends Controller
 {
     public function inicio()
     {
-        $columnas = Articulo::inRandomOrder()->with('revista')->get();
+        $columnas = Articulo::with(['revista', 'columnista'])->inRandomOrder()->get();
         $noticias = Noticia::latest()->paginate(5);
 
         return view('inicio.inicio', compact([
@@ -21,7 +21,7 @@ class InicioController extends Controller
 
     public function proximosNumeros()
     {
-        $columnas = Articulo::inRandomOrder()->with('revista')->get();
+        $columnas = Articulo::with(['revista', 'columnista'])->inRandomOrder()->get();
         return view('inicio.proxnumero', compact('columnas'));
     }
 

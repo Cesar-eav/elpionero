@@ -42,6 +42,7 @@ Route::prefix('revistas')->group(function () {
 // Rutas API para Columnistas
 Route::prefix('columnistas')->group(function () {
     Route::get('/', [ColumnistaApiController::class, 'index']);
+    Route::get('/available-images', [ColumnistaApiController::class, 'getAvailableImages']);
     Route::get('/{columnista}', [ColumnistaApiController::class, 'show']);
     Route::post('/', [ColumnistaApiController::class, 'store']);
     Route::put('/{columnista}', [ColumnistaApiController::class, 'update']);

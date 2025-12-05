@@ -11,16 +11,13 @@
                 <div class="p-6 text-gray-900 dark:text-gray-100">
                     <h1 class="text-3xl font-bold mb-4">{{ $articulo->titulo }}</h1>
                     <p class="text-gray-600 dark:text-gray-400 mb-2">{{ __('Publicado en') }}: <a href="{{ route('revistas.show', $articulo->revista) }}" class="underline">{{ $articulo->revista->titulo }}</a></p>
-                    @if ($articulo->autor)
+                    @if ($articulo->columnista)
                         <div class="flex items-center mb-4">
-                            @if ($articulo->imagen_autor)
-                                <img src="{{ asset($articulo->imagen_autor) }}" alt="{{ $articulo->autor }}" class="rounded-full h-10 w-10 mr-2 object-cover">
+                            @if ($articulo->columnista->foto)
+                                <img src="{{ asset('storage/' . $articulo->columnista->foto) }}" alt="{{ $articulo->columnista->nombre }}" class="rounded-full h-10 w-10 mr-2 object-cover">
                             @endif
-                            <p class="text-lg font-semibold">{{ $articulo->autor }}</p>
+                            <p class="text-lg font-semibold">{{ $articulo->columnista->nombre }}</p>
                         </div>
-                    @endif
-                    @if ($articulo->seccion)
-                        <p class="text-gray-600 dark:text-gray-400 mb-4">{{ __('Sección') }}: {{ $articulo->seccion }}</p>
                     @endif
                     <div class="mb-6 prose dark:prose-invert max-w-none">
                         {!! $articulo->contenido !!} {{-- Renderizar HTML del editor --}}

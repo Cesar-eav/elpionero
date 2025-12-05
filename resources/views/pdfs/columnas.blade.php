@@ -107,18 +107,18 @@
                                                 <h4 class="text-lg font-bold text-black mb-2">
                                                     {{ $articulo->titulo }}
                                                 </h4>
-                                                @if ($articulo->autor)
+                                                @if ($articulo->columnista)
                                                     <div class="text-sm italic text-gray-600 flex items-center">
-                                                        {{ $articulo->autor }}
+                                                        {{ $articulo->columnista->nombre }}
                                                     </div>
                                                 @endif
                                             </div>
 
                                             <!-- Imagen a la derecha -->
-                                            @if ($articulo->imagen_autor)
+                                            @if ($articulo->columnista && $articulo->columnista->foto)
                                                 <div class="w-1/3 flex items-center justify-center bg-gray-100">
-                                                    <img src="{{ asset($articulo->imagen_autor) }}"
-                                                        alt="{{ $articulo->autor ?? 'Autor' }}"
+                                                    <img src="{{ asset('storage/' . $articulo->columnista->foto) }}"
+                                                        alt="{{ $articulo->columnista->nombre }}"
                                                         class="w-full h-full object-cover" />
                                                 </div>
                                             @endif

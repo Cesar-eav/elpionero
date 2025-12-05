@@ -41,15 +41,21 @@ class ColumnistaApiController extends Controller
             'nombre' => 'required|string|max:255',
             'email' => 'nullable|email|max:255',
             'foto' => 'nullable|image|max:2048',
+            'foto_existente' => 'nullable|string',
             'bio' => 'nullable|string',
             'participa_proximo_numero' => 'boolean',
         ]);
 
         $columnista = new Columnista($validated);
 
-        if ($request->hasFile('foto')) {
+        // Si se envía una imagen existente, usar esa ruta
+        if ($request->has('foto_existente') && $request->foto_existente) {
+            $columnista->foto = $request->foto_existente;
+        }
+        // Si se sube un archivo nuevo, guardarlo
+        elseif ($request->hasFile('foto')) {
             $path = $request->file('foto')->store('public/columnistas');
-            $columnista->foto = str_replace('public/', 'storage/', $path);
+            $columnista->foto = str_replace('public/', '', $path);
         }
 
         $columnista->save();
@@ -77,19 +83,25 @@ class ColumnistaApiController extends Controller
             'nombre' => 'required|string|max:255',
             'email' => 'nullable|email|max:255',
             'foto' => 'nullable|image|max:2048',
+            'foto_existente' => 'nullable|string',
             'bio' => 'nullable|string',
             'participa_proximo_numero' => 'boolean',
         ]);
 
         $columnista->fill($validated);
 
-        if ($request->hasFile('foto')) {
+        // Si se envía una imagen existente, usar esa ruta
+        if ($request->has('foto_existente') && $request->foto_existente) {
+            $columnista->foto = $request->foto_existente;
+        }
+        // Si se sube un archivo nuevo, guardarlo
+        elseif ($request->hasFile('foto')) {
             // Eliminar la foto anterior si existe
             if ($columnista->foto) {
-                Storage::delete(str_replace('storage/', 'public/', $columnista->foto));
+                Storage::delete('public/' . $columnista->foto);
             }
             $path = $request->file('foto')->store('public/columnistas');
-            $columnista->foto = str_replace('public/', 'storage/', $path);
+            $columnista->foto = str_replace('public/', '', $path);
         }
 
         $columnista->save();
@@ -115,5 +127,31 @@ class ColumnistaApiController extends Controller
         return response()->json([
             'message' => 'Columnista eliminado exitosamente'
         ]);
+    }
+
+    /**
+     * List available images in columnistas directories
+     */
+    public function getAvailableImages()
+    {
+        $images = [];
+
+        // Buscar en columnistas/
+        $columnistasImages = Storage::files('public/columnistas');
+        foreach ($columnistasImages as $image) {
+            if (preg_match('/\.(jpg|jpeg|png|gif|webp)$/i', $image)) {
+                $images[] = str_replace('public/', '', $image);
+            }
+        }
+
+        // Buscar en columnistas/imagenes_autores/
+        $imagenesAutoresImages = Storage::files('public/columnistas/imagenes_autores');
+        foreach ($imagenesAutoresImages as $image) {
+            if (preg_match('/\.(jpg|jpeg|png|gif|webp)$/i', $image)) {
+                $images[] = str_replace('public/', '', $image);
+            }
+        }
+
+        return response()->json($images);
     }
 }

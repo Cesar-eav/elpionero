@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>{{ $articulo->titulo }} - {{ now()->format('d de F de Y') }}</title>
+    <title>El Pionero - {{ $articulo->titulo }}</title>
     @vite(['resources/css/app.css', 'resources/js/app.js'])
     @if (app()->environment('production'))
         <script type="text/javascript">
@@ -33,7 +33,6 @@
         <div>
 
             <x-navbar />
-
 
 
             <!-- Layout principal -->
@@ -68,22 +67,24 @@
 
                         <article class="border-b pb-6">
                             <div class="flex items-start gap-4 mb-4">
-                                @if ($articulo->imagen_autor)
+                                @if ($articulo->columnista && $articulo->columnista->foto)
                                     <div class="flex-shrink-0">
-                                        <img src="{{ asset($articulo->imagen_autor) }}"
-                                            alt="{{ $articulo->autor ?? 'Autor' }}"
+                                        <img src="{{ asset('storage/' . $articulo->columnista->foto) }}"
+                                            alt="{{ $articulo->columnista->nombre }}"
                                             class="w-20 h-20 rounded-full shadow object-cover" />
                                     </div>
                                 @endif
                                 <div class="flex flex-col justify-center">
                                     <h3 class="text-2xl font-bold text-black mb-1">{{ $articulo->titulo }}</h3>
-                                    @if ($articulo->autor)
-                                        <p class="text-sm italic text-gray-600">Por: {{ $articulo->autor }}</p>
+                                    @if ($articulo->columnista)
+                                        <p class="text-sm italic text-gray-600">Por: {{ $articulo->columnista->nombre }}</p>
                                     @endif
                                 </div>
                             </div>
 
-                            <div class="text-gray-800 text-base leading-relaxed prose max-w-none">{!! $articulo->contenido !!}</div>
+                            <div class="text-gray-800 text-base leading-relaxed prose prose-p:mb-4 prose-headings:mb-3 prose-headings:mt-6 prose-ul:mb-4 prose-ol:mb-4 max-w-none whitespace-pre-line">
+                                {!! $articulo->contenido !!}
+                            </div>
                         </article>
 
                     </div>
@@ -109,14 +110,14 @@
                                                 <h4 class="text-base font-bold text-black mb-1">{{ $articulo->titulo }}
                                                 </h4>
                                             </a>
-                                            @if ($articulo->autor)
+                                            @if ($articulo->columnista)
                                                 <div class="text-sm italic text-gray-600 flex items-center">
-                                                    @if ($articulo->imagen_autor)
-                                                        <img src="{{ asset($articulo->imagen_autor) }}"
-                                                            alt="{{ $articulo->autor ?? 'Autor' }}"
+                                                    @if ($articulo->columnista->foto)
+                                                        <img src="{{ asset('storage/' . $articulo->columnista->foto) }}"
+                                                            alt="{{ $articulo->columnista->nombre }}"
                                                             class="w-8 h-8 rounded-full mr-2 shadow" />
                                                     @endif
-                                                    Por: {{ $articulo->autor }}
+                                                    Por: {{ $articulo->columnista->nombre }}
                                                 </div>
                                             @endif
                                         </div>

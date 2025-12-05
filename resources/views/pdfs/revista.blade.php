@@ -69,22 +69,24 @@
 
                         <article class="border-b pb-6">
                             <div class="flex items-start gap-4 mb-4">
-                                @if ($articulo_portada->imagen_autor)
+                                @if ($articulo_portada->columnista && $articulo_portada->columnista->foto)
                                     <div class="flex-shrink-0">
-                                        <img src="{{ asset($articulo_portada->imagen_autor) }}"
-                                            alt="{{ $articulo_portada->autor ?? 'Autor' }}"
+                                        <img src="{{ asset('storage/' . $articulo_portada->columnista->foto) }}"
+                                            alt="{{ $articulo_portada->columnista->nombre }}"
                                             class="w-20 h-20 rounded-full shadow object-cover" />
                                     </div>
                                 @endif
                                 <div class="flex flex-col justify-center">
                                     <h3 class="text-2xl font-bold text-black mb-1">{{ $articulo_portada->titulo }}</h3>
-                                    @if ($articulo_portada->autor)
-                                        <p class="text-sm italic text-gray-600">Por: {{ $articulo_portada->autor }}</p>
+                                    @if ($articulo_portada->columnista)
+                                        <p class="text-sm italic text-gray-600">Por: {{ $articulo_portada->columnista->nombre }}</p>
                                     @endif
                                 </div>
                             </div>
 
-                            <div class="text-gray-800 text-base leading-relaxed prose max-w-none">{!! $articulo_portada->contenido !!}</div>
+                            <div class="text-gray-800 text-base leading-relaxed prose prose-p:mb-4 prose-headings:mb-3 prose-headings:mt-6 prose-ul:mb-4 prose-ol:mb-4 max-w-none whitespace-pre-line">
+                                {!! $articulo_portada->contenido !!}
+                            </div>
                         </article>
 
                     </div>
@@ -103,14 +105,14 @@
                                             <a href="{{ url('articulo') . '/' . $articulo->id }}">
                                                 <h4 class="text-base font-bold text-black mb-1">{{ $articulo->titulo }}
                                                 </h4>
-                                                @if ($articulo->autor)
+                                                @if ($articulo->columnista)
                                                     <div class="text-sm italic text-gray-600 flex items-center">
-                                                        @if ($articulo->imagen_autor)
-                                                            <img src="{{ asset($articulo->imagen_autor) }}"
-                                                                alt="{{ $articulo->autor ?? 'Autor' }}"
+                                                        @if ($articulo->columnista->foto)
+                                                            <img src="{{ asset('storage/' . $articulo->columnista->foto) }}"
+                                                                alt="{{ $articulo->columnista->nombre }}"
                                                                 class="w-8 h-8 rounded-full mr-2 shadow" />
                                                         @endif
-                                                        Por: {{ $articulo->autor }}
+                                                        Por: {{ $articulo->columnista->nombre }}
                                                     </div>
                                                 @endif
                                         </div>

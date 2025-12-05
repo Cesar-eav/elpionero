@@ -71,15 +71,92 @@
 
                         <!-- Foto -->
                         <div>
-                            <label class="block text-sm font-medium text-gray-700 mb-1">
-                                Foto
+                            <label class="block text-sm font-medium text-gray-700 mb-2">
+                                Foto del Columnista
                             </label>
-                            <input
-                                @change="handleFileUpload"
-                                type="file"
-                                accept="image/*"
-                                class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-                            />
+
+                            <!-- Tabs -->
+                            <div class="flex border-b border-gray-200 mb-3">
+                                <button
+                                    type="button"
+                                    @click="fotoMode = 'existing'"
+                                    class="px-4 py-2 text-sm font-medium border-b-2 transition-colors"
+                                    :class="fotoMode === 'existing'
+                                        ? 'border-blue-500 text-blue-600'
+                                        : 'border-transparent text-gray-500 hover:text-gray-700'"
+                                >
+                                    Seleccionar existente
+                                </button>
+                                <button
+                                    type="button"
+                                    @click="fotoMode = 'upload'"
+                                    class="px-4 py-2 text-sm font-medium border-b-2 transition-colors"
+                                    :class="fotoMode === 'upload'
+                                        ? 'border-blue-500 text-blue-600'
+                                        : 'border-transparent text-gray-500 hover:text-gray-700'"
+                                >
+                                    Subir nueva
+                                </button>
+                            </div>
+
+                            <!-- Galería de imágenes existentes -->
+                            <div v-if="fotoMode === 'existing'">
+                                <div class="flex flex-wrap gap-2 max-h-64 overflow-y-auto p-2 border border-gray-200 rounded-lg bg-gray-50">
+                                    <div
+                                        v-for="image in availableImages"
+                                        :key="image"
+                                        @click="form.fotoExistente = image"
+                                        class="relative cursor-pointer group flex-shrink-0"
+                                        :class="{
+                                            'ring-2 ring-blue-500': form.fotoExistente === image,
+                                            'hover:ring-2 hover:ring-gray-300': form.fotoExistente !== image
+                                        }"
+                                    >
+                                        <img
+                                            :src="`/storage/${image}`"
+                                            :alt="image"
+                                            class="w-20 h-20 object-cover rounded"
+                                        />
+
+                                        <!-- Checkmark -->
+                                        <div
+                                            v-if="form.fotoExistente === image"
+                                            class="absolute top-1 right-1 bg-blue-500 text-white rounded-full p-0.5"
+                                        >
+                                            <svg class="w-3 h-3" fill="currentColor" viewBox="0 0 20 20">
+                                                <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd" />
+                                            </svg>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Preview de imagen seleccionada -->
+                                <div v-if="form.fotoExistente" class="mt-3 p-2 bg-blue-50 rounded border border-blue-200">
+                                    <div class="flex items-center gap-3">
+                                        <img
+                                            :src="`/storage/${form.fotoExistente}`"
+                                            alt="Preview"
+                                            class="w-16 h-16 object-cover rounded"
+                                        />
+                                        <div class="flex-1 min-w-0">
+                                            <p class="text-xs font-medium text-gray-700">Seleccionada</p>
+                                            <p class="text-xs text-gray-500 truncate">{{ form.fotoExistente }}</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Upload de nueva imagen -->
+                            <div v-else-if="fotoMode === 'upload'">
+                                <input
+                                    @change="handleFileUpload"
+                                    type="file"
+                                    accept="image/*"
+                                    class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                                />
+                                <p class="mt-1 text-xs text-gray-500">Formatos: JPG, PNG, GIF, WEBP (máx. 2MB)</p>
+                            </div>
+
                             <p v-if="errors.foto" class="mt-1 text-sm text-red-600">{{ errors.foto[0] }}</p>
                         </div>
 
@@ -144,12 +221,19 @@ export default {
                 email: '',
                 bio: '',
                 foto: null,
+                fotoExistente: '',
                 participa_proximo_numero: false
             },
+            fotoMode: 'existing',
+            availableImages: [],
             errors: {},
             loading: false,
             editMode: false
         };
+    },
+
+    mounted() {
+        this.loadAvailableImages();
     },
 
     watch: {
@@ -167,10 +251,20 @@ export default {
     },
 
     methods: {
+        async loadAvailableImages() {
+            try {
+                const response = await axios.get('/api/columnistas/available-images');
+                this.availableImages = response.data;
+            } catch (error) {
+                console.error('Error cargando imágenes:', error);
+            }
+        },
+
         fillForm(columnista) {
             this.form.nombre = columnista.nombre;
             this.form.email = columnista.email || '';
             this.form.bio = columnista.bio || '';
+            this.form.fotoExistente = columnista.foto || '';
             this.form.participa_proximo_numero = columnista.participa_proximo_numero || false;
         },
 
@@ -180,8 +274,10 @@ export default {
                 email: '',
                 bio: '',
                 foto: null,
+                fotoExistente: '',
                 participa_proximo_numero: false
             };
+            this.fotoMode = 'existing';
             this.errors = {};
         },
 
@@ -198,7 +294,16 @@ export default {
                 formData.append('nombre', this.form.nombre);
                 if (this.form.email) formData.append('email', this.form.email);
                 if (this.form.bio) formData.append('bio', this.form.bio);
-                if (this.form.foto) formData.append('foto', this.form.foto);
+
+                // Si está en modo "existing", enviar la ruta de la imagen existente
+                if (this.fotoMode === 'existing' && this.form.fotoExistente) {
+                    formData.append('foto_existente', this.form.fotoExistente);
+                }
+                // Si está en modo "upload", enviar el archivo
+                else if (this.fotoMode === 'upload' && this.form.foto) {
+                    formData.append('foto', this.form.foto);
+                }
+
                 formData.append('participa_proximo_numero', this.form.participa_proximo_numero ? '1' : '0');
 
                 let response;

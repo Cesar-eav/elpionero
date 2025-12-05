@@ -315,10 +315,10 @@
                                 <a href="{{ url('articulo/' . $destacada->slug) }}" class="flex flex-col md:flex-row">
 
                                                                         {{-- Imagen a la derecha, grande --}}
-                                    @if ($destacada->imagen_autor)
+                                    @if ($destacada->columnista && $destacada->columnista->foto)
                                         <div class="w-full md:w-1/3 bg-gray-100">
-                                            <img src="{{ asset($destacada->imagen_autor) }}"
-                                                alt="{{ $destacada->autor ?? 'Autor' }}"
+                                            <img src="{{ asset('storage/' . $destacada->columnista->foto) }}"
+                                                alt="{{ $destacada->columnista->nombre }}"
                                                 class="w-full h-64 md:h-full object-cover" />
                                         </div>
                                     @endif
@@ -335,7 +335,7 @@
                                                 {{ $destacada->autor }}</p>
                                         @endif
                                         <p class="text-gray-800 text-base leading-relaxed">
-                                            {!! nl2br(e(Str::limit($destacada->contenido, 300))) !!}
+                                            {{ Str::limit(strip_tags($destacada->contenido), 300) }}
                                         </p>
                                     </div>
 
@@ -364,16 +364,24 @@
                                                 <h4 class="text-lg font-bold text-black mb-1">
                                                     {{ $articulo->titulo }}
                                                 </h4>
-                                                @if ($articulo->autor)
-                                                    <div class="text-sm italic text-gray-600">{{ $articulo->autor }}
+                                                @if ($articulo->columnista)
+                                                    <div class="text-sm italic text-gray-600">{{ $articulo->columnista->nombre }}
                                                     </div>
                                                 @endif
                                             </div>
                                             {{-- Imagen a la derecha --}}
-                                            @if ($articulo->imagen_autor)
+
+                                            @if ($articulo->columnista && $articulo->columnista->foto)
                                                 <div class="w-1/3 bg-gray-100">
-                                                    <img src="{{ asset($articulo->imagen_autor) }}"
-                                                        alt="{{ $articulo->autor ?? 'Autor' }}"
+                                                    <img src="{{ asset('storage/' . $articulo->columnista->foto) }}"
+                                                        alt="{{ $articulo->columnista->nombre }}"
+                                                        class="w-full h-full object-cover">
+                                                </div>
+                                            @endif
+                                            @if ($articulo->columnista && $articulo->columnista->foto)
+                                                <div class="w-1/3 bg-gray-100">
+                                                    <img src="{{ asset('storage/' . $articulo->columnista->foto) }}"
+                                                        alt="{{ $articulo->columnista->nombre }}"
                                                         class="w-full h-full object-cover">
                                                 </div>
                                             @endif

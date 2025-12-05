@@ -27,9 +27,9 @@ class ArticuloController extends Controller
 
     public function showArticulo($slug)
     {
-        
-        $articulo = Articulo::where('slug', $slug)->first();
-        $articulos = Articulo::inRandomOrder()->limit(8)->get();
+
+        $articulo = Articulo::where('slug', $slug)->with(['revista', 'columnista'])->first();
+        $articulos = Articulo::with(['revista', 'columnista'])->inRandomOrder()->limit(8)->get();
 
 
         return view('pdfs.articulo', compact('articulo', 'articulos'));
@@ -37,7 +37,7 @@ class ArticuloController extends Controller
 
     public function showColumnas()
     {
-        $columnas = Articulo::inRandomOrder()->with('revista')->get();
+        $columnas = Articulo::with(['revista', 'columnista'])->inRandomOrder()->get();
 
 
         return view('pdfs.columnas', compact('columnas'));

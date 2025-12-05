@@ -53,26 +53,6 @@
                         <x-input-error :messages="$errors->get('contenido')" class="mt-2" />
                         </div>
 
-                        <div class="mt-4">
-                            <x-input-label for="autor" :value="__('Autor (Opcional)')" />
-                            <x-text-input id="autor" class="block mt-1 w-full text-black" type="text" name="autor" :value="old('autor', $articulo->autor)" />
-                            <x-input-error :messages="$errors->get('autor')" class="mt-2" />
-                        </div>
-
-                        <div class="mt-4">
-                            <x-input-label for="imagen_autor" :value="__('Imagen del Autor (Opcional)')" />
-                            <input id="imagen_autor" class="block mt-1 w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400" type="file" name="imagen_autor" accept="image/*">
-                            @if ($articulo->imagen_autor)
-                                <img src="{{ asset($articulo->imagen_autor) }}" alt="{{ $articulo->autor }}" class="rounded-full h-16 w-16 mt-2 object-cover">
-                            @endif
-                            <x-input-error :messages="$errors->get('imagen_autor')" class="mt-2" />
-                        </div>
-
-                        <div class="mt-4">
-                            <x-input-label for="seccion" :value="__('Sección (Opcional)')" />
-                            <x-text-input id="seccion" class="block mt-1 w-full" type="text" name="seccion" :value="old('seccion', $articulo->seccion)" />
-                            <x-input-error :messages="$errors->get('seccion')" class="mt-2" />
-                        </div>
 
                         <div class="flex items-center justify-end mt-4">
                             <x-primary-button class="ml-4">

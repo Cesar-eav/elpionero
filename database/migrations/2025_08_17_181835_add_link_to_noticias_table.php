@@ -12,9 +12,15 @@ return new class extends Migration
     public function up(): void
     {
         Schema::table('noticias', function (Blueprint $table) {
-            $table->string('link')->nullable()->after('imagen'); // Agrega la columna 'link' después de 'imagen'
-            $table->string('slug')->unique()->after('titulo'); // Agrega la columna 'slug' después de 'titulo'
-            $table->timestamp('fecha_publicacion')->nullable()->after('cuerpo'); // Agrega la columna 'fecha_publicacion' después de 'cuerpo'
+            if (!Schema::hasColumn('noticias', 'link')) {
+                $table->string('link')->nullable()->after('imagen');
+            }
+            if (!Schema::hasColumn('noticias', 'slug')) {
+                $table->string('slug')->unique()->after('titulo');
+            }
+            if (!Schema::hasColumn('noticias', 'fecha_publicacion')) {
+                $table->timestamp('fecha_publicacion')->nullable()->after('cuerpo');
+            }
         });
     }
 

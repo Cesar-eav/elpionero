@@ -47,22 +47,8 @@
                             <x-input-label for="contenido" :value="__('Contenido')" />
                             <x-forms.textarea id="contenido" class="block mt-1 w-full" name="contenido">
                                 {{ old('descripcion') }}
-                            </x-forms.textarea>                            
+                            </x-forms.textarea>
                             <x-input-error :messages="$errors->get('contenido')" class="mt-2" />
-                        </div>
-
-                         <div class="mt-4">
-                            <x-input-label for="imagen_autor" :value="__('Imagen del Autor (Opcional)')" />
-                            {{-- <file-input id="imagen_autor" class="block mt-1 w-full" name="imagen_autor" accept="image/*" /> --}}
-                            <input type="file" id="imagen_autor" name="imagen_autor" accept="image/*">
-
-                            <x-input-error :messages="$errors->get('imagen_autor')" class="mt-2" />
-                        </div> 
-
-                        <div class="mt-4">
-                            <x-input-label for="seccion" :value="__('Sección (Opcional)')" />
-                            <x-text-input id="seccion" class="block mt-1 w-full" type="text" name="seccion" :value="old('seccion')" />
-                            <x-input-error :messages="$errors->get('seccion')" class="mt-2" />
                         </div>
 
                         <div class="flex items-center justify-end mt-4">

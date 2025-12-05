@@ -221,7 +221,7 @@ export default {
         async loadStats() {
             this.loading = true;
             try {
-                const response = await axios.get('/api/dashboard/stats');
+                const response = await axios.get('api/dashboard/stats');
                 this.stats = response.data;
             } catch (error) {
                 console.error('Error al cargar estadísticas:', error);
