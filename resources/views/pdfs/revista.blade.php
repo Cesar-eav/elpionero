@@ -84,7 +84,7 @@
                                 </div>
                             </div>
 
-                            <p class="text-gray-800 text-base leading-relaxed">{!! nl2br(e($articulo_portada->contenido)) !!}</p>
+                            <div class="text-gray-800 text-base leading-relaxed prose max-w-none">{!! $articulo_portada->contenido !!}</div>
                         </article>
 
                     </div>

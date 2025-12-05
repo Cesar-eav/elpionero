@@ -22,8 +22,8 @@
                     @if ($articulo->seccion)
                         <p class="text-gray-600 dark:text-gray-400 mb-4">{{ __('Sección') }}: {{ $articulo->seccion }}</p>
                     @endif
-                    <div class="mb-6 prose dark:prose-invert">
-                        {!! nl2br(e($articulo->contenido)) !!} {{-- nl2br para respetar saltos de línea --}}
+                    <div class="mb-6 prose dark:prose-invert max-w-none">
+                        {!! $articulo->contenido !!} {{-- Renderizar HTML del editor --}}
                     </div>
 
                     <div class="mb-4">

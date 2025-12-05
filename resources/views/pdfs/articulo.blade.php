@@ -83,7 +83,7 @@
                                 </div>
                             </div>
 
-                            <p class="text-gray-800 text-base leading-relaxed">{!! nl2br(e($articulo->contenido)) !!}</p>
+                            <div class="text-gray-800 text-base leading-relaxed prose max-w-none">{!! $articulo->contenido !!}</div>
                         </article>
 
                     </div>
