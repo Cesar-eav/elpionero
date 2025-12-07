@@ -36,7 +36,7 @@
 
 
             <!-- Layout principal -->
-            <div class="flex flex-col md:flex-row gap-6">
+            <div class="flex flex-col md:flex-row gap-6 mt-5">
                 <!-- Sidebar izquierda -->
                 <aside
                     class="w-full md:w-1/6 hidden md:block space-y-6 bg-gray-50 border border-gray-300 rounded-lg p-4 shadow-sm">
