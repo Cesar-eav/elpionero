@@ -314,7 +314,7 @@
                                 class="border rounded-lg overflow-hidden bg-white shadow hover:shadow-lg transition-shadow">
                                 <a href="{{ url('articulo/' . $destacada->slug) }}" class="flex flex-col md:flex-row">
 
-                                                                        {{-- Imagen a la derecha, grande --}}
+                                    {{-- Imagen a la derecha, grande --}}
                                     @if ($destacada->columnista && $destacada->columnista->foto)
                                         <div class="w-full md:w-1/3 bg-gray-100">
                                             <img src="{{ asset('storage/' . $destacada->columnista->foto) }}"
@@ -370,14 +370,6 @@
                                                 @endif
                                             </div>
                                             {{-- Imagen a la derecha --}}
-
-                                            @if ($articulo->columnista && $articulo->columnista->foto)
-                                                <div class="w-1/3 bg-gray-100">
-                                                    <img src="{{ asset('storage/' . $articulo->columnista->foto) }}"
-                                                        alt="{{ $articulo->columnista->nombre }}"
-                                                        class="w-full h-full object-cover">
-                                                </div>
-                                            @endif
                                             @if ($articulo->columnista && $articulo->columnista->foto)
                                                 <div class="w-1/3 bg-gray-100">
                                                     <img src="{{ asset('storage/' . $articulo->columnista->foto) }}"

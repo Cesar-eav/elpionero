@@ -1,13 +1,24 @@
 <template>
     <div class="revistas-manager">
-        <!-- Botón Crear Nueva Revista -->
-        <div class="mb-4">
+        <!-- Barra de acciones -->
+        <div class="mb-4 flex gap-4 items-center">
             <button
                 @click="openCreateModal"
                 class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded"
             >
                 Crear Nueva Revista
             </button>
+
+            <!-- Buscador -->
+            <div class="flex-1">
+                <input
+                    v-model="searchQuery"
+                    @input="handleSearch"
+                    type="text"
+                    placeholder="Buscar revistas por título..."
+                    class="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-green-500"
+                />
+            </div>
         </div>
 
         <!-- Mensaje de éxito -->
@@ -109,6 +120,8 @@ export default {
             showForm: false,
             selectedRevista: null,
             successMessage: '',
+            searchQuery: '',
+            searchTimeout: null,
             pagination: {
                 current_page: 1,
                 last_page: 1,
@@ -139,6 +152,7 @@ export default {
 
     mounted() {
         this.fetchRevistas();
+        this.checkEditParam();
     },
 
     methods: {
@@ -148,7 +162,8 @@ export default {
                 const response = await axios.get('/api/revistas', {
                     params: {
                         page: page,
-                        per_page: 15
+                        per_page: 15,
+                        search: this.searchQuery
                     }
                 });
 
@@ -224,6 +239,34 @@ export default {
                 month: 'long',
                 day: 'numeric'
             });
+        },
+
+        async checkEditParam() {
+            const urlParams = new URLSearchParams(window.location.search);
+            const editId = urlParams.get('edit');
+
+            if (editId) {
+                try {
+                    const response = await axios.get(`/api/revistas/${editId}`);
+                    this.openEditModal(response.data);
+                    // Limpiar el parámetro de la URL
+                    window.history.replaceState({}, '', '/revistas-vue');
+                } catch (error) {
+                    console.error('Error al cargar revista para editar:', error);
+                }
+            }
+        },
+
+        handleSearch() {
+            // Cancelar búsqueda anterior si existe
+            if (this.searchTimeout) {
+                clearTimeout(this.searchTimeout);
+            }
+
+            // Esperar 500ms después de que el usuario deje de escribir
+            this.searchTimeout = setTimeout(() => {
+                this.fetchRevistas(1); // Buscar desde la página 1
+            }, 500);
         }
     }
 };

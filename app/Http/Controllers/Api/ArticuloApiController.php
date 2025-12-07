@@ -22,7 +22,10 @@ class ArticuloApiController extends Controller
             $search = $request->search;
             $query->where(function($q) use ($search) {
                 $q->where('titulo', 'like', "%{$search}%")
-                  ->orWhere('contenido', 'like', "%{$search}%");
+                  ->orWhere('contenido', 'like', "%{$search}%")
+                  ->orWhereHas('columnista', function($q) use ($search) {
+                      $q->where('nombre', 'like', "%{$search}%");
+                  });
             });
         }
 

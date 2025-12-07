@@ -1,13 +1,24 @@
 <template>
     <div class="articulos-manager">
-        <!-- Botón Crear Nuevo Artículo -->
-        <div class="mb-4">
+        <!-- Barra de acciones -->
+        <div class="mb-4 flex gap-4 items-center">
             <button
                 @click="openCreateModal"
                 class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded"
             >
                 Crear Nuevo Artículo
             </button>
+
+            <!-- Buscador -->
+            <div class="flex-1">
+                <input
+                    v-model="searchQuery"
+                    @input="handleSearch"
+                    type="text"
+                    placeholder="Buscar artículos por título o autor..."
+                    class="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                />
+            </div>
         </div>
 
         <!-- Mensaje de éxito -->
@@ -32,16 +43,27 @@
                 :key="articulo.id"
                 class="bg-gray-100 rounded-md p-4 flex justify-between items-center"
             >
-                <div>
-                    <a
-                        :href="`/articulos/${articulo.id}`"
-                        class="hover:underline text-lg font-semibold text-gray-800"
-                    >
-                        {{ articulo.titulo }}
-                    </a>
-                    <p class="text-sm text-gray-500">
-                        Autor: {{ articulo.columnista?.nombre || 'Anónimo' }}
-                    </p>
+                <div class="flex items-center gap-3 flex-1">
+                    <img
+                        v-if="articulo.columnista?.foto"
+                        :src="`/storage/${articulo.columnista.foto}`"
+                        :alt="articulo.columnista.nombre"
+                        class="w-12 h-12 rounded-full object-cover"
+                    />
+                    <div v-else class="w-12 h-12 rounded-full bg-gray-300 flex items-center justify-center flex-shrink-0">
+                        <span class="text-gray-600 text-xl">{{ articulo.columnista?.nombre?.charAt(0) || '?' }}</span>
+                    </div>
+                    <div>
+                        <a
+                            :href="`/articulos/${articulo.id}`"
+                            class="hover:underline text-lg font-semibold text-gray-800"
+                        >
+                            {{ articulo.titulo }}
+                        </a>
+                        <p class="text-sm text-gray-500">
+                            Autor: {{ articulo.columnista?.nombre || 'Anónimo' }}
+                        </p>
+                    </div>
                 </div>
                 <div class="flex gap-2">
                     <button
@@ -108,6 +130,8 @@ export default {
             showForm: false,
             selectedArticulo: null,
             successMessage: '',
+            searchQuery: '',
+            searchTimeout: null,
             pagination: {
                 current_page: 1,
                 last_page: 1,
@@ -138,6 +162,7 @@ export default {
 
     mounted() {
         this.fetchArticulos();
+        this.checkEditParam();
     },
 
     methods: {
@@ -147,7 +172,8 @@ export default {
                 const response = await axios.get('/api/articulos', {
                     params: {
                         page: page,
-                        per_page: 15
+                        per_page: 15,
+                        search: this.searchQuery
                     }
                 });
 
@@ -215,6 +241,34 @@ export default {
             setTimeout(() => {
                 this.successMessage = '';
             }, 3000);
+        },
+
+        async checkEditParam() {
+            const urlParams = new URLSearchParams(window.location.search);
+            const editId = urlParams.get('edit');
+
+            if (editId) {
+                try {
+                    const response = await axios.get(`/api/articulos/${editId}`);
+                    this.openEditModal(response.data);
+                    // Limpiar el parámetro de la URL
+                    window.history.replaceState({}, '', '/articulos-vue');
+                } catch (error) {
+                    console.error('Error al cargar artículo para editar:', error);
+                }
+            }
+        },
+
+        handleSearch() {
+            // Cancelar búsqueda anterior si existe
+            if (this.searchTimeout) {
+                clearTimeout(this.searchTimeout);
+            }
+
+            // Esperar 500ms después de que el usuario deje de escribir
+            this.searchTimeout = setTimeout(() => {
+                this.fetchArticulos(1); // Buscar desde la página 1
+            }, 500);
         }
     }
 };

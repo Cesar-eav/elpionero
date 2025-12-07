@@ -124,14 +124,25 @@
                         <div
                             v-for="articulo in stats.articulos.recientes"
                             :key="articulo.id"
-                            class="border-l-2 border-blue-500 pl-3 py-2"
+                            class="border-l-2 border-blue-500 pl-3 py-2 hover:bg-gray-50 transition cursor-pointer"
+                            @click="goToArticulo(articulo.id)"
                         >
-                            <p class="text-sm font-medium text-gray-800">
-                                {{ truncate(articulo.titulo, 40) }}
-                            </p>
-                            <p class="text-xs text-gray-500 mt-1">
-                                Por {{ articulo.columnista?.nombre || 'Desconocido' }}
-                            </p>
+                            <div class="flex items-start gap-3">
+                                <img
+                                    v-if="articulo.columnista?.foto"
+                                    :src="`/storage/${articulo.columnista.foto}`"
+                                    :alt="articulo.columnista.nombre"
+                                    class="w-10 h-10 rounded-full object-cover flex-shrink-0"
+                                />
+                                <div class="flex-1">
+                                    <p class="text-sm font-medium text-gray-800 hover:text-blue-600">
+                                        {{ truncate(articulo.titulo, 40) }}
+                                    </p>
+                                    <p class="text-xs text-gray-500 mt-1">
+                                        Por {{ articulo.columnista?.nombre || 'Desconocido' }}
+                                    </p>
+                                </div>
+                            </div>
                         </div>
                         <div v-if="stats.articulos.recientes.length === 0" class="text-gray-500 text-sm">
                             No hay artículos recientes
@@ -146,9 +157,10 @@
                         <div
                             v-for="revista in stats.revistas.recientes"
                             :key="revista.id"
-                            class="border-l-2 border-green-500 pl-3 py-2"
+                            class="border-l-2 border-green-500 pl-3 py-2 hover:bg-gray-50 transition cursor-pointer"
+                            @click="goToRevista(revista.id)"
                         >
-                            <p class="text-sm font-medium text-gray-800">
+                            <p class="text-sm font-medium text-gray-800 hover:text-green-600">
                                 {{ revista.titulo }}
                             </p>
                             <p class="text-xs text-gray-500 mt-1">
@@ -168,14 +180,25 @@
                         <div
                             v-for="columnista in stats.columnistas.recientes"
                             :key="columnista.id"
-                            class="border-l-2 border-purple-500 pl-3 py-2"
+                            class="border-l-2 border-purple-500 pl-3 py-2 hover:bg-gray-50 transition cursor-pointer"
+                            @click="goToColumnista(columnista.id)"
                         >
-                            <p class="text-sm font-medium text-gray-800">
-                                {{ columnista.nombre }}
-                            </p>
-                            <p class="text-xs text-gray-500 mt-1">
-                                {{ columnista.email || 'Sin email' }}
-                            </p>
+                            <div class="flex items-center gap-3">
+                                <img
+                                    v-if="columnista.foto"
+                                    :src="`/storage/${columnista.foto}`"
+                                    :alt="columnista.nombre"
+                                    class="w-10 h-10 rounded-full object-cover flex-shrink-0"
+                                />
+                                <div class="flex-1">
+                                    <p class="text-sm font-medium text-gray-800 hover:text-purple-600">
+                                        {{ columnista.nombre }}
+                                    </p>
+                                    <p class="text-xs text-gray-500 mt-1">
+                                        {{ columnista.email || 'Sin email' }}
+                                    </p>
+                                </div>
+                            </div>
                         </div>
                         <div v-if="stats.columnistas.recientes.length === 0" class="text-gray-500 text-sm">
                             No hay columnistas recientes
@@ -209,31 +232,40 @@ export default {
     },
 
     methods: {
-loadStats() {
-        // 1. Iniciar carga
-        this.loading = true;
+        loadStats() {
+            // 1. Iniciar carga
+            this.loading = true;
 
-                        console.log("Datos");
+            console.log("Datos");
 
-        // 2. Llamada a la API usando .then() y .catch()
-        axios.get('/api/stats')
-            .then(response => {
-                // Éxito: Asignar los datos
-                this.stats = response.data;
-                console.log("Stats:"   ,this.stats);
-            })
-            .catch(error => {
-                // Error: Manejar fallos
-                console.error('Error al cargar estadísticas:', error);
-            })
-            .finally(() => {
-                // Finalizar carga, independientemente del resultado
-                this.loading = false;
-            });
-    },
+            // 2. Llamada a la API usando .then() y .catch()
+            axios.get('/api/stats')
+                .then(response => {
+                    // Éxito: Asignar los datos
+                    this.stats = response.data;
+                    console.log("Stats:", this.stats);
+                })
+                .catch(error => {
+                    // Error: Manejar fallos
+                    console.error('Error al cargar estadísticas:', error);
+                })
+                .finally(() => {
+                    // Finalizar carga, independientemente del resultado
+                    this.loading = false;
+                });
+        },
         truncate(text, length) {
             if (!text) return '';
             return text.length > length ? text.substring(0, length) + '...' : text;
+        },
+        goToArticulo(id) {
+            window.location.href = `/articulos-vue?edit=${id}`;
+        },
+        goToRevista(id) {
+            window.location.href = `/revistas-vue?edit=${id}`;
+        },
+        goToColumnista(id) {
+            window.location.href = `/columnistas-vue?edit=${id}`;
         }
     }
 };
