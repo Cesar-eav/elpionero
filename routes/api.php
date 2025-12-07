@@ -59,7 +59,7 @@ Route::get('/columnistas-list', function () {
 });
 
 // Dashboard Stats
-Route::get('/dashboard/stats', function () {
+Route::get('stats', function () {
     return response()->json([
         'articulos' => [
             'total' => \App\Models\Articulo::count(),

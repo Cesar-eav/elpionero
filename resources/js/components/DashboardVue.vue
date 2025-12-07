@@ -126,12 +126,9 @@
                             :key="articulo.id"
                             class="border-l-2 border-blue-500 pl-3 py-2"
                         >
-                            <a
-                                :href="`/articulos/${articulo.id}`"
-                                class="text-sm font-medium text-gray-800 hover:text-blue-600"
-                            >
+                            <p class="text-sm font-medium text-gray-800">
                                 {{ truncate(articulo.titulo, 40) }}
-                            </a>
+                            </p>
                             <p class="text-xs text-gray-500 mt-1">
                                 Por {{ articulo.columnista?.nombre || 'Desconocido' }}
                             </p>
@@ -151,12 +148,9 @@
                             :key="revista.id"
                             class="border-l-2 border-green-500 pl-3 py-2"
                         >
-                            <a
-                                :href="`/revistas/${revista.id}`"
-                                class="text-sm font-medium text-gray-800 hover:text-green-600"
-                            >
+                            <p class="text-sm font-medium text-gray-800">
                                 {{ revista.titulo }}
-                            </a>
+                            </p>
                             <p class="text-xs text-gray-500 mt-1">
                                 {{ revista.articulos_count || 0 }} artículos
                             </p>
@@ -176,12 +170,9 @@
                             :key="columnista.id"
                             class="border-l-2 border-purple-500 pl-3 py-2"
                         >
-                            <a
-                                :href="`/columnistas/${columnista.id}`"
-                                class="text-sm font-medium text-gray-800 hover:text-purple-600"
-                            >
+                            <p class="text-sm font-medium text-gray-800">
                                 {{ columnista.nombre }}
-                            </a>
+                            </p>
                             <p class="text-xs text-gray-500 mt-1">
                                 {{ columnista.email || 'Sin email' }}
                             </p>
@@ -218,18 +209,28 @@ export default {
     },
 
     methods: {
-        async loadStats() {
-            this.loading = true;
-            try {
-                const response = await axios.get('api/dashboard/stats');
-                this.stats = response.data;
-            } catch (error) {
-                console.error('Error al cargar estadísticas:', error);
-            } finally {
-                this.loading = false;
-            }
-        },
+loadStats() {
+        // 1. Iniciar carga
+        this.loading = true;
 
+                        console.log("Datos");
+
+        // 2. Llamada a la API usando .then() y .catch()
+        axios.get('/api/stats')
+            .then(response => {
+                // Éxito: Asignar los datos
+                this.stats = response.data;
+                console.log("Stats:"   ,this.stats);
+            })
+            .catch(error => {
+                // Error: Manejar fallos
+                console.error('Error al cargar estadísticas:', error);
+            })
+            .finally(() => {
+                // Finalizar carga, independientemente del resultado
+                this.loading = false;
+            });
+    },
         truncate(text, length) {
             if (!text) return '';
             return text.length > length ? text.substring(0, length) + '...' : text;
