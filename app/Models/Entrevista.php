@@ -16,10 +16,11 @@ class Entrevista extends Model
         'cargo',
         'contenido',
         'imagen',
+        'imagen_desktop',
         'fecha_publicacion'
     ];
 
     protected $casts = [
-        'fecha_publicacion' => 'date',
+        'fecha_publicacion' => 'date:Y-m-d',
     ];
 }

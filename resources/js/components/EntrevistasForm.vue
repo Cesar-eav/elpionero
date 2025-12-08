@@ -60,39 +60,77 @@
                         </div>
                     </div>
 
-                    <!-- Imagen -->
-                    <div>
-                        <label class="block text-sm font-medium text-gray-700 mb-1">
-                            Imagen
-                        </label>
+                    <!-- Imágenes en grid -->
+                    <div class="grid grid-cols-2 gap-4">
+                        <!-- Imagen Móvil -->
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-1">
+                                Imagen Móvil
+                            </label>
 
-                        <!-- Preview de imagen existente -->
-                        <div v-if="imagePreview || (isEdit && entrevista?.imagen)" class="mb-3">
-                            <img
-                                :src="imagePreview || `/storage/${entrevista.imagen}`"
-                                alt="Preview"
-                                class="w-48 h-48 object-cover rounded border"
+                            <!-- Preview de imagen existente -->
+                            <div v-if="imagePreview || (isEdit && entrevista?.imagen)" class="mb-3">
+                                <img
+                                    :src="imagePreview || `/storage/${entrevista.imagen}`"
+                                    alt="Preview Móvil"
+                                    class="w-full h-48 object-cover rounded border"
+                                />
+                                <button
+                                    type="button"
+                                    @click="removeImage"
+                                    class="mt-2 text-sm text-red-600 hover:text-red-800"
+                                >
+                                    Eliminar imagen
+                                </button>
+                            </div>
+
+                            <!-- Input de archivo -->
+                            <input
+                                ref="imageInput"
+                                type="file"
+                                accept="image/jpeg,image/jpg,image/png,image/gif"
+                                @change="handleImageChange"
+                                class="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500"
                             />
-                            <button
-                                type="button"
-                                @click="removeImage"
-                                class="mt-2 text-sm text-red-600 hover:text-red-800"
-                            >
-                                Eliminar imagen
-                            </button>
+                            <p class="text-xs text-gray-500 mt-1">
+                                Vertical/Cuadrada. Máximo: 2MB
+                            </p>
                         </div>
 
-                        <!-- Input de archivo -->
-                        <input
-                            ref="imageInput"
-                            type="file"
-                            accept="image/jpeg,image/jpg,image/png,image/gif"
-                            @change="handleImageChange"
-                            class="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500"
-                        />
-                        <p class="text-xs text-gray-500 mt-1">
-                            Formatos permitidos: JPG, JPEG, PNG, GIF. Tamaño máximo: 2MB
-                        </p>
+                        <!-- Imagen Desktop -->
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-1">
+                                Imagen Desktop
+                            </label>
+
+                            <!-- Preview de imagen desktop existente -->
+                            <div v-if="imageDesktopPreview || (isEdit && entrevista?.imagen_desktop)" class="mb-3">
+                                <img
+                                    :src="imageDesktopPreview || `/storage/${entrevista.imagen_desktop}`"
+                                    alt="Preview Desktop"
+                                    class="w-full h-48 object-cover rounded border"
+                                />
+                                <button
+                                    type="button"
+                                    @click="removeImageDesktop"
+                                    class="mt-2 text-sm text-red-600 hover:text-red-800"
+                                >
+                                    Eliminar imagen
+                                </button>
+                            </div>
+
+                            <!-- Input de archivo desktop -->
+                            <input
+                                ref="imageDesktopInput"
+                                type="file"
+                                accept="image/jpeg,image/jpg,image/png,image/gif"
+                                @change="handleImageDesktopChange"
+                                class="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500"
+                            />
+                            <p class="text-xs text-gray-500 mt-1">
+                                Horizontal/Panorámica. Máximo: 2MB
+                            </p>
+                        </div>
                     </div>
 
                     <!-- Fecha de Publicación -->
@@ -163,6 +201,8 @@ export default {
             },
             imageFile: null,
             imagePreview: null,
+            imageDesktopFile: null,
+            imageDesktopPreview: null,
             quillInstance: null,
             saving: false
         };
@@ -249,6 +289,41 @@ export default {
                 this.$refs.imageInput.value = '';
             }
         },
+        handleImageDesktopChange(event) {
+            const file = event.target.files[0];
+            if (!file) return;
+
+            // Validar tamaño (2MB)
+            if (file.size > 2 * 1024 * 1024) {
+                alert('La imagen no debe superar los 2MB');
+                this.$refs.imageDesktopInput.value = '';
+                return;
+            }
+
+            // Validar tipo
+            const validTypes = ['image/jpeg', 'image/jpg', 'image/png', 'image/gif'];
+            if (!validTypes.includes(file.type)) {
+                alert('Solo se permiten imágenes JPG, PNG o GIF');
+                this.$refs.imageDesktopInput.value = '';
+                return;
+            }
+
+            this.imageDesktopFile = file;
+
+            // Crear preview
+            const reader = new FileReader();
+            reader.onload = (e) => {
+                this.imageDesktopPreview = e.target.result;
+            };
+            reader.readAsDataURL(file);
+        },
+        removeImageDesktop() {
+            this.imageDesktopFile = null;
+            this.imageDesktopPreview = null;
+            if (this.$refs.imageDesktopInput) {
+                this.$refs.imageDesktopInput.value = '';
+            }
+        },
         submitForm() {
             // Validación básica
             if (!this.form.titulo.trim()) {
@@ -273,7 +348,7 @@ export default {
 
             this.saving = true;
 
-            // Preparar FormData para enviar archivo
+            // Preparar FormData para enviar archivos
             const formData = new FormData();
             formData.append('titulo', this.form.titulo);
             formData.append('entrevistado', this.form.entrevistado);
@@ -283,6 +358,10 @@ export default {
 
             if (this.imageFile) {
                 formData.append('imagen', this.imageFile);
+            }
+
+            if (this.imageDesktopFile) {
+                formData.append('imagen_desktop', this.imageDesktopFile);
             }
 
             const url = this.isEdit ? `/api/entrevistas/${this.entrevista.id}` : '/api/entrevistas';

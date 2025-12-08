@@ -296,7 +296,10 @@ export default {
         },
         formatDate(date) {
             if (!date) return '';
-            return new Date(date).toLocaleDateString('es-ES', {
+            // Para evitar problemas de zona horaria, parseamos la fecha como local
+            const [year, month, day] = date.split('-');
+            const localDate = new Date(year, month - 1, day);
+            return localDate.toLocaleDateString('es-ES', {
                 year: 'numeric',
                 month: 'long',
                 day: 'numeric'

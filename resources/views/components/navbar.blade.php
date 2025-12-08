@@ -9,12 +9,11 @@
     <!-- Navegación escritorio -->
     <nav class="hidden md:flex gap-4">
         <a href="{{ url('columnas') }}" class="hover:text-white transition-colors">Columnas</a>
+        <a href="{{ url('editoriales') }}" class="hover:text-white transition-colors">Editoriales</a>
         <a href="{{ url('noticias') }}" class="hover:text-white transition-colors">Noticias</a>
-        <a href="{{ url('proximos-numeros') }}" class="hover:text-white transition-colors">Próximos Números</a>
+        <a href="{{ url('entrevistas') }}" class="hover:text-white transition-colors">Entrevistas</a>
+        <a href="{{ url('revistas-lista') }}" class="hover:text-white transition-colors">Revistas</a>
         <a href="{{ url('nosotros') }}" class="hover:text-white transition-colors">Nosotros</a>
-        {{-- <a href="#" class="hover:text-white transition-colors">Rincón Wanderino</a>
-        <a href="#" class="hover:text-white transition-colors">Editoriales</a> --}}
-        {{-- <a href="{{ route('contacto.formulario') }}" class="hover:text-white transition-colors">Contáctanos</a> --}}
     </nav>
 
     <!-- Botón hamburguesa (solo en móvil) -->
@@ -36,11 +35,11 @@
     <!-- Menú móvil -->
     <div id="mobile-menu" class="hidden absolute top-full left-0 w-full bg-black text-[#fc5648] border-t border-gray-300 md:hidden flex-col p-4 space-y-2">
         <a href="{{ url('columnas') }}" class="hover:text-white transition-colors">Columnas</a>
+        <a href="{{ url('editoriales') }}" class="hover:text-white transition-colors">Editoriales</a>
         <a href="{{ url('noticias') }}" class="hover:text-white transition-colors">Noticias</a>
+        <a href="{{ url('entrevistas') }}" class="hover:text-white transition-colors">Entrevistas</a>
+        <a href="{{ url('revistas-lista') }}" class="hover:text-white transition-colors">Revistas</a>
         <a href="{{ url('nosotros') }}" class="hover:text-white transition-colors">Nosotros</a>
-        {{-- <a href="#" class="hover:text-white transition-colors">Rincón Wanderino</a> --}}
-        <a href="#" class="hover:text-white transition-colors">Editoriales</a>
-        {{-- <a href="{{ route('contacto.formulario') }}" class="hover:text-white transition-colors">Contáctanos</a> --}}
     </div>
 </div>
 

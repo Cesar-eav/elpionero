@@ -29,6 +29,10 @@ Route::get('/gracias-aporte', function () {
 Route::get('/nosotros', [InicioController::class, 'nosotros'])->name('nosotros');
 
 Route::get('/noticias',[NoticiaController::class, 'noticiasIndex'])->name('noticias.index');
+Route::get('/editoriales', [InicioController::class, 'editoriales'])->name('editoriales.index');
+Route::get('/entrevistas', [InicioController::class, 'entrevistas'])->name('entrevistas.index');
+Route::get('/entrevista/{slug}', [InicioController::class, 'showEntrevista'])->name('entrevista.show');
+Route::get('/revistas-lista', [InicioController::class, 'revistas'])->name('revistas.lista');
     
 
 Route::post('/newsletter', [NewsletterController::class, 'subscribe'])->name('newsletter.subscribe');

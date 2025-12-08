@@ -45,15 +45,21 @@ class EntrevistaApiController extends Controller
             'cargo' => 'nullable|string|max:255',
             'contenido' => 'required|string',
             'imagen' => 'nullable|image|mimes:jpeg,jpg,png,gif|max:2048',
+            'imagen_desktop' => 'nullable|image|mimes:jpeg,jpg,png,gif|max:2048',
             'fecha_publicacion' => 'required|date'
         ]);
 
         // Generar slug
         $validated['slug'] = Str::slug($validated['titulo']);
 
-        // Manejar imagen
+        // Manejar imagen móvil
         if ($request->hasFile('imagen')) {
             $validated['imagen'] = $request->file('imagen')->store('entrevistas', 'public');
+        }
+
+        // Manejar imagen desktop
+        if ($request->hasFile('imagen_desktop')) {
+            $validated['imagen_desktop'] = $request->file('imagen_desktop')->store('entrevistas', 'public');
         }
 
         $entrevista = Entrevista::create($validated);
@@ -69,19 +75,29 @@ class EntrevistaApiController extends Controller
             'cargo' => 'nullable|string|max:255',
             'contenido' => 'required|string',
             'imagen' => 'nullable|image|mimes:jpeg,jpg,png,gif|max:2048',
+            'imagen_desktop' => 'nullable|image|mimes:jpeg,jpg,png,gif|max:2048',
             'fecha_publicacion' => 'required|date'
         ]);
 
         // Actualizar slug si cambió el título
         $validated['slug'] = Str::slug($validated['titulo']);
 
-        // Manejar imagen
+        // Manejar imagen móvil
         if ($request->hasFile('imagen')) {
             // Eliminar imagen anterior si existe
             if ($entrevista->imagen) {
                 Storage::disk('public')->delete($entrevista->imagen);
             }
             $validated['imagen'] = $request->file('imagen')->store('entrevistas', 'public');
+        }
+
+        // Manejar imagen desktop
+        if ($request->hasFile('imagen_desktop')) {
+            // Eliminar imagen desktop anterior si existe
+            if ($entrevista->imagen_desktop) {
+                Storage::disk('public')->delete($entrevista->imagen_desktop);
+            }
+            $validated['imagen_desktop'] = $request->file('imagen_desktop')->store('entrevistas', 'public');
         }
 
         $entrevista->update($validated);
@@ -91,9 +107,14 @@ class EntrevistaApiController extends Controller
 
     public function destroy(Entrevista $entrevista)
     {
-        // Eliminar imagen si existe
+        // Eliminar imagen móvil si existe
         if ($entrevista->imagen) {
             Storage::disk('public')->delete($entrevista->imagen);
+        }
+
+        // Eliminar imagen desktop si existe
+        if ($entrevista->imagen_desktop) {
+            Storage::disk('public')->delete($entrevista->imagen_desktop);
         }
 
         $entrevista->delete();
