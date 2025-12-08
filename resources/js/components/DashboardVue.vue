@@ -22,12 +22,12 @@
                             </svg>
                         </div>
                     </div>
-                    <a
-                        href="/articulos-vue"
+                    <router-link
+                        to="/dashboard-vue/articulos"
                         class="mt-4 text-blue-600 hover:text-blue-800 text-sm font-medium inline-block"
                     >
                         Ver todos →
-                    </a>
+                    </router-link>
                 </div>
 
                 <!-- Editoriales Card -->
@@ -43,12 +43,12 @@
                             </svg>
                         </div>
                     </div>
-                    <a
-                        href="/editoriales-vue"
+                    <router-link
+                        to="/dashboard-vue/editoriales"
                         class="mt-4 text-orange-600 hover:text-orange-800 text-sm font-medium inline-block"
                     >
                         Ver todas →
-                    </a>
+                    </router-link>
                 </div>
 
                 <!-- Noticias Card -->
@@ -64,13 +64,15 @@
                             </svg>
                         </div>
                     </div>
-                    <a
-                        href="/noticias-vue"
+                    <router-link
+                        to="/dashboard-vue/noticias"
                         class="mt-4 text-red-600 hover:text-red-800 text-sm font-medium inline-block"
                     >
                         Ver todas →
-                    </a>
+                    </router-link>
                 </div>
+                </div> 
+                <div class="flex flex-row gap-6 mb-8">
 
                 <!-- Entrevistas Card -->
                 <div class="flex-1 bg-white rounded-lg shadow-md p-6 border-l-4 border-yellow-500">
@@ -85,12 +87,12 @@
                             </svg>
                         </div>
                     </div>
-                    <a
-                        href="/entrevistas-vue"
+                    <router-link
+                        to="/dashboard-vue/entrevistas"
                         class="mt-4 text-yellow-600 hover:text-yellow-800 text-sm font-medium inline-block"
                     >
                         Ver todas →
-                    </a>
+                    </router-link>
                 </div>
 
                 <!-- Revistas Card -->
@@ -106,12 +108,12 @@
                             </svg>
                         </div>
                     </div>
-                    <a
-                        href="/revistas-vue"
+                    <router-link
+                        to="/dashboard-vue/revistas"
                         class="mt-4 text-green-600 hover:text-green-800 text-sm font-medium inline-block"
                     >
                         Ver todas →
-                    </a>
+                    </router-link>
                 </div>
 
                 <!-- Columnistas Card -->
@@ -127,273 +129,16 @@
                             </svg>
                         </div>
                     </div>
-                    <a
-                        href="/columnistas-vue"
+                    <router-link
+                        to="/dashboard-vue/columnistas"
                         class="mt-4 text-purple-600 hover:text-purple-800 text-sm font-medium inline-block"
                     >
                         Ver todos →
-                    </a>
+                    </router-link>
                 </div>
             </div>
 
-            <!-- Quick Actions -->
-            <div class="bg-white rounded-lg shadow-md p-6 mb-8">
-                <h3 class="text-lg font-semibold text-gray-800 mb-4">Acciones Rápidas</h3>
-                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
-                    <a
-                        href="/articulos-vue"
-                        class="flex items-center p-4 border-2 border-gray-200 rounded-lg hover:border-blue-500 hover:shadow-md transition"
-                    >
-                        <div class="bg-blue-100 rounded-full p-2 mr-3">
-                            <svg class="w-6 h-6 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path>
-                            </svg>
-                        </div>
-                        <span class="font-medium text-gray-700">Crear Artículo</span>
-                    </a>
 
-                    <a
-                        href="/editoriales-vue"
-                        class="flex items-center p-4 border-2 border-gray-200 rounded-lg hover:border-orange-500 hover:shadow-md transition"
-                    >
-                        <div class="bg-orange-100 rounded-full p-2 mr-3">
-                            <svg class="w-6 h-6 text-orange-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path>
-                            </svg>
-                        </div>
-                        <span class="font-medium text-gray-700">Crear Editorial</span>
-                    </a>
-
-                    <a
-                        href="/noticias-vue"
-                        class="flex items-center p-4 border-2 border-gray-200 rounded-lg hover:border-red-500 hover:shadow-md transition"
-                    >
-                        <div class="bg-red-100 rounded-full p-2 mr-3">
-                            <svg class="w-6 h-6 text-red-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path>
-                            </svg>
-                        </div>
-                        <span class="font-medium text-gray-700">Crear Noticia</span>
-                    </a>
-
-                    <a
-                        href="/entrevistas-vue"
-                        class="flex items-center p-4 border-2 border-gray-200 rounded-lg hover:border-yellow-500 hover:shadow-md transition"
-                    >
-                        <div class="bg-yellow-100 rounded-full p-2 mr-3">
-                            <svg class="w-6 h-6 text-yellow-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path>
-                            </svg>
-                        </div>
-                        <span class="font-medium text-gray-700">Crear Entrevista</span>
-                    </a>
-
-                    <a
-                        href="/revistas-vue"
-                        class="flex items-center p-4 border-2 border-gray-200 rounded-lg hover:border-green-500 hover:shadow-md transition"
-                    >
-                        <div class="bg-green-100 rounded-full p-2 mr-3">
-                            <svg class="w-6 h-6 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path>
-                            </svg>
-                        </div>
-                        <span class="font-medium text-gray-700">Crear Revista</span>
-                    </a>
-
-                    <a
-                        href="/columnistas-vue"
-                        class="flex items-center p-4 border-2 border-gray-200 rounded-lg hover:border-purple-500 hover:shadow-md transition"
-                    >
-                        <div class="bg-purple-100 rounded-full p-2 mr-3">
-                            <svg class="w-6 h-6 text-purple-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path>
-                            </svg>
-                        </div>
-                        <span class="font-medium text-gray-700">Crear Columnista</span>
-                    </a>
-                </div>
-            </div>
-
-            <!-- Recent Items Grid -->
-            <div class="flex flex-row gap-6">
-                <!-- Artículos Recientes -->
-                <div class="flex-1 bg-white rounded-lg shadow-md p-6">
-                    <h3 class="text-lg font-semibold text-gray-800 mb-4">Artículos Recientes</h3>
-                    <div class="space-y-3">
-                        <div
-                            v-for="articulo in stats.articulos.recientes"
-                            :key="articulo.id"
-                            class="border-l-2 border-blue-500 pl-3 py-2 hover:bg-gray-50 transition cursor-pointer"
-                            @click="goToArticulo(articulo.id)"
-                        >
-                            <div class="flex items-start gap-3">
-                                <img
-                                    v-if="articulo.columnista?.foto"
-                                    :src="`/storage/${articulo.columnista.foto}`"
-                                    :alt="articulo.columnista.nombre"
-                                    class="w-10 h-10 rounded-full object-cover flex-shrink-0"
-                                />
-                                <div class="flex-1">
-                                    <p class="text-sm font-medium text-gray-800 hover:text-blue-600">
-                                        {{ truncate(articulo.titulo, 40) }}
-                                    </p>
-                                    <p class="text-xs text-gray-500 mt-1">
-                                        Por {{ articulo.columnista?.nombre || 'Desconocido' }}
-                                    </p>
-                                </div>
-                            </div>
-                        </div>
-                        <div v-if="stats.articulos.recientes.length === 0" class="text-gray-500 text-sm">
-                            No hay artículos recientes
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Editoriales Recientes -->
-                <div class="flex-1 bg-white rounded-lg shadow-md p-6">
-                    <h3 class="text-lg font-semibold text-gray-800 mb-4">Editoriales Recientes</h3>
-                    <div class="space-y-3">
-                        <div
-                            v-for="editorial in stats.editoriales.recientes"
-                            :key="editorial.id"
-                            class="border-l-2 border-orange-500 pl-3 py-2 hover:bg-gray-50 transition cursor-pointer"
-                            @click="goToEditorial(editorial.id)"
-                        >
-                            <p class="text-sm font-medium text-gray-800 hover:text-orange-600">
-                                {{ truncate(editorial.titulo, 40) }}
-                            </p>
-                            <p class="text-xs text-gray-500 mt-1">
-                                Revista: {{ editorial.revista?.titulo || 'Sin revista' }}
-                            </p>
-                        </div>
-                        <div v-if="stats.editoriales.recientes.length === 0" class="text-gray-500 text-sm">
-                            No hay editoriales recientes
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Noticias Recientes -->
-                <div class="flex-1 bg-white rounded-lg shadow-md p-6">
-                    <h3 class="text-lg font-semibold text-gray-800 mb-4">Noticias Recientes</h3>
-                    <div class="space-y-3">
-                        <div
-                            v-for="noticia in stats.noticias.recientes"
-                            :key="noticia.id"
-                            class="border-l-2 border-red-500 pl-3 py-2 hover:bg-gray-50 transition cursor-pointer"
-                            @click="goToNoticia(noticia.id)"
-                        >
-                            <div class="flex items-start gap-3">
-                                <img
-                                    v-if="noticia.imagen"
-                                    :src="`/storage/${noticia.imagen}`"
-                                    :alt="noticia.titulo"
-                                    class="w-10 h-10 rounded object-cover flex-shrink-0"
-                                />
-                                <div class="flex-1">
-                                    <p class="text-sm font-medium text-gray-800 hover:text-red-600">
-                                        {{ truncate(noticia.titulo, 40) }}
-                                    </p>
-                                    <p class="text-xs text-gray-500 mt-1">
-                                        {{ formatDate(noticia.fecha_publicacion) }}
-                                    </p>
-                                </div>
-                            </div>
-                        </div>
-                        <div v-if="stats.noticias.recientes.length === 0" class="text-gray-500 text-sm">
-                            No hay noticias recientes
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Entrevistas Recientes -->
-                <div class="flex-1 bg-white rounded-lg shadow-md p-6">
-                    <h3 class="text-lg font-semibold text-gray-800 mb-4">Entrevistas Recientes</h3>
-                    <div class="space-y-3">
-                        <div
-                            v-for="entrevista in stats.entrevistas.recientes"
-                            :key="entrevista.id"
-                            class="border-l-2 border-yellow-500 pl-3 py-2 hover:bg-gray-50 transition cursor-pointer"
-                            @click="goToEntrevista(entrevista.id)"
-                        >
-                            <div class="flex items-start gap-3">
-                                <img
-                                    v-if="entrevista.imagen"
-                                    :src="`/storage/${entrevista.imagen}`"
-                                    :alt="entrevista.titulo"
-                                    class="w-10 h-10 rounded object-cover flex-shrink-0"
-                                />
-                                <div class="flex-1">
-                                    <p class="text-sm font-medium text-gray-800 hover:text-yellow-600">
-                                        {{ truncate(entrevista.titulo, 40) }}
-                                    </p>
-                                    <p class="text-xs text-gray-500 mt-1">
-                                        Con {{ entrevista.entrevistado }}
-                                    </p>
-                                </div>
-                            </div>
-                        </div>
-                        <div v-if="stats.entrevistas.recientes.length === 0" class="text-gray-500 text-sm">
-                            No hay entrevistas recientes
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Revistas Recientes -->
-                <div class="flex-1 bg-white rounded-lg shadow-md p-6">
-                    <h3 class="text-lg font-semibold text-gray-800 mb-4">Revistas Recientes</h3>
-                    <div class="space-y-3">
-                        <div
-                            v-for="revista in stats.revistas.recientes"
-                            :key="revista.id"
-                            class="border-l-2 border-green-500 pl-3 py-2 hover:bg-gray-50 transition cursor-pointer"
-                            @click="goToRevista(revista.id)"
-                        >
-                            <p class="text-sm font-medium text-gray-800 hover:text-green-600">
-                                {{ revista.titulo }}
-                            </p>
-                            <p class="text-xs text-gray-500 mt-1">
-                                {{ revista.articulos_count || 0 }} artículos
-                            </p>
-                        </div>
-                        <div v-if="stats.revistas.recientes.length === 0" class="text-gray-500 text-sm">
-                            No hay revistas recientes
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Columnistas Recientes -->
-                <div class="flex-1 bg-white rounded-lg shadow-md p-6">
-                    <h3 class="text-lg font-semibold text-gray-800 mb-4">Columnistas Recientes</h3>
-                    <div class="space-y-3">
-                        <div
-                            v-for="columnista in stats.columnistas.recientes"
-                            :key="columnista.id"
-                            class="border-l-2 border-purple-500 pl-3 py-2 hover:bg-gray-50 transition cursor-pointer"
-                            @click="goToColumnista(columnista.id)"
-                        >
-                            <div class="flex items-center gap-3">
-                                <img
-                                    v-if="columnista.foto"
-                                    :src="`/storage/${columnista.foto}`"
-                                    :alt="columnista.nombre"
-                                    class="w-10 h-10 rounded-full object-cover flex-shrink-0"
-                                />
-                                <div class="flex-1">
-                                    <p class="text-sm font-medium text-gray-800 hover:text-purple-600">
-                                        {{ columnista.nombre }}
-                                    </p>
-                                    <p class="text-xs text-gray-500 mt-1">
-                                        {{ columnista.email || 'Sin email' }}
-                                    </p>
-                                </div>
-                            </div>
-                        </div>
-                        <div v-if="stats.columnistas.recientes.length === 0" class="text-gray-500 text-sm">
-                            No hay columnistas recientes
-                        </div>
-                    </div>
-                </div>
-            </div>
         </div>
     </div>
 </template>
@@ -458,22 +203,22 @@ export default {
             });
         },
         goToArticulo(id) {
-            window.location.href = `/articulos-vue?edit=${id}`;
+            this.$router.push(`/dashboard-vue/articulos?edit=${id}`);
         },
         goToEditorial(id) {
-            window.location.href = `/editoriales-vue?edit=${id}`;
+            this.$router.push(`/dashboard-vue/editoriales?edit=${id}`);
         },
         goToNoticia(id) {
-            window.location.href = `/noticias-vue?edit=${id}`;
+            this.$router.push(`/dashboard-vue/noticias?edit=${id}`);
         },
         goToEntrevista(id) {
-            window.location.href = `/entrevistas-vue?edit=${id}`;
+            this.$router.push(`/dashboard-vue/entrevistas?edit=${id}`);
         },
         goToRevista(id) {
-            window.location.href = `/revistas-vue?edit=${id}`;
+            this.$router.push(`/dashboard-vue/revistas?edit=${id}`);
         },
         goToColumnista(id) {
-            window.location.href = `/columnistas-vue?edit=${id}`;
+            this.$router.push(`/dashboard-vue/columnistas?edit=${id}`);
         }
     }
 };
