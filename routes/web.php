@@ -81,6 +81,18 @@ Route::middleware('auth')->group(function () {
     Route::get('/columnistas-vue', function () {
         return view('columnistas.vue-index');
     })->name('columnistas.vue');
+
+    Route::get('/editoriales-vue', function () {
+        return view('editoriales.vue-index');
+    })->name('editoriales.vue');
+
+    Route::get('/noticias-vue', function () {
+        return view('noticias.vue-index');
+    })->name('noticias.vue');
+
+    Route::get('/entrevistas-vue', function () {
+        return view('entrevistas.vue-index');
+    })->name('entrevistas.vue');
 });
 
 require __DIR__.'/auth.php';

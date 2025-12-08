@@ -39,6 +39,15 @@
                     <a href="{{ url('articulos-vue') }}" class="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium">
                         Artículos
                     </a>
+                    <a href="{{ url('editoriales-vue') }}" class="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium">
+                        Editoriales
+                    </a>
+                    <a href="{{ url('noticias-vue') }}" class="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium">
+                        Noticias
+                    </a>
+                    <a href="{{ url('entrevistas-vue') }}" class="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium">
+                        Entrevistas
+                    </a>
                     <a href="{{ url('revistas-vue') }}" class="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium">
                         Revistas
                     </a>

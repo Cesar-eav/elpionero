@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="csrf-token" content="{{ csrf_token() }}">
-    <title>Artículos - Vue 3</title>
+    <title>Noticias - Vue 3</title>
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
 <body class="bg-gray-100">
@@ -14,7 +14,7 @@
             <div class="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
                 <div class="flex justify-between items-center">
                     <h1 class="text-3xl font-bold text-gray-900">
-                        Gestión de Artículos
+                        Gestión de Noticias
                     </h1>
                     <div class="flex items-center gap-4">
                         <span class="text-sm text-gray-600">
@@ -38,13 +38,13 @@
                     <a href="{{ route('dashboard.vue') }}" class="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium">
                         Dashboard
                     </a>
-                    <a href="{{ url('articulos-vue') }}" class="bg-gray-900 text-white px-3 py-2 rounded-md text-sm font-medium">
+                    <a href="{{ url('articulos-vue') }}" class="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium">
                         Artículos
                     </a>
                     <a href="{{ url('editoriales-vue') }}" class="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium">
                         Editoriales
                     </a>
-                    <a href="{{ url('noticias-vue') }}" class="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium">
+                    <a href="{{ url('noticias-vue') }}" class="bg-gray-900 text-white px-3 py-2 rounded-md text-sm font-medium">
                     <a href="{{ url('entrevistas-vue') }}" class="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium">
                         Entrevistas
                     </a>
@@ -63,7 +63,7 @@
         <!-- Main Content -->
         <main class="max-w-7xl mx-auto py-6 sm:px-6 lg:px-8">
             <!-- Vue App Container -->
-            <div id="app"></div>
+            <div id="app-noticias"></div>
         </main>
     </div>
 </body>

@@ -5,6 +5,9 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\ArticuloApiController;
 use App\Http\Controllers\Api\RevistaApiController;
 use App\Http\Controllers\Api\ColumnistaApiController;
+use App\Http\Controllers\Api\EditorialApiController;
+use App\Http\Controllers\Api\NoticiaApiController;
+use App\Http\Controllers\Api\EntrevistaApiController;
 
 /*
 |--------------------------------------------------------------------------
@@ -49,6 +52,33 @@ Route::prefix('columnistas')->group(function () {
     Route::delete('/{columnista}', [ColumnistaApiController::class, 'destroy']);
 });
 
+// Rutas API para Editoriales
+Route::prefix('editoriales')->group(function () {
+    Route::get('/', [EditorialApiController::class, 'index']);
+    Route::get('/{editorial}', [EditorialApiController::class, 'show']);
+    Route::post('/', [EditorialApiController::class, 'store']);
+    Route::put('/{editorial}', [EditorialApiController::class, 'update']);
+    Route::delete('/{editorial}', [EditorialApiController::class, 'destroy']);
+});
+
+// Rutas API para Noticias
+Route::prefix('noticias')->group(function () {
+    Route::get('/', [NoticiaApiController::class, 'index']);
+    Route::get('/{noticia}', [NoticiaApiController::class, 'show']);
+    Route::post('/', [NoticiaApiController::class, 'store']);
+    Route::put('/{noticia}', [NoticiaApiController::class, 'update']);
+    Route::delete('/{noticia}', [NoticiaApiController::class, 'destroy']);
+});
+
+// Rutas API para Entrevistas
+Route::prefix('entrevistas')->group(function () {
+    Route::get('/', [EntrevistaApiController::class, 'index']);
+    Route::get('/{entrevista}', [EntrevistaApiController::class, 'show']);
+    Route::post('/', [EntrevistaApiController::class, 'store']);
+    Route::put('/{entrevista}', [EntrevistaApiController::class, 'update']);
+    Route::delete('/{entrevista}', [EntrevistaApiController::class, 'destroy']);
+});
+
 // Rutas para obtener listas simples (sin paginación)
 Route::get('/revistas-list', function () {
     return \App\Models\Revista::orderBy('titulo')->get();
@@ -65,6 +95,25 @@ Route::get('stats', function () {
             'total' => \App\Models\Articulo::count(),
             'recientes' => \App\Models\Articulo::with(['columnista', 'revista'])
                 ->latest()
+                ->limit(5)
+                ->get()
+        ],
+        'editoriales' => [
+            'total' => \App\Models\Editorial::count(),
+            'recientes' => \App\Models\Editorial::with(['revista'])
+                ->latest()
+                ->limit(5)
+                ->get()
+        ],
+        'noticias' => [
+            'total' => \App\Models\Noticia::count(),
+            'recientes' => \App\Models\Noticia::latest('fecha_publicacion')
+                ->limit(5)
+                ->get()
+        ],
+        'entrevistas' => [
+            'total' => \App\Models\Entrevista::count(),
+            'recientes' => \App\Models\Entrevista::latest('fecha_publicacion')
                 ->limit(5)
                 ->get()
         ],

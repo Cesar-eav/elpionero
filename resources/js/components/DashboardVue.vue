@@ -8,9 +8,9 @@
         <!-- Dashboard Content -->
         <div v-else>
             <!-- Stats Cards -->
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+            <div class="flex flex-row gap-6 mb-8">
                 <!-- Artículos Card -->
-                <div class="bg-white rounded-lg shadow-md p-6 border-l-4 border-blue-500">
+                <div class="flex-1 bg-white rounded-lg shadow-md p-6 border-l-4 border-blue-500">
                     <div class="flex items-center justify-between">
                         <div>
                             <p class="text-gray-500 text-sm font-semibold uppercase">Artículos</p>
@@ -30,8 +30,71 @@
                     </a>
                 </div>
 
+                <!-- Editoriales Card -->
+                <div class="flex-1 bg-white rounded-lg shadow-md p-6 border-l-4 border-orange-500">
+                    <div class="flex items-center justify-between">
+                        <div>
+                            <p class="text-gray-500 text-sm font-semibold uppercase">Editoriales</p>
+                            <p class="text-3xl font-bold text-gray-800 mt-2">{{ stats.editoriales.total }}</p>
+                        </div>
+                        <div class="bg-orange-100 rounded-full p-3">
+                            <svg class="w-8 h-8 text-orange-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"></path>
+                            </svg>
+                        </div>
+                    </div>
+                    <a
+                        href="/editoriales-vue"
+                        class="mt-4 text-orange-600 hover:text-orange-800 text-sm font-medium inline-block"
+                    >
+                        Ver todas →
+                    </a>
+                </div>
+
+                <!-- Noticias Card -->
+                <div class="flex-1 bg-white rounded-lg shadow-md p-6 border-l-4 border-red-500">
+                    <div class="flex items-center justify-between">
+                        <div>
+                            <p class="text-gray-500 text-sm font-semibold uppercase">Noticias</p>
+                            <p class="text-3xl font-bold text-gray-800 mt-2">{{ stats.noticias.total }}</p>
+                        </div>
+                        <div class="bg-red-100 rounded-full p-3">
+                            <svg class="w-8 h-8 text-red-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 20H5a2 2 0 01-2-2V6a2 2 0 012-2h10a2 2 0 012 2v1m2 13a2 2 0 01-2-2V7m2 13a2 2 0 002-2V9a2 2 0 00-2-2h-2m-4-3H9M7 16h6M7 8h6v4H7V8z"></path>
+                            </svg>
+                        </div>
+                    </div>
+                    <a
+                        href="/noticias-vue"
+                        class="mt-4 text-red-600 hover:text-red-800 text-sm font-medium inline-block"
+                    >
+                        Ver todas →
+                    </a>
+                </div>
+
+                <!-- Entrevistas Card -->
+                <div class="flex-1 bg-white rounded-lg shadow-md p-6 border-l-4 border-yellow-500">
+                    <div class="flex items-center justify-between">
+                        <div>
+                            <p class="text-gray-500 text-sm font-semibold uppercase">Entrevistas</p>
+                            <p class="text-3xl font-bold text-gray-800 mt-2">{{ stats.entrevistas.total }}</p>
+                        </div>
+                        <div class="bg-yellow-100 rounded-full p-3">
+                            <svg class="w-8 h-8 text-yellow-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"></path>
+                            </svg>
+                        </div>
+                    </div>
+                    <a
+                        href="/entrevistas-vue"
+                        class="mt-4 text-yellow-600 hover:text-yellow-800 text-sm font-medium inline-block"
+                    >
+                        Ver todas →
+                    </a>
+                </div>
+
                 <!-- Revistas Card -->
-                <div class="bg-white rounded-lg shadow-md p-6 border-l-4 border-green-500">
+                <div class="flex-1 bg-white rounded-lg shadow-md p-6 border-l-4 border-green-500">
                     <div class="flex items-center justify-between">
                         <div>
                             <p class="text-gray-500 text-sm font-semibold uppercase">Revistas</p>
@@ -52,7 +115,7 @@
                 </div>
 
                 <!-- Columnistas Card -->
-                <div class="bg-white rounded-lg shadow-md p-6 border-l-4 border-purple-500">
+                <div class="flex-1 bg-white rounded-lg shadow-md p-6 border-l-4 border-purple-500">
                     <div class="flex items-center justify-between">
                         <div>
                             <p class="text-gray-500 text-sm font-semibold uppercase">Columnistas</p>
@@ -76,7 +139,7 @@
             <!-- Quick Actions -->
             <div class="bg-white rounded-lg shadow-md p-6 mb-8">
                 <h3 class="text-lg font-semibold text-gray-800 mb-4">Acciones Rápidas</h3>
-                <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
                     <a
                         href="/articulos-vue"
                         class="flex items-center p-4 border-2 border-gray-200 rounded-lg hover:border-blue-500 hover:shadow-md transition"
@@ -87,6 +150,42 @@
                             </svg>
                         </div>
                         <span class="font-medium text-gray-700">Crear Artículo</span>
+                    </a>
+
+                    <a
+                        href="/editoriales-vue"
+                        class="flex items-center p-4 border-2 border-gray-200 rounded-lg hover:border-orange-500 hover:shadow-md transition"
+                    >
+                        <div class="bg-orange-100 rounded-full p-2 mr-3">
+                            <svg class="w-6 h-6 text-orange-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path>
+                            </svg>
+                        </div>
+                        <span class="font-medium text-gray-700">Crear Editorial</span>
+                    </a>
+
+                    <a
+                        href="/noticias-vue"
+                        class="flex items-center p-4 border-2 border-gray-200 rounded-lg hover:border-red-500 hover:shadow-md transition"
+                    >
+                        <div class="bg-red-100 rounded-full p-2 mr-3">
+                            <svg class="w-6 h-6 text-red-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path>
+                            </svg>
+                        </div>
+                        <span class="font-medium text-gray-700">Crear Noticia</span>
+                    </a>
+
+                    <a
+                        href="/entrevistas-vue"
+                        class="flex items-center p-4 border-2 border-gray-200 rounded-lg hover:border-yellow-500 hover:shadow-md transition"
+                    >
+                        <div class="bg-yellow-100 rounded-full p-2 mr-3">
+                            <svg class="w-6 h-6 text-yellow-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path>
+                            </svg>
+                        </div>
+                        <span class="font-medium text-gray-700">Crear Entrevista</span>
                     </a>
 
                     <a
@@ -116,9 +215,9 @@
             </div>
 
             <!-- Recent Items Grid -->
-            <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+            <div class="flex flex-row gap-6">
                 <!-- Artículos Recientes -->
-                <div class="bg-white rounded-lg shadow-md p-6">
+                <div class="flex-1 bg-white rounded-lg shadow-md p-6">
                     <h3 class="text-lg font-semibold text-gray-800 mb-4">Artículos Recientes</h3>
                     <div class="space-y-3">
                         <div
@@ -150,8 +249,97 @@
                     </div>
                 </div>
 
+                <!-- Editoriales Recientes -->
+                <div class="flex-1 bg-white rounded-lg shadow-md p-6">
+                    <h3 class="text-lg font-semibold text-gray-800 mb-4">Editoriales Recientes</h3>
+                    <div class="space-y-3">
+                        <div
+                            v-for="editorial in stats.editoriales.recientes"
+                            :key="editorial.id"
+                            class="border-l-2 border-orange-500 pl-3 py-2 hover:bg-gray-50 transition cursor-pointer"
+                            @click="goToEditorial(editorial.id)"
+                        >
+                            <p class="text-sm font-medium text-gray-800 hover:text-orange-600">
+                                {{ truncate(editorial.titulo, 40) }}
+                            </p>
+                            <p class="text-xs text-gray-500 mt-1">
+                                Revista: {{ editorial.revista?.titulo || 'Sin revista' }}
+                            </p>
+                        </div>
+                        <div v-if="stats.editoriales.recientes.length === 0" class="text-gray-500 text-sm">
+                            No hay editoriales recientes
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Noticias Recientes -->
+                <div class="flex-1 bg-white rounded-lg shadow-md p-6">
+                    <h3 class="text-lg font-semibold text-gray-800 mb-4">Noticias Recientes</h3>
+                    <div class="space-y-3">
+                        <div
+                            v-for="noticia in stats.noticias.recientes"
+                            :key="noticia.id"
+                            class="border-l-2 border-red-500 pl-3 py-2 hover:bg-gray-50 transition cursor-pointer"
+                            @click="goToNoticia(noticia.id)"
+                        >
+                            <div class="flex items-start gap-3">
+                                <img
+                                    v-if="noticia.imagen"
+                                    :src="`/storage/${noticia.imagen}`"
+                                    :alt="noticia.titulo"
+                                    class="w-10 h-10 rounded object-cover flex-shrink-0"
+                                />
+                                <div class="flex-1">
+                                    <p class="text-sm font-medium text-gray-800 hover:text-red-600">
+                                        {{ truncate(noticia.titulo, 40) }}
+                                    </p>
+                                    <p class="text-xs text-gray-500 mt-1">
+                                        {{ formatDate(noticia.fecha_publicacion) }}
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                        <div v-if="stats.noticias.recientes.length === 0" class="text-gray-500 text-sm">
+                            No hay noticias recientes
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Entrevistas Recientes -->
+                <div class="flex-1 bg-white rounded-lg shadow-md p-6">
+                    <h3 class="text-lg font-semibold text-gray-800 mb-4">Entrevistas Recientes</h3>
+                    <div class="space-y-3">
+                        <div
+                            v-for="entrevista in stats.entrevistas.recientes"
+                            :key="entrevista.id"
+                            class="border-l-2 border-yellow-500 pl-3 py-2 hover:bg-gray-50 transition cursor-pointer"
+                            @click="goToEntrevista(entrevista.id)"
+                        >
+                            <div class="flex items-start gap-3">
+                                <img
+                                    v-if="entrevista.imagen"
+                                    :src="`/storage/${entrevista.imagen}`"
+                                    :alt="entrevista.titulo"
+                                    class="w-10 h-10 rounded object-cover flex-shrink-0"
+                                />
+                                <div class="flex-1">
+                                    <p class="text-sm font-medium text-gray-800 hover:text-yellow-600">
+                                        {{ truncate(entrevista.titulo, 40) }}
+                                    </p>
+                                    <p class="text-xs text-gray-500 mt-1">
+                                        Con {{ entrevista.entrevistado }}
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                        <div v-if="stats.entrevistas.recientes.length === 0" class="text-gray-500 text-sm">
+                            No hay entrevistas recientes
+                        </div>
+                    </div>
+                </div>
+
                 <!-- Revistas Recientes -->
-                <div class="bg-white rounded-lg shadow-md p-6">
+                <div class="flex-1 bg-white rounded-lg shadow-md p-6">
                     <h3 class="text-lg font-semibold text-gray-800 mb-4">Revistas Recientes</h3>
                     <div class="space-y-3">
                         <div
@@ -174,7 +362,7 @@
                 </div>
 
                 <!-- Columnistas Recientes -->
-                <div class="bg-white rounded-lg shadow-md p-6">
+                <div class="flex-1 bg-white rounded-lg shadow-md p-6">
                     <h3 class="text-lg font-semibold text-gray-800 mb-4">Columnistas Recientes</h3>
                     <div class="space-y-3">
                         <div
@@ -221,6 +409,9 @@ export default {
             loading: true,
             stats: {
                 articulos: { total: 0, recientes: [] },
+                editoriales: { total: 0, recientes: [] },
+                noticias: { total: 0, recientes: [] },
+                entrevistas: { total: 0, recientes: [] },
                 revistas: { total: 0, recientes: [] },
                 columnistas: { total: 0, recientes: [] }
             }
@@ -258,8 +449,25 @@ export default {
             if (!text) return '';
             return text.length > length ? text.substring(0, length) + '...' : text;
         },
+        formatDate(date) {
+            if (!date) return '';
+            return new Date(date).toLocaleDateString('es-ES', {
+                year: 'numeric',
+                month: 'long',
+                day: 'numeric'
+            });
+        },
         goToArticulo(id) {
             window.location.href = `/articulos-vue?edit=${id}`;
+        },
+        goToEditorial(id) {
+            window.location.href = `/editoriales-vue?edit=${id}`;
+        },
+        goToNoticia(id) {
+            window.location.href = `/noticias-vue?edit=${id}`;
+        },
+        goToEntrevista(id) {
+            window.location.href = `/entrevistas-vue?edit=${id}`;
         },
         goToRevista(id) {
             window.location.href = `/revistas-vue?edit=${id}`;
