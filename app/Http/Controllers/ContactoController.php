@@ -1,12 +1,11 @@
 <?php
 
 namespace App\Http\Controllers;
+use App\Models\Suscriptor;
+
 
 use Illuminate\Http\Request;
 
-namespace App\Http\Controllers;
-
-use Illuminate\Http\Request;
 
 class ContactoController extends Controller
 {
@@ -21,6 +20,11 @@ class ContactoController extends Controller
         ]);
 
         return back()->with('success', '¡Gracias por suscribirte al newsletter!');
+    }
+
+    public function listarContactos(Request $request){
+        $suscriptores = Suscriptor::all();
+        return view('admin.suscriptores.suscriptores',compact('suscriptores'));
     }
 }
 

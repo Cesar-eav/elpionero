@@ -25,8 +25,5 @@
                 </table>
             </div>
 
-            <div class="mt-4">
-                {{ $suscriptores->links() }}
-            </div>
         @endif
     </div>
