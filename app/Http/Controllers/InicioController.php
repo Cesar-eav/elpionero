@@ -42,6 +42,18 @@ class InicioController extends Controller
         return view('inicio.editoriales', compact('editoriales'));
     }
 
+    public function showEditorial($slug)
+    {
+        $editorial = Editorial::with('revista')->where('slug', $slug)->firstOrFail();
+        $otrasEditoriales = Editorial::with('revista')
+            ->where('id', '!=', $editorial->id)
+            ->latest()
+            ->limit(4)
+            ->get();
+
+        return view('inicio.editorial', compact('editorial', 'otrasEditoriales'));
+    }
+
     public function entrevistas()
     {
         $entrevistas = Entrevista::latest()

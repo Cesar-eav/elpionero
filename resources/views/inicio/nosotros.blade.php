@@ -239,6 +239,9 @@
 
             </div>
 
+            <!-- Footer -->
+            <x-footer />
+    </div>
 
 </body>
 

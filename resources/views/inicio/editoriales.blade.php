@@ -79,7 +79,7 @@
                     @if ($editoriales->isNotEmpty())
                         <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
                             @foreach ($editoriales as $editorial)
-                                <article
+                                <a href="{{ url('editorial/' . $editorial->slug) }}"
                                     class="flex flex-col border rounded-lg overflow-hidden bg-white shadow hover:shadow-lg transition-shadow">
                                     <div class="p-4">
                                         @if ($editorial->revista)
@@ -87,14 +87,14 @@
                                                 {{ $editorial->revista->titulo }}
                                             </div>
                                         @endif
-                                        <h3 class="text-lg font-bold text-black mb-3">
+                                        <h3 class="text-lg font-bold text-black mb-3 hover:text-[#fc5648] transition-colors">
                                             {{ $editorial->titulo }}
                                         </h3>
                                         <div class="text-sm text-gray-600 line-clamp-3">
                                             {{ Str::limit(strip_tags($editorial->contenido), 150) }}
                                         </div>
                                     </div>
-                                </article>
+                                </a>
                             @endforeach
                         </div>
 
@@ -109,10 +109,7 @@
             </main>
 
             <!-- Footer -->
-            <footer class="text-center text-sm text-gray-600 mt-10 pt-4 border-t border-gray-300">
-                <p class="text-gray-300">&copy; {{ date('Y') }} El Pionero de Valparaíso</p>
-                <p class="text-gray-400">Todos los derechos reservados</p>
-            </footer>
+            <x-footer />
         </div>
     </div>
 </body>

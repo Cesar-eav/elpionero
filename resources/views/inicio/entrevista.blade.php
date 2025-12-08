@@ -94,7 +94,7 @@
                         </div>
 
                         <!-- Contenido de la entrevista -->
-                        <div class="text-gray-800 text-base leading-relaxed prose prose-lg max-w-none ql-editor">
+                        <div class="text-gray-800 text-base leading-relaxed prose prose-lg max-w-none">
                             {!! $entrevista->contenido !!}
                         </div>
 
@@ -169,10 +169,7 @@
             </div>
 
             <!-- Footer -->
-            <footer class="text-center text-sm text-gray-600 mt-10 pt-4 border-t border-gray-300">
-                <p class="text-gray-300">&copy; {{ date('Y') }} El Pionero de Valparaíso</p>
-                <p class="text-gray-400">Todos los derechos reservados</p>
-            </footer>
+            <x-footer />
         </div>
     </div>
 </body>
