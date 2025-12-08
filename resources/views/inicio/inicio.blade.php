@@ -112,7 +112,10 @@
             </div>
         </header>
 
-
+        <!-- Botón Apóyanos destacado -->
+        <div class="flex justify-center my-6">
+            <x-apoyo-button />
+        </div>
 
         <div>
 

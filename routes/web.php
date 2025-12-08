@@ -18,7 +18,13 @@ use App\Http\Controllers\NoticiaController;
 Route::get('/',[InicioController::class, 'inicio'])->name('inicio');
 Route::get('/proximos-numeros',[InicioController::class, 'proximosNumeros'])->name('proximos-numeros');
 
+Route::get('/aportes', function () {
+    return view('aportes');
+})->name('aportes');
 
+Route::get('/gracias-aporte', function () {
+    return view('gracias-aporte');
+})->name('gracias.aporte');
 
 Route::get('/nosotros', [InicioController::class, 'nosotros'])->name('nosotros');
 
