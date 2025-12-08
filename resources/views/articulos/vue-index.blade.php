@@ -36,7 +36,7 @@
             <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                 <div class="flex space-x-4 py-3">
                     <a href="{{ route('dashboard.vue') }}" class="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium">
-                        Dashboard
+                        Inicio
                     </a>
                     <a href="{{ url('articulos-vue') }}" class="bg-gray-900 text-white px-3 py-2 rounded-md text-sm font-medium">
                         Artículos
@@ -44,10 +44,9 @@
                     <a href="{{ url('editoriales-vue') }}" class="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium">
                         Editoriales
                     </a>
-                    <a href="{{ url('noticias-vue') }}" class="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium">
                     <a href="{{ url('entrevistas-vue') }}" class="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium">
                         Entrevistas
-                    </a>
+                    <a href="{{ url('noticias-vue') }}" class="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium">
                         Noticias
                     </a>
                     <a href="{{ url('revistas-vue') }}" class="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium">

@@ -65,34 +65,10 @@ Route::middleware('auth')->group(function () {
     Route::resource('columnistas', ColumnistaController::class);
     Route::resource('admin/noticias', NoticiaController::class);
 
-    // Rutas para las versiones Vue
-    Route::get('/dashboard-vue', function () {
+    // Ruta principal del Dashboard Vue con Router (catch-all para Vue Router)
+    Route::get('/dashboard-vue/{any?}', function () {
         return view('dashboard-vue');
-    })->name('dashboard.vue');
-
-    Route::get('/articulos-vue', function () {
-        return view('articulos.vue-index');
-    })->name('articulos.vue');
-
-    Route::get('/revistas-vue', function () {
-        return view('revistas.vue-index');
-    })->name('revistas.vue');
-
-    Route::get('/columnistas-vue', function () {
-        return view('columnistas.vue-index');
-    })->name('columnistas.vue');
-
-    Route::get('/editoriales-vue', function () {
-        return view('editoriales.vue-index');
-    })->name('editoriales.vue');
-
-    Route::get('/noticias-vue', function () {
-        return view('noticias.vue-index');
-    })->name('noticias.vue');
-
-    Route::get('/entrevistas-vue', function () {
-        return view('entrevistas.vue-index');
-    })->name('entrevistas.vue');
+    })->where('any', '.*')->name('dashboard.vue');
 });
 
 require __DIR__.'/auth.php';
