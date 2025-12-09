@@ -179,16 +179,19 @@ export default {
                         this.resetForm();
                     }
                 });
+            } else {
+                // Destruir Quill cuando el modal se cierra
+                this.destroyQuill();
             }
         }
     },
 
     methods: {
         initQuill() {
-            if (this.quill) {
-                return;
-            }
+            // Destruir instancia anterior si existe
+            this.destroyQuill();
 
+            // Crear nueva instancia de Quill
             this.quill = new Quill(this.$refs.quillEditor, {
                 theme: 'snow',
                 placeholder: 'Escribe el contenido de la editorial aquí...',
@@ -203,6 +206,17 @@ export default {
                     ]
                 }
             });
+        },
+
+        destroyQuill() {
+            if (this.quill) {
+                // Limpiar el contenedor antes de destruir
+                const container = this.quill.container;
+                if (container && container.parentNode) {
+                    container.innerHTML = '';
+                }
+                this.quill = null;
+            }
         },
 
         async loadRevistas() {
@@ -267,9 +281,7 @@ export default {
     },
 
     beforeUnmount() {
-        if (this.quill) {
-            this.quill = null;
-        }
+        this.destroyQuill();
     }
 };
 </script>
