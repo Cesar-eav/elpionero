@@ -28,7 +28,8 @@ class AuthenticatedSessionController extends Controller
 
         $request->session()->regenerate();
 
-        return redirect()->intended(route('dashboard.vue', absolute: false));
+        // Redirigir siempre al dashboard Vue
+        return redirect('/dashboard-vue');
     }
 
     /**

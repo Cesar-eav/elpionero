@@ -3,6 +3,7 @@
 use Illuminate\Foundation\Application;
 use Illuminate\Foundation\Configuration\Exceptions;
 use Illuminate\Foundation\Configuration\Middleware;
+use Illuminate\Auth\Middleware\RedirectIfAuthenticated;
 
 return Application::configure(basePath: dirname(__DIR__))
     ->withRouting(
@@ -16,6 +17,9 @@ return Application::configure(basePath: dirname(__DIR__))
             $middleware->append(\App\Http\Middleware\ForceHttps::class);
             $middleware->append(\App\Http\Middleware\ForceNonWww::class);
         }
+
+        // Configurar redirección a dashboard Vue cuando el usuario ya está autenticado
+        RedirectIfAuthenticated::redirectUsing(fn () => '/dashboard-vue');
     })
     ->withExceptions(function (Exceptions $exceptions) {
         //

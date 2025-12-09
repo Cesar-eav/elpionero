@@ -52,9 +52,10 @@ Route::get('/previsualizar-revista/pdf', [RevistaController::class, 'previsualiz
 
 
 
-Route::get('/dashboard', function () {
-    return view('dashboard');
-})->middleware(['auth', 'verified'])->name('dashboard');
+// Dashboard Blade deshabilitado - se usa dashboard Vue
+// Route::get('/dashboard', function () {
+//     return view('dashboard');
+// })->middleware(['auth', 'verified'])->name('dashboard');
 
 
 
