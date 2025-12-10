@@ -217,6 +217,4 @@
         </div>
     </div>
 
-    {{-- Alpine para el toggle (si no está ya en tu layout) --}}
-    <script src="//unpkg.com/alpinejs" defer></script>
 </x-app-layout>

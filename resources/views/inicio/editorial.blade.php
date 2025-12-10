@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>{{ $editorial->titulo }} - El Pionero de Valparaíso</title>
     @vite(['resources/css/app.css', 'resources/js/app.js'])
+    @commenterStyles
     @if (app()->environment('production'))
         <script type="text/javascript">
             (function(c, l, a, r, i, t, y) {
@@ -68,9 +69,11 @@
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path>
                                 </svg>
                                 Volver a Editoriales
+
                             </a>
                         </div>
                     </article>
+
                 </main>
 
                 <!-- Sidebar derecha -->
@@ -125,6 +128,8 @@
             <x-footer />
         </div>
     </div>
+    @commenterScripts
+
 </body>
 
 </html>

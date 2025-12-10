@@ -21,7 +21,6 @@
             })(window, document, "clarity", "script", "rsqwi6wyvd");
         </script>
     @endif
-    <script src="//unpkg.com/alpinejs" defer></script>
 
 </head>
 

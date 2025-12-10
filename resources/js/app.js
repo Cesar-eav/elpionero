@@ -1,12 +1,9 @@
 import './bootstrap';
+import './dropdown';
 
-import Alpine from 'alpinejs';
 import { createApp } from 'vue';
 import router from './router';
 import DashboardLayout from './components/DashboardLayout.vue';
-
-window.Alpine = Alpine;
-Alpine.start();
 
 // Inicializar Vue 3 - Dashboard con Router
 const appDashboard = document.getElementById('app-dashboard');
