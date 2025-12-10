@@ -73,7 +73,8 @@
                             </a>
                         </div>
                     </article>
-
+            <div class="mt-6 bg-white border border-gray-300 rounded-lg p-6 shadow-sm">
+                        <x-commenter::index :model="$editorial" /> </div>
                 </main>
 
                 <!-- Sidebar derecha -->

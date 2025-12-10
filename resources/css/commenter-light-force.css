@@ -1,0 +1,98 @@
+/* Force light mode for laravel-comments library */
+
+/* Override all dark mode media queries */
+@media (prefers-color-scheme: dark) {
+    .lakm_commenter,
+    .lakm_commenter * {
+        background-color: white !important;
+        color: #000000 !important;
+    }
+
+    /* Input fields */
+    .lakm_commenter input,
+    .lakm_commenter textarea,
+    .lakm_commenter .ql-editor,
+    .lakm_commenter .ql-container {
+        background-color: white !important;
+        color: #000000 !important;
+        border-color: #d1d5db !important;
+    }
+
+    /* Buttons and filters */
+    .lakm_commenter button,
+    .lakm_commenter [role="button"] {
+        background-color: #f3f4f6 !important;
+        color: #000000 !important;
+    }
+
+    .lakm_commenter button:hover,
+    .lakm_commenter [role="button"]:hover {
+        background-color: #e5e7eb !important;
+    }
+
+    /* Comments container */
+    .lakm_commenter .dark\:bg-black,
+    .lakm_commenter .dark\:bg-black\!,
+    .lakm_commenter .dark\:bg-gray-900,
+    .lakm_commenter .dark\:bg-gray-800 {
+        background-color: white !important;
+    }
+
+    /* Text colors */
+    .lakm_commenter .dark\:text-white,
+    .lakm_commenter .dark\:text-gray-100,
+    .lakm_commenter .dark\:text-gray-200 {
+        color: #000000 !important;
+    }
+
+    /* Border colors */
+    .lakm_commenter .dark\:border-gray-700,
+    .lakm_commenter .dark\:border-gray-600 {
+        border-color: #d1d5db !important;
+    }
+}
+
+/* Force light mode without media query */
+.lakm_commenter {
+    background-color: white !important;
+    color: #000000 !important;
+}
+
+.lakm_commenter input,
+.lakm_commenter textarea,
+.lakm_commenter .ql-editor,
+.lakm_commenter .ql-container {
+    background-color: white !important;
+    color: #000000 !important;
+    border-color: #d1d5db !important;
+}
+
+.lakm_commenter button,
+.lakm_commenter [role="button"] {
+    background-color: #f3f4f6 !important;
+    color: #000000 !important;
+}
+
+.lakm_commenter button:hover,
+.lakm_commenter [role="button"]:hover {
+    background-color: #e5e7eb !important;
+}
+
+/* Comments section title */
+.lakm_commenter h1,
+.lakm_commenter h2,
+.lakm_commenter h3,
+.lakm_commenter h4,
+.lakm_commenter h5,
+.lakm_commenter h6 {
+    color: #000000 !important;
+}
+
+/* Comment cards */
+.lakm_commenter [class*="bg-"] {
+    background-color: white !important;
+}
+
+.lakm_commenter [class*="text-"] {
+    color: #000000 !important;
+}

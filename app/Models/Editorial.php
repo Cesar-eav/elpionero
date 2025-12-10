@@ -8,11 +8,11 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use LakM\Commenter\Concerns\Commentable;
 use LakM\Commenter\Contracts\CommentableContract;
 
-//implements CommentableContract
-class Editorial extends Model 
+//
+class Editorial extends Model implements CommentableContract
 {
     use HasFactory; 
-   // use Commentable;
+    use Commentable;
     private $guestMode = true;
 
     protected $fillable = [
