@@ -54,7 +54,7 @@
 </head>
 
 <body class="bg-gray-100 text-gray-900 font-serif text-base">
-    <div class="w-full  mx-auto p-4">
+    <div class="w-full  mx-auto md:p-4">
         <!-- Encabezado -->
         <header class="text-center mb-1">
             <!-- Visible en pantallas medianas y grandes -->
@@ -86,7 +86,7 @@
 
             <!-- Visible solo en móviles -->
             <div class="block md:hidden">
-                <img src="{{ asset('storage/logo_m.png') }}" class="w-full mx-auto mb-3 rounded shadow" />
+                <img src="{{ asset('storage/logo_m.png') }}" class="w-full mx-auto mb-3 shadow" />
 
                 <!-- Redes sociales - Versión móvil -->
                 <div class="flex justify-center gap-4 mb-4">
@@ -299,7 +299,7 @@
 
                 <!-- Contenido principal -->
 
-                <main class="w-full space-y-6 bg-gray-50 border border-gray-300 rounded-lg p-4 shadow-sm">
+                <main class="w-full space-y-6 bg-gray-50 border border-gray-300 rounded-lg md:p-4 p-2 shadow-sm">
 
                     @if ($columnas->isNotEmpty())
                         @php
@@ -322,7 +322,7 @@
                                         <div class="w-full md:w-1/3 bg-gray-100">
                                             <img src="{{ asset('storage/' . $destacada->columnista->foto) }}"
                                                 alt="{{ $destacada->columnista->nombre }}"
-                                                class="w-full h-64 md:h-full object-cover" />
+                                                class="w-full h-48 md:h-full object-cover" />
                                         </div>
                                     @endif
                                     {{-- Texto --}}
@@ -356,28 +356,28 @@
                             <section class="grid grid-cols-1 md:grid-cols-2 gap-6 mt-6">
                                 @foreach ($resto as $articulo)
                                     <div
-                                        class="flex border rounded-lg overflow-hidden bg-white shadow hover:shadow-lg transition-shadow">
+                                        class="flex rounded-lg overflow-hidden bg-white shadow hover:shadow-lg transition-shadow">
                                         <a href="{{ url('articulo/' . $articulo->slug) }}" class="flex w-full">
                                             {{-- Texto --}}
-                                            <div class="w-2/3 p-4 flex flex-col justify-center">
-                                                <div class="text-xs md:text-sm text-gray-700 mb-1">
+                                            <div class="w-4/5 p-4 flex flex-col justify-center">
+                                                 <div class="text-xs md:text-sm text-gray-700 mb-1">
                                                     {{ $articulo->revista->titulo ?? '' }}
                                                 </div>
                                                  {{-- line-clamp-4 --}}
-                                                <h4 class="text-lg font-bold text-black mb-1">
+                                                <h4 class="md:text-lg text-xs font-bold text-black mb-1">
                                                     {{ $articulo->titulo }}
                                                 </h4>
                                                 @if ($articulo->columnista)
-                                                    <div class="text-sm italic text-gray-600">{{ $articulo->columnista->nombre }}
+                                                    <div class="md:text-sm text-xs italic text-gray-600">{{ $articulo->columnista->nombre }}
                                                     </div>
                                                 @endif
                                             </div>
                                             {{-- Imagen a la derecha --}}
                                             @if ($articulo->columnista && $articulo->columnista->foto)
-                                                <div class="w-1/3 bg-gray-100">
+                                                <div class="w-1/5 bg-gray-100">
                                                     <img src="{{ asset('storage/' . $articulo->columnista->foto) }}"
                                                         alt="{{ $articulo->columnista->nombre }}"
-                                                        class="w-full h-full object-cover">
+                                                        class="w-32 h-full object-cover">
                                                 </div>
                                             @endif
                                         </a>

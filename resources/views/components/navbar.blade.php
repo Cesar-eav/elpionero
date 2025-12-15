@@ -1,5 +1,5 @@
 <!-- Barra de navegación -->
-<div class="flex w-full font-mono items-center justify-between bg-black border border-gray-300 text-[#fc5648] rounded-md px-6 py-3 md:mb-8 mb-0 sticky top-0 z-50 text-lg font-semibold">
+<div class="flex w-full font-mono items-center justify-between bg-black border border-gray-300 text-[#fc5648] md:rounded-md px-6 py-3 md:mb-8 mb-0 sticky top-0 z-50 text-lg font-semibold">
 
     <!-- Logo o título -->
     <a href="{{ url('/') }}" class="hover:text-white transition-colors flex items-center gap-1">
@@ -14,6 +14,7 @@
         <a href="{{ url('entrevistas') }}" class="hover:text-white transition-colors">Entrevistas</a>
         <a href="{{ url('revistas-lista') }}" class="hover:text-white transition-colors">Revistas</a>
         <a href="{{ url('nosotros') }}" class="hover:text-white transition-colors">Nosotros</a>
+
     </nav>
 
     <!-- Botón hamburguesa (solo en móvil) -->
@@ -40,6 +41,9 @@
         <a href="{{ url('entrevistas') }}" class="hover:text-white transition-colors">Entrevistas</a>
         <a href="{{ url('revistas-lista') }}" class="hover:text-white transition-colors">Revistas</a>
         <a href="{{ url('nosotros') }}" class="hover:text-white transition-colors">Nosotros</a>
+        <a href="{{ route('aportes') }}">
+            <span class="text-lg">Apóyanos</span>
+        </a>
     </div>
 </div>
 

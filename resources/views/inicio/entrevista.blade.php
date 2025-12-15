@@ -6,6 +6,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>{{ $entrevista->titulo }} - El Pionero de Valparaíso</title>
     @vite(['resources/css/app.css', 'resources/js/app.js'])
+    @commenterStyles
+
     @if (app()->environment('production'))
         <script type="text/javascript">
             (function(c, l, a, r, i, t, y) {
@@ -109,6 +111,11 @@
                             </a>
                         </div>
                     </article>
+                    <div class="mt-6 bg-white border border-gray-300 rounded-lg p-6 shadow-sm">
+                        <x-commenter::index :model="$entrevista" /> 
+                    </div>
+                </main>
+
                 </main>
 
                 <!-- Sidebar derecha -->
@@ -172,6 +179,8 @@
             <x-footer />
         </div>
     </div>
+    @commenterScripts
+
 </body>
 
 </html>

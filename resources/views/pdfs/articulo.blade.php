@@ -6,6 +6,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>El Pionero - {{ $articulo->titulo }}</title>
     @vite(['resources/css/app.css', 'resources/js/app.js'])
+    @commenterStyles
+
     @if (app()->environment('production'))
         <script type="text/javascript">
             (function(c, l, a, r, i, t, y) {
@@ -86,7 +88,9 @@
                                 {!! $articulo->contenido !!}
                             </div>
                         </article>
-
+                    <div class="mt-6 bg-white border border-gray-300 rounded-lg p-6 shadow-sm">
+                        <x-commenter::index :model="$articulo" /> 
+                    </div>
                     </div>
                 </main>
 
@@ -129,7 +133,6 @@
                         @endif
                     </div>
 
-
                 </aside>
             </div>
 
@@ -138,6 +141,7 @@
 
             <div class="fixed bottom-2 right-2 text-xs text-gray-400">1</div>
         </div>
-</body>
+        @commenterScripts
+    </body>
 
 </html>
