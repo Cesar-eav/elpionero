@@ -107,7 +107,7 @@ class RevistaController extends Controller
         $fechaGeneracion = now()->format('Y-m-d H:i:s');
 
         // Renderizar una vista Blade específica para el PDF
-        $pdf = Pdf::loadView('pdfs.revista', compact('revista', 'articulos', 'ubicacion', 'fechaGeneracion'));
+        $pdf = Pdf::loadView('inicio.revista', compact('revista', 'articulos', 'ubicacion', 'fechaGeneracion'));
 
         // Descargar el PDF con un nombre específico
         $nombreArchivo = Str::slug($revista->titulo) . '-' . now()->format('YmdHis') . '.pdf';
@@ -125,11 +125,11 @@ class RevistaController extends Controller
         $ubicacion = 'Valparaíso, Valparaíso, Chile';
         $fechaGeneracion = now()->format('Y-m-d H:i:s');
 
-        return view('pdfs.revista', compact('articulos', 'articulo_portada', 'ubicacion', 'fechaGeneracion'));
+        return view('inicio.revista', compact('articulos', 'articulo_portada', 'ubicacion', 'fechaGeneracion'));
 
 
         // Renderizar la vista Blade del PDF
-        $pdfView = View::make('pdfs.revista', compact('revista', 'articulos', 'ubicacion', 'fechaGeneracion'));
+        $pdfView = View::make('inicio.revista', compact('revista', 'articulos', 'ubicacion', 'fechaGeneracion'));
         $html = $pdfView->render();
 
         // Mostrar la vista de previsualización

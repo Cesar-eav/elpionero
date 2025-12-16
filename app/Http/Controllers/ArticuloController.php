@@ -32,7 +32,7 @@ class ArticuloController extends Controller
         $articulos = Articulo::with(['revista', 'columnista'])->inRandomOrder()->limit(8)->get();
 
 
-        return view('pdfs.articulo', compact('articulo', 'articulos'));
+        return view('inicio.articulo', compact('articulo', 'articulos'));
     }
 
     public function showColumnas()
@@ -40,7 +40,7 @@ class ArticuloController extends Controller
         $columnas = Articulo::with(['revista', 'columnista'])->inRandomOrder()->get();
 
 
-        return view('pdfs.columnas', compact('columnas'));
+        return view('inicio.columnas', compact('columnas'));
     }
 
     /**
