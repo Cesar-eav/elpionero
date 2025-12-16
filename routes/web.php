@@ -9,6 +9,7 @@ use App\Http\Controllers\NewsletterController;
 use App\Http\Controllers\InicioController;
 use App\Http\Controllers\ColumnistaController;
 use App\Http\Controllers\NoticiaController;
+use App\Http\Controllers\BusquedaController;
 
 
 
@@ -27,6 +28,8 @@ Route::get('/gracias-aporte', function () {
 })->name('gracias.aporte');
 
 Route::get('/nosotros', [InicioController::class, 'nosotros'])->name('nosotros');
+
+Route::get('/buscar', [BusquedaController::class, 'buscar'])->name('buscar');
 
 Route::get('/noticias',[NoticiaController::class, 'noticiasIndex'])->name('noticias.index');
 Route::get('/editoriales', [InicioController::class, 'editoriales'])->name('editoriales.index');

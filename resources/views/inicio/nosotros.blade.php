@@ -37,14 +37,7 @@
 
 
     <div class="w-full  mx-auto p-4">
-        <!-- Encabezado -->
-        <header class="text-center mb-1">
-            <!-- Visible en pantallas medianas y grandes -->
-            <img src="{{ asset('storage/portada.png') }}" class="w-full mx-auto mb-4 rounded shadow  md:block hidden" />
-
-            <!-- Visible solo en móviles -->
-            <img src="{{ asset('storage/logo_m.png') }}" class="w-full mx-auto mb-4 rounded shadow  block md:hidden" />
-        </header>
+        <x-header />
 
 
         <x-navbar />
