@@ -33,25 +33,3 @@
     </div>
 </header>
 
-<!-- Búsqueda y Botón Apóyanos -->
-<div class="flex flex-col md:flex-row justify-center items-center gap-4 my-6 px-4">
-    <!-- Barra de búsqueda - Versión escritorio -->
-    <div class="hidden md:block flex-1 max-w-xl">
-        <form action="{{ route('buscar') }}" method="GET">
-            <div class="relative">
-                <input type="text"
-                       name="q"
-                       placeholder="Buscar en columnas, editoriales, noticias y entrevistas..."
-                       value="{{ request('q') }}"
-                       class="w-full px-4 py-3 pr-12 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-[#fc5648] focus:border-transparent"
-                       required>
-
-            </div>
-        </form>
-    </div>
-
-    <!-- Botón Apóyanos -->
-    <div class="flex justify-center">
-        <x-apoyo-button />
-    </div>
-</div>

@@ -62,11 +62,11 @@
             <x-navbar />
 
  <!-- DESTACADO: Último número descargable -->
-<section 
+<section
     id="ultimo-numero"
-    x-data="{ visible: false }" 
-    x-init="setTimeout(() => visible = true, 100)" 
-    x-show="visible" -
+    x-data="{ visible: false }"
+    x-init="setTimeout(() => visible = true, 100)"
+    x-show="visible"
     x-transition
     class="relative overflow-hidden rounded-2xl my-8 max-w-7xl mx-auto border border-gray-200 shadow-lg"
 >
@@ -113,27 +113,27 @@
       </h2>
 
       <p class="mt-3 text-gray-700">
-        “Propuestas para una reactivación económica en serio” — Columnas y miradas diversas sobre una pregunta urgente para la ciudad. 
+        "Propuestas para una reactivación económica en serio" — Columnas y miradas diversas sobre una pregunta urgente para la ciudad.
         Llévatelo en PDF o léelo en línea.
       </p>
 
       <!-- Botones CTA -->
       <div class="mt-5 flex flex-col sm:flex-row gap-3">
-        <a 
-          href="{{ asset('storage/Ediciones/EPDV_NOVIEMBRE_2025.pdf') }}" 
-          target="_blank" 
-          rel="noopener" 
-          download 
+        <a
+          href="{{ asset('storage/Ediciones/EPDV_NOVIEMBRE_2025.pdf') }}"
+          target="_blank"
+          rel="noopener"
+          download
           class="inline-flex items-center justify-center gap-2 px-5 py-3 rounded-lg bg-[#fc5648] text-white font-semibold hover:bg-[#d94439] shadow transition"
         >
           <svg class="w-5 h-5" viewBox="0 0 24 24" fill="currentColor"><path d="M12 3v10m0 0 4-4m-4 4-4-4M4 17h16v2H4v-2Z" stroke="currentColor" stroke-width="1.5" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>
           Descargar PDF
         </a>
 
-        <a 
-          href="{{ asset('storage/Ediciones/EPDV_NOVIEMBRE_2025.pdf') }}" 
-          target="_blank" 
-          rel="noopener" 
+        <a
+          href="{{ asset('storage/Ediciones/EPDV_NOVIEMBRE_2025.pdf') }}"
+          target="_blank"
+          rel="noopener"
           class="inline-flex items-center justify-center gap-2 px-5 py-3 rounded-lg bg-white text-gray-900 border border-gray-300 font-semibold hover:bg-gray-50 shadow-sm transition"
         >
           <svg class="w-5 h-5" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5h13M8 12h13M8 19h13M3 5h.01M3 12h.01M3 19h.01"/></svg>
@@ -144,6 +144,25 @@
       <!-- separador fino -->
       <div class="my-6 h-px bg-gradient-to-r from-transparent via-gray-200 to-transparent"></div>
 
+      <!-- Recuadro Apóyanos sobrio -->
+      <div class="bg-green-50 border border-green-300 rounded-lg p-4 mb-6">
+        <div class="flex items-start gap-3">
+          <svg class="w-6 h-6 text-green-600 flex-shrink-0 mt-0.5" fill="currentColor" viewBox="0 0 24 24">
+            <path d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"></path>
+          </svg>
+          <div class="flex-1">
+            <h3 class="font-bold text-gray-900 mb-1">Apoya nuestro trabajo</h3>
+            <p class="text-sm text-gray-700 mb-3">
+              Tu aporte nos ayuda a seguir trabajando por Valparaíso con independencia y calidad. Cada contribución hace la diferencia.
+            </p>
+            <a href="{{ route('aportes') }}"
+               class="inline-block bg-green-600 hover:bg-green-700 text-white text-sm font-semibold px-4 py-2 rounded transition">
+              Hacer un aporte
+            </a>
+          </div>
+        </div>
+      </div>
+
       <!-- Mini newsletter integrado -->
       <div class="grid grid-cols-1 sm:grid-cols-3 gap-3 items-center">
         <p class="sm:col-span-1 text-sm text-gray-700">
@@ -152,15 +171,15 @@
 
         <form method="POST" action="{{ route('newsletter.subscribe') }}" class="sm:col-span-2 flex flex-col sm:flex-row gap-2">
           @csrf
-          <input 
-            type="email" 
-            name="email" 
-            required 
-            placeholder="Tu correo electrónico" 
-            class="w-full sm:flex-1 px-4 py-2 rounded-lg border border-gray-300 focus:outline-none focus:ring focus:border-[#fc5648]" 
+          <input
+            type="email"
+            name="email"
+            required
+            placeholder="Tu correo electrónico"
+            class="w-full sm:flex-1 px-4 py-2 rounded-lg border border-gray-300 focus:outline-none focus:ring focus:border-[#fc5648]"
           />
-          <button 
-            type="submit" 
+          <button
+            type="submit"
             class="px-4 py-2 rounded-lg bg-[#eba81d] text-black font-semibold hover:brightness-95 border border-amber-300 shadow-sm transition"
           >
             Suscribirse
@@ -220,7 +239,7 @@
                                 @endforeach
                             </section>
                         @endif
-{{-- 
+{{--
                         <div class="mt-6">
                             {{ $noticias->links() }}
                         </div> --}}
