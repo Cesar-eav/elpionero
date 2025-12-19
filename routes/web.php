@@ -32,6 +32,10 @@ Route::get('/nosotros', [InicioController::class, 'nosotros'])->name('nosotros')
 
 Route::get('/buscar', [BusquedaController::class, 'buscar'])->name('buscar');
 
+Route::get('/limpiador-correos', function () {
+    return view('limpiador-correos');
+})->name('limpiador.correos');
+
 Route::get('/sitemap-noticias.xml', [SitemapController::class, 'noticias'])->name('sitemap.noticias');
 
 Route::get('/noticias',[NoticiaController::class, 'noticiasIndex'])->name('noticias.index');
