@@ -10,6 +10,7 @@ use App\Http\Controllers\InicioController;
 use App\Http\Controllers\ColumnistaController;
 use App\Http\Controllers\NoticiaController;
 use App\Http\Controllers\BusquedaController;
+use App\Http\Controllers\SitemapController;
 
 
 
@@ -31,7 +32,10 @@ Route::get('/nosotros', [InicioController::class, 'nosotros'])->name('nosotros')
 
 Route::get('/buscar', [BusquedaController::class, 'buscar'])->name('buscar');
 
+Route::get('/sitemap-noticias.xml', [SitemapController::class, 'noticias'])->name('sitemap.noticias');
+
 Route::get('/noticias',[NoticiaController::class, 'noticiasIndex'])->name('noticias.index');
+Route::get('/noticia/{slug}', [NoticiaController::class, 'showBySlug'])->name('noticia.show');
 Route::get('/editoriales', [InicioController::class, 'editoriales'])->name('editoriales.index');
 Route::get('/editorial/{slug}', [InicioController::class, 'showEditorial'])->name('editorial.show');
 Route::get('/entrevistas', [InicioController::class, 'entrevistas'])->name('entrevistas.index');

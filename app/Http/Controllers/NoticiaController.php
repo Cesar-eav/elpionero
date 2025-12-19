@@ -79,6 +79,15 @@ class NoticiaController extends Controller
     }
 
     /**
+     * Muestra una noticia específica por slug (vista pública).
+     */
+    public function showBySlug($slug)
+    {
+        $noticia = Noticia::where('slug', $slug)->firstOrFail();
+        return view('noticia-detalle', compact('noticia'));
+    }
+
+    /**
      * Muestra el formulario para editar una noticia existente.
      */
     public function edit(Noticia $noticia)

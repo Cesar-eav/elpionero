@@ -107,31 +107,29 @@
                         @if($resto->count())
                             <section class="grid grid-cols-1 sm:grid-cols-3 gap-6 mt-6">
                                 @foreach ($resto as $n)
-                                    <article class="flex flex-col border rounded-lg overflow-hidden bg-white shadow hover:shadow-lg transition-shadow">
-                                        <div class="flex flex-col h-full">
-                                            {{-- @if($n->imagen)
-                                                <img src="{{ asset('storage/' .$n->imagen) }}"
-                                                     alt="Imagen de {{ $n->titulo }}"
-                                                     class="w-full h-44 object-cover">
-                                            @else
-                                                <div class="w-full h-30 bg-gradient-to-br from-gray-200 to-gray-300 flex items-center justify-center">
-                                                    <span class="text-gray-500 text-xs">Sin imagen</span>
-                                                </div>
-                                            @endif --}}
+                                    <a href="{{ route('noticia.show', $n->slug) }}" class="block">
+                                        <article class="flex flex-col border rounded-lg overflow-hidden bg-white shadow hover:shadow-lg transition-shadow h-full">
+                                            <div class="flex flex-col h-full">
+                                                @if($n->imagen)
+                                                    <img src="{{ asset('storage/' . $n->imagen) }}"
+                                                         alt="{{ $n->titulo }}"
+                                                         class="w-full h-44 object-cover">
+                                                @endif
 
-                                            <div class="p-4 flex-1 flex flex-col">
-                                                <div class="text-xs text-gray-500 mb-1">
-                                                    {{ $n->fecha_publicacion?->format('d/m/Y') ?? '' }}
+                                                <div class="p-4 flex-1 flex flex-col">
+                                                    <div class="text-xs text-gray-500 mb-1">
+                                                        {{ $n->fecha_publicacion?->format('d/m/Y') ?? '' }}
+                                                    </div>
+                                                    <h4 class="text-lg font-bold text-black mb-1 line-clamp-2">
+                                                        {{ $n->titulo }}
+                                                    </h4>
+                                                    <p class="text-sm text-gray-700 text-justify mt-2 flex-1">
+                                                        {{ Str::limit($n->resumen ?? strip_tags($n->cuerpo), 150) }}
+                                                    </p>
                                                 </div>
-                                                <h4 class="text-lg font-bold text-black mb-1 line-clamp-2">
-                                                    {{ $n->titulo }}
-                                                </h4>
-                                                <p class="text-sm text-gray-700 text-justify mt-2 flex-1">
-                                                    {{ $n->cuerpo}}
-                                                </p>
                                             </div>
-                                        </div>
-                                    </article>
+                                        </article>
+                                    </a>
                                 @endforeach
                             </section>
                         @endif
