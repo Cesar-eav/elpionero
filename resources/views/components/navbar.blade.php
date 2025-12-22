@@ -33,6 +33,7 @@
         <a href="{{ url('noticias') }}" class="hover:text-white transition-colors">Noticias</a>
         <a href="{{ url('entrevistas') }}" class="hover:text-white transition-colors">Entrevistas</a>
         <a href="{{ url('revistas-lista') }}" class="hover:text-white transition-colors">Revistas</a>
+        <a href="{{ route('juegos.index') }}" class="hover:text-white transition-colors">Juegos</a>
         <a href="{{ url('nosotros') }}" class="hover:text-white transition-colors">Nosotros</a>
     </nav>
 
@@ -79,6 +80,7 @@
         <a href="{{ url('noticias') }}" class="hover:text-white transition-colors block py-1">Noticias</a>
         <a href="{{ url('entrevistas') }}" class="hover:text-white transition-colors block py-1">Entrevistas</a>
         <a href="{{ url('revistas-lista') }}" class="hover:text-white transition-colors block py-1">Revistas</a>
+        <a href="{{ route('juegos.index') }}" class="hover:text-white transition-colors block py-1">Juegos</a>
         <a href="{{ url('nosotros') }}" class="hover:text-white transition-colors block py-1">Nosotros</a>
         <a href="{{ route('aportes') }}" class="hover:text-white transition-colors block py-1 border-t border-gray-700 pt-3 mt-2">
             <span class="text-lg">Apóyanos</span>

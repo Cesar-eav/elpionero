@@ -79,13 +79,13 @@
       <div class="relative w-full max-w-sm">
         <!-- Cinta "Nuevo" -->
         <span class="absolute -left-2 -top-2 z-10 bg-[#fc5648] text-white text-xs font-bold uppercase tracking-wide px-2 py-1 rounded">
-          Nuevo: Noviembre 2025
+          Nuevo: Mini Especial
         </span>
 
         <!-- Portada -->
-        <a href="{{ asset('storage/Ediciones/EPDV_NOVIEMBRE_2025.pdf') }}" target="_blank" rel="noopener" class="block">
+        <a href="{{ asset('storage/Ediciones/Plaza_Ohiggins.pdf') }}" target="_blank" rel="noopener" class="block">
           <img
-            src="{{ asset('storage/Portada_Octubre.jpg') }}"
+            src="{{ asset('storage/Ediciones/MiniEspecial.jpeg') }}"
             alt="Portada El Pionero - Octubre 2025"
             class="w-full h-auto rounded-lg shadow-lg ring-1 ring-black/5 hover:scale-[1.02] transition-transform"
             loading="lazy"
@@ -113,14 +113,14 @@
       </h2>
 
       <p class="mt-3 text-gray-700">
-        "Propuestas para una reactivación económica en serio" — Columnas y miradas diversas sobre una pregunta urgente para la ciudad.
+        "Plaza O' Higgins ¿Qué pasó con el pasto?" | Mini Especial — Registro fotográfico del estado de la plaza.
         Llévatelo en PDF o léelo en línea.
       </p>
 
       <!-- Botones CTA -->
       <div class="mt-5 flex flex-col sm:flex-row gap-3">
         <a
-          href="{{ asset('storage/Ediciones/EPDV_NOVIEMBRE_2025.pdf') }}"
+          href="{{ asset('storage/Ediciones/Plaza_Ohiggins.pdf') }}"
           target="_blank"
           rel="noopener"
           download
@@ -131,7 +131,7 @@
         </a>
 
         <a
-          href="{{ asset('storage/Ediciones/EPDV_NOVIEMBRE_2025.pdf') }}"
+          href="{{ asset('storage/Ediciones/Plaza_Ohiggins.pdf') }}"
           target="_blank"
           rel="noopener"
           class="inline-flex items-center justify-center gap-2 px-5 py-3 rounded-lg bg-white text-gray-900 border border-gray-300 font-semibold hover:bg-gray-50 shadow-sm transition"

@@ -11,6 +11,7 @@ use App\Http\Controllers\ColumnistaController;
 use App\Http\Controllers\NoticiaController;
 use App\Http\Controllers\BusquedaController;
 use App\Http\Controllers\SitemapController;
+use App\Http\Controllers\TriviaReportController;
 
 
 
@@ -35,6 +36,21 @@ Route::get('/buscar', [BusquedaController::class, 'buscar'])->name('buscar');
 Route::get('/limpiador-correos', function () {
     return view('limpiador-correos');
 })->name('limpiador.correos');
+
+// Rutas de Juegos
+Route::get('/juegos', function () {
+    return view('juegos.index');
+})->name('juegos.index');
+
+Route::get('/juegos/sopa-letras', function () {
+    return view('juegos.crucigrama');
+})->name('juegos.sopa-letras');
+
+Route::get('/juegos/trivia', function () {
+    return view('juegos.trivia');
+})->name('juegos.trivia');
+
+Route::post('/trivia/reportar', [TriviaReportController::class, 'store'])->name('trivia.reportar');
 
 Route::get('/sitemap-noticias.xml', [SitemapController::class, 'noticias'])->name('sitemap.noticias');
 
