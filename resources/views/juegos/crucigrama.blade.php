@@ -139,6 +139,11 @@
                     </div>
                 </div>
 
+                <!-- Botón de Iniciar/Reiniciar -->
+                <button onclick="initGame()" id="btn-init-game" class="w-full bg-gradient-to-r from-purple-500 via-pink-500 to-orange-500 text-white font-black py-4 rounded-lg hover:scale-105 transition-all duration-300 text-sm tracking-widest uppercase shadow-xl">
+                    INICIAR JUEGO
+                </button>
+
                 <div class="bg-white p-5 shadow-lg rounded-lg border border-gray-200">
                     <div class="flex justify-between items-center mb-4 border-b pb-2 border-gray-100">
                         <h3 class="text-xs font-bold uppercase text-gray-400 tracking-wider">Palabras a buscar</h3>
@@ -147,11 +152,8 @@
                     
                     <ul id="word-list" class="grid grid-cols-2 gap-2 text-sm font-medium text-gray-600">
                         </ul>
-                    
-                    <div class="mt-6 flex flex-col gap-2">
-                         <button onclick="initGame()" class="w-full bg-gray-900 text-white font-bold py-3 rounded hover:bg-gray-700 transition text-xs tracking-widest uppercase">
-                            Reiniciar Tablero
-                        </button>
+
+                    <div class="mt-6">
                         <button id="btn-solution" class="w-full text-red-500 hover:text-red-700 font-bold py-2 text-xs transition uppercase border border-transparent hover:border-red-100 rounded">
                             Mostrar Solución
                         </button>
@@ -198,31 +200,19 @@
         const WORDS_POOL = ['ASCENSORES', 'CERROS', 'PUERTO', 'TROLEBUS', 'ESCALERAS', 'GRAFFITI', 'BOHEMIA', 'CHORRILLANA', 'MIRADOR', 'PLAYA'];
         const SIZE = 12;
         
-        // Vectores de Dirección (Matemática Pura para movernos en la matriz)
         const VECTORS = {
-            H:  { r: 0, c: 1 },   // Horizontal
-            V:  { r: 1, c: 0 },   // Vertical
-            D1: { r: 1, c: 1 },   // Diagonal \
-            D2: { r: -1, c: 1 },  // Diagonal /
-            // Inversos (Multiplicamos por -1)
-            HR: { r: 0, c: -1 },
-            VR: { r: -1, c: 0 },
-            D1R:{ r: -1, c: -1 },
-            D2R:{ r: 1, c: -1 }
+            H:  { r: 0, c: 1 }, V:  { r: 1, c: 0 }, D1: { r: 1, c: 1 }, D2: { r: -1, c: 1 },
+            HR: { r: 0, c: -1 }, VR: { r: -1, c: 0 }, D1R:{ r: -1, c: -1 }, D2R:{ r: 1, c: -1 }
         };
 
         // --- ESTADO ---
         let state = {
             grid: [],
-            solutions: {}, // Mapa palabra -> array de coords 'r-c'
-            difficulty: 'normal',
+            solutions: {},
+            difficulty: 'normal', // Default explícito
             foundCount: 0,
-            gameActive: true,
-            selection: {
-                active: false,
-                start: null, // {r, c}
-                currentIds: []
-            }
+            gameActive: true,     // SIEMPRE ACTIVO AL INICIO
+            selection: { active: false, start: null, currentIds: [] }
         };
 
         // --- DOM Elements ---
@@ -232,28 +222,35 @@
             status: document.getElementById('game-status'),
             counter: document.getElementById('counter'),
             modeText: document.getElementById('current-mode-text'),
-            btnSolution: document.getElementById('btn-solution')
+            btnSolution: document.getElementById('btn-solution'),
+            btnRestart: document.getElementById('btn-restart') // ID actualizado
         };
 
-        // --- INICIO ---
+        // --- FUNCIONES PRINCIPALES ---
+
+        // Unificar lógica: Cambiar dificultad = Nuevo Juego instantáneo
         window.setDifficulty = (level) => {
             state.difficulty = level;
             updateDifficultyUI(level);
-            initGame();
+            initGame(); // Reinicia automáticamente, sin esperar click
         };
 
         window.initGame = () => {
+            // Reset Estado
             state.gameActive = true;
             state.foundCount = 0;
             state.selection = { active: false, start: null, currentIds: [] };
             state.solutions = {};
 
-            ui.status.textContent = "¡A JUGAR!";
+            // Reset UI
+            ui.status.textContent = "BUSCANDO...";
             ui.status.className = "text-xs font-bold uppercase bg-blue-100 text-blue-800 px-4 py-2 rounded-full";
             ui.btnSolution.disabled = false;
             ui.btnSolution.textContent = "Mostrar Solución";
+            ui.btnSolution.classList.remove('opacity-50', 'line-through');
             ui.counter.textContent = `0/${WORDS_POOL.length}`;
-
+            
+            // Render
             renderWordList();
             generateGrid();
         };
@@ -270,25 +267,19 @@
             ui.modeText.textContent = `Modo: ${labels[level]}`;
         }
 
-        // --- LÓGICA DEL ALGORITMO (EL CEREBRO) ---
+        // --- MOTOR DEL JUEGO (Sin Cambios Lógicos Mayores, solo limpieza) ---
         function generateGrid() {
             state.grid = Array(SIZE).fill().map(() => Array(SIZE).fill(''));
-            
-            // Ordenamos por longitud para poner las difíciles primero
             const sortedWords = [...WORDS_POOL].sort((a, b) => b.length - a.length);
 
             sortedWords.forEach((word, index) => {
                 let placed = false;
                 let attempts = 0;
-                
-                // Obtener direcciones permitidas según dificultad
                 const dirs = getAllowedVectors(state.difficulty, index);
 
                 while (!placed && attempts < 300) {
                     const vecName = dirs[Math.floor(Math.random() * dirs.length)];
                     const vec = VECTORS[vecName];
-                    
-                    // Posición inicial aleatoria
                     const r = Math.floor(Math.random() * SIZE);
                     const c = Math.floor(Math.random() * SIZE);
 
@@ -298,26 +289,14 @@
                     }
                     attempts++;
                 }
-                
-                if(!placed) console.warn("No cupo:", word);
             });
-
             renderGridHTML();
         }
 
         function getAllowedVectors(diff, idx) {
             if (diff === 'normal') return ['H', 'V'];
-            
-            if (diff === 'hard') {
-                // 5 palabras normales, 5 locas
-                if (idx < 5) return ['H', 'V']; 
-                return ['D1', 'D2', 'HR', 'VR', 'D1R', 'D2R']; 
-            }
-            
-            if (diff === 'chorizo') {
-                // TODO vale, excepto lo fácil (Horizontal derecha)
-                return ['D1', 'D2', 'D1R', 'D2R', 'HR', 'VR', 'D1', 'D2']; 
-            }
+            if (diff === 'hard') return (idx < 5) ? ['H', 'V'] : ['D1', 'D2', 'HR', 'VR', 'D1R', 'D2R'];
+            if (diff === 'chorizo') return ['D1', 'D2', 'D1R', 'D2R', 'HR', 'VR', 'D1', 'D2'];
             return ['H'];
         }
 
@@ -325,11 +304,7 @@
             for (let i = 0; i < word.length; i++) {
                 const r = startR + (i * vec.r);
                 const c = startC + (i * vec.c);
-
-                // Fuera de limites
                 if (r < 0 || r >= SIZE || c < 0 || c >= SIZE) return false;
-                
-                // Colisión (celda ocupada y letra diferente)
                 if (state.grid[r][c] !== '' && state.grid[r][c] !== word[i]) return false;
             }
             return true;
@@ -346,14 +321,15 @@
             state.solutions[word] = coords;
         }
 
-        // --- RENDERIZADO Y EVENTOS ---
+        // --- RENDER & EVENTS ---
         function renderWordList() {
             ui.list.innerHTML = '';
             WORDS_POOL.forEach(word => {
                 const li = document.createElement('li');
                 li.id = `list-${word}`;
                 li.className = 'flex items-center p-1 transition-all rounded';
-                li.innerHTML = `<span class="w-4 h-4 mr-2 border border-gray-300 rounded-sm flex items-center justify-center text-[10px]"></span>${word}`;
+                // Añadimos opacidad para que no destaquen tanto hasta encontrarlas
+                li.innerHTML = `<span class="w-4 h-4 mr-2 border border-gray-300 rounded-sm flex items-center justify-center text-[10px] text-transparent">✓</span><span class="opacity-80">${word}</span>`;
                 ui.list.appendChild(li);
             });
         }
@@ -367,41 +343,50 @@
                     }
                     
                     const cell = document.createElement('div');
-                    cell.className = 'letter-cell';
+                    cell.className = 'letter-cell select-none'; // Importante select-none
                     cell.textContent = state.grid[r][c];
                     cell.dataset.id = `${r}-${c}`;
                     cell.dataset.r = r;
                     cell.dataset.c = c;
 
-                    // Mouse Events
+                    // Eventos Mouse y Touch unificados conceptualmente
                     cell.addEventListener('mousedown', (e) => startSelect(r, c, e));
                     cell.addEventListener('mouseenter', () => updateSelect(r, c));
-                    
-                    // Touch Events
-                    cell.addEventListener('touchstart', (e) => { e.preventDefault(); startSelect(r, c); });
+                    cell.addEventListener('touchstart', (e) => { 
+                        // Prevenir scroll default solo dentro del grid
+                        if(e.cancelable) e.preventDefault(); 
+                        startSelect(r, c); 
+                    }, { passive: false });
                     
                     ui.grid.appendChild(cell);
                 }
             }
-
-            // Global Events
-            window.addEventListener('mouseup', endSelect);
-            window.addEventListener('touchend', endSelect);
             
-            ui.grid.addEventListener('touchmove', (e) => {
-                e.preventDefault();
-                const touch = e.touches[0];
-                const el = document.elementFromPoint(touch.clientX, touch.clientY);
-                if (el && el.classList.contains('letter-cell')) {
-                    updateSelect(parseInt(el.dataset.r), parseInt(el.dataset.c));
-                }
-            }, { passive: false });
+            // Eventos Globales de finalización
+            // Usamos { once: false } y removemos listeners antiguos si fuera SPA, 
+            // pero aquí está bien así.
         }
 
-        // --- MANEJO DE SELECCIÓN VECTORIAL ---
+        // Eventos Globales fuera del loop de render para no duplicar
+        window.addEventListener('mouseup', endSelect);
+        window.addEventListener('touchend', endSelect);
+        
+        ui.grid.addEventListener('touchmove', (e) => {
+            if(!state.selection.active) return;
+            e.preventDefault(); // Crítico para evitar scroll mientras juegas
+            const touch = e.touches[0];
+            const el = document.elementFromPoint(touch.clientX, touch.clientY);
+            if (el && el.classList.contains('letter-cell')) {
+                updateSelect(parseInt(el.dataset.r), parseInt(el.dataset.c));
+            }
+        }, { passive: false });
+
+
+        // --- LÓGICA DE SELECCIÓN ---
         function startSelect(r, c, e) {
-            if (!state.gameActive) return;
-            if(e) e.preventDefault();
+            if (!state.gameActive) return; // Solo checkea si ganaste/perdiste, no si "iniciaste"
+            if(e && e.button !== 0) return; // Solo click izquierdo
+            
             state.selection.active = true;
             state.selection.start = { r, c };
             paintSelection([`${r}-${c}`]);
@@ -414,35 +399,28 @@
             const dx = r - start.r;
             const dy = c - start.c;
 
-            // Detección de línea recta (Horizontal, Vertical o Diagonal Perfecta)
-            // Una diagonal perfecta tiene |dx| == |dy|
+            // Validación Vectorial Estricta
             const isLine = (dx === 0) || (dy === 0) || (Math.abs(dx) === Math.abs(dy));
 
             if (isLine) {
                 const steps = Math.max(Math.abs(dx), Math.abs(dy));
-                const stepR = dx === 0 ? 0 : dx / steps;
-                const stepC = dy === 0 ? 0 : dy / steps;
+                const stepR = steps === 0 ? 0 : dx / steps;
+                const stepC = steps === 0 ? 0 : dy / steps;
 
                 const path = [];
                 for (let i = 0; i <= steps; i++) {
-                    const curR = start.r + (i * stepR);
-                    const curC = start.c + (i * stepC);
-                    path.push(`${curR}-${curC}`);
+                    path.push(`${start.r + (i * stepR)}-${start.c + (i * stepC)}`);
                 }
                 paintSelection(path);
             }
         }
 
         function paintSelection(ids) {
-            // Limpiar selección previa visual (pero no las encontradas)
             document.querySelectorAll('.letter-cell.selected').forEach(el => el.classList.remove('selected'));
-            
             state.selection.currentIds = ids;
             ids.forEach(id => {
                 const el = document.querySelector(`[data-id="${id}"]`);
-                if (el && !el.classList.contains('found')) {
-                    el.classList.add('selected');
-                }
+                if (el && !el.classList.contains('found')) el.classList.add('selected');
             });
         }
 
@@ -450,7 +428,6 @@
             if (!state.selection.active) return;
             state.selection.active = false;
             
-            // Validar palabra
             const wordStr = state.selection.currentIds.map(id => {
                 const [r, c] = id.split('-');
                 return state.grid[r][c];
@@ -458,37 +435,40 @@
 
             const reversed = wordStr.split('').reverse().join('');
             
-            // Chequear si existe en pool
-            let found = null;
-            if (WORDS_POOL.includes(wordStr)) found = wordStr;
-            else if (WORDS_POOL.includes(reversed)) found = reversed;
+            // Check Match
+            let match = null;
+            if (WORDS_POOL.includes(wordStr)) match = wordStr;
+            else if (WORDS_POOL.includes(reversed)) match = reversed;
 
-            if (found) {
-                // Validar si ya fue encontrada antes
-                const listEl = document.getElementById(`list-${found}`);
-                if (!listEl.classList.contains('text-green-600')) {
-                    triggerFound(found);
+            if (match) {
+                // Verificar si ya estaba encontrada
+                const listEl = document.getElementById(`list-${match}`);
+                // Si el elemento de la lista NO tiene la clase de encontrado...
+                if (!listEl.querySelector('span:first-child').classList.contains('bg-green-500')) {
+                    triggerFound(match);
                 } else {
-                    paintSelection([]); // Limpiar si ya estaba
+                    paintSelection([]);
                 }
             } else {
-                paintSelection([]); // Borrar selección errónea
+                paintSelection([]);
             }
         }
 
         function triggerFound(word) {
-            // Marcar Grid
+            // UI Grid
             state.selection.currentIds.forEach(id => {
                 const el = document.querySelector(`[data-id="${id}"]`);
                 el.classList.remove('selected');
                 el.classList.add('found');
             });
 
-            // Marcar Lista
+            // UI Lista
             const listEl = document.getElementById(`list-${word}`);
-            listEl.classList.add('text-green-600', 'font-bold', 'bg-green-50');
-            listEl.querySelector('span').textContent = '✓';
-            listEl.querySelector('span').className = 'w-4 h-4 mr-2 bg-green-500 text-white rounded-sm flex items-center justify-center text-[10px]';
+            listEl.classList.add('text-green-700', 'font-bold', 'bg-green-50');
+            const icon = listEl.querySelector('span:first-child');
+            icon.classList.remove('text-transparent', 'border-gray-300');
+            icon.classList.add('bg-green-500', 'border-green-500', 'text-white'); // Check visible
+            listEl.querySelector('span:last-child').classList.remove('opacity-80');
 
             state.foundCount++;
             ui.counter.textContent = `${state.foundCount}/${WORDS_POOL.length}`;
@@ -497,34 +477,43 @@
                 state.gameActive = false;
                 ui.status.textContent = "¡COMPLETADO!";
                 ui.status.className = "text-xs font-bold uppercase bg-green-500 text-white px-6 py-2 rounded-full shadow-lg transform scale-110 transition";
-                setTimeout(() => alert("¡Excelente! Has completado el desafío."), 300);
+                confetti(); // Llamada simulada
             }
         }
 
-        // --- SOLUCIÓN ---
+        function confetti() {
+             // Efecto visual simple sin librería externa
+             let count = 0;
+             const interval = setInterval(() => {
+                 ui.status.style.transform = `scale(${count % 2 === 0 ? 1.1 : 1})`;
+                 count++;
+                 if(count > 6) clearInterval(interval);
+             }, 200);
+             setTimeout(() => alert("¡Excelente! Has completado el recorrido por Valparaíso."), 500);
+        }
+
         ui.btnSolution.addEventListener('click', () => {
-            if(!confirm('¿Seguro? Se acabará el juego.')) return;
+            if(!confirm('¿Rendirse? Se mostrarán todas las palabras.')) return;
             state.gameActive = false;
-            paintSelection([]); // Limpiar selección usuario
+            paintSelection([]);
             
             Object.entries(state.solutions).forEach(([word, coords]) => {
-                // Marcar Grid
                 coords.forEach(id => {
                     const el = document.querySelector(`[data-id="${id}"]`);
                     if (!el.classList.contains('found')) el.classList.add('revealed');
                 });
-                // Marcar Lista
                 const listEl = document.getElementById(`list-${word}`);
-                if (!listEl.classList.contains('text-green-600')) {
-                    listEl.classList.add('text-blue-500', 'line-through', 'opacity-50');
+                if (!listEl.querySelector('span:first-child').classList.contains('bg-green-500')) {
+                    listEl.classList.add('text-blue-500', 'opacity-60');
                 }
             });
-            ui.btnSolution.textContent = "Solución Revelada";
+            ui.btnSolution.textContent = "Juego Finalizado";
             ui.btnSolution.disabled = true;
         });
 
-        // Init inicial
-        setDifficulty('normal');
+        // ARRANQUE AUTOMÁTICO
+        // Inicializamos UI y lanzamos juego inmediatamente
+        setDifficulty('normal'); 
     });
 </script>
 </body>

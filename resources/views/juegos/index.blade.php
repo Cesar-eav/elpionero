@@ -26,6 +26,11 @@
 </head>
 
 <body class="bg-gray-100">
+
+<div class="w-full  mx-auto md:p-4">
+    <x-header />
+           <div>
+
     <x-navbar />
 
     <div class="max-w-7xl mx-auto px-4 py-8">
