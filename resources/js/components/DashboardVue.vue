@@ -138,6 +138,83 @@
                 </div>
             </div>
 
+            <!-- PDF Stats Section -->
+            <div class="bg-white rounded-lg shadow-md p-6 mb-8">
+                <h2 class="text-2xl font-bold text-gray-800 mb-6 flex items-center">
+                    <svg class="w-6 h-6 mr-2 text-pink-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path>
+                    </svg>
+                    Estadísticas de PDFs
+                </h2>
+
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
+                    <!-- Total -->
+                    <div class="bg-gradient-to-br from-pink-50 to-pink-100 rounded-lg p-4 border border-pink-200">
+                        <p class="text-sm font-semibold text-pink-600 uppercase">Total</p>
+                        <p class="text-3xl font-bold text-pink-700">{{ pdfStats.total || 0 }}</p>
+                    </div>
+
+                    <!-- Descargas -->
+                    <div class="bg-gradient-to-br from-blue-50 to-blue-100 rounded-lg p-4 border border-blue-200">
+                        <p class="text-sm font-semibold text-blue-600 uppercase">Descargas</p>
+                        <p class="text-3xl font-bold text-blue-700">{{ pdfStats.downloads || 0 }}</p>
+                    </div>
+
+                    <!-- Visualizaciones -->
+                    <div class="bg-gradient-to-br from-green-50 to-green-100 rounded-lg p-4 border border-green-200">
+                        <p class="text-sm font-semibold text-green-600 uppercase">Vistas en línea</p>
+                        <p class="text-3xl font-bold text-green-700">{{ pdfStats.views || 0 }}</p>
+                    </div>
+                </div>
+
+                <!-- Por PDF -->
+                <div v-if="pdfStats.by_pdf && Object.keys(pdfStats.by_pdf).length > 0" class="mb-6">
+                    <h3 class="text-lg font-semibold text-gray-700 mb-3">Por PDF</h3>
+                    <div class="space-y-2">
+                        <div v-for="(actions, pdfName) in pdfStats.by_pdf" :key="pdfName"
+                             class="bg-gray-50 rounded p-3 border border-gray-200">
+                            <p class="font-semibold text-gray-800 mb-2">{{ pdfName }}</p>
+                            <div class="flex gap-4 text-sm">
+                                <span class="text-blue-600">
+                                    Descargas: <strong>{{ getActionCount(actions, 'download') }}</strong>
+                                </span>
+                                <span class="text-green-600">
+                                    Vistas: <strong>{{ getActionCount(actions, 'view') }}</strong>
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Actividad Reciente -->
+                <div v-if="pdfStats.recent && pdfStats.recent.length > 0">
+                    <h3 class="text-lg font-semibold text-gray-700 mb-3">Actividad Reciente</h3>
+                    <div class="overflow-x-auto">
+                        <table class="min-w-full divide-y divide-gray-200">
+                            <thead class="bg-gray-50">
+                                <tr>
+                                    <th class="px-4 py-2 text-left text-xs font-medium text-gray-500 uppercase">PDF</th>
+                                    <th class="px-4 py-2 text-left text-xs font-medium text-gray-500 uppercase">Acción</th>
+                                    <th class="px-4 py-2 text-left text-xs font-medium text-gray-500 uppercase">IP</th>
+                                    <th class="px-4 py-2 text-left text-xs font-medium text-gray-500 uppercase">Fecha</th>
+                                </tr>
+                            </thead>
+                            <tbody class="bg-white divide-y divide-gray-200">
+                                <tr v-for="activity in pdfStats.recent" :key="activity.id">
+                                    <td class="px-4 py-2 text-sm text-gray-900">{{ activity.pdf_name }}</td>
+                                    <td class="px-4 py-2 text-sm">
+                                        <span :class="activity.action === 'download' ? 'text-blue-600 font-semibold' : 'text-green-600 font-semibold'">
+                                            {{ activity.action === 'download' ? 'Descarga' : 'Vista' }}
+                                        </span>
+                                    </td>
+                                    <td class="px-4 py-2 text-sm text-gray-500">{{ activity.ip_address }}</td>
+                                    <td class="px-4 py-2 text-sm text-gray-500">{{ formatDateTime(activity.created_at) }}</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
 
         </div>
     </div>
@@ -159,12 +236,21 @@ export default {
                 entrevistas: { total: 0, recientes: [] },
                 revistas: { total: 0, recientes: [] },
                 columnistas: { total: 0, recientes: [] }
+            },
+            pdfStats: {
+                total: 0,
+                downloads: 0,
+                views: 0,
+                by_pdf: {},
+                recent: [],
+                by_day: {}
             }
         };
     },
 
     mounted() {
         this.loadStats();
+        this.loadPdfStats();
     },
 
     methods: {
@@ -189,6 +275,30 @@ export default {
                     // Finalizar carga, independientemente del resultado
                     this.loading = false;
                 });
+        },
+        loadPdfStats() {
+            axios.get('/api/pdf-stats')
+                .then(response => {
+                    this.pdfStats = response.data;
+                    console.log("PDF Stats:", this.pdfStats);
+                })
+                .catch(error => {
+                    console.error('Error al cargar estadísticas de PDFs:', error);
+                });
+        },
+        getActionCount(actions, actionType) {
+            const action = actions.find(a => a.action === actionType);
+            return action ? action.count : 0;
+        },
+        formatDateTime(date) {
+            if (!date) return '';
+            return new Date(date).toLocaleString('es-ES', {
+                year: 'numeric',
+                month: 'short',
+                day: 'numeric',
+                hour: '2-digit',
+                minute: '2-digit'
+            });
         },
         truncate(text, length) {
             if (!text) return '';

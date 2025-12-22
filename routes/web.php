@@ -12,6 +12,7 @@ use App\Http\Controllers\NoticiaController;
 use App\Http\Controllers\BusquedaController;
 use App\Http\Controllers\SitemapController;
 use App\Http\Controllers\TriviaReportController;
+use App\Http\Controllers\PdfTrackingController;
 
 
 
@@ -51,6 +52,9 @@ Route::get('/juegos/trivia', function () {
 })->name('juegos.trivia');
 
 Route::post('/trivia/reportar', [TriviaReportController::class, 'store'])->name('trivia.reportar');
+
+// Rutas de tracking de PDFs
+Route::get('/pdf/{pdfName}/{action}', [PdfTrackingController::class, 'track'])->name('pdf.track');
 
 Route::get('/sitemap-noticias.xml', [SitemapController::class, 'noticias'])->name('sitemap.noticias');
 
@@ -97,6 +101,9 @@ Route::middleware('auth')->group(function () {
     Route::resource('revistas', RevistaController::class);
     Route::resource('columnistas', ColumnistaController::class);
     Route::resource('admin/noticias', NoticiaController::class);
+
+    // API para estadísticas de PDFs
+    Route::get('/api/pdf-stats', [PdfTrackingController::class, 'stats'])->name('pdf.stats');
 
     // Ruta principal del Dashboard Vue con Router (catch-all para Vue Router)
     Route::get('/dashboard-vue/{any?}', function () {

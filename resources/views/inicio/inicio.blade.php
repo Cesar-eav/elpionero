@@ -83,7 +83,7 @@
         </span>
 
         <!-- Portada -->
-        <a href="{{ asset('storage/Ediciones/Plaza_Ohiggins.pdf') }}" target="_blank" rel="noopener" class="block">
+        <a href="{{ route('pdf.track', ['pdfName' => 'Plaza_Ohiggins.pdf', 'action' => 'view']) }}" target="_blank" rel="noopener" class="block">
           <img
             src="{{ asset('storage/Ediciones/MiniEspecial.jpeg') }}"
             alt="Portada El Pionero - Octubre 2025"
@@ -120,10 +120,9 @@
       <!-- Botones CTA -->
       <div class="mt-5 flex flex-col sm:flex-row gap-3">
         <a
-          href="{{ asset('storage/Ediciones/Plaza_Ohiggins.pdf') }}"
+          href="{{ route('pdf.track', ['pdfName' => 'Plaza_Ohiggins.pdf', 'action' => 'download']) }}"
           target="_blank"
           rel="noopener"
-          download
           class="inline-flex items-center justify-center gap-2 px-5 py-3 rounded-lg bg-[#fc5648] text-white font-semibold hover:bg-[#d94439] shadow transition"
         >
           <svg class="w-5 h-5" viewBox="0 0 24 24" fill="currentColor"><path d="M12 3v10m0 0 4-4m-4 4-4-4M4 17h16v2H4v-2Z" stroke="currentColor" stroke-width="1.5" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>
@@ -131,7 +130,7 @@
         </a>
 
         <a
-          href="{{ asset('storage/Ediciones/Plaza_Ohiggins.pdf') }}"
+          href="{{ route('pdf.track', ['pdfName' => 'Plaza_Ohiggins.pdf', 'action' => 'view']) }}"
           target="_blank"
           rel="noopener"
           class="inline-flex items-center justify-center gap-2 px-5 py-3 rounded-lg bg-white text-gray-900 border border-gray-300 font-semibold hover:bg-gray-50 shadow-sm transition"
