@@ -87,25 +87,27 @@
                 </div>
             </a>
 
-            <!-- Próximamente - Placeholder para más juegos -->
-            <div class="bg-white rounded-lg shadow-lg overflow-hidden opacity-60">
-                <div class="bg-gradient-to-br from-gray-400 to-gray-600 p-8 text-white">
-                    <div class="text-6xl mb-4">🎲</div>
-                    <h2 class="text-2xl font-bold mb-2">Más Juegos</h2>
-                    <p class="text-gray-100">Próximamente</p>
-                </div>
-                <div class="p-6">
-                    <p class="text-gray-700 mb-4">
-                        Estamos preparando más pasatiempos para ti. ¡Vuelve pronto!
-                    </p>
-                    <div class="flex items-center justify-between">
-                        <span class="text-sm text-gray-500">En desarrollo</span>
-                        <span class="text-gray-400 font-semibold">
-                            Próximamente
-                        </span>
+            <!-- Portle -->
+            <a href="{{ route('juegos.portle') }}" class="group">
+                <div class="bg-white rounded-lg shadow-lg overflow-hidden hover:shadow-xl transition-shadow h-full">
+                    <div class="bg-gradient-to-br from-green-500 to-green-700 p-8 text-white">
+                        <div class="text-6xl mb-4">🎯</div>
+                        <h2 class="text-2xl font-bold mb-2">Portle</h2>
+                        <p class="text-green-100">Wordle Porteño</p>
+                    </div>
+                    <div class="p-6">
+                        <p class="text-gray-700 mb-4">
+                            Adivina la palabra porteña de 5 letras en 6 intentos. ¡Inspirado en Wordle!
+                        </p>
+                        <div class="flex items-center justify-between">
+                            <span class="text-sm text-gray-500">Dificultad: Media</span>
+                            <span class="text-green-600 group-hover:text-green-800 font-semibold">
+                                Jugar →
+                            </span>
+                        </div>
                     </div>
                 </div>
-            </div>
+            </a>
 
         </div>
 

@@ -51,6 +51,10 @@ Route::get('/juegos/trivia', function () {
     return view('juegos.trivia');
 })->name('juegos.trivia');
 
+Route::get('/juegos/portle', function () {
+    return view('juegos.wordle');
+})->name('juegos.portle');
+
 Route::post('/trivia/reportar', [TriviaReportController::class, 'store'])->name('trivia.reportar');
 
 // Rutas de tracking de PDFs
