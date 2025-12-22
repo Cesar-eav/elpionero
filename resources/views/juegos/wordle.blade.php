@@ -78,9 +78,19 @@
 
         .key.correct { background-color: #22c55e; color: white; border-color: #22c55e; }
         .key.present { background-color: #eab308; color: white; border-color: #eab308; }
-        .key.absent { background-color: #6b7280; color: white; border-color: #6b7280; }
-        
+        .key.absent { background-color: #6d806b; color: white; border-color: #6b7280; }
+
         .key.large { flex: 1.5; font-size: 0.75rem; }
+
+        /* Botón ENVIAR en verde */
+        .key[data-key="ENTER"] {
+            background-color: #22c55e;
+            color: white;
+        }
+
+        .key[data-key="ENTER"]:hover {
+            background-color: #16a34a;
+        }
 
         /* --- ANIMACIONES --- */
         @keyframes pop { 50% { transform: scale(1.1); } }
@@ -97,11 +107,39 @@
         }
         .shake { animation: shake 0.4s linear; }
         
-        @keyframes bounce { 
+        @keyframes bounce {
             0%, 100% { transform: translateY(0); }
-            50% { transform: translateY(-15px); } 
+            50% { transform: translateY(-15px); }
         }
         .bounce { animation: bounce 0.5s ease-in-out; }
+
+        /* --- ESTILOS DEL SELECTOR DE LONGITUD --- */
+        .length-selector {
+            padding: 0.375rem 0.875rem;
+            font-size: 0.75rem;
+            font-weight: 600;
+            border-radius: 9999px;
+            border: 2px solid #e5e7eb;
+            background-color: white;
+            color: #6b7280;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            user-select: none;
+        }
+        .length-selector:hover {
+            border-color: #3b82f6;
+            color: #3b82f6;
+            transform: translateY(-1px);
+        }
+        .length-selector.active {
+            background-color: #3b82f6;
+            border-color: #3b82f6;
+            color: white;
+            box-shadow: 0 4px 6px -1px rgba(59, 130, 246, 0.3);
+        }
+        .length-selector:active {
+            transform: scale(0.95);
+        }
     </style>
 </head>
 
@@ -123,8 +161,36 @@
                         Ayuda
                     </button>
                     <span id="word-length-badge" class="text-xs bg-blue-100 text-blue-800 px-3 py-1 rounded-full font-bold border border-blue-200">
-                        5 Letras
+                        Todas
                     </span>
+                </div>
+
+                <!-- Selector de Longitud de Palabra -->
+                <div class="mt-3 w-full px-4">
+                    <p class="text-xs text-gray-600 text-center mb-2 font-semibold">Longitud de palabra:</p>
+                    <div class="flex justify-center gap-1.5 flex-wrap">
+                        <button onclick="selectWordLength(null)" class="length-selector active" data-length="all">
+                            Todas
+                        </button>
+                        <button onclick="selectWordLength(5)" class="length-selector" data-length="5">
+                            5
+                        </button>
+                        <button onclick="selectWordLength(6)" class="length-selector" data-length="6">
+                            6
+                        </button>
+                        <button onclick="selectWordLength(7)" class="length-selector" data-length="7">
+                            7
+                        </button>
+                        <button onclick="selectWordLength(8)" class="length-selector" data-length="8">
+                            8
+                        </button>
+                        <button onclick="selectWordLength(9)" class="length-selector" data-length="9">
+                            9
+                        </button>
+                        <button onclick="selectWordLength(10)" class="length-selector" data-length="10">
+                            10+
+                        </button>
+                    </div>
                 </div>
             </div>
 
@@ -209,7 +275,8 @@ const PALABRAS_VALPARAISO = [
 
         const ROWS = 6;
         let currentWordCols = 5;
-        
+        let selectedLength = null; // null = todas las longitudes
+
         let targetWord = '';
         let displayWord = '';
         let currentRow = 0;
@@ -227,12 +294,48 @@ const PALABRAS_VALPARAISO = [
             return word.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toUpperCase();
         }
 
+        function selectWordLength(length) {
+            selectedLength = length;
+
+            // Actualizar UI de los botones
+            document.querySelectorAll('.length-selector').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            const activeBtn = document.querySelector(`.length-selector[data-length="${length === null ? 'all' : length}"]`);
+            if (activeBtn) activeBtn.classList.add('active');
+
+            // Iniciar nuevo juego con la longitud seleccionada
+            newGame();
+        }
+
+        function getFilteredWords() {
+            if (selectedLength === null) {
+                return PALABRAS_VALPARAISO;
+            }
+
+            return PALABRAS_VALPARAISO.filter(word => {
+                const len = word.length;
+                if (selectedLength === 10) {
+                    return len >= 10; // 10+ incluye 10, 11, 12, 13, etc.
+                }
+                return len === selectedLength;
+            });
+        }
+
         function newGame() {
+            // Obtener palabras filtradas según longitud seleccionada
+            const availableWords = getFilteredWords();
+
+            if (availableWords.length === 0) {
+                showMessage('No hay palabras de ese largo', 'red');
+                return;
+            }
+
             // Selección de palabra (evitar repetir la misma inmediatamente si es posible)
             let newWord;
             do {
-                newWord = PALABRAS_VALPARAISO[Math.floor(Math.random() * PALABRAS_VALPARAISO.length)];
-            } while (newWord.toUpperCase() === displayWord && PALABRAS_VALPARAISO.length > 1);
+                newWord = availableWords[Math.floor(Math.random() * availableWords.length)];
+            } while (newWord.toUpperCase() === displayWord && availableWords.length > 1);
 
             displayWord = newWord.toUpperCase();
             targetWord = normalizeWord(newWord);
@@ -246,7 +349,15 @@ const PALABRAS_VALPARAISO = [
 
             document.getElementById('new-game-container').classList.add('hidden');
             document.getElementById('message-container').innerHTML = '';
-            document.getElementById('word-length-badge').textContent = `${currentWordCols} LETRAS`;
+
+            // Actualizar badge
+            if (selectedLength === null) {
+                document.getElementById('word-length-badge').textContent = `${currentWordCols} Letras`;
+            } else if (selectedLength === 10) {
+                document.getElementById('word-length-badge').textContent = `${currentWordCols} Letras`;
+            } else {
+                document.getElementById('word-length-badge').textContent = `${currentWordCols} Letras`;
+            }
             
             // Resetear teclado visual
             document.querySelectorAll('.key').forEach(key => {
@@ -394,7 +505,7 @@ const PALABRAS_VALPARAISO = [
                 celebrateRow(currentRow);
                 endGame();
             } else if (currentRow === ROWS - 1) {
-                showMessage(`Era: ${displayWord}`, 'black');
+                showMessage(`La palabra era: ${displayWord}`, 'black', true);
                 endGame();
             } else {
                 currentRow++;
@@ -420,7 +531,7 @@ const PALABRAS_VALPARAISO = [
             keyBtn.classList.add(state);
         }
 
-        function showMessage(text, type) {
+        function showMessage(text, type, permanent = false) {
             const container = document.getElementById('message-container');
             const msg = document.createElement('div');
             let classes = 'px-6 py-3 rounded-full font-bold text-sm shadow-xl animate-popIn pointer-events-auto flex items-center gap-2 backdrop-blur-sm';
@@ -433,7 +544,8 @@ const PALABRAS_VALPARAISO = [
             container.innerHTML = '';
             container.appendChild(msg);
 
-            if (type === 'red') {
+            // Solo auto-ocultar mensajes rojos y si no es permanente
+            if (type === 'red' && !permanent) {
                 setTimeout(() => {
                     if (container.contains(msg)) {
                         msg.classList.remove('animate-popIn');

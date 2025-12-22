@@ -77,7 +77,7 @@ Route::post('/newsletter', [NewsletterController::class, 'subscribe'])->name('ne
 Route::get('/contacto', [ContactoController::class, 'mostrarFormulario'])->name('contacto.formulario');
 Route::post('/contacto', [ContactoController::class, 'enviarFormulario'])->name('contacto.enviar');
 
-Route::get('/contactos2', [ContactoController::class, 'listarContactos'])->name('contactos.listar');
+Route::get('/suscriptores', [ContactoController::class, 'listarContactos'])->name('contactos.listar');
 
 Route::get('articulo/{slug}',[ArticuloController::class, 'showArticulo'])->name('inicio.articulo');
 Route::get('/columnas',[ArticuloController::class, 'showColumnas'])->name('inicio.columnas');
