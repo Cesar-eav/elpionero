@@ -136,8 +136,8 @@
         <main class="max-w-3xl mx-auto px-3 py-3 md:py-6">
             <div id="trivia-header" class="border-b-3 border-black mb-3 md:mb-4 pb-2 flex flex-col md:flex-row justify-between items-start md:items-end gap-2">
                 <div>
-                    <h1 class="text-xl md:text-3xl font-black italic uppercase tracking-tighter text-gray-900">EL PIONERO TRIVIA</h1>
-                    <p class="font-bold text-[10px] tracking-widest text-gray-600">PASATIEMPOS: TRIVIA PORTEÑA</p>
+                    <h1 class="text-xl md:text-3xl font-black italic uppercase tracking-tighter text-gray-900">EL PIONERO PREGUNTA</h1>
+                    <p class="font-bold text-[10px] tracking-widest text-gray-600">TRIVIA PORTEÑA</p>
                 </div>
                 <div class="text-right self-end md:self-auto">
                     <div class="timer-circle" id="timer-container">

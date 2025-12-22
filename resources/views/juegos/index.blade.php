@@ -70,8 +70,8 @@
                 <div class="bg-white rounded-lg shadow-lg overflow-hidden hover:shadow-xl transition-shadow h-full">
                     <div class="bg-gradient-to-br from-purple-500 to-purple-700 p-8 text-white">
                         <div class="text-6xl mb-4">🎯</div>
-                        <h2 class="text-2xl font-bold mb-2">Trivia Porteña</h2>
-                        <p class="text-purple-100">Cultura y Historia</p>
+                        <h2 class="text-2xl font-bold mb-2">El Pionero Pregunta</h2>
+                        <p class="text-purple-100">Trivia porteña</p>
                     </div>
                     <div class="p-6">
                         <p class="text-gray-700 mb-4">

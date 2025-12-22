@@ -13,9 +13,7 @@
             gap: 4px;
             margin-bottom: 4px;
             width: 100%;
-            /* El contenedor sigue siendo ancho, pero... */
-            max-width: 500px; 
-            /* ...centramos el contenido si las celdas son pequeñas */
+            max-width: 500px;
             justify-content: center;
         }
 
@@ -25,11 +23,10 @@
             display: flex;
             justify-content: center;
             align-items: center;
-            font-weight: 800; /* Un poco más negrita */
+            font-weight: 800;
             text-transform: uppercase;
             user-select: none;
             transition: all 0.2s ease;
-            /* El tamaño final se define en el JS con grid-template-columns */
         }
 
         .tile.filled {
@@ -53,7 +50,7 @@
 
         /* --- ESTILOS DEL TECLADO --- */
         .key {
-            height: 54px; /* Un poco más bajo para móviles */
+            height: 54px;
             border-radius: 4px;
             border: none;
             background-color: #d1d5db;
@@ -71,23 +68,20 @@
         }
 
         .key:active { transform: scale(0.95); background-color: #9ca3af; }
-        /* Hover solo en desktop para evitar sticky hover en móvil */
         @media (hover: hover) {
             .key:hover { background-color: #9ca3af; }
         }
 
         .key.correct { background-color: #22c55e; color: white; border-color: #22c55e; }
         .key.present { background-color: #eab308; color: white; border-color: #eab308; }
-        .key.absent { background-color: #6d806b; color: white; border-color: #6b7280; }
+        .key.absent { background-color: #6b7280; color: white; border-color: #6b7280; } /* Corregido color gris */
 
         .key.large { flex: 1.5; font-size: 0.75rem; }
 
-        /* Botón ENVIAR en verde */
         .key[data-key="ENTER"] {
             background-color: #22c55e;
             color: white;
         }
-
         .key[data-key="ENTER"]:hover {
             background-color: #16a34a;
         }
@@ -113,7 +107,7 @@
         }
         .bounce { animation: bounce 0.5s ease-in-out; }
 
-        /* --- ESTILOS DEL SELECTOR DE LONGITUD --- */
+        /* --- ESTILOS UI --- */
         .length-selector {
             padding: 0.375rem 0.875rem;
             font-size: 0.75rem;
@@ -140,6 +134,16 @@
         .length-selector:active {
             transform: scale(0.95);
         }
+
+        /* Botón de Pista */
+        .hint-btn {
+            background-color: #fffbeb;
+            color: #b45309;
+            border: 1px solid #fcd34d;
+        }
+        .hint-btn:hover {
+            background-color: #fef3c7;
+        }
     </style>
 </head>
 
@@ -155,50 +159,43 @@
                 <h1 class="text-3xl md:text-4xl font-black text-gray-900 tracking-tighter mb-1">
                     PORTLE
                 </h1>
-                <div class="mt-2 flex justify-center items-center gap-3">
-                    <button onclick="showInstructions()" class="text-xs bg-gray-200 hover:bg-gray-300 px-3 py-1 rounded-full transition flex items-center gap-1">
+                <h3 class="text-sm text-gray-500 font-bold uppercase tracking-widest mb-3">Edición Valparaíso</h3>
+                
+                <div class="mt-2 flex justify-center items-center gap-2">
+                    <button onclick="showInstructions()" class="text-xs bg-gray-200 hover:bg-gray-300 px-3 py-1.5 rounded-full transition flex items-center gap-1 font-bold text-gray-600">
                         <svg xmlns="http://www.w3.org/2000/svg" class="h-3 w-3" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
                         Ayuda
                     </button>
-                    <span id="word-length-badge" class="text-xs bg-blue-100 text-blue-800 px-3 py-1 rounded-full font-bold border border-blue-200">
+                    
+                    <button onclick="showHint()" class="text-xs hint-btn px-3 py-1.5 rounded-full transition flex items-center gap-1 font-bold shadow-sm">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-3 w-3" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z" /></svg>
+                        Pista
+                    </button>
+
+                    <span id="word-length-badge" class="ml-2 text-xs bg-blue-100 text-blue-800 px-3 py-1.5 rounded-full font-bold border border-blue-200">
                         Todas
                     </span>
                 </div>
 
-                <!-- Selector de Longitud de Palabra -->
-                <div class="mt-3 w-full px-4">
-                    <p class="text-xs text-gray-600 text-center mb-2 font-semibold">Longitud de palabra:</p>
+                <div class="mt-4 w-full px-4">
+                    <p class="text-[10px] text-gray-400 text-center mb-2 font-bold uppercase tracking-wider">Filtrar por letras</p>
                     <div class="flex justify-center gap-1.5 flex-wrap">
-                        <button onclick="selectWordLength(null)" class="length-selector active" data-length="all">
-                            Todas
-                        </button>
-                        <button onclick="selectWordLength(5)" class="length-selector" data-length="5">
-                            5
-                        </button>
-                        <button onclick="selectWordLength(6)" class="length-selector" data-length="6">
-                            6
-                        </button>
-                        <button onclick="selectWordLength(7)" class="length-selector" data-length="7">
-                            7
-                        </button>
-                        <button onclick="selectWordLength(8)" class="length-selector" data-length="8">
-                            8
-                        </button>
-                        <button onclick="selectWordLength(9)" class="length-selector" data-length="9">
-                            9
-                        </button>
-                        <button onclick="selectWordLength(10)" class="length-selector" data-length="10">
-                            10+
-                        </button>
+                        <button onclick="selectWordLength(null)" class="length-selector active" data-length="all">Todas</button>
+                        <button onclick="selectWordLength(5)" class="length-selector" data-length="5">5</button>
+                        <button onclick="selectWordLength(6)" class="length-selector" data-length="6">6</button>
+                        <button onclick="selectWordLength(7)" class="length-selector" data-length="7">7</button>
+                        <button onclick="selectWordLength(8)" class="length-selector" data-length="8">8</button>
+                        <button onclick="selectWordLength(9)" class="length-selector" data-length="9">9</button>
+                        <button onclick="selectWordLength(10)" class="length-selector" data-length="10">10+</button>
                     </div>
                 </div>
             </div>
 
-            <div id="message-container" class="fixed top-20 left-0 right-0 flex justify-center pointer-events-none z-50">
-                </div>
+            <div id="message-container" class="fixed top-24 left-0 right-0 flex justify-center pointer-events-none z-50 px-4">
+            </div>
 
             <div id="board-container" class="w-full flex flex-col items-center mb-4 md:mb-8 flex-grow justify-center max-h-[420px]">
-                </div>
+            </div>
 
             <div class="w-full max-w-md bg-white p-1.5 md:p-2 rounded-xl shadow-sm border border-gray-200 select-none select-none mb-4 md:mb-0">
                 <div id="keyboard" class="flex flex-col gap-1.5">
@@ -260,25 +257,123 @@
     </div>
 
     <script>
-const PALABRAS_VALPARAISO = [
-    'ALEGRE', 'CONCEPCION', 'ARTILLERIA', 'PLAYANCHA', 'BARON', 'POLANCO', 'CORDILLERA', 'PANTEON', 'CARCEL', 'MARIPOSAS',
-    'MONJAS', 'LECHEROS', 'LARRAIN', 'RECREO', 'ESPERANZA', 'PLACERES', 'OHIGGINS', 'ROCUANT', 'YUNGAY', 'BELLAVISTA',
-    'POLANCO', 'PERAL', 'REINA', 'VICTORIA', 'FLORIDA', 'MARIPOSA', 'VILLASECA', 'MONJAS', 'ESPIRITU', 'TROLE',
-    'TROLEBUS', 'MICRO', 'COLECTIVO', 'METRO', 'MERVAL', 'ESTACION', 'RIEL', 'CABINA', 'FUNICULAR', 'PLANO',
-    'PUERTO', 'MUELLE', 'DIQUE', 'GRUA', 'ESTIBADOR', 'CHORERO', 'LANCHA', 'BOTE', 'REMOLCADOR', 'TRANSATLANTICO',
-    'CONTAINER', 'ADUANA', 'FARO', 'ROMPEOLAS', 'BAHIA', 'COSTANERA', 'PESCADOR', 'JAIVA', 'MERLUZA', 'GAVIOTA',
-    'WANDERERS', 'CATURRO', 'LUKAS', 'NERUDA', 'SEBASTIANA', 'GITANO', 'PAYASO', 'MIMOS', 'CARNAVAL', 'TAMBORES',
-    'MILCHAS', 'CHORRILLANA', 'CUECA', 'BOHEMIA', 'CINZANO', 'PAJARITO', 'JOYA', 'PATRIMONIO', 'UNESCO', 'GRAFFITI',
-    'PRAT', 'SOTOMAYOR', 'ANCHA', 'SERRANO', 'ESMERALDA', 'CONDELL', 'PEDRO', 'MONTT', 'VICTORIA', 'FRANCIA',
-    'BRASIL', 'ITALIA', 'ECUADOR', 'CUMMING', 'DINAMARCA', 'URRIOLA', 'ALMIRANTE', 'SUBIDA', 'ESCALERA', 'MIRADOR'
-];
+        // DATA ESTRUCTURADA: Objeto { word, hint }
+        const PALABRAS_VALPARAISO = [
+            // Cerros
+            { word: 'ALEGRE', hint: 'Nombre de Cerro' },
+            { word: 'CONCEPCION', hint: 'Nombre de Cerro' },
+            { word: 'ARTILLERIA', hint: 'Nombre de Cerro / Ascensor' },
+            { word: 'PLAYANCHA', hint: 'Nombre de Cerro (Coloquial)' },
+            { word: 'BARON', hint: 'Nombre de Cerro / Muelle / Ascensor' },
+            { word: 'POLANCO', hint: 'Nombre de Cerro / Ascensor' },
+            { word: 'CORDILLERA', hint: 'Nombre de Cerro' },
+            { word: 'PANTEON', hint: 'Nombre de Cerro' },
+            { word: 'CARCEL', hint: 'Nombre de Cerro' },
+            { word: 'MARIPOSAS', hint: 'Nombre de Cerro' },
+            { word: 'MONJAS', hint: 'Nombre de Cerro / Ascensor' },
+            { word: 'LECHEROS', hint: 'Nombre de Cerro' },
+            { word: 'LARRAIN', hint: 'Nombre de Cerro' },
+            { word: 'RECREO', hint: 'Barrio / Cerro limítrofe' },
+            { word: 'ESPERANZA', hint: 'Nombre de Cerro' },
+            { word: 'PLACERES', hint: 'Nombre de Cerro' },
+            { word: 'OHIGGINS', hint: 'Nombre de Cerro' },
+            { word: 'ROCUANT', hint: 'Nombre de Cerro' },
+            { word: 'YUNGAY', hint: 'Nombre de Cerro' },
+            { word: 'BELLAVISTA', hint: 'Nombre de Cerro' },
+            { word: 'PERAL', hint: 'Nombre de Ascensor' },
+            { word: 'VILLASECA', hint: 'Nombre de Ascensor' },
+            { word: 'FLORIDA', hint: 'Nombre de Cerro / Ascensor' },
+            { word: 'MARIPOSA', hint: 'Nombre de Ascensor' },
+            
+            // Transporte
+            { word: 'TROLE', hint: 'Transporte típico' },
+            { word: 'TROLEBUS', hint: 'Transporte típico' },
+            { word: 'MICRO', hint: 'Transporte público' },
+            { word: 'COLECTIVO', hint: 'Transporte público' },
+            { word: 'METRO', hint: 'Transporte (Merval)' },
+            { word: 'MERVAL', hint: 'Tren de la región' },
+            { word: 'ESTACION', hint: 'Lugar de trenes' },
+            { word: 'RIEL', hint: 'Parte de la vía del tren' },
+            { word: 'CABINA', hint: 'Parte del ascensor' },
+            { word: 'FUNICULAR', hint: 'Tipo de ascensor' },
+            { word: 'PLANO', hint: 'Zona baja de la ciudad' },
+            { word: 'ESPIRITU', hint: 'Nombre de Ascensor (Espíritu Santo)' },
+            { word: 'REINA', hint: 'Nombre de Ascensor (Reina Victoria)' },
+            
+            // Puerto y Mar
+            { word: 'PUERTO', hint: 'Lugar de barcos' },
+            { word: 'MUELLE', hint: 'Estructura en el mar' },
+            { word: 'DIQUE', hint: 'Para reparar barcos' },
+            { word: 'GRUA', hint: 'Maquinaria portuaria' },
+            { word: 'ESTIBADOR', hint: 'Trabajador portuario' },
+            { word: 'CHORERO', hint: 'Relacionado al puerto (coloquial)' },
+            { word: 'LANCHA', hint: 'Embarcación pequeña' },
+            { word: 'BOTE', hint: 'Embarcación pequeña' },
+            { word: 'REMOLCADOR', hint: 'Barco que tira otros barcos' },
+            { word: 'TRANSATLANTICO', hint: 'Barco gigante' },
+            { word: 'CONTAINER', hint: 'Caja metálica de carga' },
+            { word: 'ADUANA', hint: 'Edificio de control' },
+            { word: 'FARO', hint: 'Luz guía en la costa' },
+            { word: 'ROMPEOLAS', hint: 'Protección contra el mar' },
+            { word: 'BAHIA', hint: 'Entrada de mar' },
+            { word: 'COSTANERA', hint: 'Calle junto al mar' },
+            { word: 'PESCADOR', 'hint': 'Oficio de mar' },
+            { word: 'JAIVA', hint: 'Crustáceo típico' },
+            { word: 'MERLUZA', hint: 'Pescado típico' },
+            { word: 'GAVIOTA', hint: 'Ave costera' },
+            
+            // Cultura y Personajes
+            { word: 'WANDERERS', hint: 'El equipo de fútbol' },
+            { word: 'CATURRO', hint: 'Apodo del equipo local' },
+            { word: 'LUKAS', hint: 'Dibujante famoso (Renzo Pecchenino)' },
+            { word: 'NERUDA', hint: 'Poeta Nobel' },
+            { word: 'SEBASTIANA', hint: 'Casa de Neruda' },
+            { word: 'GITANO', hint: 'Personaje (Gitano Rodríguez)' },
+            { word: 'PAYASO', hint: 'Artista callejero' },
+            { word: 'MIMOS', hint: 'Artista callejero' },
+            { word: 'CARNAVAL', hint: 'Fiesta callejera (Mil Tambores)' },
+            { word: 'TAMBORES', hint: 'Instrumento de carnaval' },
+            { word: 'MILCHAS', hint: 'Pan tradicional (Milcao - sureño pero común)' },
+            { word: 'CHORRILLANA', hint: 'Plato típico porteño' },
+            { word: 'CUECA', hint: 'Baile nacional' },
+            { word: 'BOHEMIA', hint: 'Vida nocturna y cultural' },
+            { word: 'CINZANO', hint: 'Bar tradicional' },
+            { word: 'PAJARITO', hint: 'Dulce chileno' },
+            { word: 'JOYA', hint: 'Apodo de la ciudad (Joya del Pacífico)' },
+            { word: 'PATRIMONIO', hint: 'Título de la UNESCO' },
+            { word: 'UNESCO', hint: 'Organización mundial' },
+            { word: 'GRAFFITI', hint: 'Arte en los muros' },
+            
+            // Calles y Lugares
+            { word: 'PRAT', hint: 'Calle financiera' },
+            { word: 'SOTOMAYOR', hint: 'Plaza principal' },
+            { word: 'ANCHA', hint: 'Playa...' },
+            { word: 'SERRANO', hint: 'Calle comercial' },
+            { word: 'ESMERALDA', hint: 'Calle céntrica' },
+            { word: 'CONDELL', hint: 'Calle comercial' },
+            { word: 'PEDRO', hint: 'Calle (Pedro Montt)' },
+            { word: 'MONTT', hint: 'Apellido de Calle Principal' },
+            { word: 'VICTORIA', hint: 'Plaza o Calle' },
+            { word: 'FRANCIA', hint: 'Avenida principal' },
+            { word: 'BRASIL', hint: 'Avenida universitaria' },
+            { word: 'ITALIA', hint: 'Paseo o Parque' },
+            { word: 'ECUADOR', hint: 'Calle de bohemia' },
+            { word: 'CUMMING', hint: 'Calle de subida' },
+            { word: 'DINAMARCA', hint: 'Calle en cerro' },
+            { word: 'URRIOLA', hint: 'Calle de subida' },
+            { word: 'ALMIRANTE', hint: 'Grado naval (Montt/Simpsom)' },
+            { word: 'SUBIDA', hint: 'Calle empinada' },
+            { word: 'ESCALERA', hint: 'Para subir a pie' },
+            { word: 'MIRADOR', hint: 'Lugar con vista' }
+        ];
 
         const ROWS = 6;
         let currentWordCols = 5;
-        let selectedLength = null; // null = todas las longitudes
+        let selectedLength = null; // null = todas
 
         let targetWord = '';
         let displayWord = '';
+        let currentHint = ''; // Variable para guardar la pista actual
         let currentRow = 0;
         let currentCol = 0;
         let gameOver = false;
@@ -313,17 +408,17 @@ const PALABRAS_VALPARAISO = [
                 return PALABRAS_VALPARAISO;
             }
 
-            return PALABRAS_VALPARAISO.filter(word => {
-                const len = word.length;
+            return PALABRAS_VALPARAISO.filter(item => {
+                const len = item.word.length;
                 if (selectedLength === 10) {
-                    return len >= 10; // 10+ incluye 10, 11, 12, 13, etc.
+                    return len >= 10; 
                 }
                 return len === selectedLength;
             });
         }
 
         function newGame() {
-            // Obtener palabras filtradas según longitud seleccionada
+            // Obtener palabras filtradas
             const availableWords = getFilteredWords();
 
             if (availableWords.length === 0) {
@@ -331,14 +426,15 @@ const PALABRAS_VALPARAISO = [
                 return;
             }
 
-            // Selección de palabra (evitar repetir la misma inmediatamente si es posible)
-            let newWord;
+            // Selección de palabra aleatoria
+            let selection;
             do {
-                newWord = availableWords[Math.floor(Math.random() * availableWords.length)];
-            } while (newWord.toUpperCase() === displayWord && availableWords.length > 1);
+                selection = availableWords[Math.floor(Math.random() * availableWords.length)];
+            } while (selection.word.toUpperCase() === displayWord && availableWords.length > 1);
 
-            displayWord = newWord.toUpperCase();
-            targetWord = normalizeWord(newWord);
+            displayWord = selection.word.toUpperCase();
+            targetWord = normalizeWord(selection.word);
+            currentHint = selection.hint; // Guardar la pista
             currentWordCols = targetWord.length;
 
             currentRow = 0;
@@ -351,13 +447,7 @@ const PALABRAS_VALPARAISO = [
             document.getElementById('message-container').innerHTML = '';
 
             // Actualizar badge
-            if (selectedLength === null) {
-                document.getElementById('word-length-badge').textContent = `${currentWordCols} Letras`;
-            } else if (selectedLength === 10) {
-                document.getElementById('word-length-badge').textContent = `${currentWordCols} Letras`;
-            } else {
-                document.getElementById('word-length-badge').textContent = `${currentWordCols} Letras`;
-            }
+            document.getElementById('word-length-badge').textContent = `${currentWordCols} Letras`;
             
             // Resetear teclado visual
             document.querySelectorAll('.key').forEach(key => {
@@ -383,8 +473,7 @@ const PALABRAS_VALPARAISO = [
                 row.className = 'board-row';
                 row.id = `row-${i}`;
                 
-                // FIX: Usar minmax para limitar el ancho máximo de las celdas
-                // 54px es un buen estándar. Si la palabra es larga, se achicarán automáticamente.
+                // Grid dinámico
                 row.style.gridTemplateColumns = `repeat(${currentWordCols}, minmax(auto, 54px))`;
 
                 for (let j = 0; j < currentWordCols; j++) {
@@ -401,7 +490,6 @@ const PALABRAS_VALPARAISO = [
             document.getElementById('keyboard').addEventListener('click', (e) => {
                 const target = e.target.closest('.key');
                 if (!target) return;
-                // Pequeño feedback háptico visual al tocar en móvil
                 target.style.transform = 'scale(0.95)';
                 setTimeout(() => target.style.transform = '', 100);
                 
@@ -428,7 +516,6 @@ const PALABRAS_VALPARAISO = [
                 const tile = document.getElementById(`tile-${currentRow}-${currentCol}`);
                 tile.textContent = letter;
                 tile.classList.add('filled');
-                // Animación de "pop" al escribir
                 tile.animate([
                     { transform: 'scale(1)' },
                     { transform: 'scale(1.15)' },
@@ -531,12 +618,21 @@ const PALABRAS_VALPARAISO = [
             keyBtn.classList.add(state);
         }
 
+        // Nueva función para mostrar la pista
+        function showHint() {
+            if (!gameOver) {
+                showMessage(`PISTA: ${currentHint}`, 'blue');
+            }
+        }
+
         function showMessage(text, type, permanent = false) {
             const container = document.getElementById('message-container');
             const msg = document.createElement('div');
             let classes = 'px-6 py-3 rounded-full font-bold text-sm shadow-xl animate-popIn pointer-events-auto flex items-center gap-2 backdrop-blur-sm';
+            
             if (type === 'green') classes += ' bg-green-500/95 text-white';
             else if (type === 'red') classes += ' bg-white text-red-600 border-2 border-red-100';
+            else if (type === 'blue') classes += ' bg-blue-600/95 text-white'; // Nuevo estilo para pista
             else classes += ' bg-slate-800/95 text-white';
 
             msg.className = classes;
@@ -544,15 +640,15 @@ const PALABRAS_VALPARAISO = [
             container.innerHTML = '';
             container.appendChild(msg);
 
-            // Solo auto-ocultar mensajes rojos y si no es permanente
-            if (type === 'red' && !permanent) {
+            // Solo auto-ocultar mensajes rojos y azules (si no es permanente)
+            if ((type === 'red' || type === 'blue') && !permanent) {
                 setTimeout(() => {
                     if (container.contains(msg)) {
                         msg.classList.remove('animate-popIn');
                         msg.classList.add('animate-popOut');
                         setTimeout(() => container.removeChild(msg), 300);
                     }
-                }, 2000);
+                }, 3000); // 3 segundos para leer la pista
             }
         }
 
@@ -573,7 +669,6 @@ const PALABRAS_VALPARAISO = [
             const modal = document.getElementById('instructionsModal');
             modal.classList.remove('hidden');
             modal.classList.add('flex');
-            // Resetear scroll del modal
             modal.querySelector('div').scrollTop = 0;
         }
 
@@ -586,7 +681,6 @@ const PALABRAS_VALPARAISO = [
         init();
     </script>
     <style>
-        /* Animaciones Adicionales */
         @keyframes popIn {
             0% { opacity: 0; transform: scale(0.8) translateY(-20px); }
             100% { opacity: 1; transform: scale(1) translateY(0); }
