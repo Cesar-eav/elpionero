@@ -68,6 +68,8 @@ Route::get('/editoriales', [InicioController::class, 'editoriales'])->name('edit
 Route::get('/editorial/{slug}', [InicioController::class, 'showEditorial'])->name('editorial.show');
 Route::get('/entrevistas', [InicioController::class, 'entrevistas'])->name('entrevistas.index');
 Route::get('/entrevista/{slug}', [InicioController::class, 'showEntrevista'])->name('entrevista.show');
+Route::get('/cable-a-tierra', [InicioController::class, 'cableATierra'])->name('cable-a-tierra.index');
+Route::get('/cable-a-tierra/{slug}', [InicioController::class, 'showCableATierra'])->name('cable-a-tierra.show');
 Route::get('/revistas-lista', [InicioController::class, 'revistas'])->name('revistas.lista');
     
 

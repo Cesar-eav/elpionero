@@ -32,6 +32,7 @@
         <a href="{{ url('editoriales') }}" class="hover:text-white transition-colors">Editoriales</a>
         <a href="{{ url('noticias') }}" class="hover:text-white transition-colors">Noticias</a>
         <a href="{{ url('entrevistas') }}" class="hover:text-white transition-colors">Entrevistas</a>
+        <a href="{{ url('cable-a-tierra') }}" class="hover:text-white transition-colors">Cable a Tierra</a>
         <a href="{{ url('revistas-lista') }}" class="hover:text-white transition-colors">Revistas</a>
         <a href="{{ route('juegos.index') }}" class="hover:text-white transition-colors">Juegos</a>
         <a href="{{ url('nosotros') }}" class="hover:text-white transition-colors">Nosotros</a>
@@ -79,6 +80,7 @@
         <a href="{{ url('editoriales') }}" class="hover:text-white transition-colors block py-1">Editoriales</a>
         <a href="{{ url('noticias') }}" class="hover:text-white transition-colors block py-1">Noticias</a>
         <a href="{{ url('entrevistas') }}" class="hover:text-white transition-colors block py-1">Entrevistas</a>
+        <a href="{{ url('cable-a-tierra') }}" class="hover:text-white transition-colors block py-1">Cable a Tierra</a>
         <a href="{{ url('revistas-lista') }}" class="hover:text-white transition-colors block py-1">Revistas</a>
         <a href="{{ route('juegos.index') }}" class="hover:text-white transition-colors block py-1">Juegos</a>
         <a href="{{ url('nosotros') }}" class="hover:text-white transition-colors block py-1">Nosotros</a>

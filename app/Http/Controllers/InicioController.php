@@ -5,6 +5,7 @@ use App\Models\Articulo;
 use App\Models\Noticia;
 use App\Models\Editorial;
 use App\Models\Entrevista;
+use App\Models\CableATierra;
 use App\Models\Revista;
 
 
@@ -71,6 +72,25 @@ class InicioController extends Controller
             ->get();
 
         return view('inicio.entrevista', compact('entrevista', 'otrasEntrevistas'));
+    }
+
+    public function cableATierra()
+    {
+        $articulos = CableATierra::latest('fecha_publicacion')
+            ->paginate(12);
+
+        return view('inicio.cable-a-tierra', compact('articulos'));
+    }
+
+    public function showCableATierra($slug)
+    {
+        $articulo = CableATierra::where('slug', $slug)->firstOrFail();
+        $otrosArticulos = CableATierra::where('id', '!=', $articulo->id)
+            ->latest('fecha_publicacion')
+            ->limit(4)
+            ->get();
+
+        return view('inicio.cable-a-tierra-detalle', compact('articulo', 'otrosArticulos'));
     }
 
     public function revistas()

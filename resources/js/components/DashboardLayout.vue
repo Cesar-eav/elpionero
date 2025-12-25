@@ -80,6 +80,17 @@
                         Entrevistas
                     </router-link>
                     <router-link
+                        to="/dashboard-vue/cable"
+                        :class="[
+                            'px-3 py-2 rounded-md text-sm font-medium',
+                            $route.path === '/dashboard-vue/cable'
+                                ? 'bg-gray-900 text-white'
+                                : 'text-gray-300 hover:bg-gray-700 hover:text-white'
+                        ]"
+                    >
+                        Cable a Tierra
+                    </router-link>
+                    <router-link
                         to="/dashboard-vue/revistas"
                         :class="[
                             'px-3 py-2 rounded-md text-sm font-medium',

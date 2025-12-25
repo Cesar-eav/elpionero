@@ -61,6 +61,10 @@
                            class="px-4 py-2 rounded {{ $tipo === 'entrevistas' ? 'bg-[#fc5648] text-white' : 'bg-white text-gray-700 hover:bg-gray-100' }} border transition-colors">
                             Entrevistas ({{ $resultados['entrevistas']->count() ?? 0 }})
                         </a>
+                        <a href="{{ route('buscar', ['q' => $query, 'tipo' => 'cable-a-tierra']) }}"
+                           class="px-4 py-2 rounded {{ $tipo === 'cable-a-tierra' ? 'bg-[#fc5648] text-white' : 'bg-white text-gray-700 hover:bg-gray-100' }} border transition-colors">
+                            Cable a Tierra ({{ $resultados['cable_a_tierra']->count() ?? 0 }})
+                        </a>
                     </div>
                 </div>
 
@@ -153,6 +157,29 @@
                                             <h3 class="text-xl font-bold text-gray-900 hover:text-[#fc5648] mb-2">{{ $entrevista->titulo }}</h3>
                                             <p class="text-gray-600 text-sm mb-2">{{ $entrevista->entrevistado }} - {{ $entrevista->cargo }}</p>
                                             <p class="text-gray-700 line-clamp-2">{{ strip_tags(substr($entrevista->contenido, 0, 200)) }}...</p>
+                                        </a>
+                                    </div>
+                                @endforeach
+                            </div>
+                        </div>
+                    @endif
+
+                    <!-- Resultados de Cable a Tierra -->
+                    @if(isset($resultados['cable_a_tierra']) && $resultados['cable_a_tierra']->count() > 0)
+                        <div class="mb-8">
+                            <h2 class="text-2xl font-bold mb-4 flex items-center">
+                                <span class="bg-[#fc5648] text-white px-3 py-1 rounded mr-2">Cable a Tierra</span>
+                                <span class="text-gray-600 text-lg">{{ $resultados['cable_a_tierra']->count() }}</span>
+                            </h2>
+                            <div class="space-y-4">
+                                @foreach($resultados['cable_a_tierra'] as $articulo)
+                                    <div class="bg-white rounded-lg shadow p-4 hover:shadow-lg transition-shadow">
+                                        <a href="{{ route('cable-a-tierra.show', $articulo->slug) }}" class="block">
+                                            <h3 class="text-xl font-bold text-gray-900 hover:text-[#fc5648] mb-2">{{ $articulo->titulo }}</h3>
+                                            @if($articulo->autor)
+                                                <p class="text-gray-600 text-sm mb-2">Por: {{ $articulo->autor }}</p>
+                                            @endif
+                                            <p class="text-gray-700 line-clamp-2">{{ $articulo->resumen }}</p>
                                         </a>
                                     </div>
                                 @endforeach

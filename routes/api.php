@@ -8,6 +8,7 @@ use App\Http\Controllers\Api\ColumnistaApiController;
 use App\Http\Controllers\Api\EditorialApiController;
 use App\Http\Controllers\Api\NoticiaApiController;
 use App\Http\Controllers\Api\EntrevistaApiController;
+use App\Http\Controllers\Api\CableATierraApiController;
 
 /*
 |--------------------------------------------------------------------------
@@ -79,6 +80,15 @@ Route::prefix('entrevistas')->group(function () {
     Route::delete('/{entrevista}', [EntrevistaApiController::class, 'destroy']);
 });
 
+// Rutas API para Cable a Tierra
+Route::prefix('cable-a-tierra')->group(function () {
+    Route::get('/', [CableATierraApiController::class, 'index']);
+    Route::get('/{cableATierra}', [CableATierraApiController::class, 'show']);
+    Route::post('/', [CableATierraApiController::class, 'store']);
+    Route::put('/{cableATierra}', [CableATierraApiController::class, 'update']);
+    Route::delete('/{cableATierra}', [CableATierraApiController::class, 'destroy']);
+});
+
 // Rutas para obtener listas simples (sin paginación)
 Route::get('/revistas-list', function () {
     return \App\Models\Revista::orderBy('titulo')->get();
@@ -114,6 +124,12 @@ Route::get('stats', function () {
         'entrevistas' => [
             'total' => \App\Models\Entrevista::count(),
             'recientes' => \App\Models\Entrevista::latest('fecha_publicacion')
+                ->limit(5)
+                ->get()
+        ],
+        'cable_a_tierra' => [
+            'total' => \App\Models\CableATierra::count(),
+            'recientes' => \App\Models\CableATierra::latest('fecha_publicacion')
                 ->limit(5)
                 ->get()
         ],

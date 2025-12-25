@@ -4,6 +4,7 @@ import ArticulosManager from './components/ArticulosManager.vue';
 import EditorialesManager from './components/EditorialesManager.vue';
 import NoticiasManager from './components/NoticiasManager.vue';
 import EntrevistasManager from './components/EntrevistasManager.vue';
+import CableATierraManager from './components/CableATierraManager.vue';
 import RevistasManager from './components/RevistasManager.vue';
 import ColumnistasManager from './components/ColumnistasManager.vue';
 
@@ -62,6 +63,15 @@ const routes = [
         component: ColumnistasManager,
         meta: {
             title: 'Gestión de Columnistas'
+        }
+    },
+
+    {
+        path: '/dashboard-vue/cable',
+        name: 'cable',
+        component: CableATierraManager,
+        meta: {
+            title: 'Cable a Tierra'
         }
     }
 ];

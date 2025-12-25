@@ -95,6 +95,27 @@
                     </router-link>
                 </div>
 
+                <!-- Cable a Tierra Card -->
+                <div class="flex-1 bg-white rounded-lg shadow-md p-6 border-l-4 border-teal-500">
+                    <div class="flex items-center justify-between">
+                        <div>
+                            <p class="text-gray-500 text-sm font-semibold uppercase">Cable a Tierra</p>
+                            <p class="text-3xl font-bold text-gray-800 mt-2">{{ stats.cable_a_tierra ? stats.cable_a_tierra.total : 0 }}</p>
+                        </div>
+                        <div class="bg-teal-100 rounded-full p-3">
+                            <svg class="w-8 h-8 text-teal-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path>
+                            </svg>
+                        </div>
+                    </div>
+                    <router-link
+                        to="/dashboard-vue/cable"
+                        class="mt-4 text-teal-600 hover:text-teal-800 text-sm font-medium inline-block"
+                    >
+                        Ver todos →
+                    </router-link>
+                </div>
+
                 <!-- Revistas Card -->
                 <div class="flex-1 bg-white rounded-lg shadow-md p-6 border-l-4 border-green-500">
                     <div class="flex items-center justify-between">

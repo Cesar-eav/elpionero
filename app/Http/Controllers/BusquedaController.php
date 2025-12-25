@@ -6,6 +6,7 @@ use App\Models\Articulo;
 use App\Models\Editorial;
 use App\Models\Noticia;
 use App\Models\Entrevista;
+use App\Models\CableATierra;
 use Illuminate\Http\Request;
 
 class BusquedaController extends Controller
@@ -13,7 +14,7 @@ class BusquedaController extends Controller
     public function buscar(Request $request)
     {
         $query = $request->input('q');
-        $tipo = $request->input('tipo', 'todos'); // todos, columnas, editoriales, noticias, entrevistas
+        $tipo = $request->input('tipo', 'todos'); // todos, columnas, editoriales, noticias, entrevistas, cable-a-tierra
 
         if (empty($query)) {
             return redirect()->back()->with('error', 'Por favor ingresa un término de búsqueda');
@@ -165,6 +166,48 @@ class BusquedaController extends Controller
                     $q->where('titulo', 'LIKE', "%{$query}%")
                       ->orWhere('entrevistado', 'LIKE', "%{$query}%")
                       ->orWhere('cargo', 'LIKE', "%{$query}%")
+                      ->orWhere('contenido', 'LIKE', "%{$query}%");
+                })
+                ->orderByDesc('relevancia')
+                ->orderByDesc('fecha_publicacion')
+                ->limit(10)
+                ->get();
+        }
+
+        // Buscar en Cable a Tierra con sistema de relevancia
+        if ($tipo === 'todos' || $tipo === 'cable-a-tierra') {
+            $resultados['cable_a_tierra'] = CableATierra::select('cable_a_tierra.*')
+                ->selectRaw('
+                    CASE
+                        WHEN LOWER(titulo) LIKE LOWER(?) THEN 100
+                        WHEN LOWER(titulo) LIKE LOWER(?) THEN 80
+                        ELSE 0
+                    END +
+                    CASE
+                        WHEN LOWER(autor) LIKE LOWER(?) THEN 70
+                        WHEN LOWER(autor) LIKE LOWER(?) THEN 50
+                        ELSE 0
+                    END +
+                    CASE
+                        WHEN LOWER(resumen) LIKE LOWER(?) THEN 50
+                        ELSE 0
+                    END +
+                    CASE
+                        WHEN LOWER(contenido) LIKE LOWER(?) THEN 30
+                        ELSE 0
+                    END as relevancia
+                ', [
+                    $query,           // Coincidencia exacta en título
+                    "%{$query}%",     // Coincidencia parcial en título
+                    $query,           // Coincidencia exacta en autor
+                    "%{$query}%",     // Coincidencia parcial en autor
+                    "%{$query}%",     // Coincidencia en resumen
+                    "%{$query}%"      // Coincidencia en contenido
+                ])
+                ->where(function($q) use ($query) {
+                    $q->where('titulo', 'LIKE', "%{$query}%")
+                      ->orWhere('autor', 'LIKE', "%{$query}%")
+                      ->orWhere('resumen', 'LIKE', "%{$query}%")
                       ->orWhere('contenido', 'LIKE', "%{$query}%");
                 })
                 ->orderByDesc('relevancia')
