@@ -27,15 +27,41 @@
     </div>
 
     <!-- Enlaces de navegación escritorio -->
-    <nav class="hidden md:flex gap-4">
+    <nav class="hidden md:flex gap-4 items-center">
         <a href="{{ url('columnas') }}" class="hover:text-white transition-colors">Columnas</a>
+        <a href="{{ url('noticias') }}" class="hover:text-white transition-colors">Notas</a>
         <a href="{{ url('editoriales') }}" class="hover:text-white transition-colors">Editoriales</a>
-        <a href="{{ url('noticias') }}" class="hover:text-white transition-colors">Noticias</a>
-        <a href="{{ url('entrevistas') }}" class="hover:text-white transition-colors">Entrevistas</a>
         <a href="{{ url('cable-a-tierra') }}" class="hover:text-white transition-colors">Cable a Tierra</a>
-        <a href="{{ url('revistas-lista') }}" class="hover:text-white transition-colors">Revistas</a>
         <a href="{{ route('juegos.index') }}" class="hover:text-white transition-colors">Juegos</a>
-        <a href="{{ url('nosotros') }}" class="hover:text-white transition-colors">Nosotros</a>
+        <a href="{{ url('entrevistas') }}" class="hover:text-white transition-colors">Entrevistas</a>
+        {{-- HASTA AQUI --}}
+
+        <!-- Menú dropdown para enlaces adicionales en desktop -->
+        <div class="relative" id="desktop-dropdown">
+            <button id="desktop-dropdown-button" class="hover:text-white transition-colors flex items-center gap-1 focus:outline-none">
+                Más
+                <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+                </svg>
+            </button>
+
+            <!-- Menú desplegable -->
+            <div id="desktop-dropdown-menu" class="hidden absolute right-0 mt-2 w-48 bg-black border border-gray-300 rounded-md shadow-lg py-2 z-50">
+                
+                <a href="{{ url('revistas-lista') }}" class="block px-4 py-2 hover:bg-gray-800 hover:text-white transition-colors">Revistas</a>
+                <a href="{{ url('nosotros') }}" class="block px-4 py-2 hover:bg-gray-800 hover:text-white transition-colors">Nosotros</a>
+                        <a href="{{ route('aportes') }}" class="hover:text-white text-green-600 transition-colors block px-4 py-2 border-t border-gray-700 pt-3 mt-2">
+            
+
+                            <span class="text-l flex items-start gap-3">
+                Apóyanos
+                                  <svg class="w-6 h-6 text-green-600 flex-shrink-0 mt-0.5" fill="currentColor" viewBox="0 0 24 24">
+            <path d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"></path>
+          </svg>
+            </span>
+        </a>
+            </div>
+        </div>
     </nav>
 
     <!-- Botón hamburguesa (solo en móvil) -->
@@ -91,7 +117,7 @@
 </div>
 
 <script>
-    // JavaScript puro para el menú móvil
+    // JavaScript puro para el menú móvil y dropdown desktop
     document.addEventListener('DOMContentLoaded', function() {
         // Menú móvil
         const menuButton = document.getElementById('mobile-menu-button');
@@ -128,6 +154,27 @@
                     mobileMenu.classList.remove('flex');
                     menuIcon.classList.remove('hidden');
                     closeIcon.classList.add('hidden');
+                }
+            });
+        }
+
+        // Menú dropdown desktop
+        const dropdownButton = document.getElementById('desktop-dropdown-button');
+        const dropdownMenu = document.getElementById('desktop-dropdown-menu');
+        const dropdown = document.getElementById('desktop-dropdown');
+
+        if (dropdownButton && dropdownMenu && dropdown) {
+            dropdownButton.addEventListener('click', function(event) {
+                event.stopPropagation();
+                dropdownMenu.classList.toggle('hidden');
+            });
+
+            // Cerrar el dropdown al hacer clic fuera de él
+            document.addEventListener('click', function(event) {
+                const isClickInside = dropdown.contains(event.target);
+
+                if (!isClickInside && !dropdownMenu.classList.contains('hidden')) {
+                    dropdownMenu.classList.add('hidden');
                 }
             });
         }
