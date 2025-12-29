@@ -73,10 +73,10 @@
   <!-- Fondo en gradiente con tus colores -->
   <div class="absolute inset-0 bg-gradient-to-r from-[#fc5648] via-[#eba81d] to-[#fc5648] opacity-20"></div>
 
-  <div class="relative grid grid-cols-1 md:grid-cols-5 gap-0 bg-white">
-    <!-- Columna portada -->
-    <div class="md:col-span-2 p-4 md:p-6 flex items-center justify-center">
-      <div class="relative w-full max-w-sm">
+  <div class="relative grid grid-cols-1 md:grid-cols-2 gap-6 bg-white p-6 md:p-8">
+    <!-- Columna 1: Mini especial (solo portada) -->
+    <div class="flex flex-col">
+      <div class="relative w-full">
         <!-- Cinta "Nuevo" -->
         <span class="absolute -left-2 -top-2 z-10 bg-[#fc5648] text-white text-xs font-bold uppercase tracking-wide px-2 py-1 rounded">
           Nuevo: Mini Especial
@@ -91,34 +91,22 @@
             loading="lazy"
           />
         </a>
-
-        <!-- Etiquetas inferiores -->
-        <div class="mt-3 flex flex-wrap items-center gap-2 text-[11px] text-gray-600">
-          <span class="inline-flex items-center gap-1 bg-gray-100 px-2 py-1 rounded">
-            <svg class="w-3 h-3" viewBox="0 0 24 24" fill="currentColor"><path d="M5 4h14a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2h-7l-4 3v-3H5a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2Z"/></svg>
-            PDF
-          </span>
-          <span class="inline-flex items-center gap-1 bg-gray-100 px-2 py-1 rounded">
-            <svg class="w-3 h-3" viewBox="0 0 24 24" fill="currentColor"><path d="M19 3H5a2 2 0 0 0-2 2v14l4-4h12a2 2 0 0 0 2-2V5a2 2 0 0 0-2-2Z"/></svg>
-            Lectura rápida
-          </span>
-        </div>
       </div>
     </div>
 
-    <!-- Columna texto + CTA + newsletter compacto -->
-    <div class="md:col-span-3 p-6 md:p-8 flex flex-col justify-center">
-      <h2 class="text-2xl md:text-3xl font-extrabold text-gray-900 leading-tight">
+    <!-- Columna 2: Contenido - Descargar hasta Newsletter + La Brújula y Juegos -->
+    <div class="flex flex-col">
+      <h2 class="text-2xl md:text-3xl font-extrabold text-gray-900 leading-tight mb-3">
         Descarga el <span class="text-[#fc5648]">Último Número</span> de <span class="italic">El Pionero de Valparaíso</span>
       </h2>
 
-      <p class="mt-3 text-gray-700">
+      <p class="text-gray-700 mb-5">
         "Plaza O' Higgins ¿Qué pasó con el pasto?" | Mini Especial — Registro fotográfico del estado de la plaza.
         Llévatelo en PDF o léelo en línea.
       </p>
 
       <!-- Botones CTA -->
-      <div class="mt-5 flex flex-col sm:flex-row gap-3">
+      <div class="flex flex-col sm:flex-row gap-3 md:mb-3 mb-6" >
         <a
           href="{{ route('pdf.track', ['pdfName' => 'Plaza_Ohiggins.pdf', 'action' => 'download']) }}"
           target="_blank"
@@ -129,30 +117,19 @@
           Descargar PDF
         </a>
 
-        <a
-          href="{{ route('pdf.track', ['pdfName' => 'Plaza_Ohiggins.pdf', 'action' => 'view']) }}"
-          target="_blank"
-          rel="noopener"
-          class="inline-flex items-center justify-center gap-2 px-5 py-3 rounded-lg bg-white text-gray-900 border border-gray-300 font-semibold hover:bg-gray-50 shadow-sm transition"
-        >
-          <svg class="w-5 h-5" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5h13M8 12h13M8 19h13M3 5h.01M3 12h.01M3 19h.01"/></svg>
-          Ver en línea
-        </a>
       </div>
 
-      <!-- separador fino -->
-      <div class="my-6 h-px bg-gradient-to-r from-transparent via-gray-200 to-transparent"></div>
-
       <!-- Recuadro Apóyanos sobrio -->
-      <div class="bg-green-50 border border-green-300 rounded-lg p-4 mb-6">
+      <div class="bg-green-100 border border-green-300 rounded-lg p-4 mb-6">
         <div class="flex items-start gap-3">
           <svg class="w-6 h-6 text-green-600 flex-shrink-0 mt-0.5" fill="currentColor" viewBox="0 0 24 24">
             <path d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"></path>
           </svg>
           <div class="flex-1">
-            <h3 class="font-bold text-gray-900 mb-1">Apoya nuestro trabajo</h3>
+            <h3 class="font-bold text-gray-900 mb-1">¿Te gusta nuestro trabajo?</h3>
             <p class="text-sm text-gray-700 mb-3">
               Tu aporte nos ayuda a seguir trabajando por Valparaíso con independencia y calidad. Cada contribución hace la diferencia.
+              <span class="text-green-600">Desde $2000 en adelante puedes aportar.</span>
             </p>
             <a href="{{ route('aportes') }}"
                class="inline-block bg-green-600 hover:bg-green-700 text-white text-sm font-semibold px-4 py-2 rounded transition">
@@ -163,12 +140,12 @@
       </div>
 
       <!-- Mini newsletter integrado -->
-      <div class="grid grid-cols-1 sm:grid-cols-3 gap-3 items-center">
-        <p class="sm:col-span-1 text-sm text-gray-700">
+      <div class="space-y-3 md:space-y-1 mb-2">
+        <p class="text-sm text-gray-700">
           📬 Suscríbete y recibe los próximos números y columnas en tu correo.
         </p>
 
-        <form method="POST" action="{{ route('newsletter.subscribe') }}" class="sm:col-span-2 flex flex-col sm:flex-row gap-2">
+        <form method="POST" action="{{ route('newsletter.subscribe') }}" class="flex flex-col sm:flex-row gap-2">
           @csrf
           <input
             type="email"
@@ -191,11 +168,41 @@
           {{ session('success') }}
         </div>
       @endif
+
+
+      <!-- Nueva sección: La Brújula y Juegos -->
+      <div class="grid grid-cols-2 gap-4">
+        <!-- Tarjeta La Brújula -->
+        <a href="#" class="group block rounded-2xl overflow-hidden border border-gray-200 shadow-lg hover:shadow-xl transition-all duration-300">
+          <div class="relative bg-gray-200 h-40 flex items-center justify-center">
+            <div class="absolute inset-0 bg-gradient-to-br from-blue-100 to-blue-50"></div>
+            <div class="relative text-center">
+              <div class="text-5xl mb-2">🧭</div>
+            </div>
+          </div>
+          <div class="p-4 bg-white">
+            <h3 class="text-xl font-bold text-gray-900 group-hover:text-[#fc5648] transition">La Brújula</h3>
+            <p class="text-gray-700 mt-1 text-sm">Navega nuestro contenido especial</p>
+          </div>
+        </a>
+
+        <!-- Tarjeta Juegos -->
+        <a href="{{ route('juegos.index') }}" class="group block rounded-2xl overflow-hidden border border-gray-200 shadow-lg hover:shadow-xl transition-all duration-300">
+          <div class="relative bg-gray-200 h-40 flex items-center justify-center">
+            <div class="absolute inset-0 bg-gradient-to-br from-purple-100 to-purple-50"></div>
+            <div class="relative text-center">
+              <div class="text-5xl mb-2">🕹️</div>
+            </div>
+          </div>
+          <div class="p-4 bg-white">
+            <h3 class="text-xl font-bold text-gray-900 group-hover:text-[#fc5648] transition">Juegos</h3>
+            <p class="text-gray-700 mt-1 text-sm">Diversión y entretenimiento</p>
+          </div>
+        </a>
+      </div>
     </div>
   </div>
 </section>
-
-
 
             <!-- Layout principal -->
             <div class="flex flex-col md:flex-row gap-6">
