@@ -37,6 +37,9 @@
         <!-- Header -->
         <div class="bg-white rounded-lg shadow-lg p-8 mb-8 text-center">
             <h1 class="text-4xl font-bold text-gray-900 mb-3">Juegos del Pionero</h1>
+            <p class="text-lg text-red-600">Versión BETA 1.0</p>
+            <p class="text-lg text-red-600">Los juegos pueden contener errores</p>
+
             <p class="text-lg text-gray-600">Diviértete con nuestros pasatiempos mientras aprendes sobre Valparaíso</p>
         </div>
 
