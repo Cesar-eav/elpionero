@@ -112,6 +112,17 @@
                     >
                         Columnistas
                     </router-link>
+                    <router-link
+                        to="/dashboard-vue/atractivos"
+                        :class="[
+                            'px-3 py-2 rounded-md text-sm font-medium',
+                            $route.path === '/dashboard-vue/atractivos'
+                                ? 'bg-gray-900 text-white'
+                                : 'text-gray-300 hover:bg-gray-700 hover:text-white'
+                        ]"
+                    >
+                        Atractivos
+                    </router-link>
                 </div>
             </div>
         </nav>

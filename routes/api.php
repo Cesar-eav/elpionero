@@ -9,6 +9,7 @@ use App\Http\Controllers\Api\EditorialApiController;
 use App\Http\Controllers\Api\NoticiaApiController;
 use App\Http\Controllers\Api\EntrevistaApiController;
 use App\Http\Controllers\Api\CableATierraApiController;
+use App\Http\Controllers\Api\AtractivoApiController;
 
 /*
 |--------------------------------------------------------------------------
@@ -87,6 +88,15 @@ Route::prefix('cable-a-tierra')->group(function () {
     Route::post('/', [CableATierraApiController::class, 'store']);
     Route::put('/{cableATierra}', [CableATierraApiController::class, 'update']);
     Route::delete('/{cableATierra}', [CableATierraApiController::class, 'destroy']);
+});
+
+// Rutas API para Atractivos
+Route::prefix('atractivos')->group(function () {
+    Route::get('/', [AtractivoApiController::class, 'index']);
+    Route::get('/{atractivo}', [AtractivoApiController::class, 'show']);
+    Route::post('/', [AtractivoApiController::class, 'store']);
+    Route::put('/{atractivo}', [AtractivoApiController::class, 'update']);
+    Route::delete('/{atractivo}', [AtractivoApiController::class, 'destroy']);
 });
 
 // Rutas para obtener listas simples (sin paginación)

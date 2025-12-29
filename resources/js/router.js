@@ -7,6 +7,7 @@ import EntrevistasManager from './components/EntrevistasManager.vue';
 import CableATierraManager from './components/CableATierraManager.vue';
 import RevistasManager from './components/RevistasManager.vue';
 import ColumnistasManager from './components/ColumnistasManager.vue';
+import AtractivosManager from './components/AtractivosManager.vue';
 
 const routes = [
     {
@@ -63,6 +64,15 @@ const routes = [
         component: ColumnistasManager,
         meta: {
             title: 'Gestión de Columnistas'
+        }
+    },
+
+    {
+        path: '/dashboard-vue/atractivos',
+        name: 'atractivos',
+        component: AtractivosManager,
+        meta: {
+            title: 'Gestión de Atractivos'
         }
     },
 

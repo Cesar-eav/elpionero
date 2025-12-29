@@ -120,24 +120,8 @@
       </div>
 
       <!-- Recuadro Apóyanos sobrio -->
-      <div class="bg-green-100 border border-green-300 rounded-lg p-4 mb-6">
-        <div class="flex items-start gap-3">
-          <svg class="w-6 h-6 text-green-600 flex-shrink-0 mt-0.5" fill="currentColor" viewBox="0 0 24 24">
-            <path d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"></path>
-          </svg>
-          <div class="flex-1">
-            <h3 class="font-bold text-gray-900 mb-1">¿Te gusta nuestro trabajo?</h3>
-            <p class="text-sm text-gray-700 mb-3">
-              Tu aporte nos ayuda a seguir trabajando por Valparaíso con independencia y calidad. Cada contribución hace la diferencia.
-              <span class="text-green-600">Desde $2000 en adelante puedes aportar.</span>
-            </p>
-            <a href="{{ route('aportes') }}"
-               class="inline-block bg-green-600 hover:bg-green-700 text-white text-sm font-semibold px-4 py-2 rounded transition">
-              Hacer un aporte
-            </a>
-          </div>
-        </div>
-      </div>
+            <x-apoyanos />
+
 
       <!-- Mini newsletter integrado -->
       <div class="space-y-3 md:space-y-1 mb-2">
@@ -173,8 +157,8 @@
       <!-- Nueva sección: La Brújula y Juegos -->
       <div class="grid grid-cols-2 gap-4">
         <!-- Tarjeta La Brújula -->
-        <a href="#" class="group block rounded-2xl overflow-hidden border border-gray-200 shadow-lg hover:shadow-xl transition-all duration-300">
-          <div class="relative bg-gray-200 h-40 flex items-center justify-center">
+        <a href="{{ route('atractivos.index') }}" class="group block rounded-2xl overflow-hidden border border-gray-200 shadow-lg hover:shadow-xl transition-all duration-300">
+          <div class="relative bg-gray-200 h-32 md:h-40 flex items-center justify-center">
             <div class="absolute inset-0 bg-gradient-to-br from-blue-100 to-blue-50"></div>
             <div class="relative text-center">
               <div class="text-5xl mb-2">🧭</div>
@@ -188,7 +172,7 @@
 
         <!-- Tarjeta Juegos -->
         <a href="{{ route('juegos.index') }}" class="group block rounded-2xl overflow-hidden border border-gray-200 shadow-lg hover:shadow-xl transition-all duration-300">
-          <div class="relative bg-gray-200 h-40 flex items-center justify-center">
+          <div class="relative bg-gray-200 h-32 md:h-40 flex items-center justify-center">
             <div class="absolute inset-0 bg-gradient-to-br from-purple-100 to-purple-50"></div>
             <div class="relative text-center">
               <div class="text-5xl mb-2">🕹️</div>

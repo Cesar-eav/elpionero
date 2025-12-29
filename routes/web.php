@@ -14,6 +14,8 @@ use App\Http\Controllers\SitemapController;
 use App\Http\Controllers\TriviaReportController;
 use App\Http\Controllers\PdfTrackingController;
 
+use App\Http\Controllers\AtractivoController;
+
 
 
 
@@ -50,6 +52,12 @@ Route::get('/juegos/sopa-letras', function () {
 Route::get('/juegos/trivia', function () {
     return view('juegos.trivia');
 })->name('juegos.trivia');
+
+// Rutas públicas para Atractivos (La Brújula)
+Route::get('/labrujula', [AtractivoController::class, 'index'])->name('atractivos.index');
+Route::get('/atractivos/{atractivo}', [AtractivoController::class, 'show'])->name('atractivos.show');
+Route::get('/atractivos/categoria/{categoria}', [AtractivoController::class, 'filtrarPorCategoria'])->name('atractivos.categoria');
+Route::get('/atractivos/ciudad/{ciudad}', [AtractivoController::class, 'filtrarPorCiudad'])->name('atractivos.ciudad');
 
 Route::get('/juegos/portle', function () {
     return view('juegos.wordle');
