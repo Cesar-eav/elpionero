@@ -17,7 +17,9 @@
                         @endif
                     </a>
                     <span class="absolute top-4 left-4 bg-[#fc5648] text-white text-[10px] uppercase tracking-widest font-bold px-3 py-1 rounded-full shadow-lg">
-                        {{ $atractivo->category }}
+                        @if ($atractivo->categoria)
+                            {{ $atractivo->categoria->icono }} {{ $atractivo->categoria->nombre }}
+                        @endif
                     </span>
                 </div>
 

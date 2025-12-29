@@ -54,7 +54,9 @@
                     <!-- Categoría -->
                     <div class="mb-4">
                         <span class="inline-block bg-[#fc5648] text-white px-4 py-2 rounded-full text-sm font-semibold">
-                            {{ ucfirst($atractivo->category) }}
+                            @if ($atractivo->categoria)
+                                {{ $atractivo->categoria->icono }} {{ $atractivo->categoria->nombre }}
+                            @endif
                         </span>
                     </div>
 
@@ -117,7 +119,7 @@
 
             <!-- Atractivos relacionados -->
             @php
-                $relacionados = \App\Models\Atractivo::where('category', $atractivo->category)
+                $relacionados = \App\Models\Atractivo::where('categoria_id', $atractivo->categoria_id)
                     ->where('id', '!=', $atractivo->id)
                     ->limit(3)
                     ->get();
@@ -125,7 +127,7 @@
 
             @if ($relacionados->count())
                 <section>
-                    <h2 class="text-3xl font-bold text-gray-900 mb-6">Más {{ $atractivo->category }}</h2>
+                    <h2 class="text-3xl font-bold text-gray-900 mb-6">Más {{ $atractivo->categoria?->nombre }}</h2>
 
                     <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
                         @foreach ($relacionados as $relacionado)

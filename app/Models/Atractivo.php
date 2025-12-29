@@ -8,9 +8,9 @@ class Atractivo extends Model
 {
     protected $fillable = [
         'user_id',
+        'categoria_id',
         'title',
         'description',
-        'category',
         'tags',
         'image',
         'ciudad',
@@ -30,8 +30,50 @@ class Atractivo extends Model
     ];
 
     /**
-     * Accesor: Procesa los tags para asegurar que sean un array limpio
+     * Mapeo de categorías del inglés al español
      */
+    protected static $categoryTranslations = [
+        'museum' => 'Museo',
+        'restaurant' => 'Restaurante',
+        'park' => 'Parque',
+        'beach' => 'Playa',
+        'viewpoint' => 'Mirador',
+        'historic' => 'Sitio Histórico',
+        'monument' => 'Monumento',
+        'art' => 'Arte',
+        'culture' => 'Cultura',
+        'entertainment' => 'Entretenimiento',
+        'shopping' => 'Compras',
+        'nature' => 'Naturaleza',
+        'sports' => 'Deportes',
+        'tour' => 'Tours',
+        'activity' => 'Actividad',
+    ];
+
+    /**
+     * Accesor: Traduce la categoría al español
+     */
+    public function getCategoryTranslatedAttribute()
+    {
+        $categoryLower = strtolower($this->attributes['category'] ?? '');
+        return self::$categoryTranslations[$categoryLower] ?? ucfirst($this->attributes['category'] ?? '');
+    }
+
+    /**
+     * Método estático: Obtener todas las categorías traducidas
+     */
+    public static function getCategoriesTranslated()
+    {
+        $categories = self::distinct()->pluck('category');
+        
+        return $categories->map(function ($cat) {
+            $catLower = strtolower($cat);
+            return [
+                'original' => $cat,
+                'translated' => self::$categoryTranslations[$catLower] ?? ucfirst($cat)
+            ];
+        })->sortBy('translated')->values();
+    }
     public function getProcessedTagsAttribute()
     {
         if (!$this->tags) {
@@ -66,6 +108,14 @@ class Atractivo extends Model
     public function user()
     {
         return $this->belongsTo(User::class);
+    }
+
+    /**
+     * Relación: Un atractivo pertenece a una categoría
+     */
+    public function categoria()
+    {
+        return $this->belongsTo(Categoria::class);
     }
 }
 

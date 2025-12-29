@@ -38,8 +38,8 @@
                                     class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#fc5648] outline-none bg-gray-50">
                                 <option value="">Todas las categorías</option>
                                 @foreach ($categorias as $cat)
-                                    <option value="{{ $cat }}" @selected(request('category') == $cat)>
-                                        {{ ucfirst($cat) }}
+                                    <option value="{{ $cat->slug }}" @selected(request('category') == $cat->slug)>
+                                        {{ $cat->icono }} {{ $cat->nombre }}
                                     </option>
                                 @endforeach
                             </select>
@@ -84,9 +84,11 @@
                                             <div class="w-full h-56 bg-gray-200 flex items-center justify-center text-4xl">📍</div>
                                         @endif
                                     </a>
-                                    <span class="absolute top-4 left-4 bg-[#fc5648] text-white text-[10px] uppercase tracking-widest font-bold px-3 py-1 rounded-full shadow-lg">
-                                        {{ $atractivo->category }}
-                                    </span>
+                                    @if ($atractivo->categoria)
+                                        <span class="absolute top-4 left-4 bg-[#fc5648] text-white text-[10px] uppercase tracking-widest font-bold px-3 py-1 rounded-full shadow-lg">
+                                            {{ $atractivo->categoria->icono }} {{ $atractivo->categoria->nombre }}
+                                        </span>
+                                    @endif
                                 </div>
 
                                 <div class="p-5 flex-grow">

@@ -158,3 +158,8 @@ Route::get('stats', function () {
         ]
     ]);
 });
+
+// Ruta para obtener todas las categorías
+Route::get('/categorias', function () {
+    return \App\Models\Categoria::all();
+});

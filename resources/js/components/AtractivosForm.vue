@@ -44,17 +44,14 @@
                     <div>
                         <label class="block text-gray-700 font-semibold mb-2">Categoría *</label>
                         <select
-                            v-model="formData.category"
+                            v-model.number="formData.categoria_id"
                             required
                             class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
                         >
                             <option value="">Selecciona una categoría</option>
-                            <option value="museum">Museo</option>
-                            <option value="monument">Monumento</option>
-                            <option value="restaurant">Restaurante</option>
-                            <option value="beach">Playa</option>
-                            <option value="park">Parque</option>
-                            <option value="other">Otro</option>
+                            <option v-for="cat in categorias" :key="cat.id" :value="cat.id">
+                                {{ cat.icono }} {{ cat.nombre }}
+                            </option>
                         </select>
                     </div>
 
@@ -200,7 +197,7 @@ export default {
             formData: {
                 title: '',
                 description: '',
-                category: '',
+                categoria_id: '',
                 ciudad: '',
                 autor: '',
                 enlace: '',
@@ -209,17 +206,42 @@ export default {
                 horario: '',
                 tags: [],
             },
+            categorias: [],
             tagsInput: '',
             imagePreview: null,
             imageFile: null,
         };
     },
-    mounted() {
+    async mounted() {
+        // Cargar categorías primero
+        try {
+            const response = await axios.get('/api/categorias');
+            this.categorias = response.data;
+        } catch (error) {
+            console.error('Error cargando categorías:', error);
+        }
+
+        // Luego, si estamos editando, cargar los datos del atractivo
         if (this.isEditing && this.atractivo) {
-            this.formData = { ...this.atractivo };
+            // Copiar los datos del atractivo
+            this.formData = {
+                title: this.atractivo.title || '',
+                description: this.atractivo.description || '',
+                categoria_id: this.atractivo.categoria_id || '',
+                ciudad: this.atractivo.ciudad || '',
+                autor: this.atractivo.autor || '',
+                enlace: this.atractivo.enlace || '',
+                lng: this.atractivo.lng || '',
+                lat: this.atractivo.lat || '',
+                horario: this.atractivo.horario || '',
+                tags: this.atractivo.tags || [],
+                id: this.atractivo.id || null,
+            };
+            
             this.tagsInput = Array.isArray(this.atractivo.tags)
                 ? this.atractivo.tags.join(', ')
                 : '';
+            
             if (this.atractivo.image) {
                 this.imagePreview = `/storage/${this.atractivo.image}`;
             }
@@ -238,30 +260,53 @@ export default {
             }
         },
 
-        async submitForm() {
-            // Procesar etiquetas
-            this.formData.tags = this.tagsInput
-                .split(',')
-                .map((tag) => tag.trim())
-                .filter((tag) => tag);
+  async submitForm() {
+    console.log('=== INICIO submitForm ===');
+    console.log('formData.categoria_id TYPE:', typeof this.formData.categoria_id);
+    console.log('formData.categoria_id VALUE:', this.formData.categoria_id);
+    
+    // Procesar tags
+    const tags = this.tagsInput
+        .split(',')
+        .map((tag) => tag.trim())
+        .filter((tag) => tag);
 
-            // Si hay imagen nueva, usar FormData
-            if (this.imageFile) {
-                const formData = new FormData();
-                Object.keys(this.formData).forEach((key) => {
-                    if (key === 'tags') {
-                        formData.append(key, JSON.stringify(this.formData[key]));
-                    } else {
-                        formData.append(key, this.formData[key]);
-                    }
-                });
-                formData.append('image', this.imageFile);
+    const datos = {
+        title: this.formData.title,
+        description: this.formData.description,
+        categoria_id: this.formData.categoria_id,
+        ciudad: this.formData.ciudad,
+        autor: this.formData.autor,
+        enlace: this.formData.enlace,
+        lng: this.formData.lng,
+        lat: this.formData.lat,
+        horario: this.formData.horario,
+        tags: tags,
+    };
 
-                this.$emit('save', formData);
-            } else {
-                this.$emit('save', this.formData);
-            }
-        },
+
+    try {
+        let response;
+        
+        if (this.isEditing) {
+            console.log('PUT a /api/atractivos/' + this.formData.id);
+            response = await axios.put(`/api/atractivos/${this.formData.id}`, datos);
+        } else {
+            console.log('POST a /api/atractivos');
+            response = await axios.post('/api/atractivos', datos);
+        }
+        
+        console.log('✓ Respuesta exitosa:', response.data);
+        console.log('Respuesta categoria_id:', response.data.categoria_id);
+        alert('✓ Guardado correctamente');
+        this.$emit('close');
+        
+    } catch (error) {
+        console.error('❌ Error:', error);
+        console.error('Respuesta del servidor:', error.response?.data);
+        alert('Error: ' + (error.response?.data?.message || error.message));
+    }
+}
     },
 };
 </script>

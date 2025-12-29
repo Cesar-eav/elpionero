@@ -96,7 +96,7 @@
                         </td>
                         <td class="border border-gray-300 px-4 py-2">
                             <span class="bg-blue-100 text-blue-800 px-2 py-1 rounded text-sm">
-                                {{ atractivo.category }}
+                                {{ atractivo.categoria?.nombre || 'N/A' }}
                             </span>
                         </td>
                         <td class="border border-gray-300 px-4 py-2">{{ atractivo.ciudad }}</td>
@@ -236,37 +236,13 @@ export default {
         },
 
         async saveAtractivo(atractivoData) {
-            try {
-                let response;
-                if (this.isEditing) {
-                    response = await fetch(`/api/atractivos/${this.editingAtractivo.id}`, {
-                        method: 'POST',
-                        headers: {
-                            'Content-Type': 'application/json',
-                            'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content,
-                        },
-                        body: JSON.stringify({ ...atractivoData, _method: 'PUT' }),
-                    });
-                } else {
-                    response = await fetch('/api/atractivos', {
-                        method: 'POST',
-                        headers: {
-                            'Content-Type': 'application/json',
-                            'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content,
-                        },
-                        body: JSON.stringify(atractivoData),
-                    });
-                }
-
-                if (response.ok) {
-                    this.successMessage = this.isEditing ? 'Atractivo actualizado' : 'Atractivo creado';
-                    setTimeout(() => (this.successMessage = ''), 3000);
-                    this.closeModal();
-                    this.fetchAtractivos(this.currentPage);
-                }
-            } catch (error) {
-                console.error('Error saving atractivo:', error);
-            }
+            console.log('=== AtractivosManager: saveAtractivo llamado ===');
+            console.log('Datos recibidos:', atractivoData);
+            
+            // Ya se guarda en AtractivosForm, solo recargamos
+            this.fetchAtractivos(this.currentPage);
+            this.successMessage = '✓ Guardado correctamente';
+            setTimeout(() => (this.successMessage = ''), 3000);
         },
 
         async deleteAtractivo(id) {

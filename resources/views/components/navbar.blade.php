@@ -30,7 +30,6 @@
     <nav class="hidden md:flex gap-4 items-center">
         <a href="{{ url('columnas') }}" class="hover:text-white transition-colors">Columnas</a>
         <a href="{{ url('noticias') }}" class="hover:text-white transition-colors">Notas</a>
-        <a href="{{ url('editoriales') }}" class="hover:text-white transition-colors">Editoriales</a>
         <a href="{{ url('labrujula') }}" class="hover:text-white transition-colors">La Brújula</a>
         <a href="{{ url('cable-a-tierra') }}" class="hover:text-white transition-colors">Cable a Tierra</a>
         <a href="{{ route('juegos.index') }}" class="hover:text-white transition-colors">Juegos</a>
@@ -48,7 +47,7 @@
 
             <!-- Menú desplegable -->
             <div id="desktop-dropdown-menu" class="hidden absolute right-0 mt-2 w-48 bg-black border border-gray-300 rounded-md shadow-lg py-2 z-50">
-                
+                <a href="{{ url('editoriales') }}" class="hover:text-white transition-colors">Editoriales</a>
                 <a href="{{ url('revistas-lista') }}" class="block px-4 py-2 hover:bg-gray-800 hover:text-white transition-colors">Revistas</a>
                 <a href="{{ url('nosotros') }}" class="block px-4 py-2 hover:bg-gray-800 hover:text-white transition-colors">Nosotros</a>
                         <a href="{{ route('aportes') }}" class="hover:text-white text-green-600 transition-colors block px-4 py-2 border-t border-gray-700 pt-3 mt-2">

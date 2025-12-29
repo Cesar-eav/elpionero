@@ -14,7 +14,7 @@ class AtractivoApiController extends Controller
      */
     public function index(Request $request)
     {
-        $query = Atractivo::with(['user']);
+        $query = Atractivo::with(['user', 'categoria']);
 
         // Filtros opcionales
         if ($request->has('search')) {
@@ -49,7 +49,7 @@ class AtractivoApiController extends Controller
         $validated = $request->validate([
             'title' => 'required|string|max:255',
             'description' => 'required|string',
-            'category' => 'required|string',
+            'categoria_id' => 'required|exists:categorias,id',
             'tags' => 'nullable|array',
             'ciudad' => 'nullable|string',
             'enlace' => 'nullable|url',
@@ -60,12 +60,11 @@ class AtractivoApiController extends Controller
             'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
         ]);
 
-        // Manejar la imagen
         if ($request->hasFile('image')) {
             $validated['image'] = $request->file('image')->store('atractivos', 'public');
         }
 
-        $validated['user_id'] = auth()->id() ?? 99; // Usuario autenticado o por defecto 99
+        $validated['user_id'] = auth()->id() ?? 99;
 
         $atractivo = Atractivo::create($validated);
 
@@ -77,7 +76,7 @@ class AtractivoApiController extends Controller
      */
     public function show(Atractivo $atractivo)
     {
-        return response()->json($atractivo->load(['user']));
+        return response()->json($atractivo->load(['user', 'categoria']));
     }
 
     /**
@@ -88,7 +87,7 @@ class AtractivoApiController extends Controller
         $validated = $request->validate([
             'title' => 'string|max:255',
             'description' => 'string',
-            'category' => 'string',
+            'categoria_id' => 'exists:categorias,id',
             'tags' => 'nullable|array',
             'ciudad' => 'nullable|string',
             'enlace' => 'nullable|url',
@@ -99,9 +98,7 @@ class AtractivoApiController extends Controller
             'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
         ]);
 
-        // Manejar imagen nueva
         if ($request->hasFile('image')) {
-            // Eliminar imagen anterior
             if ($atractivo->image) {
                 Storage::disk('public')->delete($atractivo->image);
             }
