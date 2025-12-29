@@ -32,7 +32,6 @@
 
             <x-navbar />
 
-
             <!-- Layout principal -->
             <div class="flex flex-col md:flex-row gap-6 mt-5">
                 <!-- Sidebar izquierda -->
@@ -94,11 +93,7 @@
                 <aside class="w-full md:w-2/6 space-y-6 bg-gray-50 border border-gray-300 rounded-lg p-4 shadow-sm">
                     <div>
 
-                        <div>
-                            <a href="https://www.instagram.com/manos_.alarte/" target="_blank">
-                                <img src="{{ asset('storage/manosalarte.jpeg') }}" alt="Anuncio Mediano"
-                                    class="w-full rounded border shadow" /></a>
-                        </div>
+            <x-apoyanos />
                         <h2 class="text-xl font-semibold text-gray-800 border-b pb-2">Columnas de Opinión</h2>
 
                         @if ($articulos->isNotEmpty())
