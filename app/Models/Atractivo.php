@@ -118,4 +118,3 @@ class Atractivo extends Model
         return $this->belongsTo(Categoria::class);
     }
 }
-

@@ -173,7 +173,13 @@ export default {
         };
     },
     mounted() {
-        this.fetchAtractivos();
+        // Obtener página de la URL si existe
+        const url = new URL(window.location);
+        const pageFromUrl = url.searchParams.get('atractivos_page');
+        if (pageFromUrl) {
+            this.currentPage = parseInt(pageFromUrl);
+        }
+        this.fetchAtractivos(this.currentPage);
     },
     methods: {
         async fetchAtractivos(page = 1) {
@@ -200,6 +206,12 @@ export default {
                 this.atractivos = data.data;
                 this.currentPage = data.current_page;
                 this.hasNextPage = data.next_page_url !== null;
+                
+                // Actualizar URL con la página actual
+                const url = new URL(window.location);
+                url.searchParams.set('atractivos_page', this.currentPage);
+                window.history.pushState({}, '', url);
+                
                 this.loading = false;
             } catch (error) {
                 console.error('Error fetching atractivos:', error);
@@ -236,9 +248,6 @@ export default {
         },
 
         async saveAtractivo(atractivoData) {
-            console.log('=== AtractivosManager: saveAtractivo llamado ===');
-            console.log('Datos recibidos:', atractivoData);
-            
             // Ya se guarda en AtractivosForm, solo recargamos
             this.fetchAtractivos(this.currentPage);
             this.successMessage = '✓ Guardado correctamente';

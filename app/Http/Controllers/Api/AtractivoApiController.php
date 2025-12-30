@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Models\Atractivo;
+use App\Models\Categoria;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 
@@ -60,11 +61,18 @@ class AtractivoApiController extends Controller
             'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
         ]);
 
+
         if ($request->hasFile('image')) {
             $validated['image'] = $request->file('image')->store('atractivos', 'public');
         }
 
         $validated['user_id'] = auth()->id() ?? 99;
+
+        // Rellenar el campo `category` (slug) usando la categoría seleccionada
+        if (!empty($validated['categoria_id'])) {
+            $categoria = Categoria::find($validated['categoria_id']);
+            $validated['category'] = $categoria ? $categoria->slug : '';
+        }
 
         $atractivo = Atractivo::create($validated);
 
@@ -103,6 +111,12 @@ class AtractivoApiController extends Controller
                 Storage::disk('public')->delete($atractivo->image);
             }
             $validated['image'] = $request->file('image')->store('atractivos', 'public');
+        }
+
+        // Si se actualiza la categoría, también actualizar el campo `category`
+        if (isset($validated['categoria_id'])) {
+            $categoria = Categoria::find($validated['categoria_id']);
+            $validated['category'] = $categoria ? $categoria->slug : $atractivo->category;
         }
 
         $atractivo->update($validated);

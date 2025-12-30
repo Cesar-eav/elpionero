@@ -1,5 +1,5 @@
 <template>
-    <div class="fixed inset-0 bg-black bg-opacity-50 overflow-y-auto h-full w-full z-50 p-4" @click.self="$emit('close')">
+    <div class="fixed inset-0 bg-black bg-opacity-50 overflow-y-auto h-full w-full z-50 p-4">
         <div class="relative top-20 mx-auto p-5 border bg-white rounded-lg shadow-lg max-w-2xl w-full max-h-[90vh] overflow-y-auto">
             <div class="sticky top-0 bg-gray-100 border-b flex justify-between items-center p-6">
                 <h2 class="text-2xl font-bold">
@@ -264,6 +264,7 @@ export default {
     console.log('=== INICIO submitForm ===');
     console.log('formData.categoria_id TYPE:', typeof this.formData.categoria_id);
     console.log('formData.categoria_id VALUE:', this.formData.categoria_id);
+    console.log('imageFile:', this.imageFile);
     
     // Procesar tags
     const tags = this.tagsInput
@@ -271,33 +272,50 @@ export default {
         .map((tag) => tag.trim())
         .filter((tag) => tag);
 
-    const datos = {
-        title: this.formData.title,
-        description: this.formData.description,
-        categoria_id: this.formData.categoria_id,
-        ciudad: this.formData.ciudad,
-        autor: this.formData.autor,
-        enlace: this.formData.enlace,
-        lng: this.formData.lng,
-        lat: this.formData.lat,
-        horario: this.formData.horario,
-        tags: tags,
-    };
-
+    // Usar FormData para soportar archivos
+    const formData = new FormData();
+    formData.append('title', this.formData.title);
+    formData.append('description', this.formData.description);
+    formData.append('categoria_id', this.formData.categoria_id);
+    formData.append('ciudad', this.formData.ciudad);
+    formData.append('autor', this.formData.autor);
+    formData.append('enlace', this.formData.enlace);
+    formData.append('lng', this.formData.lng);
+    formData.append('lat', this.formData.lat);
+    formData.append('horario', this.formData.horario);
+    
+    // Agregar tags como array
+    tags.forEach((tag, index) => {
+        formData.append(`tags[${index}]`, tag);
+    });
+    
+    // Agregar imagen si existe
+    if (this.imageFile) {
+        formData.append('image', this.imageFile);
+        console.log('Imagen agregada al FormData');
+    }
 
     try {
         let response;
         
         if (this.isEditing) {
             console.log('PUT a /api/atractivos/' + this.formData.id);
-            response = await axios.put(`/api/atractivos/${this.formData.id}`, datos);
+            // Para PUT con archivos, necesitamos agregar _method = PUT
+            formData.append('_method', 'PUT');
+            response = await axios.post(`/api/atractivos/${this.formData.id}`, formData, {
+                headers: {
+                    'Content-Type': 'multipart/form-data',
+                }
+            });
         } else {
             console.log('POST a /api/atractivos');
-            response = await axios.post('/api/atractivos', datos);
+            response = await axios.post('/api/atractivos', formData, {
+                headers: {
+                    'Content-Type': 'multipart/form-data',
+                }
+            });
         }
         
-        console.log('✓ Respuesta exitosa:', response.data);
-        console.log('Respuesta categoria_id:', response.data.categoria_id);
         alert('✓ Guardado correctamente');
         this.$emit('close');
         
