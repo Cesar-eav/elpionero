@@ -41,6 +41,7 @@ class AtractivoApiController extends Controller
             $request->merge(['tags' => json_decode($request->tags, true)]);
         }
 
+
         $validated = $request->validate([
             'title' => 'required|string|max:255',
             'description' => 'required|string',
@@ -59,6 +60,11 @@ class AtractivoApiController extends Controller
             'show_enlace' => 'nullable|boolean',
             'show_galeria' => 'nullable|boolean',
         ]);
+
+        // Forzar booleanos a 0 o 1
+        $validated['show_horario'] = $request->input('show_horario', 0) ? 1 : 0;
+        $validated['show_enlace'] = $request->input('show_enlace', 0) ? 1 : 0;
+        $validated['show_galeria'] = $request->input('show_galeria', 0) ? 1 : 0;
 
         // 2. SOLUCIÓN AL ERROR 1452: Usar ID 1 en lugar de 99 para local
         $validated['user_id'] = auth()->id() ?? 1;
@@ -91,6 +97,7 @@ class AtractivoApiController extends Controller
         }
 
 
+
         $validated = $request->validate([
             'title' => 'sometimes|string|max:255',
             'description' => 'sometimes|string',
@@ -109,6 +116,11 @@ class AtractivoApiController extends Controller
             'show_enlace' => 'nullable|boolean',
             'show_galeria' => 'nullable|boolean',
         ]);
+
+        // Forzar booleanos a 0 o 1
+        $validated['show_horario'] = $request->input('show_horario', 0) ? 1 : 0;
+        $validated['show_enlace'] = $request->input('show_enlace', 0) ? 1 : 0;
+        $validated['show_galeria'] = $request->input('show_galeria', 0) ? 1 : 0;
 
         if ($request->hasFile('image')) {
             if ($atractivo->image) {

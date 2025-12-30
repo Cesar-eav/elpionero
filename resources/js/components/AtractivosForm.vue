@@ -11,18 +11,34 @@
             <form @submit.prevent="submitForm" class="p-6 space-y-4">
                 <div>
                     <label class="block text-gray-700 font-semibold mb-2">Título *</label>
-                    <input v-model="formData.title" type="text" required class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500" placeholder="Ej: Museo Institucional UTFSM" />
+                    <input
+                        v-model="formData.title"
+                        type="text"
+                        required
+                        class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                        placeholder="Ej: Museo Institucional UTFSM"
+                    />
                 </div>
 
                 <div>
                     <label class="block text-gray-700 font-semibold mb-2">Descripción *</label>
-                    <textarea v-model="formData.description" required rows="5" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500" placeholder="Describe el atractivo en detalle"></textarea>
+                    <textarea
+                        v-model="formData.description"
+                        required
+                        rows="5"
+                        class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                        placeholder="Describe el atractivo en detalle"
+                    ></textarea>
                 </div>
 
                 <div class="grid grid-cols-2 gap-4">
                     <div>
                         <label class="block text-gray-700 font-semibold mb-2">Categoría *</label>
-                        <select v-model.number="formData.categoria_id" required class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
+                        <select
+                            v-model.number="formData.categoria_id"
+                            required
+                            class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                        >
                             <option value="">Selecciona una categoría</option>
                             <option v-for="cat in categorias" :key="cat.id" :value="cat.id">
                                 {{ cat.icono }} {{ cat.nombre }}
@@ -31,7 +47,11 @@
                     </div>
                     <div>
                         <label class="block text-gray-700 font-semibold mb-2">Ciudad</label>
-                        <select v-model="formData.ciudad" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
+                        <select
+                            v-model="formData.ciudad"
+                            required
+                            class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                        >
                             <option value="">Selecciona una ciudad</option>
                             <option value="Valparaíso">Valparaíso</option>
                             <option value="Viña del Mar">Viña del Mar</option>
@@ -43,28 +63,57 @@
                 <div class="grid grid-cols-2 gap-4">
                     <div>
                         <label class="block text-gray-700 font-semibold mb-2">Autor</label>
-                        <input v-model="formData.autor" type="text" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500" placeholder="Ej: Admin" />
+                        <input
+                            v-model="formData.autor"
+                            type="text"
+                            class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                            placeholder="Ej: Admin"
+                        />
                     </div>
                     <div>
                         <label class="block text-gray-700 font-semibold mb-2">Enlace</label>
-                        <input v-model="formData.enlace" type="url" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500" placeholder="https://ejemplo.com" />
+                        <input
+                            v-model="formData.enlace"
+                            type="url"
+                            class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                            placeholder="https://ejemplo.com"
+                        />
                     </div>
                 </div>
 
                 <div class="grid grid-cols-2 gap-4">
                     <div>
                         <label class="block text-gray-700 font-semibold mb-2">Longitud (Lng)</label>
-                        <input v-model="formData.lng" type="number" step="0.00000001" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500" placeholder="-71.596" />
+                        <input
+                            v-model="formData.lng"
+                            type="number"
+                            step="0.00000001"
+                            required
+                            class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                            placeholder="-71.596"
+                        />
                     </div>
                     <div>
                         <label class="block text-gray-700 font-semibold mb-2">Latitud (Lat)</label>
-                        <input v-model="formData.lat" type="number" step="0.00000001" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500" placeholder="-33.034" />
+                        <input
+                            v-model="formData.lat"
+                            type="number"
+                            step="0.00000001"
+                            required
+                            class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                            placeholder="-33.034"
+                        />
                     </div>
                 </div>
 
                 <div class="space-y-2">
                     <label class="block text-gray-700 font-semibold">Horario</label>
-                    <input v-model="formData.horario" type="text" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500" placeholder="Ej: Lun-Vie 9:00-18:00" />
+                    <input
+                        v-model="formData.horario"
+                        type="text"
+                        class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                        placeholder="Ej: Lun-Vie 9:00-18:00"
+                    />
                     <div class="flex flex-col gap-2 mt-2">
                         <label class="inline-flex items-center">
                             <input type="checkbox" v-model="formData.show_horario" class="form-checkbox">
@@ -83,12 +132,24 @@
 
                 <div>
                     <label class="block text-gray-700 font-semibold mb-2">Etiquetas (separadas por coma)</label>
-                    <input v-model="tagsInput" type="text" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500" placeholder="Ej: valparaiso, museo, cultura" />
+                    <input
+                        v-model="tagsInput"
+                        type="text"
+                        required
+                        class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                        placeholder="Ej: valparaiso, museo, cultura"
+                    />
                 </div>
 
                 <div>
                     <label class="block text-gray-700 font-semibold mb-2">Imagen Principal</label>
-                    <input @change="handleImageUpload" type="file" accept="image/*" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500" />
+                    <input
+                        @change="handleImageUpload"
+                        type="file"
+                        accept="image/*"
+                        required
+                        class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    />
                     <div v-if="imagePreview" class="mt-2">
                         <img :src="imagePreview" class="w-32 h-32 object-cover rounded border" />
                     </div>
@@ -96,19 +157,33 @@
 
                 <div v-if="formData.show_galeria" class="border-t pt-4">
                     <label class="block text-gray-700 font-semibold mb-2">Galería de imágenes (máx 10)</label>
-                    <input type="file" accept="image/*" multiple @change="handleGaleriaUpload" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500" />
+                    <input
+                        type="file"
+                        accept="image/*"
+                        multiple
+                        @change="handleGaleriaUpload"
+                        class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    />
                     
                     <div v-if="savedGaleria.length" class="flex flex-wrap gap-2 mt-2">
                         <div v-for="(img, idx) in savedGaleria" :key="'saved-' + idx" class="relative group">
                             <img :src="'/storage/' + img" class="w-20 h-20 object-cover rounded border" />
-                            <button type="button" @click="removeSavedGaleriaImage(idx)" class="absolute -top-1 -right-1 bg-red-600 text-white rounded-full w-5 h-5 flex items-center justify-center text-xs">✕</button>
+                            <button
+                                type="button"
+                                @click="removeSavedGaleriaImage(idx)"
+                                class="absolute -top-1 -right-1 bg-red-600 text-white rounded-full w-5 h-5 flex items-center justify-center text-xs"
+                            >✕</button>
                         </div>
                     </div>
                     
                     <div v-if="galeriaPreview.length" class="flex flex-wrap gap-2 mt-2">
                         <div v-for="(img, idx) in galeriaPreview" :key="'preview-' + idx" class="relative group">
                             <img :src="img" class="w-20 h-20 object-cover rounded border border-blue-400" />
-                            <button type="button" @click="removeGaleriaImage(idx)" class="absolute -top-1 -right-1 bg-gray-800 text-white rounded-full w-5 h-5 flex items-center justify-center text-xs">✕</button>
+                            <button
+                                type="button"
+                                @click="removeGaleriaImage(idx)"
+                                class="absolute -top-1 -right-1 bg-gray-800 text-white rounded-full w-5 h-5 flex items-center justify-center text-xs"
+                            >✕</button>
                         </div>
                     </div>
                 </div>

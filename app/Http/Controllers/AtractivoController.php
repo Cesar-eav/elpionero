@@ -61,25 +61,54 @@ class AtractivoController extends Controller
     public function store(Request $request)
     {
         try {
-            $data = $request->all();
+            // Validar solo los campos obligatorios
+            $validated = $request->validate([
+                'title' => 'required|string|max:255',
+                'description' => 'required|string',
+                'categoria_id' => 'required|exists:categorias,id',
+                'ciudad' => 'required|string',
+                'lng' => 'required|numeric',
+                'lat' => 'required|numeric',
+                'tags' => 'required|array',
+                'image' => 'required|image|max:2048',
+                // Opcionales:
+                'autor' => 'nullable|string',
+                'enlace' => 'nullable|string',
+                'horario' => 'nullable|string',
+                'show_horario' => 'nullable|boolean',
+                'show_enlace' => 'nullable|boolean',
+                'show_galeria' => 'nullable|boolean',
+                'galeria' => 'nullable|array|max:10',
+                'galeria.*' => 'image|max:2048',
+            ]);
 
-            // Imagen Principal
+            // Forzar booleanos a 0 o 1
+            $validated['show_horario'] = $request->input('show_horario', 0) ? 1 : 0;
+            $validated['show_enlace'] = $request->input('show_enlace', 0) ? 1 : 0;
+            $validated['show_galeria'] = $request->input('show_galeria', 0) ? 1 : 0;
+
+            // 1. Procesar Imagen Principal
             if ($request->hasFile('image')) {
-                $data['image'] = $request->file('image')->store('atractivos', 'public');
+                $validated['image'] = $request->file('image')->store('atractivos', 'public');
             }
 
-            // Galería Nueva
+            // 2. Procesar Galería (si existe)
             $galeria = [];
             if ($request->hasFile('galeria')) {
                 foreach ($request->file('galeria') as $file) {
                     $galeria[] = $file->store('galeria', 'public');
                 }
             }
-            $data['galeria'] = $galeria;
+            $validated['galeria'] = $galeria;
 
-            $atractivo = Atractivo::create($data);
+            // 3. Crear el registro
+            $atractivo = Atractivo::create($validated);
 
-            return response()->json(['message' => 'Creado', 'atractivo' => $atractivo], 201);
+            return response()->json([
+                'message' => 'Creado con éxito',
+                'atractivo' => $atractivo
+            ], 201);
+
         } catch (\Exception $e) {
             Log::error('Error en store: ' . $e->getMessage());
             return response()->json(['message' => 'Error al crear'], 500);
@@ -95,24 +124,27 @@ class AtractivoController extends Controller
             $atractivo = Atractivo::findOrFail($id);
             $data = $request->all();
 
-            // 1. Imagen Principal
+            // Forzar booleanos a 0 o 1
+            $data['show_horario'] = $request->input('show_horario', 0) ? 1 : 0;
+            $data['show_enlace'] = $request->input('show_enlace', 0) ? 1 : 0;
+            $data['show_galeria'] = $request->input('show_galeria', 0) ? 1 : 0;
+
+            // 1. Imagen Principal: Si sube una nueva, borramos la vieja
             if ($request->hasFile('image')) {
-                if ($atractivo->image) Storage::disk('public')->delete($atractivo->image);
+                if ($atractivo->image) {
+                    Storage::disk('public')->delete($atractivo->image);
+                }
                 $data['image'] = $request->file('image')->store('atractivos', 'public');
             }
 
-            // 2. Manejar Galería
+            // 2. Galería: Manejar borrados específicos
             $galeriaActual = $atractivo->galeria ?? [];
-            
-            // Borrar fotos seleccionadas en Vue
             if ($request->has('galeria_delete')) {
-                foreach ($request->galeria_delete as $path) {
-                    Storage::disk('public')->delete($path);
-                    $galeriaActual = array_values(array_diff($galeriaActual, [$path]));
+                foreach ($request->galeria_delete as $pathABorrar) {
+                    Storage::disk('public')->delete($pathABorrar);
+                    $galeriaActual = array_values(array_diff($galeriaActual, [$pathABorrar]));
                 }
             }
-
-            // Agregar fotos nuevas
             if ($request->hasFile('galeria')) {
                 foreach ($request->file('galeria') as $file) {
                     $galeriaActual[] = $file->store('galeria', 'public');
@@ -120,12 +152,17 @@ class AtractivoController extends Controller
             }
             $data['galeria'] = $galeriaActual;
 
+            // 4. Actualizar registro
             $atractivo->update($data);
 
-            return response()->json(['message' => 'Actualizado', 'atractivo' => $atractivo]);
+            return response()->json([
+                'message' => 'Actualizado con éxito',
+                'atractivo' => $atractivo
+            ]);
+
         } catch (\Exception $e) {
             Log::error('Error en update: ' . $e->getMessage());
-            return response()->json(['message' => 'Error: ' . $e->getMessage()], 500);
+            return response()->json(['message' => 'Error al actualizar: ' . $e->getMessage()], 500);
         }
     }
 
