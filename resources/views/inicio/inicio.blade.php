@@ -107,15 +107,32 @@
 
       <!-- Botones CTA -->
       <div class="flex flex-col sm:flex-row gap-3 md:mb-3 mb-6" >
+
         <a
-          href="{{ route('pdf.track', ['pdfName' => 'Plaza_Ohiggins.pdf', 'action' => 'download']) }}"
-          target="_blank"
-          rel="noopener"
+          href="#"
+          onclick="trackAndDownloadPDF(event, '{{ route('pdf.track', ['pdfName' => 'Plaza_Ohiggins.pdf', 'action' => 'download']) }}')"
           class="inline-flex items-center justify-center gap-2 px-5 py-3 rounded-lg bg-[#fc5648] text-white font-semibold hover:bg-[#d94439] shadow transition"
         >
           <svg class="w-5 h-5" viewBox="0 0 24 24" fill="currentColor"><path d="M12 3v10m0 0 4-4m-4 4-4-4M4 17h16v2H4v-2Z" stroke="currentColor" stroke-width="1.5" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>
           Descargar PDF
         </a>
+  @push('scripts')
+  <script>
+  function trackAndDownloadPDF(event, url) {
+    event.preventDefault();
+    fetch(url, { method: 'GET', credentials: 'same-origin' })
+      .then(response => {
+        if (response.status === 200 || response.status === 302) {
+          // Si es una descarga, forzar la descarga del PDF
+          window.location.href = url;
+        } else {
+          alert('No se pudo descargar el PDF.');
+        }
+      })
+      .catch(() => alert('Error al registrar la descarga.'));
+  }
+  </script>
+  @endpush
 
       </div>
 

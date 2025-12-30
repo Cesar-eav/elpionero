@@ -19,7 +19,7 @@
             <!-- Revista de Mayo -->
             <div class="flex flex-col items-center text-center">
                 <p class="text-[#eba81d] font-semibold mb-2 font-mono">Mayo</p>
-                <a href="{{ asset('storage/Ediciones/EPDV_MAYO_2025.pdf') }}"
+                <a href="{{ route('pdf.track', ['pdfName' => 'EPDV_MAYO_2025.pdf', 'action' => 'download']) }}"
                     target="_blank">
                     <img src="/storage/Portada_ED1.jpg" alt="Revista Mayo"
                         class="w-24 h-auto rounded shadow-md filter grayscale hover:grayscale-0 hover:scale-105 transition duration-300">
@@ -28,7 +28,7 @@
             <!-- Revista de Junio -->
             <div class="flex flex-col items-center text-center">
                 <p class="text-[#eba81d] font-semibold mb-2 font-mono">Junio</p>
-                <a href="{{ asset('storage/Ediciones/EPDV_JUNIO_2025.pdf') }}"
+                <a href="{{ route('pdf.track', ['pdfName' => 'EPDV_JUNIO_2025.pdf', 'action' => 'download']) }}"
                     target="_blank">
                     <img src="/storage/Portada_ED2.jpeg" alt="Revista Junio"
                         class="w-24 h-auto rounded shadow-md filter grayscale hover:grayscale-0 hover:scale-105 transition duration-300">
@@ -37,7 +37,7 @@
             <!-- Revista de Julio -->
             <div class="flex flex-col items-center text-center">
                 <p class="text-[#eba81d] font-semibold mb-2 font-mono">Julio</p>
-                <a href="{{ asset('storage/Ediciones/EPDV_JULIO_2025.pdf') }}"
+                <a href="{{ route('pdf.track', ['pdfName' => 'EPDV_JULIO_2025.pdf', 'action' => 'download']) }}"
                     target="_blank">
                     <img src="/storage/Portada_ED3.jpeg" alt="Revista Julio"
                         class="w-24 h-auto rounded shadow-md filter grayscale hover:grayscale-0 hover:scale-105 transition duration-300">
@@ -47,7 +47,7 @@
             <!-- Revista de Septiembre -->
             <div class="flex flex-col items-center text-center">
                 <p class="text-[#eba81d] font-semibold mb-2 font-mono">Septiembre</p>
-                <a href="{{ asset('storage/Ediciones/EPDV_SEPTIEMBRE_2025.pdf') }}"
+                <a href="{{ route('pdf.track', ['pdfName' => 'EPDV_SEPTIEMBRE_2025.pdf', 'action' => 'download']) }}"
                     target="_blank">
                     <img src="/storage/Portada_ED5.jpeg" alt="Revista Septiembre"
                         class="w-24 h-auto rounded shadow-md filter grayscale hover:grayscale-0 hover:scale-105 transition duration-300">
@@ -57,7 +57,7 @@
             <!-- Revista de Octubre -->
             <div class="flex flex-col items-center text-center">
                 <p class="text-[#eba81d] font-semibold mb-2 font-mono">Octubre</p>
-                <a href="{{ asset('storage/Ediciones/EPDV_OCTUBRE_2025.pdf') }}"
+                <a href="{{ route('pdf.track', ['pdfName' => 'EPDV_OCTUBRE_2025.pdf', 'action' => 'download']) }}"
                     target="_blank">
                     <img src="/storage/Portada_ED5.jpeg" alt="Revista Octubre"
                         class="w-24 h-auto rounded shadow-md filter grayscale hover:grayscale-0 hover:scale-105 transition duration-300">
@@ -67,7 +67,7 @@
             <!-- Revista de Noviembre -->
             <div class="flex flex-col items-center text-center">
                 <p class="text-[#eba81d] font-semibold mb-2 font-mono">Noviembre</p>
-                <a href="{{ asset('storage/Ediciones/EPDV_NOVIEMBRE_2025.pdf') }}"
+                <a href="{{ route('pdf.track', ['pdfName' => 'EPDV_NOVIEMBRE_2025.pdf', 'action' => 'download']) }}"
                     target="_blank">
                     <img src="/storage/Portada_ED5.jpeg" alt="Revista Noviembre"
                         class="w-24 h-auto rounded shadow-md filter grayscale hover:grayscale-0 hover:scale-105 transition duration-300">
