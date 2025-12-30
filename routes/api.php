@@ -159,7 +159,9 @@ Route::get('stats', function () {
     ]);
 });
 
-// Ruta para obtener todas las categorías
+// Rutas para categorías
+use App\Http\Controllers\Api\CategoriaApiController;
 Route::get('/categorias', function () {
     return \App\Models\Categoria::all();
 });
+Route::post('/categorias', [CategoriaApiController::class, 'store']);

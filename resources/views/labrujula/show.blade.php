@@ -101,6 +101,43 @@
                         {{$atractivo->description}}
                     </div>
 
+
+                    <!-- Galería de imágenes real y funcional -->
+                    @php
+                        $galeria = $atractivo->galeria && is_array($atractivo->galeria) && count($atractivo->galeria)
+                            ? $atractivo->galeria
+                            : [];
+
+                    @endphp
+
+
+@if ($atractivo->show_galeria && count($galeria))
+    <div class="mb-8 relative group">
+        <h3 class="text-2xl font-bold mb-4">Galería de fotos</h3>
+        
+        <div class="relative">
+            <button onclick="moveSlider('prev')" class="absolute left-0 top-1/2 -translate-y-1/2 z-10 bg-black/50 text-white p-2 rounded-r-lg hover:bg-[#fc5648] transition-colors md:flex hidden">
+                ❮
+            </button>
+
+            <div id="gallery-slider" class="flex overflow-x-auto gap-4 scroll-smooth snap-x snap-mandatory no-scrollbar pb-4">
+                @foreach ($galeria as $img)
+                    <div class="flex-none w-[calc(50%-0.5rem)] md:w-[calc(33.333%-0.75rem)] snap-start">
+                        <img src="{{ asset('storage/' . $img) }}" 
+                             alt="Imagen galería" 
+                             class="w-full md:h-60 h-40 object-cover rounded-lg shadow-md cursor-pointer hover:opacity-90 transition"
+                             onclick="window.open(this.src, '_blank')" />
+                    </div>
+                @endforeach
+            </div>
+
+            <button onclick="moveSlider('next')" class="absolute right-0 top-1/2 -translate-y-1/2 z-10 bg-black/50 text-white p-2 rounded-l-lg hover:bg-[#fc5648] transition-colors md:flex hidden">
+                ❯
+            </button>
+        </div>
+    </div>
+@endif
+
                     <!-- Enlace externo -->
                     @if ($atractivo->show_enlace && $atractivo->enlace)
                         <div class="bg-green-50 border-l-4 border-green-500 p-4 mb-8">
@@ -172,3 +209,29 @@
 </body>
 
 </html>
+
+
+<script>
+    function moveSlider(direction) {
+        const slider = document.getElementById('gallery-slider');
+        // Calculamos cuánto desplazar: el ancho de una imagen
+        const scrollAmount = slider.clientWidth; 
+
+        if (direction === 'next') {
+            slider.scrollLeft += scrollAmount;
+        } else {
+            slider.scrollLeft -= scrollAmount;
+        }
+    }
+</script>
+
+<style>
+    /* Ocultar la barra de scroll pero mantener la funcionalidad */
+    .no-scrollbar::-webkit-scrollbar {
+        display: none;
+    }
+    .no-scrollbar {
+        -ms-overflow-style: none;
+        scrollbar-width: none;
+    }
+</style>

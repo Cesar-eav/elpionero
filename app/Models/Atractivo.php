@@ -13,6 +13,8 @@ class Atractivo extends Model
         'description',
         'tags',
         'image',
+        'galeria',
+        'show_galeria',
         'ciudad',
         'enlace',
         'autor',
@@ -25,12 +27,14 @@ class Atractivo extends Model
 
     protected $casts = [
         'tags' => 'array',
+        'galeria' => 'array',
         'lng' => 'float',
         'lat' => 'float',
         'created_at' => 'datetime',
         'updated_at' => 'datetime',
         'show_horario' => 'boolean',
         'show_enlace' => 'boolean',
+        'show_galeria' => 'boolean',
     ];
 
     /**

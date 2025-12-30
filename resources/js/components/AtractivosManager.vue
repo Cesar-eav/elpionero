@@ -8,6 +8,17 @@
             >
                 Crear Nuevo Atractivo
             </button>
+            <button
+                @click="showCategoriaModal = true"
+                class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+            >
+                Crear Categoría
+            </button>
+            <CategoriaForm
+                v-if="showCategoriaModal"
+                @close="showCategoriaModal = false"
+                @created="onCategoriaCreated"
+            />
 
             <!-- Buscador -->
             <div class="flex-1">
@@ -29,12 +40,9 @@
                 class="px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
             >
                 <option value="">Todas las categorías</option>
-                <option value="museum">Museo</option>
-                <option value="monument">Monumento</option>
-                <option value="restaurant">Restaurante</option>
-                <option value="beach">Playa</option>
-                <option value="park">Parque</option>
-                <option value="other">Otro</option>
+                <option v-for="cat in categorias" :key="cat.id" :value="cat.slug">
+                    {{ cat.icono ? cat.icono + ' ' : '' }}{{ cat.nombre }}
+                </option>
             </select>
 
             <select
@@ -172,16 +180,20 @@
 </template>
 
 <script>
+
 import AtractivosForm from './AtractivosForm.vue';
+import CategoriaForm from './CategoriaForm.vue';
 
 export default {
     name: 'AtractivosManager',
     components: {
         AtractivosForm,
+        CategoriaForm,
     },
     data() {
         return {
             atractivos: [],
+            categorias: [],
             loading: false,
             showModal: false,
             editingAtractivo: null,
@@ -194,6 +206,7 @@ export default {
             successMessage: '',
             showHorario: false,
             showEnlace: false,
+            showCategoriaModal: false,
         };
     },
     mounted() {
@@ -204,8 +217,12 @@ export default {
             this.currentPage = parseInt(pageFromUrl);
         }
         this.fetchAtractivos(this.currentPage);
+        this.fetchCategorias(); // Cargar categorías al iniciar
     },
     methods: {
+        onCategoriaCreated() {
+            this.fetchCategorias();
+        },
         async fetchAtractivos(page = 1) {
             this.loading = true;
             try {
@@ -240,6 +257,16 @@ export default {
             } catch (error) {
                 console.error('Error fetching atractivos:', error);
                 this.loading = false;
+            }
+        },
+
+        async fetchCategorias() {
+            try {
+                const response = await fetch('/api/categorias');
+                const data = await response.json();
+                this.categorias = data;
+            } catch (error) {
+                console.error('Error fetching categorias:', error);
             }
         },
 

@@ -53,15 +53,28 @@ class AtractivoApiController extends Controller
             'lat' => 'nullable|numeric',
             'horario' => 'nullable|string',
             'image' => 'nullable|image|max:2048',
+            'galeria' => 'nullable|array|max:10',
+            'galeria.*' => 'image|max:2048',
             'show_horario' => 'nullable|boolean',
             'show_enlace' => 'nullable|boolean',
+            'show_galeria' => 'nullable|boolean',
         ]);
 
         // 2. SOLUCIÓN AL ERROR 1452: Usar ID 1 en lugar de 99 para local
         $validated['user_id'] = auth()->id() ?? 1;
 
+
         if ($request->hasFile('image')) {
             $validated['image'] = $request->file('image')->store('atractivos', 'public');
+        }
+
+        // Guardar galería de imágenes
+        $galeriaPaths = [];
+        if ($request->hasFile('galeria')) {
+            foreach ($request->file('galeria') as $img) {
+                $galeriaPaths[] = $img->store('atractivos/galeria', 'public');
+            }
+            $validated['galeria'] = $galeriaPaths;
         }
 
         // ELIMINADO: Ya no intentamos llenar el campo 'category' porque no existe en la DB
@@ -77,6 +90,7 @@ class AtractivoApiController extends Controller
             $request->merge(['tags' => json_decode($request->tags, true)]);
         }
 
+
         $validated = $request->validate([
             'title' => 'sometimes|string|max:255',
             'description' => 'sometimes|string',
@@ -89,8 +103,11 @@ class AtractivoApiController extends Controller
             'lat' => 'nullable|numeric',
             'horario' => 'nullable|string',
             'image' => 'nullable|image|max:2048',
+            'galeria' => 'nullable|array|max:10',
+            'galeria.*' => 'image|max:2048',
             'show_horario' => 'nullable|boolean',
             'show_enlace' => 'nullable|boolean',
+            'show_galeria' => 'nullable|boolean',
         ]);
 
         if ($request->hasFile('image')) {
@@ -99,6 +116,31 @@ class AtractivoApiController extends Controller
             }
             $validated['image'] = $request->file('image')->store('atractivos', 'public');
         }
+
+        // Galería: eliminar imágenes marcadas para borrar
+        $galeriaPaths = $atractivo->galeria ?? [];
+        $galeriaToDelete = $request->input('galeria_delete', []);
+        if (!is_array($galeriaToDelete)) {
+            $galeriaToDelete = [];
+        }
+        // Eliminar físicamente y del array
+        $galeriaPaths = array_values(array_filter($galeriaPaths, function($img) use ($galeriaToDelete) {
+            if (in_array($img, $galeriaToDelete)) {
+                Storage::disk('public')->delete($img);
+                return false;
+            }
+            return true;
+        }));
+
+        // Agregar nuevas imágenes
+        if ($request->hasFile('galeria')) {
+            foreach ($request->file('galeria') as $img) {
+                $galeriaPaths[] = $img->store('atractivos/galeria', 'public');
+            }
+        }
+        // Limitar a 10
+        $galeriaPaths = array_slice($galeriaPaths, 0, 10);
+        $validated['galeria'] = $galeriaPaths;
 
         // ELIMINADO: La lógica de actualizar el campo 'category' string
         
