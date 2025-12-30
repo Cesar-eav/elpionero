@@ -21,8 +21,8 @@
             </div>
         </div>
 
-        <!-- Filtros -->
-        <div class="mb-4 flex gap-2">
+        <!-- Filtros y opciones de visualización -->
+        <div class="mb-4 flex gap-2 items-center flex-wrap">
             <select
                 v-model="filterCategory"
                 @change="handleFilter"
@@ -47,6 +47,18 @@
                 <option value="Viña del Mar">Viña del Mar</option>
                 <option value="Quilpué">Quilpué</option>
             </select>
+
+            <!-- Opciones de visualización -->
+            <div class="flex items-center gap-4 ml-4">
+                <label class="flex items-center gap-1">
+                    <input type="checkbox" v-model="showHorario" class="form-checkbox">
+                    <span>Mostrar horario</span>
+                </label>
+                <label class="flex items-center gap-1">
+                    <input type="checkbox" v-model="showEnlace" class="form-checkbox">
+                    <span>Mostrar enlace</span>
+                </label>
+            </div>
         </div>
 
         <!-- Mensaje de éxito -->
@@ -73,6 +85,8 @@
                         <th class="border border-gray-300 px-4 py-2 text-left">Título</th>
                         <th class="border border-gray-300 px-4 py-2 text-left">Categoría</th>
                         <th class="border border-gray-300 px-4 py-2 text-left">Ciudad</th>
+                        <th v-if="showHorario" class="border border-gray-300 px-4 py-2 text-left">Horario</th>
+                        <th v-if="showEnlace" class="border border-gray-300 px-4 py-2 text-left">Enlace</th>
                         <th class="border border-gray-300 px-4 py-2 text-left">Acciones</th>
                     </tr>
                 </thead>
@@ -100,6 +114,14 @@
                             </span>
                         </td>
                         <td class="border border-gray-300 px-4 py-2">{{ atractivo.ciudad }}</td>
+                        <td v-if="showHorario" class="border border-gray-300 px-4 py-2">
+                            <span v-if="atractivo.horario">{{ atractivo.horario }}</span>
+                            <span v-else class="text-gray-400">N/A</span>
+                        </td>
+                        <td v-if="showEnlace" class="border border-gray-300 px-4 py-2">
+                            <a v-if="atractivo.enlace" :href="atractivo.enlace" target="_blank" class="text-blue-600 hover:underline">Ver enlace</a>
+                            <span v-else class="text-gray-400">N/A</span>
+                        </td>
                         <td class="border border-gray-300 px-4 py-2 flex gap-2">
                             <button
                                 @click="openEditModal(atractivo)"
@@ -170,6 +192,8 @@ export default {
             currentPage: 1,
             hasNextPage: false,
             successMessage: '',
+            showHorario: false,
+            showEnlace: false,
         };
     },
     mounted() {

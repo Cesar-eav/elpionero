@@ -88,7 +88,7 @@
                             </div>
                         @endif
 
-                        @if ($atractivo->horario)
+                        @if ($atractivo->show_horario && $atractivo->horario)
                             <div class="flex items-center gap-2">
                                 <span class="text-2xl">🕐</span>
                                 <span class="text-lg">{{ $atractivo->horario }}</span>
@@ -102,7 +102,7 @@
                     </div>
 
                     <!-- Enlace externo -->
-                    @if ($atractivo->enlace)
+                    @if ($atractivo->show_enlace && $atractivo->enlace)
                         <div class="bg-green-50 border-l-4 border-green-500 p-4 mb-8">
                             <h3 class="text-lg font-bold text-gray-900 mb-2">Sitio Web</h3>
                             <a href="{{ $atractivo->enlace }}"

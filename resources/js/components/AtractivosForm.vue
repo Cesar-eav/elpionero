@@ -131,8 +131,19 @@
                         class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
                         placeholder="Ej: Lun-Vie 9:00-18:00"
                     />
+                    <label class="inline-flex items-center mt-2 ml-2">
+                        <input type="checkbox" v-model="formData.show_horario" class="form-checkbox">
+                        <span class="ml-2 text-sm">Mostrar horario en la web</span>
+                    </label>
                 </div>
 
+                <!-- Enlace visible -->
+                <div class="mb-2">
+                    <label class="inline-flex items-center">
+                        <input type="checkbox" v-model="formData.show_enlace" class="form-checkbox">
+                        <span class="ml-2 text-sm">Mostrar enlace en la web</span>
+                    </label>
+                </div>
                 <!-- Etiquetas -->
                 <div>
                     <label class="block text-gray-700 font-semibold mb-2">Etiquetas (separadas por coma)</label>
@@ -205,6 +216,8 @@ export default {
                 lat: '',
                 horario: '',
                 tags: [],
+                show_horario: false,
+                show_enlace: false,
             },
             categorias: [],
             tagsInput: '',
@@ -235,13 +248,13 @@ export default {
                 lat: this.atractivo.lat || '',
                 horario: this.atractivo.horario || '',
                 tags: this.atractivo.tags || [],
+                show_horario: this.atractivo.show_horario || false,
+                show_enlace: this.atractivo.show_enlace || false,
                 id: this.atractivo.id || null,
             };
-            
             this.tagsInput = Array.isArray(this.atractivo.tags)
                 ? this.atractivo.tags.join(', ')
                 : '';
-            
             if (this.atractivo.image) {
                 this.imagePreview = `/storage/${this.atractivo.image}`;
             }
@@ -283,6 +296,8 @@ export default {
     formData.append('lng', this.formData.lng);
     formData.append('lat', this.formData.lat);
     formData.append('horario', this.formData.horario);
+    formData.append('show_horario', this.formData.show_horario ? 1 : 0);
+    formData.append('show_enlace', this.formData.show_enlace ? 1 : 0);
     
     // Agregar tags como array
     tags.forEach((tag, index) => {

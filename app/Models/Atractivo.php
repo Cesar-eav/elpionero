@@ -19,6 +19,8 @@ class Atractivo extends Model
         'lng',
         'lat',
         'horario',
+        'show_horario',
+        'show_enlace',
     ];
 
     protected $casts = [
@@ -27,94 +29,41 @@ class Atractivo extends Model
         'lat' => 'float',
         'created_at' => 'datetime',
         'updated_at' => 'datetime',
+        'show_horario' => 'boolean',
+        'show_enlace' => 'boolean',
     ];
 
     /**
-     * Mapeo de categorías del inglés al español
-     */
-    protected static $categoryTranslations = [
-        'museum' => 'Museo',
-        'restaurant' => 'Restaurante',
-        'park' => 'Parque',
-        'beach' => 'Playa',
-        'viewpoint' => 'Mirador',
-        'historic' => 'Sitio Histórico',
-        'monument' => 'Monumento',
-        'art' => 'Arte',
-        'culture' => 'Cultura',
-        'entertainment' => 'Entretenimiento',
-        'shopping' => 'Compras',
-        'nature' => 'Naturaleza',
-        'sports' => 'Deportes',
-        'tour' => 'Tours',
-        'activity' => 'Actividad',
-    ];
-
-    /**
-     * Accesor: Traduce la categoría al español
+     * Accesor: Obtiene el nombre de la categoría desde la relación
      */
     public function getCategoryTranslatedAttribute()
     {
-        $categoryLower = strtolower($this->attributes['category'] ?? '');
-        return self::$categoryTranslations[$categoryLower] ?? ucfirst($this->attributes['category'] ?? '');
+        return $this->categoria->nombre ?? 'Sin categoría';
     }
 
-    /**
-     * Método estático: Obtener todas las categorías traducidas
-     */
-    public static function getCategoriesTranslated()
-    {
-        $categories = self::distinct()->pluck('category');
-        
-        return $categories->map(function ($cat) {
-            $catLower = strtolower($cat);
-            return [
-                'original' => $cat,
-                'translated' => self::$categoryTranslations[$catLower] ?? ucfirst($cat)
-            ];
-        })->sortBy('translated')->values();
-    }
     public function getProcessedTagsAttribute()
     {
-        if (!$this->tags) {
-            return [];
-        }
-
+        if (!$this->tags) return [];
         $tags = is_array($this->tags) ? $this->tags : (is_string($this->tags) ? json_decode($this->tags, true) : []);
-        
         return array_map(fn($tag) => trim((string)$tag, ' "[]'), $tags ?? []);
     }
 
-    /**
-     * Accesor: Asegura que el enlace tenga protocolo
-     */
     public function getEnlaceAttribute($value)
     {
-        if (!$value) {
-            return null;
-        }
-
-        // Si no empieza con http:// o https://, agregar https://
+        if (!$value) return null;
         if (!str_starts_with($value, 'http://') && !str_starts_with($value, 'https://')) {
             return 'https://' . $value;
         }
-
         return $value;
     }
 
-    /**
-     * Relación: Un atractivo pertenece a un usuario
-     */
     public function user()
     {
         return $this->belongsTo(User::class);
     }
 
-    /**
-     * Relación: Un atractivo pertenece a una categoría
-     */
     public function categoria()
     {
-        return $this->belongsTo(Categoria::class);
+        return $this->belongsTo(Categoria::class, 'categoria_id');
     }
 }
