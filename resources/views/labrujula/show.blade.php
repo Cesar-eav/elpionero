@@ -23,6 +23,10 @@
     @endif
 
     @vite(['resources/css/app.css', 'resources/js/app.js'])
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/glightbox/dist/css/glightbox.min.css" />
+
+<script src="https://cdn.jsdelivr.net/gh/mcstudios/glightbox/dist/js/glightbox.min.js"></script>
 </head>
 
 <body class="bg-gray-100 text-gray-900 font-serif text-base">
@@ -123,10 +127,11 @@
             <div id="gallery-slider" class="flex overflow-x-auto gap-4 scroll-smooth snap-x snap-mandatory no-scrollbar pb-4">
                 @foreach ($galeria as $img)
                     <div class="flex-none w-[calc(50%-0.5rem)] md:w-[calc(33.333%-0.75rem)] snap-start">
-                        <img src="{{ asset('storage/' . $img) }}" 
-                             alt="Imagen galería" 
-                             class="w-full md:h-60 h-40 object-cover rounded-lg shadow-md cursor-pointer hover:opacity-90 transition"
-                             onclick="window.open(this.src, '_blank')" />
+                        <a href="{{ asset('storage/' . $img) }}" class="glightbox" data-gallery="atractivo-gallery">
+                            <img src="{{ asset('storage/' . $img) }}" 
+                                 alt="Imagen galería" 
+                                 class="w-full md:h-60 h-40 object-cover rounded-lg shadow-md cursor-pointer hover:opacity-90 transition" />
+                        </a>
                     </div>
                 @endforeach
             </div>
@@ -212,6 +217,28 @@
 
 
 <script>
+
+document.addEventListener('DOMContentLoaded', function() {
+    // Inicializar GLightbox
+    const lightbox = GLightbox({
+        selector: '.glightbox',
+        touchNavigation: true,
+        loop: true,
+        autoplayVideos: true
+    });
+});
+
+// Tu función moveSlider existente se mantiene igual...
+function moveSlider(direction) {
+    const slider = document.getElementById('gallery-slider');
+    const scrollAmount = slider.clientWidth; 
+    if (direction === 'next') {
+        slider.scrollLeft += scrollAmount;
+    } else {
+        slider.scrollLeft -= scrollAmount;
+    }
+}
+
     function moveSlider(direction) {
         const slider = document.getElementById('gallery-slider');
         // Calculamos cuánto desplazar: el ancho de una imagen

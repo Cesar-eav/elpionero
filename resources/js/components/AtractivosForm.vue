@@ -147,7 +147,7 @@
                         @change="handleImageUpload"
                         type="file"
                         accept="image/*"
-                        required
+                        :required="!isEditing && !imagePreview"
                         class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
                     />
                     <div v-if="imagePreview" class="mt-2">
@@ -155,7 +155,7 @@
                     </div>
                 </div>
 
-                <div v-if="formData.show_galeria" class="border-t pt-4">
+                <div class="border-t pt-4">
                     <label class="block text-gray-700 font-semibold mb-2">Galería de imágenes (máx 10)</label>
                     <input
                         type="file"
@@ -164,7 +164,13 @@
                         @change="handleGaleriaUpload"
                         class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
                     />
-                    
+                    <div class="flex flex-col gap-2 mt-2">
+                        <label class="inline-flex items-center">
+                            <input type="checkbox" v-model="formData.show_galeria" class="form-checkbox">
+                            <span class="ml-2 text-sm">Activar galería (freemium)</span>
+                        </label>
+                    </div>
+
                     <div v-if="savedGaleria.length" class="flex flex-wrap gap-2 mt-2">
                         <div v-for="(img, idx) in savedGaleria" :key="'saved-' + idx" class="relative group">
                             <img :src="'/storage/' + img" class="w-20 h-20 object-cover rounded border" />
@@ -175,7 +181,7 @@
                             >✕</button>
                         </div>
                     </div>
-                    
+
                     <div v-if="galeriaPreview.length" class="flex flex-wrap gap-2 mt-2">
                         <div v-for="(img, idx) in galeriaPreview" :key="'preview-' + idx" class="relative group">
                             <img :src="img" class="w-20 h-20 object-cover rounded border border-blue-400" />
