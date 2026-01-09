@@ -66,7 +66,14 @@
                     </div>
                 @endif
             </section>
-
+            <div class="flex flex-col items-center text-center">
+                <p class="text-[#eba81d] font-semibold mb-2 font-mono">Plaza O'Higgins - ¿Qué pasó con el pasto?</p>
+                <a href="{{ route('pdf.track', ['pdfName' => 'Plaza_Ohiggins.pdf', 'action' => 'download']) }}"
+                    target="_blank">
+                    <img src="/storage/Ediciones/MiniEspecial.jpeg" alt="Plaza O'Higgins - ¿Qué pasó con el pasto?"
+                        class="w-80 h-auto rounded shadow-md filter  hover:scale-105 transition duration-300">
+                </a>
+            </div>
             <!-- Contenido principal -->
             <main class="w-full space-y-6 bg-gray-50 border border-gray-300 rounded-lg p-4 shadow-sm">
                 <div>

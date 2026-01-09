@@ -24,7 +24,7 @@ use App\Http\Controllers\AtractivoController;
 Route::get('/',[InicioController::class, 'inicio'])->name('inicio');
 Route::get('/proximos-numeros',[InicioController::class, 'proximosNumeros'])->name('proximos-numeros');
 
-Route::get('/aportes', function () {
+Route::get('/apoyanos', function () {
     return view('aportes');
 })->name('aportes');
 

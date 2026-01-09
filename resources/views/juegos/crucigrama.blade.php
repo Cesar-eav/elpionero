@@ -171,6 +171,7 @@
                                 <option value="ASCENSORES">Nombres de Ascensores</option>
                                 <option value="CERROS">Cerros Porteños</option>
                                 <option value="PLACAS_CALLES">Plazas y Calles</option>
+                                <option value="JUGADORES">Históricos Wanderers</option>
                             </select>
                             <p id="current-mode-text" class="text-md text-red-600 mt-1">Modo: Normal</p>
                         </div>
@@ -229,7 +230,8 @@
             ],
             ASCENSORES: ['ARTILLERIA', 'VILLASECA', 'CONCEPCION', 'LARRAIN', 'BARON', 'POLANCO', 'MONJAS', 'FLORIDA', 'MARIPOSAS', 'PERAL'],
             CERROS: ['ALEGRE', 'CONCEPCION', 'BARON', 'POLANCO', 'LARRAIN', 'CARCEL', 'PLACERES', 'CORDILLERA', 'BELLAVISTA', 'MOLINO'],
-            PLACAS_CALLES: ['VICTORIA', 'SOTOMAYOR', 'PINTO', 'ECHUURREN', 'MONTT', 'CONDELL', 'ESMERALDA', 'PRAT', 'BLANCO', 'ERRAZURIZ']
+            PLACAS_CALLES: ['VICTORIA', 'SOTOMAYOR', 'PINTO', 'ECHUURREN', 'MONTT', 'CONDELL', 'ESMERALDA', 'PRAT', 'BLANCO', 'ERRAZURIZ'],
+            JUGADORES: ['OLIVARES', 'FIGUEROA', 'SANCHEZ', 'VILLARROEL', 'LETELIER', 'ORMEÑO', 'DUBOST'],
         };
 
         const SIZE = 12;

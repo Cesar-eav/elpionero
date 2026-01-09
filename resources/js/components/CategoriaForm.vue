@@ -57,6 +57,8 @@ export default {
         { emoji: '🗻', nombre: 'montaña' },
         { emoji: '🧗', nombre: 'aventura' },
         { emoji: '👁️', nombre: 'mirador' },
+        { emoji: '✨', nombre: 'otros' },
+        
       ],
     };
   },

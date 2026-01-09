@@ -188,8 +188,12 @@
                     </div>
                 </div>
 
+
+
+
                 <!-- Por PDF -->
-                <div v-if="pdfStats.by_pdf && Object.keys(pdfStats.by_pdf).length > 0" class="mb-6">
+                <div v-if="pdfStats.by_pdf && Object.keys(pdfStats.by_pdf).length > 0" class="flex gap-5 mb-6">
+                    <div>
                     <h3 class="text-lg font-semibold text-gray-700 mb-3">Por PDF</h3>
                     <div class="space-y-2">
                         <div v-for="(actions, pdfName) in pdfStats.by_pdf" :key="pdfName"
@@ -205,6 +209,32 @@
                             </div>
                         </div>
                     </div>
+                    </div>
+
+<div>
+
+            <!-- Por Mes-->
+                <div v-if="pdfStats.by_month && Object.keys(pdfStats.by_month).length > 0" class="mb-6">
+                    <h3 class="text-lg font-semibold text-gray-700 mb-3">Por Mes</h3>
+                    <div class="space-y-2">
+                        <div v-for="(actions, month) in pdfStats.by_month" :key="month"
+                             class="bg-gray-50 rounded p-3 border border-gray-200">
+                            <p class="font-semibold text-gray-800 mb-2">{{ month }}</p>
+                            <div class="flex gap-4 text-sm">
+                                <span class="text-blue-600">
+                                    Descargas: <strong>{{ getActionCount(actions, 'download') }}</strong>
+                                </span>
+                                <span class="text-green-600">
+                                    Vistas: <strong>{{ getActionCount(actions, 'view') }}</strong>
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+</div>
+
+
+
                 </div>
 
                 <!-- Actividad Reciente -->

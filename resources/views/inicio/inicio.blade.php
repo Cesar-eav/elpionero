@@ -25,7 +25,7 @@
     <meta property="og:url" content="{{ config('app.url') }}" />
     <meta property="og:title" content="El Pionero de Valparaíso" />
     <meta property="og:description" content="Revista digital con columnas y miradas diversas sobre la ciudad puerto" />
-    <meta property="og:image" content="{{ asset('storage/Portada_Octubre.jpg') }}" />
+    <meta property="og:image" content="{{ asset('storage/Portada_Diciembre.jpg') }}" />
     <meta property="og:image:width" content="1200" />
     <meta property="og:image:height" content="630" />
 
@@ -34,7 +34,7 @@
     <meta property="twitter:url" content="{{ config('app.url') }}" />
     <meta property="twitter:title" content="El Pionero de Valparaíso" />
     <meta property="twitter:description" content="Revista digital con columnas y miradas diversas sobre la ciudad puerto" />
-    <meta property="twitter:image" content="{{ asset('storage/Portada_Octubre.jpg') }}" />
+    <meta property="twitter:image" content="{{ asset('storage/Portada_Diciembre.jpg') }}" />
 
     @vite(['resources/css/app.css', 'resources/js/app.js'])
     @if (app()->environment('production'))
@@ -79,13 +79,13 @@
       <div class="relative w-full">
         <!-- Cinta "Nuevo" -->
         <span class="absolute -left-2 -top-2 z-10 bg-[#fc5648] text-white text-xs font-bold uppercase tracking-wide px-2 py-1 rounded">
-          Nuevo: Mini Especial
+          Nuevo: Diciembre
         </span>
 
         <!-- Portada -->
-        <a href="{{ route('pdf.track', ['pdfName' => 'Plaza_Ohiggins.pdf', 'action' => 'view']) }}" target="_blank" rel="noopener" class="block">
+        <a href="{{ route('pdf.track', ['pdfName' => 'EPDV_DICIEMBRE_2025.pdf', 'action' => 'view']) }}" target="_blank" rel="noopener" class="block">
           <img
-            src="{{ asset('storage/Ediciones/MiniEspecial.jpeg') }}"
+            src="{{ asset('storage/Portada_Diciembre.jpg') }}"
             alt="Portada El Pionero - Octubre 2025"
             class="w-full h-auto rounded-lg shadow-lg ring-1 ring-black/5 hover:scale-[1.02] transition-transform"
             loading="lazy"
@@ -101,21 +101,19 @@
       </h2>
 
       <p class="text-gray-700 mb-5">
-        "Plaza O' Higgins ¿Qué pasó con el pasto?" | Mini Especial — Registro fotográfico del estado de la plaza.
-        Llévatelo en PDF o léelo en línea.
+        "A un año de la nueva administración municipal?" 
       </p>
 
       <!-- Botones CTA -->
       <div class="flex flex-col sm:flex-row gap-3 md:mb-3 mb-6" >
-
-        <a
-          href="#"
-          onclick="trackAndDownloadPDF(event, '{{ route('pdf.track', ['pdfName' => 'Plaza_Ohiggins.pdf', 'action' => 'download']) }}')"
-          class="inline-flex items-center justify-center gap-2 px-5 py-3 rounded-lg bg-[#fc5648] text-white font-semibold hover:bg-[#d94439] shadow transition"
-        >
-          <svg class="w-5 h-5" viewBox="0 0 24 24" fill="currentColor"><path d="M12 3v10m0 0 4-4m-4 4-4-4M4 17h16v2H4v-2Z" stroke="currentColor" stroke-width="1.5" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>
-          Descargar PDF
-        </a>
+<a href="{{ route('pdf.track', ['pdfName' => 'EPDV_DICIEMBRE_2025.pdf', 'action' => 'download']) }}"
+   class="inline-flex items-center justify-center gap-2 px-5 py-3 rounded-lg bg-[#fc5648] text-white font-semibold hover:bg-[#d94439] shadow transition"
+>
+    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/>
+    </svg>
+    Descargar PDF
+</a>
   @push('scripts')
   <script>
   function trackAndDownloadPDF(event, url) {

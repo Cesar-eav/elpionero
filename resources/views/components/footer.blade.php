@@ -73,6 +73,16 @@
                         class="w-24 h-auto rounded shadow-md filter grayscale hover:grayscale-0 hover:scale-105 transition duration-300">
                 </a>
             </div>
+
+                        <!-- Revista de Diciembre -->
+            <div class="flex flex-col items-center text-center">
+                <p class="text-[#eba81d] font-semibold mb-2 font-mono">Diciembre</p>
+                <a href="{{ route('pdf.track', ['pdfName' => 'EPDV_DICIEMBRE_2025.pdf', 'action' => 'download']) }}"
+                    target="_blank">
+                    <img src="/storage/Portada_12_2025.jpg" alt="Revista Diciembre"
+                        class="w-24 h-auto rounded shadow-md filter grayscale hover:grayscale-0 hover:scale-105 transition duration-300">
+                </a>
+            </div>
         </div>
 
         <!-- Información adicional -->
