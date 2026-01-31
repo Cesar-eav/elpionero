@@ -25,7 +25,7 @@
     <meta property="og:url" content="{{ config('app.url') }}" />
     <meta property="og:title" content="El Pionero de Valparaíso" />
     <meta property="og:description" content="Revista digital con columnas y miradas diversas sobre la ciudad puerto" />
-    <meta property="og:image" content="{{ asset('storage/Portada_Diciembre.jpg') }}" />
+    <meta property="og:image" content="{{ asset('storage/especiales/01_paseo_wWheelwright.jpg') }}" />
     <meta property="og:image:width" content="1200" />
     <meta property="og:image:height" content="630" />
 
@@ -79,13 +79,13 @@
       <div class="relative w-full">
         <!-- Cinta "Nuevo" -->
         <span class="absolute -left-2 -top-2 z-10 bg-[#fc5648] text-white text-xs font-bold uppercase tracking-wide px-2 py-1 rounded">
-          Nuevo: Diciembre
+          Nuevo: Especial Paseo Wheelwright
         </span>
 
         <!-- Portada -->
-        <a href="{{ route('pdf.track', ['pdfName' => 'EPDV_DICIEMBRE_2025.pdf', 'action' => 'view']) }}" target="_blank" rel="noopener" class="block">
+        <a href="{{ route('pdf.track', ['pdfName' => '01_paseo_wWheelwright.pdf', 'action' => 'view']) }}" target="_blank" rel="noopener" class="block">
           <img
-            src="{{ asset('storage/Portada_Diciembre.jpg') }}"
+            src="{{ asset('storage/especiales/01_paseo_wWheelwright.jpg') }}"
             alt="Portada El Pionero - Octubre 2025"
             class="w-full h-auto rounded-lg shadow-lg ring-1 ring-black/5 hover:scale-[1.02] transition-transform"
             loading="lazy"
@@ -97,16 +97,16 @@
     <!-- Columna 2: Contenido - Descargar hasta Newsletter + La Brújula y Juegos -->
     <div class="flex flex-col">
       <h2 class="text-2xl md:text-3xl font-extrabold text-gray-900 leading-tight mb-3">
-        Descarga el <span class="text-[#fc5648]">Último Número</span> de <span class="italic">El Pionero de Valparaíso</span>
+        Descarga el <span class="text-[#fc5648]">primer especial</span> de <span class="italic">El Pionero de Valparaíso</span>
       </h2>
 
       <p class="text-gray-700 mb-5">
-        "A un año de la nueva administración municipal?" 
+        "Paseo Wheelwright, entre el potencial y el olvido." 
       </p>
 
       <!-- Botones CTA -->
       <div class="flex flex-col sm:flex-row gap-3 md:mb-3 mb-6" >
-<a href="{{ route('pdf.track', ['pdfName' => 'EPDV_DICIEMBRE_2025.pdf', 'action' => 'download']) }}"
+<a href="{{ route('pdf.track', ['pdfName' => '01_paseo_wWheelwright.pdf', 'action' => 'download']) }}"
    class="inline-flex items-center justify-center gap-2 px-5 py-3 rounded-lg bg-[#fc5648] text-white font-semibold hover:bg-[#d94439] shadow transition"
 >
     <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
