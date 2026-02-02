@@ -123,6 +123,28 @@
                     >
                         Atractivos
                     </router-link>
+                        <a href="limpiador-correos"
+                        
+                        :class="[
+                            'px-3 py-2 rounded-md text-sm font-medium',
+                            $route.path === '/limpiador-correos'
+                                ? 'bg-gray-900 text-white'
+                                : 'text-gray-300 hover:bg-gray-700 hover:text-white'
+                        ]"
+                    >
+                        Limpiador
+                </a>
+                    <a href="suscriptores"
+                        
+                        :class="[
+                            'px-3 py-2 rounded-md text-sm font-medium',
+                            $route.path === '/suscriptores'
+                                ? 'bg-gray-900 text-white'
+                                : 'text-gray-300 hover:bg-gray-700 hover:text-white'
+                        ]"
+                    >
+                        Suscriptores
+                </a>
                 </div>
             </div>
         </nav>
