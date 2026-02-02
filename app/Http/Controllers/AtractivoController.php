@@ -33,7 +33,7 @@ class AtractivoController extends Controller
                 });
             }
 
-            $atractivos = $query->with('categoria')->latest()->paginate(12)->withQueryString();
+            $atractivos = $query->with('categoria')->latest()->paginate(40)->withQueryString();
             $categorias = Categoria::all();
 
             if ($request->ajax() || $request->header('X-Requested-With') === 'XMLHttpRequest') {
