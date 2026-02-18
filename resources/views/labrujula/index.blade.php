@@ -115,7 +115,7 @@
                                    >
                                     📍
                                 </a>
-                                        <a href="{{ route('atractivos.show', $atractivo->id) }}" class="hover:text-[#fc5648] transition">
+                                        <a href="{{ route('atractivos.show', $atractivo->slug) }}" class="hover:text-[#fc5648] transition">
                                             {{ $atractivo->title }}
                                         </a>
                                     </h3>
