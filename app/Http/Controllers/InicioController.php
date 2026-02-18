@@ -15,7 +15,7 @@ class InicioController extends Controller
 {
     public function inicio()
     {
-        $columnas = Articulo::with(['revista', 'columnista'])->inRandomOrder()->get();
+        $columnas = Articulo::with(['revista', 'columnista'])->get();
         $noticias = Noticia::latest()->paginate(5);
 
         return view('inicio.inicio', compact([

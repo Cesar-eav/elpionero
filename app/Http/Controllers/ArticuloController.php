@@ -20,7 +20,6 @@ class ArticuloController extends Controller
         ->with('columnista')
         ->paginate(15);
 
-        Log::info(json_encode($articulos, JSON_PRETTY_PRINT));
 
         return view('articulos.index', compact('articulos'));
     }

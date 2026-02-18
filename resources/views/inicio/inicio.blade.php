@@ -274,8 +274,9 @@
 
                     @if ($columnas->isNotEmpty())
                         @php
-                            $destacada = $columnas->last();
-                            $resto = $columnas->take(6);
+                            $ordenados = $columnas->sortByDesc('created_at');
+                            $destacada = $ordenados->first();
+                            $resto = $ordenados->slice(1,6);
                         @endphp
                         <div>
          
