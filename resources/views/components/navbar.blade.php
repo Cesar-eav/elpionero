@@ -31,7 +31,7 @@
     <nav class="hidden md:flex gap-4 items-center">
         <a href="{{ url('columnas') }}" class="hover:text-white transition-colors">Columnas</a>
         <a href="{{ url('noticias') }}" class="hover:text-white transition-colors">Notas</a>
-        <a href="{{ url('labrujula') }}" class="hover:text-green-600 text-white transition-colors">La Brújula</a>
+        <a href="{{ url('labrujula') }}" class="bg-red hover:text-green-600 text-white transition-colors">La Brújula</a>
         <a href="{{ url('cable-a-tierra') }}" class="hover:text-white transition-colors">Cable a Tierra</a>
         <a href="{{ route('juegos.index') }}" class="hover:text-white transition-colors">Juegos</a>
         <a href="{{ url('entrevistas') }}" class="hover:text-white transition-colors">Entrevistas</a>

@@ -106,7 +106,7 @@
 
       <!-- Botones CTA -->
       <div class="flex flex-col sm:flex-row gap-3 md:mb-3 mb-6" >
-<a href="{{ route('pdf.track', ['pdfName' => '01_paseo_Wheelwright.pdf', 'action' => 'download']) }}"
+<a href="{{ route('pdf.track', ['pdfName' => '01_paseo_wWheelwright.pdf', 'action' => 'download']) }}"
    class="inline-flex items-center justify-center gap-2 px-5 py-3 rounded-lg bg-[#fc5648] text-white font-semibold hover:bg-[#d94439] shadow transition"
 >
     <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
