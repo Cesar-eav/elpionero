@@ -90,7 +90,7 @@
                         @foreach ($atractivos as $atractivo)
                             <article class="bg-white rounded-xl overflow-hidden shadow-md hover:shadow-2xl transition-all duration-300 border border-gray-100 flex flex-col h-full">
                                 <div class="relative">
-                                    <a href="{{ route('atractivos.show', $atractivo->id) }}" class="block overflow-hidden">
+                                    <a href="{{ route('atractivos.show', $atractivo->slug) }}" class="block overflow-hidden">
                                         @if ($atractivo->image)
                                             <img src="{{ asset('storage/' . $atractivo->image) }}"
                                                  alt="{{ $atractivo->title }}"

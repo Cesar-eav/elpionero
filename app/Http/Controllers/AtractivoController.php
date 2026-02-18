@@ -33,7 +33,7 @@ class AtractivoController extends Controller
                 });
             }
 
-            $atractivos = $query->with('categoria')->latest()->paginate(40)->withQueryString();
+            $atractivos = $query->with('categoria')->inRandomOrder()->paginate(40)->withQueryString();
             $categorias = Categoria::all();
 
             if ($request->ajax() || $request->header('X-Requested-With') === 'XMLHttpRequest') {
@@ -50,8 +50,9 @@ class AtractivoController extends Controller
     /**
      * Ver detalle de un atractivo (Público)
      */
-    public function show(Atractivo $atractivo)
+    public function show($slug)
     {
+        $atractivo = Atractivo::where('slug', $slug)->first();
         return view('labrujula.show', compact('atractivo'));
     }
 

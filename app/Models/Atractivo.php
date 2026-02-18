@@ -23,6 +23,7 @@ class Atractivo extends Model
         'horario',
         'show_horario',
         'show_enlace',
+        'slug'
     ];
 
     protected $casts = [

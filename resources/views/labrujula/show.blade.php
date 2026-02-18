@@ -15,7 +15,7 @@
 
     <!-- Open Graph -->
     <meta property="og:type" content="website" />
-    <meta property="og:url" content="{{ route('atractivos.show', $atractivo->id) }}" />
+    <meta property="og:url" content="{{ route('atractivos.show', $atractivo->slug) }}" />
     <meta property="og:title" content="{{ $atractivo->title }}" />
     <meta property="og:description" content="{{ Str::limit(strip_tags($atractivo->description), 150) }}" />
     @if ($atractivo->image)
@@ -190,7 +190,7 @@
                         @foreach ($relacionados as $relacionado)
                             <article class="bg-white rounded-lg overflow-hidden shadow-lg hover:shadow-xl transition-shadow">
                                 <!-- Imagen -->
-                                <a href="{{ route('atractivos.show', $relacionado->id) }}" class="block">
+                                <a href="{{ route('atractivos.show', $relacionado->slug) }}" class="block">
                                     @if ($relacionado->image)
                                         <img src="{{ asset('storage/' . $relacionado->image) }}"
                                              alt="{{ $relacionado->title }}"
