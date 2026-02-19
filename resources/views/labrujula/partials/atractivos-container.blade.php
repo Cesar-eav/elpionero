@@ -7,7 +7,7 @@
         @foreach ($atractivos as $atractivo)
             <article class="bg-white rounded-xl overflow-hidden shadow-md hover:shadow-2xl transition-all duration-300 border border-gray-100 flex flex-col h-full">
                 <div class="relative">
-                    <a href="{{ route('atractivos.show', $atractivo->id) }}" class="block overflow-hidden">
+                    <a href="{{ route('atractivos.show', $atractivo->slug) }}" class="block overflow-hidden">
                         @if ($atractivo->image)
                             <img src="{{ asset('storage/' . $atractivo->image) }}"
                                  alt="{{ $atractivo->title }}"
@@ -25,7 +25,7 @@
 
                 <div class="p-5 flex-grow">
                     <h3 class="text-xl font-bold text-gray-900 mb-3 leading-tight min-h-[3rem]">
-                        <a href="{{ route('atractivos.show', $atractivo->id) }}" class="hover:text-[#fc5648] transition">
+                        <a href="{{ route('atractivos.show', $atractivo->slug) }}" class="hover:text-[#fc5648] transition">
                             {{ $atractivo->title }}
                         </a>
                     </h3>
@@ -46,7 +46,7 @@
                 </div>
 
                 <div class="px-5 pb-5">
-                    <a href="{{ route('atractivos.show', $atractivo->id) }}"
+                    <a href="{{ route('atractivos.show', $atractivo->slug) }}"
                        class="block w-full text-center bg-gray-900 text-white py-2.5 rounded-lg font-bold text-sm hover:bg-[#fc5648] transition-colors duration-300">
                         Explorar lugar
                     </a>
