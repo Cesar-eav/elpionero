@@ -147,10 +147,12 @@
                                             {{ $atractivo->title }}
                                         </a>
                                     </h3>
-                                    
+                                                                        <a href="{{ route('atractivos.show', $atractivo->slug) }}" class="block overflow-hidden">
+
                                     <p class="text-gray-600 text-sm mb-4 leading-relaxed">
                                         {{ Str::limit(strip_tags($atractivo->description), 130) }}
                                     </p>
+                                                                        </a>
                                 </div>
                             </article>
                         @endforeach

@@ -205,13 +205,13 @@
                                 <!-- Contenido -->
                                 <div class="p-4">
                                     <h3 class="text-lg font-bold text-gray-900 mb-2 line-clamp-2">
-                                        <a href="{{ route('atractivos.show', $relacionado->id) }}"
+                                        <a href="{{ route('atractivos.show', $relacionado->slug) }}"
                                            class="hover:text-[#fc5648] transition">
                                             {{ $relacionado->title }}
                                         </a>
                                     </h3>
 
-                                    <a href="{{ route('atractivos.show', $relacionado->id) }}"
+                                    <a href="{{ route('atractivos.show', $relacionado->slug) }}"
                                        class="inline-block text-[#fc5648] font-semibold hover:underline">
                                         Explorar
                                     </a>

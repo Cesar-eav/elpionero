@@ -72,7 +72,7 @@
     </button>
 
     <!-- Menú móvil -->
-    <div id="mobile-menu" class="hidden absolute top-full left-0 w-full bg-white text-[#fc5648] border-t border-gray-300 md:hidden flex-col p-4 space-y-3">
+    <div id="mobile-menu" class="hidden absolute top-full left-0 w-full bg-white text-[#fc5648] border border-gray-600 md:hidden flex-col p-4 space-y-3">
         <!-- Barra de búsqueda integrada en el menú móvil -->
         <div class="pb-3 border-b border-gray-700">
             <form action="{{ route('buscar') }}" method="GET">
@@ -92,15 +92,18 @@
                 </div>
             </form>
         </div>
-        <a href="{{ url('/') }}" class="hover:text-green-600 text-white transition-colors block py-1">El Pionero</a>
+        <a href="{{ url('/labrujula') }}" class="hover:text-green-600 transition-colors block py-1">Inicio</a>
+        <a href="{{ url('panoramas') }}" class="hover:text-green-600 transition-colors">Panoramas</a>
+        <a href="{{ url('#') }}" class="hover:text-green-600 transition-colors">Publicita</a>
+        <a href="{{ url('/') }}" class="text-black hover:text-green-600 transition-colors">El Pionero</a>
         {{-- <a href="{{ url('columnas') }}" class="hover:text-white transition-colors block py-1">Columnas</a>
         <a href="{{ url('editoriales') }}" class="hover:text-white transition-colors block py-1">Editoriales</a>
         <a href="{{ url('noticias') }}" class="hover:text-white transition-colors block py-1">Notas</a>
         <a href="{{ url('entrevistas') }}" class="hover:text-white transition-colors block py-1">Entrevistas</a>
         <a href="{{ url('cable-a-tierra') }}" class="hover:text-white transition-colors block py-1">Cable a Tierra</a>
         <a href="{{ url('revistas-lista') }}" class="hover:text-white transition-colors block py-1">Revistas</a> --}}
-        <a href="{{ route('juegos.index') }}" class="hover:text-white transition-colors block py-1">Juegos</a>
-        <a href="{{ url('nosotros') }}" class="hover:text-white transition-colors block py-1">Nosotros</a>
+        {{-- <a href="{{ route('juegos.index') }}" class="hover:text-white transition-colors block py-1">Juegos</a>
+        <a href="{{ url('nosotros') }}" class="hover:text-white transition-colors block py-1">Nosotros</a> --}}
         {{-- <a href="{{ route('aportes') }}" class="hover:text-white transition-colors block py-1 border-t border-gray-700 pt-3 mt-2">
             <span class="text-lg">Apóyanos</span>
         </a> --}}
