@@ -58,6 +58,7 @@ Route::get('/labrujula', [AtractivoController::class, 'index'])->name('atractivo
 Route::get('/atractivos/{atractivo}', [AtractivoController::class, 'show'])->name('atractivos.show');
 Route::get('/atractivos/categoria/{categoria}', [AtractivoController::class, 'filtrarPorCategoria'])->name('atractivos.categoria');
 Route::get('/atractivos/ciudad/{ciudad}', [AtractivoController::class, 'filtrarPorCiudad'])->name('atractivos.ciudad');
+Route::get('/panoramas', [AtractivoController::class, 'panoramas'])->name('atractivos.panoramas');
 
 Route::get('/juegos/portle', function () {
     return view('juegos.wordle');
@@ -94,8 +95,7 @@ Route::get('/columnas',[ArticuloController::class, 'showColumnas'])->name('inici
 
 Route::get('/revistas/{revista}/pdf', [RevistaController::class, 'generarPDF'])->name('revistas.generar-pdf');
 Route::get('/previsualizar-revista/pdf', [RevistaController::class, 'previsualizarPDF'])->name('previsualizar.pdf');
-
-
+Route::get('/gps-buscar', [AtractivoController::class, 'gpsBuscar'])->name('gps-buscar');
 
 // Dashboard Blade deshabilitado - se usa dashboard Vue
 // Route::get('/dashboard', function () {

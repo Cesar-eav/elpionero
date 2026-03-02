@@ -41,6 +41,8 @@ class Atractivo extends Model
     /**
      * Accesor: Obtiene el nombre de la categoría desde la relación
      */
+
+ 
     public function getCategoryTranslatedAttribute()
     {
         return $this->categoria->nombre ?? 'Sin categoría';

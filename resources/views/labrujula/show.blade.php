@@ -46,8 +46,8 @@
 
 <body class="bg-gray-100 text-gray-900 font-serif text-base">
     <div class="w-full mx-auto md:p-4">
-        <x-header />
-        <x-navbar />
+        <x-header_labrujula />
+        <x-navbar_labrujula />
 
         <!-- Contenido Principal -->
         <div class="max-w-4xl mx-auto">

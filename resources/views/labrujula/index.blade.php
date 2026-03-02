@@ -12,7 +12,7 @@
 
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 
-        @if (app()->environment('production'))
+    @if (app()->environment('production'))
         <script type="text/javascript">
             (function(c, l, a, r, i, t, y) {
                 c[a] = c[a] || function() {
@@ -30,8 +30,8 @@
 
 <body class="bg-gray-100 text-gray-900 font-serif text-base">
     <div class="w-full mx-auto md:p-4">
-        <x-header />
-        <x-navbar />
+        <x-header_labrujula />
+        <x-navbar_labrujula />
 
         <div class="max-w-7xl mx-auto px-4">
             <section class="my-8 text-center">
@@ -44,11 +44,11 @@
             </section>
 
             <div class="bg-white rounded-lg shadow-lg p-6 mb-8 border-t-4 border-[#fc5648]">
-                <form id="filterForm">
+                <form id="filterForm" action="{{ route('atractivos.index') }}" method="GET">
                     <div class="grid grid-cols-1 md:grid-cols-3 gap-6 items-end">
                         
                         <div>
-                            <label class="block text-sm font-bold text-gray-700 mb-1">Categoría</label>
+                            <label class="block text-sm font-bold text-gray-700 mb-1">Bùsqueda por categoría</label>
                             <select id="categoryFilter" name="category" 
                                     class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#fc5648] outline-none bg-gray-50">
                                 <option value="">Todas las categorías</option>
@@ -61,30 +61,53 @@
                         </div>
 
                         <div>
-                            <label class="block text-sm font-bold text-gray-700 mb-1">Búsqueda rápida</label>
+                            <label class="block text-sm font-bold text-gray-700 mb-1">Búsqueda por palabra</label>
                             <div class="flex">
                                 <input type="text" id="searchFilter" name="search" value="{{ request('search') }}" 
-                                       placeholder="¿Qué estás buscando?" 
+                                       placeholder="Ascensor, puerta de colores, café" 
                                        class="w-full px-3 py-2 border border-gray-300 rounded-l-lg focus:ring-2 focus:ring-[#fc5648] outline-none">
-                                <button type="button" id="searchBtn" class="bg-[#fc5648] text-white px-5 py-2 rounded-r-lg hover:bg-[#d94439] transition">
+                                <button type="submit" class="bg-[#fc5648] text-white px-5 py-2 rounded-r-lg hover:bg-[#d94439] transition">
                                     🔍
                                 </button>
                             </div>
                         </div>
 
-                        <div class="flex items-center justify-between md:justify-end gap-4">
-                            @if(request()->anyFilled(['category', 'search']))
-                                <button type="button" id="clearFiltersBtn"
-                                   class="text-sm font-semibold text-gray-500 hover:text-[#fc5648] transition flex items-center gap-1 underline">
-                                    <span>✕</span> Borrar filtros
+                        <div>
+                            <label class="block text-sm font-bold text-gray-700 mb-1">¿Qué hay cerca de mí? (GPS)</label>
+                            <div class="flex">
+                                <select name="rango" id="rango" class="w-full px-3 py-2 border border-gray-300 rounded-l-lg focus:ring-2 focus:ring-[#fc5648] outline-none">
+                                    <option value="100" @selected(request('rango') == 100)>100 mts</option>
+                                    <option value="300" @selected(request('rango') == 300)>300 mts</option>
+                                    <option value="500" @selected(request('rango') == 500)>500 mts</option>
+                                    <option value="1000" @selected(request('rango') == 1000)>1 km</option>
+                                    <option value="3000" @selected(request('rango') == 3000)>3 km</option>
+                                    <option value="5000" @selected(request('rango') == 5000)>5 km</option>
+                                    <option value="10000" @selected(request('rango') == 10000)>10 km</option>
+                                </select>
+                                
+                                <input type="hidden" id="lat" name="lat" value="{{ request('lat') }}">
+                                <input type="hidden" id="lng" name="lng" value="{{ request('lng') }}">
+
+                                <button type="button" id="btn-gps" class="bg-gray-800 text-white px-5 py-2 rounded-r-lg hover:bg-black transition flex items-center gap-2">
+                                    📍 <span>GPS</span>
                                 </button>
-                            @endif
+                            </div>
                         </div>
                     </div>
-                </form>
-            </div>
 
-            <div class="atractivos-container">
+                    <div class="flex items-center justify-between mt-4">
+                        <p class="text-xs text-gray-400 italic">El Pionero de Valparaíso</p>
+                        @if(request()->anyFilled(['category', 'search', 'lat']))
+                            <a href="{{ route('atractivos.index') }}" 
+                               class="text-sm font-semibold text-gray-500 hover:text-[#fc5648] transition flex items-center gap-1 underline">
+                                <span>✕</span> Borrar filtros
+                            </a>
+                        @endif
+                    </div>
+                </form>
+           </div>
+
+             <div class="atractivos-container">
                 @if ($atractivos->count())
                     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
                         @foreach ($atractivos as $atractivo)
@@ -107,25 +130,28 @@
                                 </div>
 
                                 <div class="p-5 flex-grow">
-                                    <h3 class="text-xl font-bold text-gray-900 mb-1 leading-tight min-h-[3rem]">
+                                    @if(isset($atractivo->distancia))
+                                        <div class="mb-2">
+                                            <span class="bg-orange-100 text-[#fc5648] text-xs font-bold px-2 py-1 rounded border border-orange-200">
+                                                A {{ number_format($atractivo->distancia / 1000, 2) }} km de ti
+                                            </span>
+                                        </div>
+                                    @endif
 
-                                <a href="https://maps.google.com/?q={{ $atractivo->lat }},{{ $atractivo->lng }}"
-                                   target="_blank"
-                                   rel="noopener"
-                                   >
-                                    📍
-                                </a>
+                                    <h3 class="text-xl font-bold text-gray-900 mb-1 leading-tight">
+                                        <a href="https://www.google.com/maps/search/?api=1&query={{ $atractivo->lat }},{{ $atractivo->lng }}"
+                                           target="_blank" rel="noopener" class="text-gray-400 hover:text-[#fc5648] mr-1">
+                                            📍
+                                        </a>
                                         <a href="{{ route('atractivos.show', $atractivo->slug) }}" class="hover:text-[#fc5648] transition">
                                             {{ $atractivo->title }}
                                         </a>
                                     </h3>
-
+                                    
                                     <p class="text-gray-600 text-sm mb-4 leading-relaxed">
-                                        {{ Str::limit(strip_tags($atractivo->description), 160) }}
+                                        {{ Str::limit(strip_tags($atractivo->description), 130) }}
                                     </p>
-
                                 </div>
-
                             </article>
                         @endforeach
                     </div>
@@ -137,75 +163,83 @@
                     <div class="bg-white rounded-2xl shadow-sm p-20 text-center border-2 border-dashed border-gray-200">
                         <div class="text-6xl mb-6">🕵️‍♂️</div>
                         <h3 class="text-2xl font-bold text-gray-800 mb-2">Sin resultados</h3>
-                        <p class="text-gray-500 mb-6">No encontramos lugares que coincidan con "{{ request('search') }}".</p>
+                        <p class="text-gray-500 mb-6">No encontramos lugares cercanos o que coincidan con tu búsqueda.</p>
                         <a href="{{ route('atractivos.index') }}" class="bg-[#fc5648] text-white px-6 py-3 rounded-xl font-bold hover:bg-gray-900 transition">
                             Ver toda La Brújula
                         </a>
                     </div>
                 @endif
-            </div>
+            </div> 
         </div>
 
         <x-footer />
     </div>
 
     <script>
-        // Función para cargar atractivos con Axios
-        async function loadAtractivos(params = {}) {
-            try {
-                const response = await window.axios.get('{{ route('atractivos.index') }}', {
-                    params: params,
-                    headers: {
-                        'X-Requested-With': 'XMLHttpRequest'
-                    }
-                });
+    document.addEventListener('DOMContentLoaded', function() {
+        const filterForm = document.getElementById('filterForm');
+        const btnGps = document.getElementById('btn-gps');
+        const inputLat = document.getElementById('lat');
+        const inputLng = document.getElementById('lng');
 
-                // Reemplazar el contenedor de atractivos
-                document.querySelector('.atractivos-container').innerHTML = response.data;
-            } catch (error) {
-                console.error('Error cargando atractivos:', error);
-            }
-        }
+        // Lógica del botón GPS
+        if (btnGps) {
+            btnGps.addEventListener('click', function() {
+                btnGps.disabled = true;
+                btnGps.innerHTML = '⌛ Localizando...';
 
-        // Listener para cambios en el filtro de categoría
-        document.getElementById('categoryFilter').addEventListener('change', function() {
-            const params = {
-                category: this.value,
-                search: document.getElementById('searchFilter').value
-            };
-            loadAtractivos(params);
-        });
+                if (!navigator.geolocation) {
+                    alert("Tu navegador no soporta geolocalización.");
+                    resetBtn();
+                    return;
+                }
 
-        // Listener para el botón de búsqueda
-        document.getElementById('searchBtn').addEventListener('click', function() {
-            const params = {
-                category: document.getElementById('categoryFilter').value,
-                search: document.getElementById('searchFilter').value
-            };
-            loadAtractivos(params);
-        });
-
-        // Listener para Enter en el campo de búsqueda
-        document.getElementById('searchFilter').addEventListener('keypress', function(e) {
-            if (e.key === 'Enter') {
-                e.preventDefault();
-                const params = {
-                    category: document.getElementById('categoryFilter').value,
-                    search: this.value
-                };
-                loadAtractivos(params);
-            }
-        });
-
-        // Listener para borrar filtros
-        const clearBtn = document.getElementById('clearFiltersBtn');
-        if (clearBtn) {
-            clearBtn.addEventListener('click', function() {
-                document.getElementById('categoryFilter').value = '';
-                document.getElementById('searchFilter').value = '';
-                loadAtractivos({});
+                navigator.geolocation.getCurrentPosition(
+                    function(position) {
+                        inputLat.value = position.coords.latitude;
+                        inputLng.value = position.coords.longitude;
+                        
+                        console.log("📍 Ubicación obtenida:", position.coords.latitude, position.coords.longitude);
+                        
+                        // Enviamos el formulario principal
+                        filterForm.submit();
+                    },
+                    function(error) {
+                        console.error("Error GPS:", error);
+                        alert("No pudimos obtener tu ubicación.");
+                        resetBtn();
+                    },
+                    { enableHighAccuracy: true, timeout: 8000 }
+                );
             });
         }
+
+        function resetBtn() {
+            btnGps.disabled = false;
+            btnGps.innerHTML = '📍 GPS';
+        }
+
+        // Listener para cambio de categoría (envío automático)
+        document.getElementById('categoryFilter').addEventListener('change', function() {
+            filterForm.submit();
+        });
+    });
     </script>
+
+    {{-- Consola Debug --}}
+    @if(request()->filled(['lat', 'lng']))
+        <script>
+            const listaAtractivos = @json($atractivos->items());
+            console.log("🗺️ Resultados de la búsqueda espacial:");
+            if(listaAtractivos.length > 0) {
+                console.table(listaAtractivos.map(i => ({
+                    Nombre: i.title,
+                    Distancia: i.distancia ? (i.distancia / 1000).toFixed(2) + ' km' : 'Original'
+                })));
+            } else {
+                console.log("Cero resultados en el radio seleccionado.");
+            }
+        </script>
+    @endif
 </body>
 </html>

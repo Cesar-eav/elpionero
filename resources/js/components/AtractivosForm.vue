@@ -52,8 +52,7 @@
                             required
                             class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
                         >
-                            <option value="">Selecciona una ciudad</option>
-                            <option value="Valparaíso">Valparaíso</option>
+                            <option value="Valparaíso" >Valparaíso</option>
                             <option value="Viña del Mar">Viña del Mar</option>
                             <option value="Quilpué">Quilpué</option>
                         </select>
@@ -197,7 +196,7 @@
                 <div class="flex gap-4 justify-end pt-4 border-t">
                     <button type="button" @click="$emit('close')" class="px-6 py-2 border border-gray-300 rounded-lg text-gray-700 hover:bg-gray-100">Cancelar</button>
                     <button type="submit" class="px-6 py-2 bg-blue-600 hover:bg-blue-700 text-white font-semibold rounded-lg">
-                        {{ isEditing ? 'Actualizar Atractivo' : 'Crear Atractivo' }}
+                        {{ isEditing ? 'Actualizar Atractivo' : 'Crear Atractivo 2' }}
                     </button>
                 </div>
             </form>
@@ -220,7 +219,7 @@ export default {
                 title: '',
                 description: '',
                 categoria_id: '',
-                ciudad: '',
+                ciudad: 'Valparaíso',
                 autor: '',
                 enlace: '',
                 lng: '',
@@ -228,7 +227,7 @@ export default {
                 horario: '',
                 show_horario: false,
                 show_enlace: false,
-                show_galeria: false,
+                show_galeria: false
             },
             categorias: [],
             tagsInput: '',
