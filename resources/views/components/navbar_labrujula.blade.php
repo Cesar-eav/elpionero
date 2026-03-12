@@ -1,90 +1,44 @@
-<!-- Barra de navegación -->
-<div class="flex w-full font-mono items-center justify-between bg-white border border-gray-300 text-[#fc5648] md:rounded-md px-6 py-3 md:mb-8 mb-0 sticky top-0 z-50 text-lg font-semibold">
+<div class="relative flex w-full font-mono items-center justify-between bg-white border border-gray-300 text-[#fc5648] md:rounded-md px-6 py-3 md:mb-8 mb-0 sticky top-0 z-50 text-lg font-semibold min-h-[60px]">
 
-    <!-- Logo o título + búsqueda -->
     <div class="flex items-center gap-6">
-
-        <a href="{{ url('labrujula') }}" class="hover:text-green-600 text-[#fc5648] transition-colors  py-1 block md:hidden" >
-
-                <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        <a href="{{ url('labrujula') }}" class="hover:text-green-600 text-[#fc5648] transition-colors py-1 block lg:hidden">
+            <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l9-9 9 9M5 10v10a2 2 0 002 2h10a2 2 0 002-2V10" />
-                </svg>
-
+            </svg>
         </a>
 
-
-            <div class="flex ">
-                <input type="text" id="searchFilter" name="search" value="{{ request('search') }}" 
-             
-                        class="w-full px-3 py-2 border border-gray-300 rounded-l-lg focus:ring-2 focus:ring-[#fc5648] outline-none">
-                <button type="button" id="searchBtn" class="bg-[#fc5648] text-white px-5 py-2 rounded-r-lg hover:bg-[#d94439] transition">
-                    🔍
-                </button>
-            </div>
-
-
-
-
-        <!-- Búsqueda escritorio -->
-        {{-- <form action="{{ route('buscar') }}" method="GET" class="hidden md:block">
-            <div class="relative flex">
-                <input type="text"
-                       name="q"
-                       placeholder="Buscar..."
-                       value="{{ request('q') }}"
-                       class="w-64 px-4 py-1.5 rounded-l-md bg-gray-100 border border-gray-600 text-black placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[#fc5648] focus:border-transparent"
-                       required>
-                <button type="submit"
-                        class="px-3 bg-[#fc5648] hover:bg-white text-white hover:text-[#fc5648] rounded-r-md border border-[#fc5648] transition-colors flex items-center justify-center">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
-                    </svg>
-                </button>
-            </div>
-        </form> --}}
+        <div class="flex">
+            <input type="text" id="searchFilter" name="search" value="{{ request('search') }}" 
+                   class="w-full px-3 py-2 border border-gray-300 rounded-l-lg focus:ring-2 focus:ring-[#fc5648] outline-none text-sm md:text-base">
+            <button type="button" id="searchBtn" class="bg-[#fc5648] text-white px-5 py-2 rounded-r-lg hover:bg-[#d94439] transition">
+                🔍
+            </button>
+        </div>
     </div>
 
-    <!-- Enlaces de navegación escritorio -->
-    <nav class="hidden md:flex gap-4 items-center">
+    <nav class="hidden lg:flex gap-4 items-center">
         <a href="{{ url('labrujula') }}" class="hover:text-green-600 transition-colors">Inicio</a>
-                <a href="{{ url('panoramas') }}" class="hover:text-green-600 transition-colors">Panoramas</a>
+        <a href="{{ url('panoramas') }}" class="hover:text-green-600 transition-colors">Panoramas</a>
         <a href="{{ url('#') }}" class="hover:text-green-600 transition-colors">Publicita</a>
         <a href="{{ url('/') }}" class="text-black hover:text-green-600 transition-colors">El Pionero</a>
-        
-                
-
     </nav>
 
-    <!-- Botón hamburguesa (solo en móvil) -->
-    <button id="mobile-menu-button" class="md:hidden text-[#fc5648] hover:text-[#fc5648] focus:outline-none pl-2">
-        <!-- Ícono hamburguesa -->
-        <svg id="menu-icon" xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" fill="none"
-            viewBox="0 0 24 24" stroke="currentColor">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                d="M4 6h16M4 12h16M4 18h16" />
+    <button id="mobile-menu-button" class="lg:hidden text-[#fc5648] focus:outline-none pl-2 relative z-[60]">
+        <svg id="menu-icon" xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
         </svg>
-        <!-- Ícono cerrar -->
-        <svg id="close-icon" xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 hidden" fill="none"
-            viewBox="0 0 24 24" stroke="currentColor">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                d="M6 18L18 6M6 6l12 12" />
+        <svg id="close-icon" xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 hidden" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
         </svg>
     </button>
 
-    <!-- Menú móvil -->
-    <div id="mobile-menu" class="hidden absolute top-full left-0 w-full bg-white text-[#fc5648] border border-gray-600 md:hidden flex-col p-4 space-y-3">
-        <!-- Barra de búsqueda integrada en el menú móvil -->
-        <div class="pb-3 border-b border-gray-700">
+    <div id="mobile-menu" class="hidden absolute top-full left-0 w-full bg-white text-[#fc5648] border-t border-gray-300 border-b border-x shadow-2xl flex-col p-4 space-y-3 z-[55]">
+        <div class="pb-3 border-b border-gray-100">
             <form action="{{ route('buscar') }}" method="GET">
                 <div class="relative flex">
-                    <input type="text"
-                           name="q"
-                           placeholder="Buscar..."
-                           value="{{ request('q') }}"
-                           class="flex-1 px-4 py-2 rounded-l-md bg-gray-100 border border-gray-600 text-black placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[#fc5648] focus:border-transparent"
-                           required>
-                    <button type="submit"
-                            class="px-3 bg-[#fc5648] hover:bg-white text-white hover:text-[#fc5648] rounded-r-md border border-[#fc5648] transition-colors flex items-center justify-center">
+                    <input type="text" name="q" placeholder="Buscar..." value="{{ request('q') }}"
+                           class="flex-1 px-4 py-2 rounded-l-md bg-gray-100 border border-gray-300 text-black outline-none" required>
+                    <button type="submit" class="px-3 bg-[#fc5648] text-white rounded-r-md">
                         <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
                         </svg>
@@ -93,23 +47,11 @@
             </form>
         </div>
         <a href="{{ url('/labrujula') }}" class="hover:text-green-600 transition-colors block py-1">Inicio</a>
-        <a href="{{ url('panoramas') }}" class="hover:text-green-600 transition-colors">Panoramas</a>
-        <a href="{{ url('#') }}" class="hover:text-green-600 transition-colors">Publicita</a>
-        <a href="{{ url('/') }}" class="text-black hover:text-green-600 transition-colors">El Pionero</a>
-        {{-- <a href="{{ url('columnas') }}" class="hover:text-white transition-colors block py-1">Columnas</a>
-        <a href="{{ url('editoriales') }}" class="hover:text-white transition-colors block py-1">Editoriales</a>
-        <a href="{{ url('noticias') }}" class="hover:text-white transition-colors block py-1">Notas</a>
-        <a href="{{ url('entrevistas') }}" class="hover:text-white transition-colors block py-1">Entrevistas</a>
-        <a href="{{ url('cable-a-tierra') }}" class="hover:text-white transition-colors block py-1">Cable a Tierra</a>
-        <a href="{{ url('revistas-lista') }}" class="hover:text-white transition-colors block py-1">Revistas</a> --}}
-        {{-- <a href="{{ route('juegos.index') }}" class="hover:text-white transition-colors block py-1">Juegos</a>
-        <a href="{{ url('nosotros') }}" class="hover:text-white transition-colors block py-1">Nosotros</a> --}}
-        {{-- <a href="{{ route('aportes') }}" class="hover:text-white transition-colors block py-1 border-t border-gray-700 pt-3 mt-2">
-            <span class="text-lg">Apóyanos</span>
-        </a> --}}
+        <a href="{{ url('panoramas') }}" class="hover:text-green-600 transition-colors block py-1">Panoramas</a>
+        <a href="{{ url('#') }}" class="hover:text-green-600 transition-colors block py-1">Publicita</a>
+        <a href="{{ url('/') }}" class="text-black hover:text-green-600 transition-colors block py-1">El Pionero</a>
     </div>
 </div>
-
 <script>
 
 
