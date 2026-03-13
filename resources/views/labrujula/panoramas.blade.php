@@ -40,29 +40,42 @@
 
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             <div class="bg-white rounded-lg shadow-lg p-6 mb-8 border-t-4 border-[#fc5648]">
-                <img src="{{ asset('storage/atractivos/panoramas/A.jpeg') }}" alt="Panorama 1" class="w-full h-64 object-cover">
+                <img src="{{ asset('storage/atractivos/panoramas/1.jpg') }}" alt="Panorama 1" class="w-full h-70 object-cover">
                 
                 <div class="flex flex-col gap-2 mt-2">
-                <span class="text-gray-600 text-lg font-bold">Domingos Culturales en el Cerro Ñielol</span>
-                <span class="text-gray-600 text-md">Ubicación: Cerro Ñielol</span>
-                <span class="text-gray-600 text-md">Fecha: 07-03-2026</span>
-                <span class="text-gray-600 text-md">Hora: 11:00 a.m.</span>
+                <span class="text-gray-600 text-lg font-bold">Taller de ciencia ciudadana.Día de la astronomía. </span>
+                <span class="text-gray-600 text-md">Ubicación: Teatro municipal de Viña del Mar.</span>
+                <span class="text-gray-600 text-md">Fecha: 19-03-2026</span>
+                <span class="text-gray-600 text-md">Hora: 15:30.</span>
                 </div>
 
             </div>
             <div class="bg-white rounded-lg shadow-lg p-6 mb-8 border-t-4 border-[#fc5648]">
-                <img src="{{ asset('storage/atractivos/panoramas/B.jpeg') }}" alt="Panorama 1" class="w-full h-64 object-cover">
+                <img src="{{ asset('storage/atractivos/panoramas/2.jpg') }}" alt="Panorama 1" class="w-full h-70 object-cover">
                                 <div class="flex flex-col gap-2 mt-2">
-                <span class="text-gray-600 text-lg font-bold">Taller de ilustración</span>
-                <span class="text-gray-600 text-md">Ubicación: Cerro Ñielol</span>
-                <span class="text-gray-600 text-md">Fecha: 07-03-2026</span>
-                <span class="text-gray-600 text-md">Hora: 11:00 a.m.</span>
+                <span class="text-gray-600 text-lg font-bold">Cartelera semanal</span>
+                <span class="text-gray-600 text-md">Ubicación: Teatro Insomnia</span>
                 </div>
             </div>
                         <div class="bg-white rounded-lg shadow-lg p-6 mb-8 border-t-4 border-[#fc5648]">
-                <img src="{{ asset('storage/atractivos/panoramas/C.jpeg') }}" alt="Panorama 1" class="w-full h-64 object-cover">
+                <img src="{{ asset('storage/atractivos/panoramas/3.jpg') }}" alt="Panorama 1" class="w-full h-70 object-cover">
                                 <div class="flex flex-col gap-2 mt-2">
-                <span class="text-gray-600 text-lg font-bold">Taller Dibujo en Carboncillo</span>
+                <span class="text-gray-600 text-lg font-bold">Programación semanal</span>
+                <span class="text-gray-600 text-md">Ubicación: Parque Cultrual de Valparaíso</span>
+                </div>
+            </div>
+
+            <div class="bg-white rounded-lg shadow-lg p-6 mb-8 border-t-4 border-[#fc5648]">
+                <img src="{{ asset('storage/atractivos/panoramas/4.jpg') }}" alt="Panorama 1" class="w-full h-70 object-cover">
+                <div class="flex flex-col gap-2 mt-2">
+                    <span class="text-gray-600 text-lg font-bold">Cartelera Mensual</span>
+                    <span class="text-gray-600 text-md">Ubicación: Museo Baburizza</span>
+                </div>
+            </div>
+            <div class="bg-white rounded-lg shadow-lg p-6 mb-8 border-t-4 border-[#fc5648] h-70">
+                <img src="{{ asset('storage/atractivos/panoramas/5.jpg') }}" alt="Panorama 1" class="w-full  object-cover">
+                <div class="flex flex-col gap-2 mt-2">
+                <span class="text-gray-600 text-lg font-bold">Luz que permanece</span>
                 <span class="text-gray-600 text-md">Ubicación: Cerro Ñielol</span>
                 <span class="text-gray-600 text-md">Fecha: 07-03-2026</span>
                 <span class="text-gray-600 text-md">Hora: 11:00 a.m.</span>
@@ -70,31 +83,12 @@
             </div>
 
             <div class="bg-white rounded-lg shadow-lg p-6 mb-8 border-t-4 border-[#fc5648]">
-                <img src="{{ asset('storage/atractivos/panoramas/04-DE-MARZO.png') }}" alt="Panorama 1" class="w-full h-64 object-cover">
+                <img src="{{ asset('storage/atractivos/panoramas/6.jpg') }}" alt="Panorama 2" class="w-full h-70 object-cover">     
                 <div class="flex flex-col gap-2 mt-2">
-                    <span class="text-gray-600 text-lg font-bold">Domingos Culturales en el Cerro Ñielol</span>
-                    <span class="text-gray-600 text-md">Ubicación: Cerro Ñielol</span>
-                    <span class="text-gray-600 text-md">Fecha: 07-03-2026</span>
-                    <span class="text-gray-600 text-md">Hora: 11:00 a.m.</span>
-                </div>
-            </div>
-                        <div class="bg-white rounded-lg shadow-lg p-6 mb-8 border-t-4 border-[#fc5648]">
-                <img src="{{ asset('storage/atractivos/panoramas/04-DE-MARZO.png') }}" alt="Panorama 1" class="w-full h-64 object-cover">
-                <div class="flex flex-col gap-2 mt-2">
-                <span class="text-gray-600 text-lg font-bold">Taller de ilustración</span>
-                <span class="text-gray-600 text-md">Ubicación: Cerro Ñielol</span>
-                <span class="text-gray-600 text-md">Fecha: 07-03-2026</span>
-                <span class="text-gray-600 text-md">Hora: 11:00 a.m.</span>
-                </div>
-            </div>
-
-            <div class="bg-white rounded-lg shadow-lg p-6 mb-8 border-t-4 border-[#fc5648]">
-                <img src="{{ asset('storage/atractivos/panoramas/03-DE-MARZO.png') }}" alt="Panorama 2" class="w-full h-64 object-cover">     
-                <div class="flex flex-col gap-2 mt-2">
-                <span class="text-gray-600 text-lg font-bold">Taller Dibujo en Carboncillo</span>
-                <span class="text-gray-600 text-md">Ubicación: Cerro Ñielol</span>
-                <span class="text-gray-600 text-md">Fecha: 07-03-2026</span>
-                <span class="text-gray-600 text-md">Hora: 11:00 a.m.</span>
+                <span class="text-gray-600 text-lg font-bold">Sesión de Vinillos</span>
+                <span class="text-gray-600 text-md">Ubicación: Fisher 18, Escalera de Colores, Cerro Concepción</span>
+                <span class="text-gray-600 text-md">Fecha: 14-03-2026</span>
+                <span class="text-gray-600 text-md">Hora: 19:00</span>
                 </div>
 
             </div>
