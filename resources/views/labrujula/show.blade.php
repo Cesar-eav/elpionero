@@ -82,8 +82,12 @@
                     <div class="flex flex-col md:flex-row gap-6 mb-6 text-gray-600 border-b pb-6">
                         @if ($atractivo->ciudad)
                             <div class="flex items-center gap-2">
+                                <a href="https://maps.google.com/?q={{ $atractivo->lat }},{{ $atractivo->lng }}"
+                                   target="_blank"
+                                   rel="noopener"
+                                   class="text-blue-600 hover:underline">
                                 <span class="text-2xl">📍</span>
-
+                                </a>
 
                             <span class="text-xl text-gray-600 mt-2">
                                 <a href="https://maps.google.com/?q={{ $atractivo->lat }},{{ $atractivo->lng }}"
@@ -94,10 +98,14 @@
                                 </a>
                             </span>
 
-
-
-
-
+                            <span class="text-xl text-gray-600 mt-2">
+                                <a href="#"
+                                   {{-- target="_blank" --}}
+                                   rel="noopener"
+                                   class="text-blue-600 hover:underline">
+                                    Contratar guías
+                                </a>
+                            </span>
                             </div>
                         @endif
 
