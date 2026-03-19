@@ -93,14 +93,14 @@
 
             </div>
 
+<div class=""></div>
+
+        </div>
 
 
         </div>
 
-
-        </div>
-
-        <x-footer />
+        {{-- <x-footer /> --}}
     </div>
 
     <script>

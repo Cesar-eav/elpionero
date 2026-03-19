@@ -99,12 +99,12 @@
                             </span>
 
                             <span class="text-xl text-gray-600 mt-2">
-                                <a href="#"
+                                <div
                                    {{-- target="_blank" --}}
                                    rel="noopener"
-                                   class="text-blue-600 hover:underline">
+                                   class="text-blue-600">
                                     Contratar guías
-                                </a>
+                                </div>
                             </span>
                             </div>
                         @endif
@@ -226,7 +226,7 @@
         </div>
 
         <!-- Footer -->
-        <x-footer />
+        {{-- <x-footer /> --}}
     </div>
 </body>
 

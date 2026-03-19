@@ -31,7 +31,7 @@
         <div class="max-w-7xl mx-auto px-4">
             <section class="my-8 text-center">
                 <h1 class="text-4xl md:text-5xl font-bold text-gray-900 mb-3">
-                    🧭 La Brújula
+                    <span class="text-red-400">P</span>i<span class="text-red-400">n</span>d<span class="text-red-400">oo</span>r
                 </h1>
                 <p class="text-xl text-gray-700">
                     Descubre los mejores rincones y experiencias de Valparaíso
@@ -169,7 +169,7 @@
             </div> 
         </div>
 
-        <x-footer />
+        {{-- <x-footer /> --}}
     </div>
 
     <script>
