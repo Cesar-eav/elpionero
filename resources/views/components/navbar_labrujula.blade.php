@@ -7,14 +7,18 @@
             </svg>
         </a>
 
+    <form id="searchFilterNavBar" action="{{ route('atractivos.index') }}" method="GET">
         <div class="flex">
-            <input type="text" id="searchFilter" name="search" value="{{ request('search') }}" 
-                   class="w-full px-3 py-2 border border-gray-300 rounded-l-lg focus:ring-2 focus:ring-[#fc5648] outline-none text-sm md:text-base">
-            <button type="button" id="searchBtn" class="bg-[#fc5648] text-white px-5 py-2 rounded-r-lg hover:bg-[#d94439] transition">
+            <input type="text" id="searchFilterNavbar" name="search" value="{{ request('search') }}" 
+                    placeholder="¿Qué quieres conocer?" 
+                    class="w-full px-3 py-2 border border-gray-300 rounded-l-lg focus:ring-2 focus:ring-[#fc5648] outline-none">
+            <button type="submit" class="bg-[#fc5648] text-white px-5 py-2 rounded-r-lg hover:bg-[#d94439] transition">
                 🔍
             </button>
         </div>
+    </form>
     </div>
+
 
     <nav class="hidden lg:flex gap-4 items-center">
         <a href="{{ url('labrujula') }}" class="hover:text-green-600 transition-colors">Inicio</a>
@@ -34,7 +38,7 @@
 
     <div id="mobile-menu" class="hidden absolute top-full left-0 w-full bg-white text-[#fc5648] border-t border-gray-300 border-b border-x shadow-2xl flex-col p-4 space-y-3 z-[55]">
         <div class="pb-3 border-b border-gray-100">
-            <form action="{{ route('buscar') }}" method="GET">
+            <form action="{{ route('atractivos.index') }}" method="GET">
                 <div class="relative flex">
                     <input type="text" name="q" placeholder="Buscar..." value="{{ request('q') }}"
                            class="flex-1 px-4 py-2 rounded-l-md bg-gray-100 border border-gray-300 text-black outline-none" required>
@@ -55,13 +59,13 @@
 <script>
 
 
-        document.getElementById('searchBtn').addEventListener('click', function() {
-            const params = {
-                category: document.getElementById('categoryFilter').value,
-                search: document.getElementById('searchFilter').value
-            };
-            loadAtractivos(params);
-        });
+    // document.getElementById('searchBtn').addEventListener('click', function() {
+    //     const params = {
+    //         category: document.getElementById('categoryFilter').value,
+    //         search: document.getElementById('searchFilter').value
+    //     };
+    //     loadAtractivos(params);
+    // });
 
 
     // JavaScript puro para el menú móvil y dropdown desktop
