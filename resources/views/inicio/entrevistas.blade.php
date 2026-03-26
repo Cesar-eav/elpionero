@@ -20,6 +20,9 @@
             })(window, document, "clarity", "script", "rsqwi6wyvd");
         </script>
     @endif
+
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7119582402031511"
+     crossorigin="anonymous"></script>
 </head>
 
 <body class="bg-gray-100 text-gray-900 font-serif text-base">

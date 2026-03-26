@@ -8,7 +8,7 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>La Brújula - Atractivos | El Pionero de Valparaíso</title>
+    <title>Pindoor.cl </title>
 
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 
@@ -58,12 +58,9 @@
                         <div>
                             <label class="block text-sm font-bold text-gray-700 mb-1">Búsqueda por palabra</label>
                             <div class="flex">
-                                <input type="text" id="searchFilter" name="search" value="{{ request('search') }}" 
-                                       placeholder="Ascensor, puerta de colores, café" 
-                                       class="w-full px-3 py-2 border border-gray-300 rounded-l-lg focus:ring-2 focus:ring-[#fc5648] outline-none">
-                                <button type="submit" class="bg-[#fc5648] text-white px-5 py-2 rounded-r-lg hover:bg-[#d94439] transition">
-                                    🔍
-                                </button>
+                                    <input type="text" id="searchFilter" name="search" value="{{ request('search') }}" 
+                                        placeholder="Ascensor, puerta de colores, café" 
+                                        class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#fc5648] outline-none">
                             </div>
                         </div>
 
@@ -106,50 +103,48 @@
                 @if ($atractivos->count())
                     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
                         @foreach ($atractivos as $atractivo)
-                            <article class="bg-white rounded-xl overflow-hidden shadow-md hover:shadow-2xl transition-all duration-300 border border-gray-100 flex flex-col h-full">
-                                <div class="relative">
-                                    <a href="{{ route('atractivos.show', $atractivo->slug) }}" class="block overflow-hidden">
-                                        @if ($atractivo->image)
-                                            <img src="{{ asset('storage/' . $atractivo->image) }}"
-                                                 alt="{{ $atractivo->title }}"
-                                                 class="w-full h-56 object-cover transform hover:scale-105 transition-transform duration-500" />
-                                        @else
-                                            <div class="w-full h-56 bg-gray-200 flex items-center justify-center text-4xl">📍</div>
-                                        @endif
-                                    </a>
-                                    @if ($atractivo->categoria)
-                                        <span class="absolute top-4 left-4 bg-[#fc5648] text-white text-[10px] uppercase tracking-widest font-bold px-3 py-1 rounded-full shadow-lg">
-                                            {{ $atractivo->categoria->icono }} {{ $atractivo->categoria->nombre }}
-                                        </span>
-                                    @endif
-                                </div>
+<article class="bg-white rounded-xl overflow-hidden shadow-md hover:shadow-2xl transition-all duration-300 border border-gray-100 flex flex-col h-full">
+        <div class="relative">
+            <a href="{{ route('atractivos.show', $atractivo->slug ?? $atractivo->id) }}" class="block overflow-hidden">
+                @if ($atractivo->image)
+                    <img src="{{ asset('storage/' . $atractivo->image) }}"
+                         alt="{{ $atractivo->title }}"
+                         class="w-full h-56 object-cover transform hover:scale-105 transition-transform duration-500" />
+                @else
+                    <div class="w-full h-56 bg-gray-200 flex items-center justify-center text-4xl">📍</div>
+                @endif
+            </a>
+            @if ($atractivo->categoria)
+                <span class="absolute top-4 left-4 bg-[#fc5648] text-white text-[10px] uppercase tracking-widest font-bold px-3 py-1 rounded-full shadow-lg">
+                    {{ $atractivo->categoria->icono }} {{ $atractivo->categoria->nombre }}
+                </span>
+            @endif
+        </div>
 
-                                <div class="p-5 flex-grow">
-                                    @if(isset($atractivo->distancia))
-                                        <div class="mb-2">
-                                            <span class="bg-orange-100 text-[#fc5648] text-xs font-bold px-2 py-1 rounded border border-orange-200">
-                                                A {{ number_format($atractivo->distancia / 1000, 2) }} km de ti
-                                            </span>
-                                        </div>
-                                    @endif
+        <div class="p-5 flex-grow">
+            @if(isset($atractivo->distancia))
+                <div class="mb-2">
+                    <span class="bg-orange-100 text-[#fc5648] text-xs font-bold px-2 py-1 rounded border border-orange-200">
+                        A {{ number_format($atractivo->distancia / 1000, 2) }} km de ti
+                    </span>
+                </div>
+            @endif
 
-                                    <h3 class="text-xl font-bold text-gray-900 mb-1 leading-tight">
-                                        <a href="https://www.google.com/maps/search/?api=1&query={{ $atractivo->lat }},{{ $atractivo->lng }}"
-                                           target="_blank" rel="noopener" class="text-gray-400 hover:text-[#fc5648] mr-1">
-                                            📍
-                                        </a>
-                                        <a href="{{ route('atractivos.show', $atractivo->slug) }}" class="hover:text-[#fc5648] transition">
-                                            {{ $atractivo->title }}
-                                        </a>
-                                    </h3>
-                                                                        <a href="{{ route('atractivos.show', $atractivo->slug) }}" class="block overflow-hidden">
+            <h3 class="text-xl font-bold text-gray-900 mb-1 leading-tight">
+                <a href="https://www.google.com/maps/search/?api=1&query={{ $atractivo->lat }},{{ $atractivo->lng }}"
+                   target="_blank" rel="noopener" class="text-gray-400 hover:text-[#fc5648] mr-1">
+                    📍
+                </a>
+                <a href="{{ route('atractivos.show', $atractivo->slug ?? $atractivo->id) }}" class="hover:text-[#fc5648] transition">
+                    {{ $atractivo->title }}
+                </a>
+            </h3>
 
-                                    <p class="text-gray-600 text-sm mb-4 leading-relaxed">
-                                        {{ Str::limit(strip_tags($atractivo->description), 130) }}
-                                    </p>
-                                                                        </a>
-                                </div>
-                            </article>
+            <p class="text-gray-600 text-sm mb-4 leading-relaxed">
+                {{ Str::limit(strip_tags($atractivo->description), 130) }}
+            </p>
+        </div>
+    </article>
                         @endforeach
                     </div>
 
@@ -172,71 +167,78 @@
         {{-- <x-footer /> --}}
     </div>
 
-    <script>
-    document.addEventListener('DOMContentLoaded', function() {
-        const filterForm = document.getElementById('filterForm');
-        const btnGps = document.getElementById('btn-gps');
-        const inputLat = document.getElementById('lat');
-        const inputLng = document.getElementById('lng');
+  
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    console.log("🚀 La Brújula: Script cargado y listo.");
 
-        // Lógica del botón GPS
-        if (btnGps) {
-            btnGps.addEventListener('click', function() {
-                btnGps.disabled = true;
-                btnGps.innerHTML = '⌛ Localizando...';
+    const filterForm = document.getElementById('filterForm');
+    const btnGps = document.getElementById('btn-gps');
+    const inputLat = document.getElementById('lat');
+    const inputLng = document.getElementById('lng');
+    const categoryFilter = document.getElementById('categoryFilter');
+    const searchFilter = document.getElementById('searchFilter');
 
-                if (!navigator.geolocation) {
-                    alert("Tu navegador no soporta geolocalización.");
+    // Guardamos el valor inicial para comparar y evitar bucles
+    const initialCategory = categoryFilter ? categoryFilter.value : '';
+
+    // 1. Lógica del Botón GPS
+    if (btnGps) {
+        btnGps.addEventListener('click', function() {
+            console.log("🎯 Click en botón GPS");
+            btnGps.disabled = true;
+            btnGps.innerHTML = '⌛ Localizando...';
+
+            if (!navigator.geolocation) {
+                alert("Tu navegador no soporta geolocalización.");
+                resetBtn();
+                return;
+            }
+
+            navigator.geolocation.getCurrentPosition(
+                function(position) {
+                    inputLat.value = position.coords.latitude;
+                    inputLng.value = position.coords.longitude;
+                    console.log("📍 Coordenadas obtenidas:", position.coords.latitude, position.coords.longitude);
+                    filterForm.submit();
+                },
+                function(error) {
+                    console.error("❌ Error de geolocalización:", error);
+                    alert("No pudimos obtener tu ubicación.");
                     resetBtn();
-                    return;
-                }
+                },
+                { enableHighAccuracy: true, timeout: 8000 }
+            );
+        });
+    }
 
-                navigator.geolocation.getCurrentPosition(
-                    function(position) {
-                        inputLat.value = position.coords.latitude;
-                        inputLng.value = position.coords.longitude;
-                        
-                        console.log("📍 Ubicación obtenida:", position.coords.latitude, position.coords.longitude);
-                        
-                        // Enviamos el formulario principal
-                        filterForm.submit();
-                    },
-                    function(error) {
-                        console.error("Error GPS:", error);
-                        alert("No pudimos obtener tu ubicación.");
-                        resetBtn();
-                    },
-                    { enableHighAccuracy: true, timeout: 8000 }
-                );
-            });
-        }
+    // 2. Lógica de Cambio de Categoría (CON LOGS Y FILTRO DE CAMBIO REAL)
+    if (categoryFilter) {
+        categoryFilter.addEventListener('change', function(e) {
+            const newValue = e.target.value;
+            console.log("📂 Evento 'change' detectado en Categoría.");
+            console.log("   - Origen confiable (isTrusted):", e.isTrusted);
+            console.log("   - Valor anterior:", initialCategory);
+            console.log("   - Valor nuevo:", newValue);
+            // Solo enviamos si el cambio es real y provocado por el usuario
+            if (e.isTrusted && newValue !== initialCategory) {
+                console.log("✅ Cambio válido. Eliminando input de búsqueda y enviando...");
+                if (searchFilter) searchFilter.parentNode.removeChild(searchFilter);
+                filterForm.submit();
+            } else {
+                console.warn("⚠️ Cambio ignorado (posible bucle o auto-relleno del navegador).");
+            }
+        });
+    }
 
-        function resetBtn() {
+    function resetBtn() {
+        if (btnGps) {
             btnGps.disabled = false;
             btnGps.innerHTML = '📍 GPS';
         }
-
-        // Listener para cambio de categoría (envío automático)
-        document.getElementById('categoryFilter').addEventListener('change', function() {
-            filterForm.submit();
-        });
-    });
-    </script>
-
-    {{-- Consola Debug --}}
-    @if(request()->filled(['lat', 'lng']))
-        <script>
-            const listaAtractivos = @json($atractivos->items());
-            console.log("🗺️ Resultados de la búsqueda espacial:");
-            if(listaAtractivos.length > 0) {
-                console.table(listaAtractivos.map(i => ({
-                    Nombre: i.title,
-                    Distancia: i.distancia ? (i.distancia / 1000).toFixed(2) + ' km' : 'Original'
-                })));
-            } else {
-                console.log("Cero resultados en el radio seleccionado.");
-            }
-        </script>
-    @endif
+    }
+});
+</script>
+    
 </body>
 </html>

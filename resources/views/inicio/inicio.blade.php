@@ -10,6 +10,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>El Pionero de Valparaíso</title>
 
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7119582402031511"
+     crossorigin="anonymous"></script>
+
     <script>
         // Forzar redirección si estamos en www
         if (window.location.hostname.startsWith('www.')) {
