@@ -64,145 +64,116 @@
 
             <x-navbar />
 
- <!-- DESTACADO: Último número descargable -->
+ <!-- BARRA PRINCIPAL: 3 paneles horizontales -->
 <section
     id="ultimo-numero"
     x-data="{ visible: false }"
     x-init="setTimeout(() => visible = true, 100)"
     x-show="visible"
     x-transition
-    class="relative overflow-hidden rounded-2xl my-8 max-w-7xl mx-auto border border-gray-200 shadow-lg"
+    class="relative overflow-hidden rounded-xl my-6 max-w-7xl mx-auto border border-gray-200 shadow-md bg-white"
 >
-  <!-- Fondo en gradiente con tus colores -->
-  <div class="absolute inset-0 bg-gradient-to-r from-[#fc5648] via-[#eba81d] to-[#fc5648] opacity-20"></div>
+  <div class="h-1 bg-gradient-to-r from-[#fc5648] via-[#eba81d] to-[#fc5648]"></div>
 
-  <div class="relative grid grid-cols-1 md:grid-cols-2 gap-6 bg-white p-6 md:p-8">
-    <!-- Columna 1: Mini especial (solo portada) -->
-    <div class="flex flex-col">
-      <div class="relative w-full">
-        <!-- Cinta "Nuevo" -->
-        <span class="absolute -left-2 -top-2 z-10 bg-[#fc5648] text-white text-xs font-bold uppercase tracking-wide px-2 py-1 rounded">
-          Nuevo: Especial Paseo Wheelwright
+  <div class="flex flex-col md:flex-row divide-y md:divide-y-0 md:divide-x divide-gray-200">
+
+    <!-- PANEL 1: El Especial -->
+    <div class="flex md:w-[42%]">
+      <!-- Portada a full height -->
+      <div class="relative shrink-0 w-28 md:w-40 overflow-hidden">
+        <span class="absolute top-2 left-2 z-10 bg-[#fc5648] text-white text-[10px] font-bold uppercase tracking-wide px-2 py-0.5 rounded leading-tight shadow">
+          Nuevo
         </span>
-
-        <!-- Portada -->
-        <a href="{{ route('pdf.track', ['pdfName' => '01_paseo_wWheelwright.pdf', 'action' => 'view']) }}" target="_blank" rel="noopener" class="block">
+        <a href="{{ route('pdf.track', ['pdfName' => '01_paseo_wWheelwright.pdf', 'action' => 'view']) }}" target="_blank" rel="noopener" class="block h-full">
           <img
             src="{{ asset('storage/especiales/01_paseo_wWheelwright.jpg') }}"
-            alt="Portada El Pionero - Octubre 2025"
-            class="w-full h-auto rounded-lg shadow-lg ring-1 ring-black/5 hover:scale-[1.02] transition-transform"
+            alt="Especial Paseo Wheelwright"
+            class="h-full w-full hover:scale-105 transition-transform duration-300"
             loading="lazy"
           />
         </a>
       </div>
-    </div>
-
-    <!-- Columna 2: Contenido - Descargar hasta Newsletter + La Brújula y Juegos -->
-    <div class="flex flex-col">
-      <h2 class="text-2xl md:text-3xl font-extrabold text-gray-900 leading-tight mb-3">
-        Descarga el <span class="text-[#fc5648]">primer especial</span> de <span class="italic">El Pionero de Valparaíso</span>
-      </h2>
-
-      <p class="text-gray-700 mb-5">
-        "Paseo Wheelwright, entre el potencial y el olvido." 
-      </p>
-
-      <!-- Botones CTA -->
-      <div class="flex flex-col sm:flex-row gap-3 md:mb-3 mb-6" >
-<a href="{{ route('pdf.track', ['pdfName' => '01_paseo_wWheelwright.pdf', 'action' => 'download']) }}"
-   class="inline-flex items-center justify-center gap-2 px-5 py-3 rounded-lg bg-[#fc5648] text-white font-semibold hover:bg-[#d94439] shadow transition"
->
-    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/>
-    </svg>
-    Descargar PDF
-</a>
-  @push('scripts')
-  <script>
-  function trackAndDownloadPDF(event, url) {
-    event.preventDefault();
-    fetch(url, { method: 'GET', credentials: 'same-origin' })
-      .then(response => {
-        if (response.status === 200 || response.status === 302) {
-          // Si es una descarga, forzar la descarga del PDF
-          window.location.href = url;
-        } else {
-          alert('No se pudo descargar el PDF.');
-        }
-      })
-      .catch(() => alert('Error al registrar la descarga.'));
-  }
-  </script>
-  @endpush
-
-      </div>
-
-      <!-- Recuadro Apóyanos sobrio -->
-            <x-apoyanos />
-
-
-      <!-- Mini newsletter integrado -->
-      <div class="space-y-3 md:space-y-1 mb-2">
-        <p class="text-sm text-gray-700">
-          📬 Suscríbete y recibe los próximos números y columnas en tu correo.
-        </p>
-
-        <form method="POST" action="{{ route('newsletter.subscribe') }}" class="flex flex-col sm:flex-row gap-2">
-          @csrf
-          <input
-            type="email"
-            name="email"
-            required
-            placeholder="Tu correo electrónico"
-            class="w-full sm:flex-1 px-4 py-2 rounded-lg border border-gray-300 focus:outline-none focus:ring focus:border-[#fc5648]"
-          />
-          <button
-            type="submit"
-            class="px-4 py-2 rounded-lg bg-[#eba81d] text-black font-semibold hover:brightness-95 border border-amber-300 shadow-sm transition"
+      <!-- Info -->
+      <div class="flex flex-col gap-2 min-w-0 p-4 justify-center">
+        <span class="text-[11px] font-semibold uppercase tracking-wider text-[#fc5648]">Especial · Paseo Wheelwright</span>
+        <h2 class="text-base font-extrabold text-gray-900 leading-snug">Entre el potencial y el olvido</h2>
+        <p class="text-xs text-gray-500 line-clamp-2">Descarga gratis nuestro primer especial sobre uno de los paseos más emblemáticos de Valparaíso.</p>
+        <div class="flex flex-wrap gap-2 mt-1">
+          <a href="{{ route('pdf.track', ['pdfName' => '01_paseo_wWheelwright.pdf', 'action' => 'download']) }}"
+             class="inline-flex items-center gap-1 px-3 py-1.5 rounded-lg bg-[#fc5648] text-white text-xs font-semibold hover:bg-[#d94439] shadow-sm transition"
           >
-            Suscribirse
-          </button>
-        </form>
-      </div>
-
-      @if (session('success'))
-        <div class="mt-3 text-green-600 text-sm font-semibold">
-          {{ session('success') }}
+            <svg class="w-3.5 h-3.5 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/>
+            </svg>
+            Descargar
+          </a>
+          <a href="{{ route('aportes') }}"
+             class="inline-flex items-center gap-1 px-3 py-1.5 rounded-lg bg-green-50 border border-green-300 text-green-800 text-xs font-semibold hover:bg-green-100 transition"
+          >
+            <svg class="w-3.5 h-3.5 shrink-0" fill="currentColor" viewBox="0 0 24 24">
+              <path d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"/>
+            </svg>
+            Apóyanos
+          </a>
         </div>
-      @endif
-
-
-      <!-- Nueva sección: La Brújula y Juegos -->
-      <div class="grid grid-cols-2 gap-4">
-        <!-- Tarjeta La Brújula -->
-        <a href="{{ route('atractivos.index') }}" class="group block rounded-2xl overflow-hidden border border-gray-200 shadow-lg hover:shadow-xl transition-all duration-300">
-          <div class="relative bg-gray-200 h-32 md:h-40 flex items-center justify-center">
-            <div class="absolute inset-0 bg-gradient-to-br from-blue-100 to-blue-50"></div>
-            <div class="relative text-center">
-              <div class="text-5xl mb-2">🧭</div>
-            </div>
-          </div>
-          <div class="p-4 bg-white">
-            <h3 class="text-xl font-bold text-gray-900 group-hover:text-[#fc5648] transition">La Brújula</h3>
-            <p class="text-gray-700 mt-1 text-sm">Encuentra todos los tesoros de Valparaíso</p>
-          </div>
-        </a>
-
-        <!-- Tarjeta Juegos -->
-        <a href="{{ route('juegos.index') }}" class="group block rounded-2xl overflow-hidden border border-gray-200 shadow-lg hover:shadow-xl transition-all duration-300">
-          <div class="relative bg-gray-200 h-32 md:h-40 flex items-center justify-center">
-            <div class="absolute inset-0 bg-gradient-to-br from-purple-100 to-purple-50"></div>
-            <div class="relative text-center">
-              <div class="text-5xl mb-2">🕹️</div>
-            </div>
-          </div>
-          <div class="p-4 bg-white">
-            <h3 class="text-xl font-bold text-gray-900 group-hover:text-[#fc5648] transition">Juegos</h3>
-            <p class="text-gray-700 mt-1 text-sm">Diversión y entretenimiento</p>
-          </div>
-        </a>
       </div>
     </div>
+
+    <!-- PANEL 2: Secciones (Pindoor + Juegos) -->
+    <div class="p-4 md:w-[30%] flex flex-col justify-center gap-2">
+      <p class="text-[11px] font-semibold uppercase tracking-wider text-gray-400 mb-1">Secciones</p>
+      <a href="https://www.pindoor.cl" target="_blank"
+         class="group flex items-center gap-3 p-3 rounded-xl border border-blue-100 bg-blue-50 hover:bg-blue-100 transition"
+      >
+        <div class="w-10 h-10 rounded-lg bg-blue-600 flex items-center justify-center text-xl shrink-0">🧭</div>
+        <div class="min-w-0">
+          <p class="text-sm font-bold text-gray-900 leading-tight">Pin<span class="text-[#fc5648]">door</span></p>
+          <p class="text-xs text-gray-500 leading-tight truncate">Tesoros de Valparaíso</p>
+        </div>
+        <svg class="w-4 h-4 text-gray-400 ml-auto shrink-0 group-hover:translate-x-0.5 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
+        </svg>
+      </a>
+      <a href="{{ route('juegos.index') }}"
+         class="group flex items-center gap-3 p-3 rounded-xl border border-purple-100 bg-purple-50 hover:bg-purple-100 transition"
+      >
+        <div class="w-10 h-10 rounded-lg bg-purple-600 flex items-center justify-center text-xl shrink-0">🕹️</div>
+        <div class="min-w-0">
+          <p class="text-sm font-bold text-gray-900 leading-tight">Juegos</p>
+          <p class="text-xs text-gray-500 leading-tight truncate">Diversión y entretenimiento</p>
+        </div>
+        <svg class="w-4 h-4 text-gray-400 ml-auto shrink-0 group-hover:translate-x-0.5 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
+        </svg>
+      </a>
+    </div>
+
+    <!-- PANEL 3: Newsletter -->
+    <div class="p-4 md:w-[28%] flex flex-col justify-center gap-2 bg-gray-50">
+      <p class="text-[11px] font-semibold uppercase tracking-wider text-gray-400 mb-1">Newsletter</p>
+      <p class="text-sm font-semibold text-gray-800">📬 Recibe los próximos números</p>
+      <p class="text-xs text-gray-500">Suscríbete y los recibirás directo en tu correo.</p>
+      <form method="POST" action="{{ route('newsletter.subscribe') }}" class="flex flex-col gap-2 mt-1">
+        @csrf
+        <input
+          type="email"
+          name="email"
+          required
+          placeholder="Tu correo electrónico"
+          class="w-full px-3 py-2 text-sm rounded-lg border border-gray-300 focus:outline-none focus:ring focus:border-[#fc5648]"
+        />
+        <button
+          type="submit"
+          class="w-full px-4 py-2 rounded-lg bg-[#eba81d] text-black text-sm font-semibold hover:brightness-95 border border-amber-300 shadow-sm transition"
+        >
+          Suscribirse
+        </button>
+      </form>
+      @if (session('success'))
+        <p class="text-green-600 text-xs font-semibold">{{ session('success') }}</p>
+      @endif
+    </div>
+
   </div>
 </section>
 
@@ -266,7 +237,7 @@
 
                         <div class="mt-2">
                             <a href="https://www.instagram.com/manos_.alarte/" target="_blank">
-                                <img src="{{ asset('storage/manosalarte.jpeg') }}" alt="Anuncio Mediano"
+                                <img src="{{ asset('storage/manosalarte.png') }}" alt="Anuncio Mediano"
                                     class="w-full rounded border shadow" /></a>
                         </div>
                 </aside>

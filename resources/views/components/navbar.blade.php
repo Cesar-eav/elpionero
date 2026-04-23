@@ -6,8 +6,7 @@
         <a href="{{ url('/') }}" class="hover:text-white transition-colors flex items-center gap-1">
             Inicio
         </a>
-        <a href="{{ url('labrujula') }}" class="hover:text-green-600 text-white transition-colors  py-1 block md:hidden" >La Brújula</a>
-
+<a href="https://www.pindoor.cl" class="bg-red text-white transition-colors">Pin<span class="text-[#fc5648]">door</span></a>
         <!-- Búsqueda escritorio -->
         <form action="{{ route('buscar') }}" method="GET" class="hidden md:block">
             <div class="relative flex">
@@ -31,7 +30,7 @@
     <nav class="hidden md:flex gap-4 items-center">
         <a href="{{ url('columnas') }}" class="hover:text-white transition-colors">Columnas</a>
         <a href="{{ url('noticias') }}" class="hover:text-white transition-colors">Notas</a>
-        <a href="{{ url('labrujula') }}" class="bg-red hover:text-green-600 text-white transition-colors">La Brújula</a>
+        
         <a href="{{ url('cable-a-tierra') }}" class="hover:text-white transition-colors">Cable a Tierra</a>
         <a href="{{ route('juegos.index') }}" class="hover:text-white transition-colors">Juegos</a>
         <a href="{{ url('entrevistas') }}" class="hover:text-white transition-colors">Entrevistas</a>
@@ -102,8 +101,7 @@
                 </div>
             </form>
         </div>
-        <a href="{{ url('labrujula') }}" class="hover:text-green-600 text-white transition-colors block py-1">La Brújula</a>
-        <a href="{{ url('columnas') }}" class="hover:text-white transition-colors block py-1">Columnas</a>
+        <a href="https://www.pindoor.cl" class="bg-red text-white transition-colors">Pin<span class="text-[#fc5648]">door</span></a>        <a href="{{ url('columnas') }}" class="hover:text-white transition-colors block py-1">Columnas</a>
         <a href="{{ url('editoriales') }}" class="hover:text-white transition-colors block py-1">Editoriales</a>
         <a href="{{ url('noticias') }}" class="hover:text-white transition-colors block py-1">Notas</a>
         <a href="{{ url('entrevistas') }}" class="hover:text-white transition-colors block py-1">Entrevistas</a>
