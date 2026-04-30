@@ -18,8 +18,21 @@ class InicioController extends Controller
         $columnas = Articulo::with(['revista', 'columnista'])->get();
         $noticias = Noticia::latest()->paginate(3);
 
+        $ultimaRevista = Revista::latest()->first();
+        $articulosDestacados = $ultimaRevista
+            ? Articulo::with(['revista', 'columnista'])
+                ->where('revista_id', $ultimaRevista->id)
+                ->orderBy('id')
+                ->get()
+            : $columnas->sortByDesc('created_at');
+
+        $total = $articulosDestacados->count();
+        $indice = $total > 0 ? (int)(time() / 7200) % $total : 0;
+        $destacada = $articulosDestacados->values()->get($indice)
+            ?? $columnas->sortByDesc('created_at')->first();
+
         return view('inicio.inicio', compact([
-            'columnas', 'noticias'
+            'columnas', 'noticias', 'destacada'
         ]));
     }
 

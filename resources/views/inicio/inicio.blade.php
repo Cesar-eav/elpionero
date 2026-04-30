@@ -190,16 +190,10 @@
                 {{-- {{$noticias }} --}}
 
                     @if ($noticias->count())
-                        {{-- Opcional: destacar la primera noticia --}}
-                        @php
-                            $destacada = $noticias->first();
-                            $resto = $noticias;
-                        @endphp
-
                         {{-- Resto en grilla --}}
-                        @if($resto->count())
+                        @if($noticias->count())
                             <section class="grid grid-cols-1 sm:grid-cols-1 gap-6 mt-6">
-                                @foreach ($resto as $n)
+                                @foreach ($noticias as $n)
                                     <a href="{{ route('noticia.show', $n->slug) }}" class="block">
                                         <article class="flex flex-col border rounded-lg overflow-hidden bg-white shadow hover:shadow-lg transition-shadow">
                                             <div class="flex flex-col h-full">
@@ -249,8 +243,7 @@
                     @if ($columnas->isNotEmpty())
                         @php
                             $ordenados = $columnas->sortByDesc('created_at');
-                            $destacada = $ordenados->first();
-                            $resto = $ordenados->slice(1,16);
+                            $resto = $ordenados->reject(fn($a) => $a->id === $destacada->id)->take(16);
                         @endphp
                         <div>
          
