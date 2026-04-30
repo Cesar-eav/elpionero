@@ -54,18 +54,21 @@
                         <span class="text-gray-600 text-xl">{{ columnista.nombre.charAt(0) }}</span>
                     </div>
                     <div>
-                        <a
-                            :href="`/columnistas/${columnista.id}`"
-                            class="hover:underline text-lg font-semibold text-gray-800"
-                        >
+                        <span class="text-lg font-semibold text-gray-800">
                             {{ columnista.nombre }}
-                        </a>
+                        </span>
                         <p class="text-sm text-gray-500">
                             {{ columnista.email || 'Sin email' }}
                         </p>
                     </div>
                 </div>
                 <div class="flex gap-2">
+                    <router-link
+                        :to="`/dashboard-vue/columnistas/${columnista.id}`"
+                        class="bg-gray-500 hover:bg-gray-700 text-white font-bold py-1 px-2 rounded text-sm"
+                    >
+                        Ver
+                    </router-link>
                     <button
                         @click="openEditModal(columnista)"
                         class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-1 px-2 rounded text-sm"

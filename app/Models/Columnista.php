@@ -15,4 +15,9 @@ class Columnista extends Model
         'bio',
         'participa_proximo_numero',
     ];
+
+    public function articulos()
+    {
+        return $this->hasMany(\App\Models\Articulo::class);
+    }
 }

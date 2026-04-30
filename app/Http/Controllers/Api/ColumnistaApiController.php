@@ -54,8 +54,7 @@ class ColumnistaApiController extends Controller
         }
         // Si se sube un archivo nuevo, guardarlo
         elseif ($request->hasFile('foto')) {
-            $path = $request->file('foto')->store('public/columnistas');
-            $columnista->foto = str_replace('public/', '', $path);
+            $columnista->foto = $request->file('foto')->store('columnistas', 'public');
         }
 
         $columnista->save();
@@ -96,12 +95,10 @@ class ColumnistaApiController extends Controller
         }
         // Si se sube un archivo nuevo, guardarlo
         elseif ($request->hasFile('foto')) {
-            // Eliminar la foto anterior si existe
             if ($columnista->foto) {
-                Storage::delete('public/' . $columnista->foto);
+                Storage::disk('public')->delete($columnista->foto);
             }
-            $path = $request->file('foto')->store('public/columnistas');
-            $columnista->foto = str_replace('public/', '', $path);
+            $columnista->foto = $request->file('foto')->store('columnistas', 'public');
         }
 
         $columnista->save();
@@ -119,7 +116,7 @@ class ColumnistaApiController extends Controller
     {
         // Eliminar la foto si existe
         if ($columnista->foto) {
-            Storage::delete(str_replace('storage/', 'public/', $columnista->foto));
+            Storage::disk('public')->delete($columnista->foto);
         }
 
         $columnista->delete();

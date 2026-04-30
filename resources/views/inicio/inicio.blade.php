@@ -84,9 +84,9 @@
         <span class="absolute top-2 left-2 z-10 bg-[#fc5648] text-white text-[10px] font-bold uppercase tracking-wide px-2 py-0.5 rounded leading-tight shadow">
           Nuevo
         </span>
-        <a href="{{ route('pdf.track', ['pdfName' => '01_paseo_wWheelwright.pdf', 'action' => 'view']) }}" target="_blank" rel="noopener" class="block h-full">
+        <a href="{{ route('pdf.track', ['pdfName' => 'EPDV_ABRIL_2026_A.pdf', 'action' => 'view']) }}" target="_blank" rel="noopener" class="block h-full">
           <img
-            src="{{ asset('storage/especiales/01_paseo_wWheelwright.jpg') }}"
+            src="{{ asset('storage/Ediciones/PORTADA_ABRIL_2026.jpg') }}"
             alt="Especial Paseo Wheelwright"
             class="h-full w-full hover:scale-105 transition-transform duration-300"
             loading="lazy"
@@ -95,11 +95,11 @@
       </div>
       <!-- Info -->
       <div class="flex flex-col gap-2 min-w-0 p-4 justify-center">
-        <span class="text-[11px] font-semibold uppercase tracking-wider text-[#fc5648]">Especial · Paseo Wheelwright</span>
-        <h2 class="text-base font-extrabold text-gray-900 leading-snug">Entre el potencial y el olvido</h2>
-        <p class="text-xs text-gray-500 line-clamp-2">Descarga gratis nuestro primer especial sobre uno de los paseos más emblemáticos de Valparaíso.</p>
+        <span class="text-[11px] font-semibold uppercase tracking-wider text-[#fc5648]">Edición · Abril 2026</span>
+        <h2 class="text-base font-extrabold text-gray-900 leading-snug">¿Qué hacer con los rayados en Valparaíso?</h2>
+        <p class="text-xs text-gray-500 line-clamp-2">Descarga gratis nuestra edición de abril 2026.</p>
         <div class="flex flex-wrap gap-2 mt-1">
-          <a href="{{ route('pdf.track', ['pdfName' => '01_paseo_wWheelwright.pdf', 'action' => 'download']) }}"
+          <a href="{{ route('pdf.track', ['pdfName' => 'EPDV_ABRIL_2026_A.pdf', 'action' => 'download']) }}"
              class="inline-flex items-center gap-1 px-3 py-1.5 rounded-lg bg-[#fc5648] text-white text-xs font-semibold hover:bg-[#d94439] shadow-sm transition"
           >
             <svg class="w-3.5 h-3.5 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -250,7 +250,7 @@
                         @php
                             $ordenados = $columnas->sortByDesc('created_at');
                             $destacada = $ordenados->first();
-                            $resto = $ordenados->slice(1,6);
+                            $resto = $ordenados->slice(1,16);
                         @endphp
                         <div>
          

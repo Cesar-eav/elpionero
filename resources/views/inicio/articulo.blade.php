@@ -56,7 +56,18 @@
                                 </p>
                             </a>
                         </div>
+                        <div class="mt-2">
+                            <a href="https://www.instagram.com/manos_.alarte/" target="_blank">
+                                <img src="{{ asset('storage/manosalarte.png') }}" alt="Manos al Arte"
+                                    class="w-full rounded border shadow" /></a>
+                        </div>
 
+                        <div class="mt-2">
+                            <a href="https://www.instagram.com/e99_arquitectura/" target="_blank">
+                                <img src="{{ asset('storage/e99.jpeg') }}" alt="E99 Estudio de Arquitectura"
+                                    class="w-full rounded border shadow" />
+                                </a>
+                        </div>
                 </aside>
 
                 <!-- Contenido principal -->

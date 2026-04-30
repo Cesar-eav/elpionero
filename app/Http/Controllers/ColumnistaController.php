@@ -22,6 +22,12 @@ class ColumnistaController extends Controller
         return view('admin.columnistas', compact('columnistas', 'revistas'));
     }
 
+    public function show(Columnista $columnista)
+    {
+        $columnista->load('articulos');
+        return view('admin.columnista_show', compact('columnista'));
+    }
+
     public function store(Request $request)
     {
 

@@ -7,16 +7,13 @@
             @click.self="closeModal"
         >
             <!-- Modal -->
-            <div class="relative top-20 mx-auto p-5 border w-full max-w-2xl shadow-lg rounded-md bg-white">
+            <div class="relative top-10 mx-auto p-5 border w-full max-w-2xl shadow-lg rounded-md bg-white">
                 <!-- Header -->
                 <div class="flex justify-between items-center mb-4">
                     <h3 class="text-lg font-semibold text-gray-900">
                         {{ editMode ? 'Editar Columnista' : 'Nuevo Columnista' }}
                     </h3>
-                    <button
-                        @click="closeModal"
-                        class="text-gray-400 hover:text-gray-500"
-                    >
+                    <button @click="closeModal" class="text-gray-400 hover:text-gray-500">
                         <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
                         </svg>
@@ -43,9 +40,7 @@
 
                         <!-- Email -->
                         <div>
-                            <label class="block text-sm font-medium text-gray-700 mb-1">
-                                Email
-                            </label>
+                            <label class="block text-sm font-medium text-gray-700 mb-1">Email</label>
                             <input
                                 v-model="form.email"
                                 type="email"
@@ -57,43 +52,34 @@
 
                         <!-- Bio -->
                         <div>
-                            <label class="block text-sm font-medium text-gray-700 mb-1">
-                                Biografía
-                            </label>
+                            <label class="block text-sm font-medium text-gray-700 mb-1">Biografía</label>
                             <textarea
                                 v-model="form.bio"
-                                rows="4"
+                                rows="3"
                                 class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-                                :class="{ 'border-red-500': errors.bio }"
                             ></textarea>
                             <p v-if="errors.bio" class="mt-1 text-sm text-red-600">{{ errors.bio[0] }}</p>
                         </div>
 
                         <!-- Foto -->
                         <div>
-                            <label class="block text-sm font-medium text-gray-700 mb-2">
-                                Foto del Columnista
-                            </label>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Foto del Columnista</label>
 
                             <!-- Tabs -->
                             <div class="flex border-b border-gray-200 mb-3">
                                 <button
                                     type="button"
-                                    @click="fotoMode = 'existing'"
+                                    @click="switchMode('existing')"
                                     class="px-4 py-2 text-sm font-medium border-b-2 transition-colors"
-                                    :class="fotoMode === 'existing'
-                                        ? 'border-blue-500 text-blue-600'
-                                        : 'border-transparent text-gray-500 hover:text-gray-700'"
+                                    :class="fotoMode === 'existing' ? 'border-blue-500 text-blue-600' : 'border-transparent text-gray-500 hover:text-gray-700'"
                                 >
                                     Seleccionar existente
                                 </button>
                                 <button
                                     type="button"
-                                    @click="fotoMode = 'upload'"
+                                    @click="switchMode('upload')"
                                     class="px-4 py-2 text-sm font-medium border-b-2 transition-colors"
-                                    :class="fotoMode === 'upload'
-                                        ? 'border-blue-500 text-blue-600'
-                                        : 'border-transparent text-gray-500 hover:text-gray-700'"
+                                    :class="fotoMode === 'upload' ? 'border-blue-500 text-blue-600' : 'border-transparent text-gray-500 hover:text-gray-700'"
                                 >
                                     Subir nueva
                                 </button>
@@ -106,38 +92,23 @@
                                         v-for="image in availableImages"
                                         :key="image"
                                         @click="form.fotoExistente = image"
-                                        class="relative cursor-pointer group flex-shrink-0"
+                                        class="relative cursor-pointer flex-shrink-0 rounded overflow-hidden"
                                         :class="{
                                             'ring-2 ring-blue-500': form.fotoExistente === image,
                                             'hover:ring-2 hover:ring-gray-300': form.fotoExistente !== image
                                         }"
                                     >
-                                        <img
-                                            :src="`/storage/${image}`"
-                                            :alt="image"
-                                            class="w-20 h-20 object-cover rounded"
-                                        />
-
-                                        <!-- Checkmark -->
-                                        <div
-                                            v-if="form.fotoExistente === image"
-                                            class="absolute top-1 right-1 bg-blue-500 text-white rounded-full p-0.5"
-                                        >
+                                        <img :src="`/storage/${image}`" :alt="image" class="w-20 h-20 object-cover" />
+                                        <div v-if="form.fotoExistente === image" class="absolute top-1 right-1 bg-blue-500 text-white rounded-full p-0.5">
                                             <svg class="w-3 h-3" fill="currentColor" viewBox="0 0 20 20">
                                                 <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd" />
                                             </svg>
                                         </div>
                                     </div>
                                 </div>
-
-                                <!-- Preview de imagen seleccionada -->
                                 <div v-if="form.fotoExistente" class="mt-3 p-2 bg-blue-50 rounded border border-blue-200">
                                     <div class="flex items-center gap-3">
-                                        <img
-                                            :src="`/storage/${form.fotoExistente}`"
-                                            alt="Preview"
-                                            class="w-16 h-16 object-cover rounded"
-                                        />
+                                        <img :src="`/storage/${form.fotoExistente}`" alt="Preview" class="w-16 h-16 object-cover rounded" />
                                         <div class="flex-1 min-w-0">
                                             <p class="text-xs font-medium text-gray-700">Seleccionada</p>
                                             <p class="text-xs text-gray-500 truncate">{{ form.fotoExistente }}</p>
@@ -146,15 +117,49 @@
                                 </div>
                             </div>
 
-                            <!-- Upload de nueva imagen -->
+                            <!-- Upload + Recortador -->
                             <div v-else-if="fotoMode === 'upload'">
                                 <input
+                                    ref="fileInput"
                                     @change="handleFileUpload"
                                     type="file"
                                     accept="image/*"
                                     class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
                                 />
-                                <p class="mt-1 text-xs text-gray-500">Formatos: JPG, PNG, GIF, WEBP (máx. 2MB)</p>
+                                <p class="mt-1 text-xs text-gray-500">JPG, PNG, WEBP · máx. 2MB · se recortará en cuadrado 1:1</p>
+
+                                <!-- Área de recorte -->
+                                <div v-if="cropSrc" class="mt-3">
+                                    <p class="text-xs font-medium text-gray-600 mb-1">Ajusta el recorte y confirma:</p>
+                                    <div class="crop-wrapper border border-gray-300 rounded bg-gray-900">
+                                        <img ref="cropImage" :src="cropSrc" style="display:block;max-width:100%;" />
+                                    </div>
+                                    <div class="flex items-center gap-2 mt-2">
+                                        <button
+                                            type="button"
+                                            @click="confirmCrop"
+                                            class="px-4 py-1.5 bg-blue-600 hover:bg-blue-700 text-white text-sm font-semibold rounded transition"
+                                        >
+                                            Confirmar recorte
+                                        </button>
+                                        <button
+                                            type="button"
+                                            @click="cancelCrop"
+                                            class="px-4 py-1.5 border border-gray-300 text-gray-600 text-sm rounded hover:bg-gray-50 transition"
+                                        >
+                                            Cancelar
+                                        </button>
+                                    </div>
+                                </div>
+
+                                <!-- Preview del recorte confirmado -->
+                                <div v-if="croppedPreview && !cropSrc" class="mt-3 flex items-center gap-3 p-2 bg-green-50 border border-green-200 rounded">
+                                    <img :src="croppedPreview" alt="Recorte" class="w-16 h-16 object-cover rounded shadow" />
+                                    <div>
+                                        <p class="text-xs font-semibold text-green-700">Recorte listo</p>
+                                        <button type="button" @click="resetCrop" class="text-xs text-gray-500 underline mt-0.5">Cambiar imagen</button>
+                                    </div>
+                                </div>
                             </div>
 
                             <p v-if="errors.foto" class="mt-1 text-sm text-red-600">{{ errors.foto[0] }}</p>
@@ -199,19 +204,15 @@
 
 <script>
 import axios from 'axios';
+import Cropper from 'cropperjs';
+import 'cropperjs/dist/cropper.css';
 
 export default {
     name: 'ColumnistasForm',
 
     props: {
-        show: {
-            type: Boolean,
-            default: false
-        },
-        columnista: {
-            type: Object,
-            default: null
-        }
+        show: { type: Boolean, default: false },
+        columnista: { type: Object, default: null }
     },
 
     data() {
@@ -228,7 +229,9 @@ export default {
             availableImages: [],
             errors: {},
             loading: false,
-            editMode: false
+            editMode: false,
+            cropSrc: null,
+            croppedPreview: null,
         };
     },
 
@@ -279,10 +282,73 @@ export default {
             };
             this.fotoMode = 'existing';
             this.errors = {};
+            this.destroyCropper();
+        },
+
+        switchMode(mode) {
+            this.fotoMode = mode;
+            this.destroyCropper();
         },
 
         handleFileUpload(event) {
-            this.form.foto = event.target.files[0];
+            const file = event.target.files[0];
+            if (!file) return;
+
+            this.destroyCropper();
+            this.croppedPreview = null;
+            this.form.foto = null;
+
+            const reader = new FileReader();
+            reader.onload = (e) => {
+                this.cropSrc = e.target.result;
+                this.$nextTick(() => {
+                    this._cropper = new Cropper(this.$refs.cropImage, {
+                        aspectRatio: 1,
+                        viewMode: 1,
+                        dragMode: 'move',
+                        autoCropArea: 0.9,
+                        responsive: true,
+                    });
+                });
+            };
+            reader.readAsDataURL(file);
+        },
+
+        confirmCrop() {
+            if (!this._cropper) return;
+            const canvas = this._cropper.getCroppedCanvas({ width: 400, height: 400 });
+            const dataURL = canvas.toDataURL('image/jpeg', 0.9);
+            this.croppedPreview = dataURL;
+
+            // Conversión síncrona de dataURL a File
+            const arr = dataURL.split(',');
+            const mime = arr[0].match(/:(.*?);/)[1];
+            const bstr = atob(arr[1]);
+            let n = bstr.length;
+            const u8arr = new Uint8Array(n);
+            while (n--) u8arr[n] = bstr.charCodeAt(n);
+            this.form.foto = new File([u8arr], 'foto_columnista.jpg', { type: mime });
+
+            this.destroyCropper();
+        },
+
+        cancelCrop() {
+            this.destroyCropper();
+            this.$refs.fileInput.value = '';
+        },
+
+        resetCrop() {
+            this.croppedPreview = null;
+            this.form.foto = null;
+            this.$refs.fileInput.value = '';
+        },
+
+        destroyCropper() {
+            if (this._cropper) {
+                this._cropper.destroy();
+                this._cropper = null;
+            }
+            this.cropSrc = null;
         },
 
         async submitForm() {
@@ -295,12 +361,9 @@ export default {
                 if (this.form.email) formData.append('email', this.form.email);
                 if (this.form.bio) formData.append('bio', this.form.bio);
 
-                // Si está en modo "existing", enviar la ruta de la imagen existente
                 if (this.fotoMode === 'existing' && this.form.fotoExistente) {
                     formData.append('foto_existente', this.form.fotoExistente);
-                }
-                // Si está en modo "upload", enviar el archivo
-                else if (this.fotoMode === 'upload' && this.form.foto) {
+                } else if (this.fotoMode === 'upload' && this.form.foto) {
                     formData.append('foto', this.form.foto);
                 }
 
@@ -333,6 +396,8 @@ export default {
         },
 
         closeModal() {
+            this.destroyCropper();
+            this.croppedPreview = null;
             this.resetForm();
             this.$emit('close');
         }
@@ -341,5 +406,5 @@ export default {
 </script>
 
 <style scoped>
-/* Estilos adicionales si es necesario */
+.crop-wrapper { height: 320px; }
 </style>

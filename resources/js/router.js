@@ -7,6 +7,7 @@ import EntrevistasManager from './components/EntrevistasManager.vue';
 import CableATierraManager from './components/CableATierraManager.vue';
 import RevistasManager from './components/RevistasManager.vue';
 import ColumnistasManager from './components/ColumnistasManager.vue';
+import ColumnistasShow from './components/ColumnistasShow.vue';
 import AtractivosManager from './components/AtractivosManager.vue';
 
 const routes = [
@@ -62,9 +63,13 @@ const routes = [
         path: '/dashboard-vue/columnistas',
         name: 'columnistas',
         component: ColumnistasManager,
-        meta: {
-            title: 'Gestión de Columnistas'
-        }
+        meta: { title: 'Gestión de Columnistas' }
+    },
+    {
+        path: '/dashboard-vue/columnistas/:id',
+        name: 'columnistas.show',
+        component: ColumnistasShow,
+        meta: { title: 'Detalle Columnista' }
     },
 
     {

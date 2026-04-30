@@ -122,6 +122,10 @@
                                         @endif
                                     </div>
                                     <div class="flex items-center gap-2">
+                                        <a href="{{ route('columnistas.show', $c) }}"
+                                            class="bg-gray-500 hover:bg-gray-700 text-white font-bold py-1 px-3 rounded text-sm">
+                                            {{ __('Ver') }}
+                                        </a>
                                         <button @click="edit=true"
                                             class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-1 px-3 rounded text-sm">
                                             {{ __('Editar') }}
