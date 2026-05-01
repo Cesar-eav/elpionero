@@ -27,7 +27,7 @@ class InicioController extends Controller
             : $columnas->sortByDesc('created_at');
 
         $total = $articulosDestacados->count();
-        $indice = $total > 0 ? (int)(time() / 7200) % $total : 0;
+        $indice = $total > 0 ? (int)(time() / 1800) % $total : 0;
         $destacada = $articulosDestacados->values()->get($indice)
             ?? $columnas->sortByDesc('created_at')->first();
 
