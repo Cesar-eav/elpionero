@@ -38,8 +38,18 @@ class ArticuloController extends Controller
     {
         $columnas = Articulo::with(['revista', 'columnista'])->inRandomOrder()->get();
 
-
         return view('inicio.columnas', compact('columnas'));
+    }
+
+    public function showColumnista($id)
+    {
+        $columnista = Columnista::findOrFail($id);
+        $articulos = Articulo::with('revista')
+            ->where('columnista_id', $id)
+            ->orderByDesc('created_at')
+            ->get();
+
+        return view('inicio.columnista', compact('columnista', 'articulos'));
     }
 
     /**

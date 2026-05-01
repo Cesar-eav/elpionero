@@ -92,6 +92,7 @@ Route::get('/suscriptores', [ContactoController::class, 'listarContactos'])->nam
 
 Route::get('articulo/{slug}',[ArticuloController::class, 'showArticulo'])->name('inicio.articulo');
 Route::get('/columnas',[ArticuloController::class, 'showColumnas'])->name('inicio.columnas');
+Route::get('/columnista/{id}',[ArticuloController::class, 'showColumnista'])->name('columnista.show');
 
 Route::get('/revistas/{revista}/pdf', [RevistaController::class, 'generarPDF'])->name('revistas.generar-pdf');
 Route::get('/previsualizar-revista/pdf', [RevistaController::class, 'previsualizarPDF'])->name('previsualizar.pdf');
