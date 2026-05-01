@@ -16,7 +16,8 @@ class Revista extends Model
         'titulo',
         'slug',
         'fecha_publicacion',
-        'descripcion'
+        'descripcion',
+        'portada',
     ];
 
     protected $casts = [

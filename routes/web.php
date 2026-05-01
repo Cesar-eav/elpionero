@@ -80,6 +80,7 @@ Route::get('/entrevista/{slug}', [InicioController::class, 'showEntrevista'])->n
 Route::get('/cable-a-tierra', [InicioController::class, 'cableATierra'])->name('cable-a-tierra.index');
 Route::get('/cable-a-tierra/{slug}', [InicioController::class, 'showCableATierra'])->name('cable-a-tierra.show');
 Route::get('/revistas-lista', [InicioController::class, 'revistas'])->name('revistas.lista');
+Route::get('/revista/{slug}', [InicioController::class, 'showRevista'])->name('revista.show');
     
 
 Route::post('/newsletter', [NewsletterController::class, 'subscribe'])->name('newsletter.subscribe');

@@ -115,4 +115,12 @@ class InicioController extends Controller
         return view('inicio.revistas', compact('revistas'));
     }
 
+    public function showRevista($slug)
+    {
+        $revista = Revista::where('slug', $slug)->firstOrFail();
+        $articulos = $revista->articulos()->with('columnista')->orderByDesc('created_at')->get();
+
+        return view('inicio.revista-detalle', compact('revista', 'articulos'));
+    }
+
 }

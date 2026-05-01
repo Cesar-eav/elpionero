@@ -78,22 +78,26 @@
                         <div class="grid grid-cols-1 md:grid-cols-4 gap-6">
                             @foreach ($revistas as $revista)
                                 <article
-                                    class="flex flex-col border rounded-lg overflow-hidden bg-white shadow hover:shadow-lg transition-shadow">
+                                    class="flex flex-col border rounded-lg overflow-hidden bg-white shadow hover:shadow-lg transition-shadow group">
+                                    <a href="{{ route('revista.show', $revista->slug) }}" class="block">
                                     @if ($revista->portada)
                                         <div class="w-full aspect-[3/4] overflow-hidden bg-gray-100">
                                             <img src="{{ asset('storage/' . $revista->portada) }}"
                                                 alt="Portada {{ $revista->titulo }}"
-                                                class="w-full h-full object-cover hover:scale-105 transition-transform duration-300" />
+                                                class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300" />
                                         </div>
                                     @else
                                         <div class="w-full aspect-[3/4] bg-gradient-to-br from-[#fc5648] to-[#eba81d] flex items-center justify-center">
                                             <span class="text-white text-4xl font-bold">📰</span>
                                         </div>
                                     @endif
+                                    </a>
                                     <div class="p-4">
-                                        <h3 class="text-lg font-bold text-black mb-2">
+                                        <a href="{{ route('revista.show', $revista->slug) }}">
+                                        <h3 class="text-lg font-bold text-black mb-2 hover:text-[#fc5648] transition-colors">
                                             {{ $revista->titulo }}
                                         </h3>
+                                        </a>
                                         @if ($revista->fecha_publicacion)
                                             <div class="text-sm text-[#fc5648] font-semibold mb-2">
                                                 {{ \Carbon\Carbon::parse($revista->fecha_publicacion)->format('F Y') }}

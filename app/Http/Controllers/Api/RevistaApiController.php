@@ -6,17 +6,14 @@ use App\Http\Controllers\Controller;
 use App\Models\Revista;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
+use Illuminate\Support\Facades\Storage;
 
 class RevistaApiController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
     public function index(Request $request)
     {
         $query = Revista::withCount('articulos');
 
-        // Filtros opcionales
         if ($request->has('search')) {
             $search = $request->search;
             $query->where(function($q) use ($search) {
@@ -25,77 +22,72 @@ class RevistaApiController extends Controller
             });
         }
 
-        // Paginación
         $perPage = $request->get('per_page', 15);
         $revistas = $query->latest()->paginate($perPage);
 
         return response()->json($revistas);
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
     public function store(Request $request)
     {
         $validated = $request->validate([
-            'titulo' => 'required|string|max:255|unique:revistas',
-            'fecha_publicacion' => 'required|date',
-            'descripcion' => 'nullable|string',
+            'titulo'             => 'required|string|max:255|unique:revistas',
+            'fecha_publicacion'  => 'required|date',
+            'descripcion'        => 'nullable|string',
+            'portada'            => 'nullable|image|max:4096',
         ]);
 
         $revista = new Revista($validated);
         $revista->slug = Str::slug($validated['titulo']);
-        $revista->save();
 
+        if ($request->hasFile('portada')) {
+            $revista->portada = $request->file('portada')->store('portadas', 'public');
+        }
+
+        $revista->save();
         $revista->loadCount('articulos');
 
-        return response()->json([
-            'message' => 'Revista creada exitosamente',
-            'data' => $revista
-        ], 201);
+        return response()->json(['message' => 'Revista creada exitosamente', 'data' => $revista], 201);
     }
 
-    /**
-     * Display the specified resource.
-     */
     public function show(Revista $revista)
     {
         $revista->loadCount('articulos');
         return response()->json($revista);
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
     public function update(Request $request, Revista $revista)
     {
         $validated = $request->validate([
-            'titulo' => 'required|string|max:255|unique:revistas,titulo,' . $revista->id,
-            'fecha_publicacion' => 'required|date',
-            'descripcion' => 'nullable|string',
+            'titulo'             => 'required|string|max:255|unique:revistas,titulo,' . $revista->id,
+            'fecha_publicacion'  => 'required|date',
+            'descripcion'        => 'nullable|string',
+            'portada'            => 'nullable|image|max:4096',
         ]);
 
         $revista->fill($validated);
         $revista->slug = Str::slug($validated['titulo']);
-        $revista->save();
 
+        if ($request->hasFile('portada')) {
+            if ($revista->portada) {
+                Storage::disk('public')->delete($revista->portada);
+            }
+            $revista->portada = $request->file('portada')->store('portadas', 'public');
+        }
+
+        $revista->save();
         $revista->loadCount('articulos');
 
-        return response()->json([
-            'message' => 'Revista actualizada exitosamente',
-            'data' => $revista
-        ]);
+        return response()->json(['message' => 'Revista actualizada exitosamente', 'data' => $revista]);
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
     public function destroy(Revista $revista)
     {
+        if ($revista->portada) {
+            Storage::disk('public')->delete($revista->portada);
+        }
         $revista->delete();
 
-        return response()->json([
-            'message' => 'Revista eliminada exitosamente'
-        ]);
+        return response()->json(['message' => 'Revista eliminada exitosamente']);
     }
 }
