@@ -87,7 +87,12 @@
                                 <div class="flex flex-col justify-center">
                                     <h3 class="text-2xl font-bold text-black mb-1">{{ $articulo->titulo }}</h3>
                                     @if ($articulo->columnista)
-                                        <p class="text-sm italic text-gray-600">Por: {{ $articulo->columnista->nombre }}</p>
+                                        <p class="text-sm italic text-gray-600">Por:
+                                            <a href="{{ route('columnista.show', $articulo->columnista->id) }}"
+                                               class="hover:text-[#fc5648] transition-colors">
+                                                {{ $articulo->columnista->nombre }}
+                                            </a>
+                                        </p>
                                     @endif
                                 </div>
                             </div>

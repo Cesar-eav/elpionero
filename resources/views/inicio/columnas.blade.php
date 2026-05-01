@@ -88,46 +88,57 @@
                 <main class="w-full space-y-6 bg-gray-50 border border-gray-300 rounded-lg p-4 shadow-sm">
                     <div>
                         <h2 class="text-xl font-semibold text-gray-800 border-b pb-2">Columnas de Opinión</h2>
+@if ($columnas->isNotEmpty())
+    <div class="grid grid-cols-2 md:grid-cols-3 gap-3 md:gap-4 mt-4">
+        @foreach ($columnas as $articulo)
+            <div class="group rounded-xl overflow-hidden shadow hover:shadow-lg transition-all duration-300 bg-black">
 
-                        @if ($columnas->isNotEmpty())
-                            <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mt-4">
-                                @foreach ($columnas as $articulo)
-                                    <div
-                                        class="flex flex-col border rounded-lg overflow-hidden bg-white shadow hover:shadow-lg transition-shadow">
-                                        <a href="{{ url('articulo/' . $articulo->slug) }}" class="flex flex-row h-full">
+                {{-- Link al artículo: solo la imagen --}}
+                <a href="{{ url('articulo/' . $articulo->slug) }}" class="block">
+                    <div class="relative aspect-square md:aspect-[10/7] overflow-hidden">
 
-                                            <!-- Texto -->
-                                            <div class="flex flex-col justify-center p-4 w-2/3">
-                                                <div
-                                                    class="md:text-xl text-sm  text-black flex items-center md:mb-5 mb-2">
-                                                    {{ $articulo->revista->titulo }}
-                                                </div>
-                                                <h4 class="text-lg font-bold text-black mb-2">
-                                                    {{ $articulo->titulo }}
-                                                </h4>
-                                                @if ($articulo->columnista)
-                                                    <div class="text-sm italic text-gray-600 flex items-center">
-                                                        {{ $articulo->columnista->nombre }}
-                                                    </div>
-                                                @endif
-                                            </div>
-
-                                            <!-- Imagen a la derecha -->
-                                            @if ($articulo->columnista && $articulo->columnista->foto)
-                                                <div class="w-1/3 flex items-center justify-center bg-gray-100">
-                                                    <img src="{{ asset('storage/' . $articulo->columnista->foto) }}"
-                                                        alt="{{ $articulo->columnista->nombre }}"
-                                                        class="w-full h-full object-cover" />
-                                                </div>
-                                            @endif
-
-                                        </a>
-                                    </div>
-                                @endforeach
-                            </div>
+                        @if ($articulo->columnista && $articulo->columnista->foto)
+                            <img src="{{ asset('storage/' . $articulo->columnista->foto) }}"
+                                 alt="{{ $articulo->columnista->nombre }}"
+                                 class="w-full h-full object-cover object-top transition-transform duration-500 group-hover:scale-105" />
                         @else
-                            <p>No hay artículos en esta revista.</p>
+                            <div class="w-full h-full bg-gradient-to-br from-[#fc5648] to-[#eba81d]"></div>
                         @endif
+
+                        <div class="absolute inset-0 pointer-events-none"
+                             style="background: linear-gradient(to top, rgba(0,0,0,0.85), rgba(0,0,0,0.25), transparent);">
+                        </div>
+
+                        <div class="absolute bottom-0 left-0 right-0 p-3">
+                            <div style="width:20px; height:2px; background:#eba81d;" class="mb-1.5"></div>
+                            <p class="text-white/70 uppercase tracking-wider mb-1"
+                               style="font-size:10px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">
+                                {{ $articulo->revista->titulo ?? '' }}
+                            </p>
+                            <h4 class="text-white font-bold leading-snug line-clamp-3 md:line-clamp-2 text-xs md:text-md">
+                                {{ $articulo->titulo }}
+                            </h4>
+                        </div>
+                    </div>
+                </a>
+
+                {{-- Link al columnista: barra inferior --}}
+                @if ($articulo->columnista)
+                    <a href="{{ route('columnista.show', $articulo->columnista->id) }}"
+                       class="flex items-center gap-2 px-3 py-2 bg-gray-900 hover:bg-gray-800 transition-colors">
+                        <span style="width:14px; height:1px; background:#eba81d; flex-shrink:0;"></span>
+                        <p class="italic text-xs truncate" style="color:#eba81d;">
+                            {{ $articulo->columnista->nombre }}
+                        </p>
+                    </a>
+                @endif
+
+            </div>
+        @endforeach
+    </div>
+@else
+    <p>No hay artículos en esta revista.</p>
+@endif
                     </div>
 
 

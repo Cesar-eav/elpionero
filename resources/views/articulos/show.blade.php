@@ -16,7 +16,10 @@
                             @if ($articulo->columnista->foto)
                                 <img src="{{ asset('storage/' . $articulo->columnista->foto) }}" alt="{{ $articulo->columnista->nombre }}" class="rounded-full h-10 w-10 mr-2 object-cover">
                             @endif
-                            <p class="text-lg font-semibold">{{ $articulo->columnista->nombre }}</p>
+                            <a href="{{ route('columnista.show', $articulo->columnista->id) }}"
+                               class="text-lg font-semibold hover:text-[#fc5648] transition-colors">
+                                {{ $articulo->columnista->nombre }}
+                            </a>
                         </div>
                     @endif
                     <div class="mb-6 prose dark:prose-invert max-w-none">
