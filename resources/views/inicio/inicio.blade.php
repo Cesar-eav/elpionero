@@ -255,8 +255,8 @@
                             <a href="{{ url('articulo/' . $destacada->slug) }}"
                                class="group block md:flex md:flex-row rounded-xl overflow-hidden shadow-lg hover:shadow-xl transition-all duration-300 bg-white">
 
-                                {{-- Imagen con overlay en mobile --}}
-                                <div class="relative w-full aspect-[4/3] md:aspect-auto md:w-1/3 overflow-hidden
+                                {{-- Imagen --}}
+                                <div class="relative w-full aspect-[4/3] md:aspect-auto md:w-2/5 md:flex-shrink-0 overflow-hidden
                                     {{ ($destacada->columnista && $destacada->columnista->foto) ? 'bg-gray-100' : 'bg-gradient-to-br from-[#fc5648] to-[#eba81d]' }}">
 
                                     @if ($destacada->columnista && $destacada->columnista->foto)
@@ -288,19 +288,25 @@
                                 </div>
 
                                 {{-- Texto (solo desktop) --}}
-                                <div class="hidden md:flex md:w-2/3 p-6 flex-col justify-center">
-                                    <div class="text-sm text-[#fc5648] font-semibold uppercase tracking-wide mb-2">
+                                <div class="hidden md:flex md:w-3/5 flex-col justify-center px-8 py-8 border-l-4 border-[#fc5648]">
+                                    <div class="h-1 w-10 bg-[#eba81d] rounded-full mb-4"></div>
+                                    <p class="text-xs text-gray-400 uppercase tracking-widest mb-3">
                                         {{ $destacada->revista->titulo ?? '' }}
-                                    </div>
-                                    <h3 class="text-2xl md:text-3xl font-bold text-black leading-tight mb-3">
+                                    </p>
+                                    <h3 class="text-3xl font-bold text-black leading-tight mb-4">
                                         {{ $destacada->titulo }}
                                     </h3>
-                                    @if ($destacada->autor)
-                                        <p class="text-sm italic text-gray-500 mb-3">Por {{ $destacada->autor }}</p>
-                                    @endif
-                                    <p class="text-gray-700 text-sm leading-relaxed line-clamp-4">
-                                        {{ Str::limit(strip_tags($destacada->contenido), 300) }}
+                                    <p class="text-gray-600 text-sm leading-relaxed line-clamp-4 mb-5">
+                                        {{ Str::limit(strip_tags($destacada->contenido), 280) }}
                                     </p>
+                                    @if ($destacada->autor || ($destacada->columnista && $destacada->columnista->nombre))
+                                        <div class="flex items-center gap-2 mt-auto">
+                                            <span class="w-6 h-px bg-[#fc5648]"></span>
+                                            <p class="text-sm italic text-[#fc5648] font-medium">
+                                                {{ $destacada->autor ?: $destacada->columnista->nombre }}
+                                            </p>
+                                        </div>
+                                    @endif
                                 </div>
 
                             </a>
@@ -313,14 +319,14 @@
                         </div>
                         {{-- RESTO (tarjetas más pequeñas) --}}
                         @if ($resto->isNotEmpty())
-                            <section class="grid grid-cols-2 md:grid-cols-2 gap-3 md:gap-5 mt-6">
+                            <section class="grid grid-cols-2 md:grid-cols-3 gap-3 md:gap-4 mt-6">
                                 @foreach ($resto as $articulo)
                                     <a href="{{ url('articulo/' . $articulo->slug) }}"
-                                       class="group block md:flex md:flex-row-reverse md:bg-white rounded-xl overflow-hidden shadow hover:shadow-lg transition-all duration-300">
+                                       class="group block rounded-xl overflow-hidden shadow hover:shadow-lg transition-all duration-300">
 
-                                        {{-- Imagen con overlay en mobile --}}
-                                        <div class="relative aspect-square md:aspect-auto md:w-1/4 md:flex-shrink-0 overflow-hidden
-                                                    @if(!($articulo->columnista && $articulo->columnista->foto)) bg-gradient-to-br from-[#fc5648] to-[#eba81d] @else bg-gray-100 @endif">
+                                        {{-- Div imagen: relative para texto encima --}}
+                                        <div class="relative aspect-square md:aspect-[10/7] overflow-hidden
+                                                    {{ ($articulo->columnista && $articulo->columnista->foto) ? 'bg-gray-100' : 'bg-gradient-to-br from-[#fc5648] to-[#eba81d]' }}">
 
                                             @if ($articulo->columnista && $articulo->columnista->foto)
                                                 <img src="{{ asset('storage/' . $articulo->columnista->foto) }}"
@@ -328,11 +334,11 @@
                                                     class="w-full h-full object-cover object-top group-hover:scale-105 transition-transform duration-500">
                                             @endif
 
-                                            {{-- Gradiente + texto encima (solo mobile) --}}
-                                            <div class="absolute inset-0 bg-gradient-to-t from-black/85 via-black/25 to-transparent md:hidden"></div>
-                                            <div class="absolute bottom-0 inset-x-0 p-2.5 md:hidden">
+                                            {{-- Gradiente + texto (mobile y desktop) --}}
+                                            <div class="absolute inset-0 bg-gradient-to-t from-black/85 via-black/25 to-transparent"></div>
+                                            <div class="absolute bottom-0 inset-x-0 p-2.5 md:p-3">
                                                 <div class="w-5 h-0.5 bg-[#eba81d] mb-1.5 rounded-full"></div>
-                                                <h4 class="text-white text-xs font-bold leading-tight line-clamp-3 mb-1 drop-shadow">
+                                                <h4 class="text-white text-xs md:text-sm font-bold leading-tight line-clamp-3 md:line-clamp-2 mb-1 drop-shadow">
                                                     {{ $articulo->titulo }}
                                                 </h4>
                                                 @if ($articulo->columnista)
@@ -341,17 +347,6 @@
                                                     </p>
                                                 @endif
                                             </div>
-                                        </div>
-
-                                        {{-- Texto (solo desktop) --}}
-                                        <div class="hidden md:flex flex-1 p-4 flex-col justify-center">
-                                            <div class="text-xs text-gray-400 mb-1">{{ $articulo->revista->titulo ?? '' }}</div>
-                                            <h4 class="text-sm font-bold text-black mb-1.5 line-clamp-3 leading-snug">
-                                                {{ $articulo->titulo }}
-                                            </h4>
-                                            @if ($articulo->columnista)
-                                                <p class="text-xs italic text-[#fc5648]">{{ $articulo->columnista->nombre }}</p>
-                                            @endif
                                         </div>
                                     </a>
                                 @endforeach
