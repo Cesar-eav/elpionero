@@ -243,7 +243,7 @@
                     @if ($columnas->isNotEmpty())
                         @php
                             $ordenados = $columnas->sortByDesc('created_at');
-                            $resto = $ordenados->reject(fn($a) => $a->id === $destacada->id)->take(16);
+                            $resto = $ordenados->reject(fn($a) => $a->id === $destacada->id)->take(15);
                         @endphp
                         <div>
          
