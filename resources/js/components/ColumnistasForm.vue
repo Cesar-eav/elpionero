@@ -91,7 +91,7 @@
                                     <div
                                         v-for="image in availableImages"
                                         :key="image"
-                                        @click="form.fotoExistente = image"
+                                        @click="selectExistingImage(image)"
                                         class="relative cursor-pointer flex-shrink-0 rounded overflow-hidden"
                                         :class="{
                                             'ring-2 ring-blue-500': form.fotoExistente === image,
@@ -106,13 +106,47 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div v-if="form.fotoExistente" class="mt-3 p-2 bg-blue-50 rounded border border-blue-200">
+
+                                <!-- Preview + botón recortar -->
+                                <div v-if="form.fotoExistente && !cropSrc && !croppedPreview" class="mt-3 p-2 bg-blue-50 rounded border border-blue-200">
                                     <div class="flex items-center gap-3">
                                         <img :src="`/storage/${form.fotoExistente}`" alt="Preview" class="w-16 h-16 object-cover rounded" />
                                         <div class="flex-1 min-w-0">
                                             <p class="text-xs font-medium text-gray-700">Seleccionada</p>
                                             <p class="text-xs text-gray-500 truncate">{{ form.fotoExistente }}</p>
                                         </div>
+                                        <button
+                                            type="button"
+                                            @click="startCropExisting"
+                                            class="flex-shrink-0 px-3 py-1.5 bg-blue-600 hover:bg-blue-700 text-white text-xs font-semibold rounded transition"
+                                        >
+                                            Recortar
+                                        </button>
+                                    </div>
+                                </div>
+
+                                <!-- Área de recorte -->
+                                <div v-if="cropSrc" class="mt-3">
+                                    <p class="text-xs font-medium text-gray-600 mb-1">Ajusta el recorte y confirma:</p>
+                                    <div class="crop-wrapper border border-gray-300 rounded bg-gray-900">
+                                        <img ref="cropImage" :src="cropSrc" style="display:block;max-width:100%;" />
+                                    </div>
+                                    <div class="flex items-center gap-2 mt-2">
+                                        <button type="button" @click="confirmCrop" class="px-4 py-1.5 bg-blue-600 hover:bg-blue-700 text-white text-sm font-semibold rounded transition">
+                                            Confirmar recorte
+                                        </button>
+                                        <button type="button" @click="cancelCrop" class="px-4 py-1.5 border border-gray-300 text-gray-600 text-sm rounded hover:bg-gray-50 transition">
+                                            Cancelar
+                                        </button>
+                                    </div>
+                                </div>
+
+                                <!-- Preview del recorte confirmado -->
+                                <div v-if="croppedPreview && !cropSrc" class="mt-3 flex items-center gap-3 p-2 bg-green-50 border border-green-200 rounded">
+                                    <img :src="croppedPreview" alt="Recorte" class="w-16 h-16 object-cover rounded shadow" />
+                                    <div>
+                                        <p class="text-xs font-semibold text-green-700">Recorte listo</p>
+                                        <button type="button" @click="resetCropExisting" class="text-xs text-gray-500 underline mt-0.5">Usar imagen original</button>
                                     </div>
                                 </div>
                             </div>
@@ -334,13 +368,55 @@ export default {
 
         cancelCrop() {
             this.destroyCropper();
-            this.$refs.fileInput.value = '';
+            if (this.fotoMode === 'upload' && this.$refs.fileInput) {
+                this.$refs.fileInput.value = '';
+            }
         },
 
         resetCrop() {
             this.croppedPreview = null;
             this.form.foto = null;
-            this.$refs.fileInput.value = '';
+            if (this.$refs.fileInput) this.$refs.fileInput.value = '';
+        },
+
+        selectExistingImage(image) {
+            this.form.fotoExistente = image;
+            this.croppedPreview = null;
+            this.form.foto = null;
+            this.destroyCropper();
+        },
+
+        async startCropExisting() {
+            if (!this.form.fotoExistente) return;
+            this.destroyCropper();
+            this.croppedPreview = null;
+            this.form.foto = null;
+
+            try {
+                const response = await fetch(`/storage/${this.form.fotoExistente}`);
+                const blob = await response.blob();
+                const reader = new FileReader();
+                reader.onload = (e) => {
+                    this.cropSrc = e.target.result;
+                    this.$nextTick(() => {
+                        this._cropper = new Cropper(this.$refs.cropImage, {
+                            aspectRatio: 1,
+                            viewMode: 1,
+                            dragMode: 'move',
+                            autoCropArea: 0.9,
+                            responsive: true,
+                        });
+                    });
+                };
+                reader.readAsDataURL(blob);
+            } catch (error) {
+                console.error('Error cargando imagen para recorte:', error);
+            }
+        },
+
+        resetCropExisting() {
+            this.croppedPreview = null;
+            this.form.foto = null;
         },
 
         destroyCropper() {
@@ -361,10 +437,10 @@ export default {
                 if (this.form.email) formData.append('email', this.form.email);
                 if (this.form.bio) formData.append('bio', this.form.bio);
 
-                if (this.fotoMode === 'existing' && this.form.fotoExistente) {
-                    formData.append('foto_existente', this.form.fotoExistente);
-                } else if (this.fotoMode === 'upload' && this.form.foto) {
+                if (this.form.foto) {
                     formData.append('foto', this.form.foto);
+                } else if (this.fotoMode === 'existing' && this.form.fotoExistente) {
+                    formData.append('foto_existente', this.form.fotoExistente);
                 }
 
                 formData.append('participa_proximo_numero', this.form.participa_proximo_numero ? '1' : '0');
