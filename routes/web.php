@@ -15,6 +15,7 @@ use App\Http\Controllers\TriviaReportController;
 use App\Http\Controllers\PdfTrackingController;
 
 use App\Http\Controllers\AtractivoController;
+use App\Http\Controllers\DenunciaController;
 
 
 
@@ -84,6 +85,12 @@ Route::get('/revista/{slug}', [InicioController::class, 'showRevista'])->name('r
     
 
 Route::post('/newsletter', [NewsletterController::class, 'subscribe'])->name('newsletter.subscribe');
+
+// Rutas de Denuncia
+Route::get('/denuncias', [DenunciaController::class, 'index'])->name('denuncia.index');
+Route::get('/denuncia', [DenunciaController::class, 'formulario'])->name('denuncia.formulario');
+Route::post('/denuncia', [DenunciaController::class, 'store'])->name('denuncia.store');
+Route::get('/denuncia/gracias', [DenunciaController::class, 'gracias'])->name('denuncia.gracias');
 
 
 Route::get('/contacto', [ContactoController::class, 'mostrarFormulario'])->name('contacto.formulario');

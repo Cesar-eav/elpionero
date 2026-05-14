@@ -165,3 +165,14 @@ Route::get('/categorias', function () {
     return \App\Models\Categoria::all();
 });
 Route::post('/categorias', [CategoriaApiController::class, 'store']);
+
+// Rutas API para Denuncias
+use App\Http\Controllers\Api\DenunciaApiController;
+Route::prefix('denuncias')->group(function () {
+    Route::get('/', [DenunciaApiController::class, 'index']);
+    Route::get('/{denuncia}', [DenunciaApiController::class, 'show']);
+    Route::post('/', [DenunciaApiController::class, 'store']);
+    Route::post('/{denuncia}/aprobar', [DenunciaApiController::class, 'aprobar']);
+    Route::post('/{denuncia}/rechazar', [DenunciaApiController::class, 'rechazar']);
+    Route::delete('/{denuncia}', [DenunciaApiController::class, 'destroy']);
+});

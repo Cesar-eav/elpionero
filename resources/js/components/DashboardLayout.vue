@@ -123,7 +123,18 @@
                     >
                         Atractivos
                     </router-link>
-                        <a href="limpiador-correos"
+                        <router-link
+                        to="/dashboard-vue/denuncias"
+                        :class="[
+                            'px-3 py-2 rounded-md text-sm font-medium',
+                            $route.path === '/dashboard-vue/denuncias'
+                                ? 'bg-gray-900 text-white'
+                                : 'text-gray-300 hover:bg-gray-700 hover:text-white'
+                        ]"
+                    >
+                        Denuncias
+                    </router-link>
+                    <a href="limpiador-correos"
                         
                         :class="[
                             'px-3 py-2 rounded-md text-sm font-medium',

@@ -9,6 +9,7 @@ import RevistasManager from './components/RevistasManager.vue';
 import ColumnistasManager from './components/ColumnistasManager.vue';
 import ColumnistasShow from './components/ColumnistasShow.vue';
 import AtractivosManager from './components/AtractivosManager.vue';
+import DenunciasManager from './components/DenunciasManager.vue';
 
 const routes = [
     {
@@ -87,6 +88,14 @@ const routes = [
         component: CableATierraManager,
         meta: {
             title: 'Cable a Tierra'
+        }
+    },
+    {
+        path: '/dashboard-vue/denuncias',
+        name: 'denuncias',
+        component: DenunciasManager,
+        meta: {
+            title: 'Gestión de Denuncias'
         }
     }
 ];
