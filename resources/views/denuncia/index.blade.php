@@ -66,25 +66,35 @@
                             <!-- Layout de Contenido Mixto -->
                             <div class="p-6 flex flex-col md:flex-row gap-6 h-full">
                                 
-                                <!-- Columna Izquierda: Imágenes (Siempre 3 según tu requerimiento) -->
+                                <!-- Columna Izquierda: Imágenes -->
+                                @php
+                                    $imgs = array_values(array_filter([$denuncia->imagen1, $denuncia->imagen2, $denuncia->imagen3]));
+                                    $imgsJson = json_encode($imgs);
+                                @endphp
                                 <div class="md:w-5/12 flex flex-col gap-2">
-                                    <div class="relative h-48 rounded-2xl overflow-hidden shadow-inner">
+                                    <div class="relative h-48 rounded-2xl overflow-hidden shadow-inner cursor-pointer"
+                                         onclick="abrirLightbox({{ $imgsJson }}, 0)">
                                         <img src="/storage/{{ $denuncia->imagen1 }}" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700" alt="Principal">
                                         <div class="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity flex items-end p-3">
-                                            <span class="text-white text-[10px] font-bold uppercase">Ver evidencia 1</span>
+                                            <span class="text-white text-[10px] font-bold uppercase">Ver fotos</span>
                                         </div>
                                     </div>
+                                    @if(count($imgs) > 1)
                                     <div class="grid grid-cols-2 gap-2">
-                                        <div class="h-20 rounded-xl overflow-hidden border border-slate-100">
-                                            <img src="/storage/{{ $denuncia->imagen2 }}" class="w-full h-full object-cover" alt="E2">
+                                        @if(isset($imgs[1]))
+                                        <div class="h-20 rounded-xl overflow-hidden border border-slate-100 cursor-pointer"
+                                             onclick="abrirLightbox({{ $imgsJson }}, 1)">
+                                            <img src="/storage/{{ $imgs[1] }}" class="w-full h-full object-cover hover:scale-105 transition-transform duration-300" alt="E2">
                                         </div>
-                                        <div class="h-20 rounded-xl overflow-hidden border border-slate-100 relative">
-                                            <img src="/storage/{{ $denuncia->imagen3 }}" class="w-full h-full object-cover" alt="E3">
-                                            <div class="absolute inset-0 bg-black/20 flex items-center justify-center">
-                                                <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"/></svg>
-                                            </div>
+                                        @endif
+                                        @if(isset($imgs[2]))
+                                        <div class="h-20 rounded-xl overflow-hidden border border-slate-100 cursor-pointer relative"
+                                             onclick="abrirLightbox({{ $imgsJson }}, 2)">
+                                            <img src="/storage/{{ $imgs[2] }}" class="w-full h-full object-cover hover:scale-105 transition-transform duration-300" alt="E3">
                                         </div>
+                                        @endif
                                     </div>
+                                    @endif
                                 </div>
 
                                 <!-- Columna Derecha: Texto y Acciones -->
@@ -132,9 +142,53 @@
     </main>
 
     <!-- Floating Action Button (Mobile Only) -->
-    <a href="{{ route('denuncia.formulario') }}" 
+    <a href="{{ route('denuncia.formulario') }}"
        class="md:hidden fixed bottom-6 right-6 w-16 h-16 bg-[#fc5648] text-white rounded-full flex items-center justify-center shadow-2xl z-50 animate-bounce">
         <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M12 4v16m8-8H4"/></svg>
     </a>
+
+    <!-- Lightbox -->
+    <div id="lb" class="fixed inset-0 bg-black/95 z-50 flex items-center justify-center" style="display:none!important">
+        <button onclick="cerrarLightbox()" class="absolute top-4 right-4 text-white text-2xl w-11 h-11 flex items-center justify-center bg-white/10 hover:bg-white/20 rounded-full transition-colors">✕</button>
+        <button onclick="prevImg()" id="lb-prev" class="absolute left-3 md:left-6 text-white text-4xl w-12 h-12 flex items-center justify-center bg-white/10 hover:bg-white/20 rounded-full transition-colors">‹</button>
+        <img id="lb-img" src="" alt="" class="max-w-[85vw] max-h-[85vh] object-contain rounded-xl shadow-2xl select-none">
+        <button onclick="nextImg()" id="lb-next" class="absolute right-3 md:right-6 text-white text-4xl w-12 h-12 flex items-center justify-center bg-white/10 hover:bg-white/20 rounded-full transition-colors">›</button>
+        <span id="lb-counter" class="absolute bottom-5 text-white/60 text-sm font-bold tracking-widest"></span>
+    </div>
+
+    <script>
+        let lbImgs = [], lbIdx = 0;
+
+        function abrirLightbox(imgs, idx) {
+            lbImgs = imgs;
+            lbIdx = idx;
+            actualizarLightbox();
+            document.getElementById('lb').style.cssText = 'display:flex!important';
+            document.body.style.overflow = 'hidden';
+        }
+
+        function cerrarLightbox() {
+            document.getElementById('lb').style.cssText = 'display:none!important';
+            document.body.style.overflow = '';
+        }
+
+        function actualizarLightbox() {
+            document.getElementById('lb-img').src = '/storage/' + lbImgs[lbIdx];
+            document.getElementById('lb-counter').textContent = (lbIdx + 1) + ' / ' + lbImgs.length;
+            document.getElementById('lb-prev').style.display = lbImgs.length > 1 ? 'flex' : 'none';
+            document.getElementById('lb-next').style.display = lbImgs.length > 1 ? 'flex' : 'none';
+        }
+
+        function prevImg() { lbIdx = (lbIdx - 1 + lbImgs.length) % lbImgs.length; actualizarLightbox(); }
+        function nextImg() { lbIdx = (lbIdx + 1) % lbImgs.length; actualizarLightbox(); }
+
+        document.getElementById('lb').addEventListener('click', e => { if (e.target === document.getElementById('lb')) cerrarLightbox(); });
+        document.addEventListener('keydown', e => {
+            if (document.getElementById('lb').style.display.includes('none')) return;
+            if (e.key === 'Escape') cerrarLightbox();
+            if (e.key === 'ArrowLeft') prevImg();
+            if (e.key === 'ArrowRight') nextImg();
+        });
+    </script>
 </body>
 </html>

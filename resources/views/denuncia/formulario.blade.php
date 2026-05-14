@@ -128,7 +128,24 @@
         </div>
     </div>
 
-    <!-- Script se mantiene igual funcionalmente, solo ajusto la renderización de previews para que coincida con el nuevo estilo -->
+    <!-- Overlay de carga -->
+    <div id="loading-overlay" class="fixed inset-0 z-50 flex flex-col items-center justify-center bg-black/80 backdrop-blur-sm" style="display:none!important">
+        <div class="bg-white rounded-3xl p-10 max-w-sm w-full mx-4 text-center shadow-2xl">
+            <svg class="animate-spin h-14 w-14 text-[#fc5648] mx-auto mb-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+            </svg>
+            <h3 id="loading-title" class="text-xl font-black text-slate-900 mb-2">Procesando tu reporte</h3>
+            <p id="loading-msg" class="text-slate-500 text-sm leading-relaxed">
+                Estamos subiendo las imágenes y registrando tu denuncia.<br>
+                <span class="font-semibold text-slate-700">Esto puede tomar entre 10 y 20 segundos.</span>
+            </p>
+            <div class="mt-6 bg-amber-50 border border-amber-200 rounded-xl px-4 py-3 text-amber-800 text-xs font-medium">
+                Por favor no cierres ni recargues la página.
+            </div>
+        </div>
+    </div>
+
     <script>
         const fileSelector = document.getElementById('file-selector');
         const previewsBox  = document.getElementById('previews-container');
@@ -138,11 +155,27 @@
         const dropZone     = document.getElementById('drop-zone');
         let selectedFiles  = [];
 
+        const spinnerHtml = `<svg class="animate-spin h-5 w-5 text-white inline ml-2" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle><path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path></svg>`;
+        const overlay      = document.getElementById('loading-overlay');
+        const loadingTitle = document.getElementById('loading-title');
+        const loadingMsg   = document.getElementById('loading-msg');
+
+        function mostrarOverlay(titulo, mensaje) {
+            loadingTitle.textContent = titulo;
+            loadingMsg.innerHTML = mensaje;
+            overlay.style.cssText = 'display:flex!important';
+            document.body.style.overflow = 'hidden';
+        }
+
+        function ocultarOverlay() {
+            overlay.style.cssText = 'display:none!important';
+            document.body.style.overflow = '';
+        }
+
         dropZone.onclick = () => fileSelector.click();
 
         fileSelector.addEventListener('change', function(e) {
-            const files = Array.from(e.target.files);
-            addFiles(files);
+            addFiles(Array.from(e.target.files));
             this.value = "";
         });
 
@@ -162,7 +195,6 @@
                 countMsg.style.display = 'none';
                 return;
             }
-
             previewsBox.style.display = 'grid';
             countMsg.style.display = 'block';
             countMsg.textContent = `${selectedFiles.length} de 3 imágenes seleccionadas`;
@@ -175,7 +207,6 @@
                     div.innerHTML = `
                         <img src="${e.target.result}" class="w-full h-full object-cover">
                         <button type="button" onclick="removeFile(${index})" class="absolute top-2 right-2 bg-rose-600 text-white rounded-full w-8 h-8 flex items-center justify-center shadow-lg transform translate-y-2 opacity-0 group-hover:translate-y-0 group-hover:opacity-100 transition-all">✕</button>
-                        <div class="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-10 transition-opacity pointer-events-none"></div>
                     `;
                     previewsBox.appendChild(div);
                 };
@@ -195,25 +226,56 @@
             setTimeout(() => errorMsg.classList.add('hidden'), 6000);
         }
 
+        function compressImage(file, maxWidth = 1280, quality = 0.82) {
+            return new Promise((resolve) => {
+                const img = new Image();
+                const url = URL.createObjectURL(file);
+                img.onload = () => {
+                    let w = img.width, h = img.height;
+                    if (w > maxWidth) { h = Math.round(h * maxWidth / w); w = maxWidth; }
+                    const canvas = document.createElement('canvas');
+                    canvas.width = w; canvas.height = h;
+                    canvas.getContext('2d').drawImage(img, 0, 0, w, h);
+                    URL.revokeObjectURL(url);
+                    canvas.toBlob(blob => {
+                        resolve(new File([blob], file.name.replace(/\.[^.]+$/, '.jpg'), { type: 'image/jpeg' }));
+                    }, 'image/jpeg', quality);
+                };
+                img.src = url;
+            });
+        }
+
         document.getElementById('denuncia-form').addEventListener('submit', async function(e) {
             e.preventDefault();
-            const titulo = document.getElementById('titulo').value.trim();
-            const ubicacion = document.getElementById('ubicacion').value.trim();
+            const titulo      = document.getElementById('titulo').value.trim();
+            const ubicacion   = document.getElementById('ubicacion').value.trim();
             const descripcion = document.getElementById('descripcion').value.trim();
 
-            if (!titulo) { showError("Debes ingresar un título."); return; }
-            if (!ubicacion) { showError("La ubicación es fundamental."); return; }
-            if (descripcion.length < 20) { showError("Danos un poco más de detalle (mín. 20 caracteres)."); return; }
+            if (!titulo)                  { showError("Debes ingresar un título."); return; }
+            if (!ubicacion)               { showError("La ubicación es fundamental."); return; }
+            if (descripcion.length < 20)  { showError("Danos un poco más de detalle (mín. 20 caracteres)."); return; }
             if (selectedFiles.length === 0) { showError("Necesitamos al menos una imagen para validar el reporte."); return; }
+
+            submitBtn.disabled = true;
+            mostrarOverlay('Comprimiendo imágenes…', 'Reduciendo el tamaño de tus fotos antes de subirlas.');
+
+            let compressed;
+            try {
+                compressed = await Promise.all(selectedFiles.map(f => compressImage(f)));
+            } catch {
+                compressed = selectedFiles;
+            }
+
+            mostrarOverlay(
+                'Enviando tu reporte…',
+                'Estamos subiendo las imágenes y registrando tu denuncia.<br><span class="font-semibold text-slate-700">Esto puede tomar entre 10 y 20 segundos.</span>'
+            );
 
             const fd = new FormData(this);
             fd.delete('imagenes[]');
-            fd.append('imagen1', selectedFiles[0]);
-            if (selectedFiles[1]) fd.append('imagen2', selectedFiles[1]);
-            if (selectedFiles[2]) fd.append('imagen3', selectedFiles[2]);
-
-            submitBtn.disabled = true;
-            submitBtn.innerHTML = `Subiendo... <svg class="animate-spin h-5 w-5 text-white inline ml-2" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle><path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path></svg>`;
+            fd.append('imagen1', compressed[0], compressed[0].name);
+            if (compressed[1]) fd.append('imagen2', compressed[1], compressed[1].name);
+            if (compressed[2]) fd.append('imagen3', compressed[2], compressed[2].name);
 
             try {
                 const response = await fetch("{{ route('denuncia.store') }}", {
@@ -225,20 +287,25 @@
                     }
                 });
 
-                if (response.redirected || response.ok) {
-                    window.location.href = "{{ route('denuncia.gracias') }}";
+                if (response.ok) {
+                    const html = await response.text();
+                    document.open('text/html', 'replace');
+                    document.write(html);
+                    document.close();
+                    history.replaceState(null, '', "{{ route('denuncia.gracias') }}");
                     return;
                 }
 
+                ocultarOverlay();
                 const result = await response.json();
                 showError(result.errors ? Object.values(result.errors).flat().join(' ') : (result.message || "Error en el servidor."));
-                submitBtn.disabled = false;
-                submitBtn.textContent = "Enviar Reporte Ahora";
-            } catch (err) {
+            } catch {
+                ocultarOverlay();
                 showError("Error de conexión. Revisa tu internet.");
-                submitBtn.disabled = false;
-                submitBtn.textContent = "Enviar Reporte Ahora";
             }
+
+            submitBtn.disabled = false;
+            submitBtn.textContent = "Enviar Reporte Ahora";
         });
     </script>
 </body>

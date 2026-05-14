@@ -29,11 +29,12 @@
             @if (count($imagenes) > 0)
                 <div class="grid {{ count($imagenes) === 1 ? 'grid-cols-1' : (count($imagenes) === 2 ? 'grid-cols-2' : 'grid-cols-3') }} gap-1 p-2">
                     @foreach ($imagenes as $idx => $imagen)
-                        <div class="overflow-hidden rounded-2xl {{ count($imagenes) > 1 && $idx === 0 ? 'col-span-full' : '' }} aspect-video">
+                        <div class="overflow-hidden rounded-2xl {{ count($imagenes) > 1 && $idx === 0 ? 'col-span-full' : '' }} aspect-video cursor-pointer"
+                             onclick="abrirLightbox({{ $idx }})">
                             <img
                                 src="/storage/{{ $imagen }}"
                                 alt="Evidencia {{ $idx + 1 }}"
-                                class="w-full h-full object-cover"
+                                class="w-full h-full object-cover hover:scale-105 transition-transform duration-300"
                             />
                         </div>
                     @endforeach
@@ -107,5 +108,56 @@
         </div>
 
     </div>
+
+    <!-- Lightbox -->
+    <div id="lb" class="fixed inset-0 bg-black/95 z-50 flex items-center justify-center" style="display:none!important">
+        <button onclick="cerrarLightbox()" class="absolute top-4 right-4 text-white text-2xl w-11 h-11 flex items-center justify-center bg-white/10 hover:bg-white/20 rounded-full transition-colors">✕</button>
+
+        <button onclick="prevImg()" class="absolute left-3 md:left-6 text-white text-4xl w-12 h-12 flex items-center justify-center bg-white/10 hover:bg-white/20 rounded-full transition-colors" id="lb-prev">‹</button>
+
+        <img id="lb-img" src="" alt="" class="max-w-[85vw] max-h-[85vh] object-contain rounded-xl shadow-2xl select-none">
+
+        <button onclick="nextImg()" class="absolute right-3 md:right-6 text-white text-4xl w-12 h-12 flex items-center justify-center bg-white/10 hover:bg-white/20 rounded-full transition-colors" id="lb-next">›</button>
+
+        <span id="lb-counter" class="absolute bottom-5 text-white/60 text-sm font-bold tracking-widest"></span>
+    </div>
+
+    <script>
+        const lbImgs = @json(array_values($imagenes));
+        let lbIdx = 0;
+
+        function abrirLightbox(idx) {
+            lbIdx = idx;
+            actualizarLightbox();
+            document.getElementById('lb').style.cssText = 'display:flex!important';
+            document.body.style.overflow = 'hidden';
+        }
+
+        function cerrarLightbox() {
+            document.getElementById('lb').style.cssText = 'display:none!important';
+            document.body.style.overflow = '';
+        }
+
+        function actualizarLightbox() {
+            document.getElementById('lb-img').src = '/storage/' + lbImgs[lbIdx];
+            document.getElementById('lb-counter').textContent = (lbIdx + 1) + ' / ' + lbImgs.length;
+            document.getElementById('lb-prev').style.display = lbImgs.length > 1 ? 'flex' : 'none';
+            document.getElementById('lb-next').style.display = lbImgs.length > 1 ? 'flex' : 'none';
+        }
+
+        function prevImg() { lbIdx = (lbIdx - 1 + lbImgs.length) % lbImgs.length; actualizarLightbox(); }
+        function nextImg() { lbIdx = (lbIdx + 1) % lbImgs.length; actualizarLightbox(); }
+
+        document.getElementById('lb').addEventListener('click', function(e) {
+            if (e.target === this) cerrarLightbox();
+        });
+
+        document.addEventListener('keydown', e => {
+            if (document.getElementById('lb').style.display === 'none!important') return;
+            if (e.key === 'Escape') cerrarLightbox();
+            if (e.key === 'ArrowLeft') prevImg();
+            if (e.key === 'ArrowRight') nextImg();
+        });
+    </script>
 </body>
 </html>
