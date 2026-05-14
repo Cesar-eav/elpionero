@@ -22,9 +22,19 @@ class DenunciaController extends Controller
         return view('denuncia.formulario');
     }
 
+    public function show(Denuncia $denuncia)
+    {
+        if ($denuncia->estado !== 'aprobada') {
+            abort(404);
+        }
+
+        return view('denuncia.show', compact('denuncia'));
+    }
+
     public function store(Request $request)
     {
         $validated = $request->validate([
+            'titulo'      => 'required|string|max:255',
             'nombre'      => 'nullable|string|max:255',
             'descripcion' => 'required|string|min:20',
             'ubicacion'   => 'required|string|max:500',
@@ -32,6 +42,7 @@ class DenunciaController extends Controller
             'imagen2'     => 'nullable|image|mimes:jpeg,jpg,png,gif|max:5120',
             'imagen3'     => 'nullable|image|mimes:jpeg,jpg,png,gif|max:5120',
         ], [
+            'titulo.required'  => 'El título es obligatorio.',
             'imagen1.required' => 'Debes subir al menos una imagen.',
             'descripcion.min'  => 'La descripción debe tener al menos 20 caracteres.',
         ]);

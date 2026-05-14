@@ -40,6 +40,7 @@ class DenunciaApiController extends Controller
     public function store(Request $request)
     {
         $validated = $request->validate([
+            'titulo'      => 'required|string|max:255',
             'nombre'      => 'nullable|string|max:255',
             'descripcion' => 'required|string',
             'ubicacion'   => 'required|string|max:500',

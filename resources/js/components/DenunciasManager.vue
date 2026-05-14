@@ -1,5 +1,27 @@
 <template>
     <div class="denuncias-manager">
+        <!-- Modal de confirmación interno -->
+        <div v-if="confirmacion.visible" class="fixed inset-0 bg-black bg-opacity-40 flex items-center justify-center z-50">
+            <div class="bg-white rounded-xl shadow-xl p-6 max-w-sm w-full mx-4">
+                <p class="text-gray-800 font-medium mb-5">{{ confirmacion.mensaje }}</p>
+                <div class="flex gap-3 justify-end">
+                    <button
+                        @click="confirmarAccion(false)"
+                        class="px-4 py-2 bg-gray-200 hover:bg-gray-300 text-gray-700 rounded-md text-sm"
+                    >
+                        Cancelar
+                    </button>
+                    <button
+                        @click="confirmarAccion(true)"
+                        :class="confirmacion.peligro ? 'bg-red-600 hover:bg-red-700' : 'bg-green-600 hover:bg-green-700'"
+                        class="px-4 py-2 text-white rounded-md text-sm font-medium"
+                    >
+                        {{ confirmacion.botonOk }}
+                    </button>
+                </div>
+            </div>
+        </div>
+
         <!-- Aviso 24 horas -->
         <div class="bg-amber-50 border-l-4 border-amber-500 p-4 mb-6 rounded flex items-start gap-3">
             <svg class="w-5 h-5 text-amber-500 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -197,6 +219,13 @@ export default {
                 last_page: 1,
                 per_page: 10,
                 total: 0
+            },
+            confirmacion: {
+                visible: false,
+                mensaje: '',
+                botonOk: 'Confirmar',
+                peligro: false,
+                resolve: null
             }
         };
     },
@@ -204,6 +233,17 @@ export default {
         this.loadDenuncias();
     },
     methods: {
+        pedir(mensaje, botonOk = 'Confirmar', peligro = false) {
+            return new Promise(resolve => {
+                this.confirmacion = { visible: true, mensaje, botonOk, peligro, resolve };
+            });
+        },
+        confirmarAccion(valor) {
+            this.confirmacion.visible = false;
+            if (this.confirmacion.resolve) {
+                this.confirmacion.resolve(valor);
+            }
+        },
         loadDenuncias(page = 1) {
             this.loading = true;
 
@@ -226,7 +266,7 @@ export default {
                         total: response.data.total
                     };
                 })
-                .catch(() => alert('Error al cargar las denuncias'))
+                .catch(() => this.pedir('Error al cargar las denuncias', 'OK'))
                 .finally(() => { this.loading = false; });
         },
         handleSearch() {
@@ -238,39 +278,38 @@ export default {
                 this.loadDenuncias(page);
             }
         },
-        aprobar(denuncia) {
-            if (!confirm('¿Aprobar esta denuncia y publicarla en el sitio?')) return;
-            this.procesando = denuncia.id;
+        async aprobar(denuncia) {
+            const ok = await this.pedir('¿Aprobar esta denuncia y publicarla en el sitio?', 'Aprobar', false);
+            if (!ok) return;
 
+            this.procesando = denuncia.id;
             axios.post(`/api/denuncias/${denuncia.id}/aprobar`)
                 .then(() => {
-                    alert('Denuncia aprobada y publicada.');
                     this.loadDenuncias(this.pagination.current_page);
                 })
-                .catch(() => alert('Error al aprobar la denuncia'))
+                .catch(error => {
+                    console.error('[Aprobar] error:', error.response?.status, error.response?.data);
+                    this.pedir('Error al aprobar la denuncia. Revisa la consola.', 'OK');
+                })
                 .finally(() => { this.procesando = null; });
         },
-        rechazar(denuncia) {
-            if (!confirm('¿Rechazar y eliminar esta denuncia? Esta acción no se puede deshacer.')) return;
-            this.procesando = denuncia.id;
+        async rechazar(denuncia) {
+            const ok = await this.pedir('¿Rechazar y eliminar esta denuncia? Esta acción no se puede deshacer.', 'Rechazar', true);
+            if (!ok) return;
 
+            this.procesando = denuncia.id;
             axios.post(`/api/denuncias/${denuncia.id}/rechazar`)
-                .then(() => {
-                    alert('Denuncia rechazada y eliminada.');
-                    this.loadDenuncias(this.pagination.current_page);
-                })
-                .catch(() => alert('Error al rechazar la denuncia'))
+                .then(() => this.loadDenuncias(this.pagination.current_page))
+                .catch(() => this.pedir('Error al rechazar la denuncia.', 'OK'))
                 .finally(() => { this.procesando = null; });
         },
-        eliminar(denuncia) {
-            if (!confirm('¿Eliminar esta denuncia permanentemente?')) return;
+        async eliminar(denuncia) {
+            const ok = await this.pedir('¿Eliminar esta denuncia permanentemente?', 'Eliminar', true);
+            if (!ok) return;
 
             axios.delete(`/api/denuncias/${denuncia.id}`)
-                .then(() => {
-                    alert('Denuncia eliminada.');
-                    this.loadDenuncias(this.pagination.current_page);
-                })
-                .catch(() => alert('Error al eliminar la denuncia'));
+                .then(() => this.loadDenuncias(this.pagination.current_page))
+                .catch(() => this.pedir('Error al eliminar la denuncia.', 'OK'));
         },
         getImages(denuncia) {
             return [denuncia.imagen1, denuncia.imagen2, denuncia.imagen3].filter(Boolean);

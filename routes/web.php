@@ -88,6 +88,7 @@ Route::post('/newsletter', [NewsletterController::class, 'subscribe'])->name('ne
 
 // Rutas de Denuncia
 Route::get('/denuncias', [DenunciaController::class, 'index'])->name('denuncia.index');
+Route::get('/denuncias/{denuncia}', [DenunciaController::class, 'show'])->name('denuncia.show');
 Route::get('/denuncia', [DenunciaController::class, 'formulario'])->name('denuncia.formulario');
 Route::post('/denuncia', [DenunciaController::class, 'store'])->name('denuncia.store');
 Route::get('/denuncia/gracias', [DenunciaController::class, 'gracias'])->name('denuncia.gracias');
