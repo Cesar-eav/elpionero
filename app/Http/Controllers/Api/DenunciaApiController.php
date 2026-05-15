@@ -71,6 +71,7 @@ class DenunciaApiController extends Controller
         $denuncia->update([
             'estado'      => 'aprobada',
             'approved_at' => now(),
+            'slug'        => $denuncia->slug ?: Denuncia::generarSlug($denuncia->titulo ?: 'denuncia-' . $denuncia->id),
         ]);
 
         return response()->json($denuncia);
