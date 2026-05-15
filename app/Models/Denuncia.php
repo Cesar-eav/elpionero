@@ -16,6 +16,7 @@ class Denuncia extends Model
         'imagen1',
         'imagen2',
         'imagen3',
+        'imagen4',
         'estado',
         'approved_at',
     ];

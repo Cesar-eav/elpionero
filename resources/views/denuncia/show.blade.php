@@ -23,7 +23,7 @@
 
             <!-- Galería -->
             @php
-                $imagenes = array_filter([$denuncia->imagen1, $denuncia->imagen2, $denuncia->imagen3]);
+                $imagenes = array_filter([$denuncia->imagen1, $denuncia->imagen2, $denuncia->imagen3, $denuncia->imagen4]);
             @endphp
 
             @if (count($imagenes) > 0)

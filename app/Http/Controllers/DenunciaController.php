@@ -45,6 +45,7 @@ class DenunciaController extends Controller
             'imagen1'     => 'required|image|max:5120',
             'imagen2'     => 'nullable|image|max:5120',
             'imagen3'     => 'nullable|image|max:5120',
+            'imagen4'     => 'nullable|image|max:5120',
         ], [
             'titulo.required'  => 'El título es obligatorio.',
             'imagen1.required' => 'Debes subir al menos una imagen.',
@@ -52,7 +53,7 @@ class DenunciaController extends Controller
         ]);
 
         $archivosTemp = [];
-        foreach (['imagen1', 'imagen2', 'imagen3'] as $campo) {
+        foreach (['imagen1', 'imagen2', 'imagen3', 'imagen4'] as $campo) {
             if ($request->hasFile($campo)) {
                 $nombre = Str::uuid() . '.' . $request->file($campo)->getClientOriginalExtension();
                 $archivosTemp[$campo] = $request->file($campo)->storeAs('temp/denuncias', $nombre, 'local');

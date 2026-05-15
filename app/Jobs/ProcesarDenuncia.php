@@ -29,7 +29,7 @@ class ProcesarDenuncia implements ShouldQueue
 
         $datos = $this->datos;
 
-        foreach (['imagen1', 'imagen2', 'imagen3'] as $campo) {
+        foreach (['imagen1', 'imagen2', 'imagen3', 'imagen4'] as $campo) {
             if (!isset($this->archivosTemp[$campo])) {
                 continue;
             }

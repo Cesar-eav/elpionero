@@ -47,16 +47,15 @@ class DenunciaApiController extends Controller
             'imagen1'     => 'required|image|mimes:jpeg,jpg,png,gif|max:5120',
             'imagen2'     => 'nullable|image|mimes:jpeg,jpg,png,gif|max:5120',
             'imagen3'     => 'nullable|image|mimes:jpeg,jpg,png,gif|max:5120',
+            'imagen4'     => 'nullable|image|mimes:jpeg,jpg,png,gif|max:5120',
         ]);
 
         $validated['imagen1'] = $request->file('imagen1')->store('denuncias', 'public');
 
-        if ($request->hasFile('imagen2')) {
-            $validated['imagen2'] = $request->file('imagen2')->store('denuncias', 'public');
-        }
-
-        if ($request->hasFile('imagen3')) {
-            $validated['imagen3'] = $request->file('imagen3')->store('denuncias', 'public');
+        foreach (['imagen2', 'imagen3', 'imagen4'] as $campo) {
+            if ($request->hasFile($campo)) {
+                $validated[$campo] = $request->file($campo)->store('denuncias', 'public');
+            }
         }
 
         $validated['estado'] = 'pendiente';
@@ -95,7 +94,7 @@ class DenunciaApiController extends Controller
 
     private function deleteImages(Denuncia $denuncia): void
     {
-        foreach (['imagen1', 'imagen2', 'imagen3'] as $field) {
+        foreach (['imagen1', 'imagen2', 'imagen3', 'imagen4'] as $field) {
             if ($denuncia->$field) {
                 Storage::disk('public')->delete($denuncia->$field);
             }

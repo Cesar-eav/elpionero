@@ -106,7 +106,7 @@
                                 </div>
                                 <div>
                                     <p class="text-slate-900 font-bold">Haz clic o arrastra fotos aquí</p>
-                                    <p class="text-slate-500 text-sm">Puedes subir hasta un máximo de <span class="text-[#fc5648] font-bold">3 imágenes</span></p>
+                                    <p class="text-slate-500 text-sm">Puedes subir hasta un máximo de <span class="text-[#fc5648] font-bold">4 imágenes</span></p>
                                 </div>
                             </div>
                         </div>
@@ -181,7 +181,7 @@
 
         function addFiles(files) {
             files.forEach(file => {
-                if (selectedFiles.length >= 3) return;
+                if (selectedFiles.length >= 4) return;
                 if (!file.type.startsWith('image/')) return;
                 selectedFiles.push(file);
             });
@@ -197,7 +197,7 @@
             }
             previewsBox.style.display = 'grid';
             countMsg.style.display = 'block';
-            countMsg.textContent = `${selectedFiles.length} de 3 imágenes seleccionadas`;
+            countMsg.textContent = `${selectedFiles.length} de 4 imágenes seleccionadas`;
 
             selectedFiles.forEach((file, index) => {
                 const reader = new FileReader();
@@ -276,6 +276,7 @@
             fd.append('imagen1', compressed[0], compressed[0].name);
             if (compressed[1]) fd.append('imagen2', compressed[1], compressed[1].name);
             if (compressed[2]) fd.append('imagen3', compressed[2], compressed[2].name);
+            if (compressed[3]) fd.append('imagen4', compressed[3], compressed[3].name);
 
             try {
                 const response = await fetch("{{ route('denuncia.store') }}", {
