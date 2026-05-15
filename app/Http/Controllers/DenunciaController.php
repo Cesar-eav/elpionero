@@ -35,12 +35,7 @@ class DenunciaController extends Controller
 
     public function store(Request $request)
     {
-        $t0 = microtime(true);
-        $ms = fn() => round((microtime(true) - $t0) * 1000) . 'ms';
-        \Log::info('[FORM] request recibido');
-
         session()->save();
-        \Log::info('[FORM] session liberada — ' . $ms());
 
         $validated = $request->validate([
             'titulo'      => 'required|string|max:255',
@@ -56,23 +51,17 @@ class DenunciaController extends Controller
             'descripcion.min'  => 'La descripción debe tener al menos 20 caracteres.',
         ]);
 
-        \Log::info('[FORM] validación OK — ' . $ms());
-
-        // Mover imágenes a temp (rápido, disco local) y despachar el job
         $archivosTemp = [];
         foreach (['imagen1', 'imagen2', 'imagen3'] as $campo) {
             if ($request->hasFile($campo)) {
                 $nombre = Str::uuid() . '.' . $request->file($campo)->getClientOriginalExtension();
                 $archivosTemp[$campo] = $request->file($campo)->storeAs('temp/denuncias', $nombre, 'local');
-                \Log::info('[FORM] ' . $campo . ' → temp — ' . $ms() . ' | ' . round($request->file($campo)->getSize() / 1024) . 'KB');
                 unset($validated[$campo]);
             }
         }
 
         ProcesarDenuncia::dispatch($validated, $archivosTemp);
-        \Log::info('[FORM] job despachado — ' . $ms());
 
-        \Log::info('[FORM] TOTAL respuesta — ' . $ms());
         return view('denuncia.gracias');
     }
 
