@@ -7,16 +7,21 @@
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
 <body class="bg-gray-50">
+            <x-header />
+
+     <div class="px-6 pt-5">
+        <a href="{{ url('/') }}" class="inline-flex items-center gap-2 bg-slate-900 hover:bg-[#fc5648] text-white text-sm font-bold px-5 py-2.5 rounded-xl transition-all duration-300 group shadow-sm">
+            <svg class="w-4 h-4 group-hover:-translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M10 19l-7-7m0 0l7-7m-7 7h18"/>
+            </svg>
+            Volver al inicio
+        </a>
+     </div>
+
     <div class="min-h-screen py-12 px-4 sm:px-6 lg:px-8">
         <div class="max-w-4xl mx-auto">
             <!-- Header -->
             <div class="text-center mb-12">
-                <a href="{{ route('inicio') }}" class="inline-block mb-6 text-blue-600 hover:text-blue-800 transition">
-                    <svg class="w-6 h-6 inline-block" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path>
-                    </svg>
-                    Volver al inicio
-                </a>
                 <h1 class="text-4xl font-bold text-gray-900 mb-4">Apoya a El Pionero de Valparaíso</h1>
                 <p class="text-xl text-gray-600 max-w-2xl mx-auto">
                     Tu aporte nos ayuda a seguir informando con independencia y calidad. Cada contribución cuenta.
@@ -159,5 +164,8 @@
             </div>
         </div>
     </div>
+
+                <x-footer />
+ 
 </body>
 </html>

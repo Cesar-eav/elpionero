@@ -7,6 +7,7 @@ use App\Models\Editorial;
 use App\Models\Entrevista;
 use App\Models\CableATierra;
 use App\Models\Revista;
+use App\Models\Denuncia;
 
 
 use Illuminate\Http\Request;
@@ -17,6 +18,7 @@ class InicioController extends Controller
     {
         $columnas = Articulo::with(['revista', 'columnista'])->get();
         $noticias = Noticia::latest()->paginate(3);
+        $ultimasDenuncias = Denuncia::where('estado', 'aprobada')->latest('approved_at')->take(3)->get();
 
         $ultimaRevista = Revista::latest()->first();
         $articulosDestacados = $ultimaRevista
@@ -32,7 +34,7 @@ class InicioController extends Controller
             ?? $columnas->sortByDesc('created_at')->first();
 
         return view('inicio.inicio', compact([
-            'columnas', 'noticias', 'destacada'
+            'columnas', 'noticias', 'destacada', 'ultimasDenuncias'
         ]));
     }
 

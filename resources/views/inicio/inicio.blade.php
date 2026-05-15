@@ -183,48 +183,39 @@
                 <aside
                     class="w-full md:w-2/6 hidden md:block space-y-6 bg-gray-50 border border-gray-300 rounded-lg p-4 shadow-sm">
                     <div>
-                 <!-- MAIN: Noticias dinámicas -->
+                <!-- MAIN: Últimas denuncias -->
                 <main class="md:col-span-2 w-full">
-                    <h2 class="text-xl font-semibold text-gray-800 border-b pb-2">Últimas noticias</h2>
+                    <div class="flex items-center justify-between border-b pb-2 mb-5">
+                        <h2 class="text-xl font-black text-slate-900">Últimas <span class="text-[#fc5648]">denuncias</span></h2>
+                        <a href="{{ route('denuncia.index') }}" class="text-xs font-bold text-[#fc5648] hover:underline uppercase tracking-widest">Ver todas →</a>
+                    </div>
 
-                {{-- {{$noticias }} --}}
-
-                    @if ($noticias->count())
-                        {{-- Resto en grilla --}}
-                        @if($noticias->count())
-                            <section class="grid grid-cols-1 sm:grid-cols-1 gap-6 mt-6">
-                                @foreach ($noticias as $n)
-                                    <a href="{{ route('noticia.show', $n->slug) }}" class="block">
-                                        <article class="flex flex-col border rounded-lg overflow-hidden bg-white shadow hover:shadow-lg transition-shadow">
-                                            <div class="flex flex-col h-full">
-                                                @if($n->imagen)
-                                                    <img src="{{ asset('storage/' . $n->imagen) }}"
-                                                         alt="{{ $n->titulo }}"
-                                                         class="w-full h-48 object-cover">
-                                                @endif
-                                                <div class="p-4 flex-1 flex flex-col">
-                                                    <div class="text-xs text-gray-500 mb-1">
-                                                        {{ $n->fecha_publicacion?->format('d/m/Y') ?? '' }}
-                                                    </div>
-                                                    <h4 class="text-lg font-bold text-black mb-1 line-clamp-2">
-                                                        {{ $n->titulo }}
-                                                    </h4>
-                                                    <p class="text-sm text-gray-700 text-justify mt-2 flex-1">
-                                                        {{ Str::limit($n->resumen ?? strip_tags($n->cuerpo), 250) }}
-                                                    </p>
+                    @if($ultimasDenuncias->count())
+                        <section class="grid grid-cols-1 gap-4">
+                            @foreach($ultimasDenuncias as $d)
+                                <a href="{{ route('denuncia.show', $d) }}" class="block group">
+                                    <article class="flex gap-4 bg-white border border-slate-100 rounded-2xl overflow-hidden shadow-sm hover:shadow-md transition-all duration-300 p-3">
+                                        <div class="w-24 h-24 shrink-0 rounded-xl overflow-hidden">
+                                            <img src="/storage/{{ $d->imagen1 }}" alt="{{ $d->titulo }}"
+                                                 class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300">
+                                        </div>
+                                        <div class="flex flex-col justify-between flex-1 min-w-0">
+                                            <div>
+                                                <div class="flex items-center gap-1.5 mb-1">
+                                                    <svg class="w-3 h-3 text-[#fc5648] shrink-0" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M5.05 4.05a7 7 0 119.9 9.9L10 18.9l-4.95-4.95a7 7 0 010-9.9zM10 11a2 2 0 100-4 2 2 0 000 4z" clip-rule="evenodd"/></svg>
+                                                    <span class="text-[10px] font-bold text-[#fc5648] uppercase tracking-wider truncate">{{ $d->ubicacion }}</span>
                                                 </div>
+                                                <h4 class="text-sm font-black text-slate-900 leading-tight line-clamp-1 group-hover:text-[#fc5648] transition-colors mb-1">{{ $d->titulo }}</h4>
+                                                <p class="text-xs text-slate-500 leading-relaxed line-clamp-2">{{ Str::limit($d->descripcion, 100) }}</p>
                                             </div>
-                                        </article>
-                                    </a>
-                                @endforeach
-                            </section>
-                        @endif
-{{--
-                        <div class="mt-6">
-                            {{ $noticias->links() }}
-                        </div> --}}
+                                            <span class="text-[10px] text-slate-400 font-medium mt-1">{{ $d->approved_at?->diffForHumans() }}</span>
+                                        </div>
+                                    </article>
+                                </a>
+                            @endforeach
+                        </section>
                     @else
-                        <p class="mt-4 text-gray-600">No hay noticias publicadas aún.</p>
+                        <p class="text-sm text-slate-400 mt-4">No hay denuncias publicadas aún.</p>
                     @endif
                 </main>
 
