@@ -99,6 +99,7 @@
 
                                 <!-- Columna Derecha: Texto y Acciones -->
                                 <div class="md:w-7/12 flex flex-col justify-between">
+                                    <a href="{{ route('denuncia.show', $denuncia) }}" >
                                     <div>
                                         <h2 class="text-xl font-black text-slate-900 leading-tight mb-3 group-hover:text-[#fc5648] transition-colors line-clamp-2">
                                             {{ $denuncia->titulo }}
@@ -107,6 +108,7 @@
                                             {{ $denuncia->descripcion }}
                                         </p>
                                     </div>
+                                </a>
 
                                     <div class="space-y-4">
                                         <div class="flex items-center gap-3">
