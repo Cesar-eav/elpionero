@@ -2,9 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Jobs\ProcesarDenuncia;
 use App\Models\Denuncia;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Str;
 
 class DenunciaController extends Controller
 {
@@ -33,13 +35,12 @@ class DenunciaController extends Controller
 
     public function store(Request $request)
     {
-        $t = fn() => round((microtime(true) - $GLOBALS['_t0']) * 1000) . 'ms';
-        $GLOBALS['_t0'] = microtime(true);
-        \Log::info('[POST] inicio');
+        $t0 = microtime(true);
+        $ms = fn() => round((microtime(true) - $t0) * 1000) . 'ms';
+        \Log::info('[FORM] request recibido');
 
-        // Liberar el lock de sesión lo antes posible para no bloquear otros requests concurrentes
         session()->save();
-        \Log::info('[POST] session liberada — ' . $t());
+        \Log::info('[FORM] session liberada — ' . $ms());
 
         $validated = $request->validate([
             'titulo'      => 'required|string|max:255',
@@ -54,26 +55,24 @@ class DenunciaController extends Controller
             'imagen1.required' => 'Debes subir al menos una imagen.',
             'descripcion.min'  => 'La descripción debe tener al menos 20 caracteres.',
         ]);
-        \Log::info('[POST] validación — ' . $t());
 
-        $validated['imagen1'] = $request->file('imagen1')->store('denuncias', 'public');
-        \Log::info('[POST] imagen1 guardada — ' . $t() . ' | tamaño: ' . round($request->file('imagen1')->getSize() / 1024) . 'KB');
+        \Log::info('[FORM] validación OK — ' . $ms());
 
-        if ($request->hasFile('imagen2')) {
-            $validated['imagen2'] = $request->file('imagen2')->store('denuncias', 'public');
-            \Log::info('[POST] imagen2 guardada — ' . $t() . ' | tamaño: ' . round($request->file('imagen2')->getSize() / 1024) . 'KB');
+        // Mover imágenes a temp (rápido, disco local) y despachar el job
+        $archivosTemp = [];
+        foreach (['imagen1', 'imagen2', 'imagen3'] as $campo) {
+            if ($request->hasFile($campo)) {
+                $nombre = Str::uuid() . '.' . $request->file($campo)->getClientOriginalExtension();
+                $archivosTemp[$campo] = $request->file($campo)->storeAs('temp/denuncias', $nombre, 'local');
+                \Log::info('[FORM] ' . $campo . ' → temp — ' . $ms() . ' | ' . round($request->file($campo)->getSize() / 1024) . 'KB');
+                unset($validated[$campo]);
+            }
         }
 
-        if ($request->hasFile('imagen3')) {
-            $validated['imagen3'] = $request->file('imagen3')->store('denuncias', 'public');
-            \Log::info('[POST] imagen3 guardada — ' . $t() . ' | tamaño: ' . round($request->file('imagen3')->getSize() / 1024) . 'KB');
-        }
+        ProcesarDenuncia::dispatch($validated, $archivosTemp);
+        \Log::info('[FORM] job despachado — ' . $ms());
 
-        $validated['estado'] = 'pendiente';
-        Denuncia::create($validated);
-        \Log::info('[POST] DB insert — ' . $t());
-
-        \Log::info('[POST] total — ' . $t());
+        \Log::info('[FORM] TOTAL respuesta — ' . $ms());
         return view('denuncia.gracias');
     }
 

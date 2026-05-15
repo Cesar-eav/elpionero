@@ -18,7 +18,12 @@ class InicioController extends Controller
     {
         $columnas = Articulo::with(['revista', 'columnista'])->get();
         $noticias = Noticia::latest()->paginate(3);
-        $ultimasDenuncias = Denuncia::where('estado', 'aprobada')->latest('approved_at')->take(3)->get();
+        $ultimasDenuncias = Denuncia::where('estado', 'aprobada')
+            ->whereNotNull('slug')
+            ->where('slug', '!=', '')
+            ->latest('approved_at')
+            ->take(3)
+            ->get();
 
         $ultimaRevista = Revista::latest()->first();
         $articulosDestacados = $ultimaRevista
