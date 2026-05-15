@@ -124,7 +124,7 @@ Route::middleware('auth')->group(function () {
     Route::resource('articulos', ArticuloController::class);
     Route::resource('revistas', RevistaController::class);
     Route::resource('columnistas', ColumnistaController::class);
-    Route::resource('admin/noticias', NoticiaController::class);
+    Route::resource('admin/noticias', NoticiaController::class)->names('admin.noticias');
 
     // API para estadísticas de PDFs
     Route::get('/api/pdf-stats', [PdfTrackingController::class, 'stats'])->name('pdf.stats');
