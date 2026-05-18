@@ -57,7 +57,9 @@
                                 <div class="flex items-center gap-2 bg-[#fc5648]/10 text-[#fc5648] px-3 py-1.5 rounded-full">
                                     <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M5.05 4.05a7 7 0 119.9 9.9L10 18.9l-4.95-4.95a7 7 0 010-9.9zM10 11a2 2 0 100-4 2 2 0 000 4z" clip-rule="evenodd"/></svg>
                                     <span class="text-xs font-black uppercase tracking-widest">{{ $denuncia->ubicacion }}</span>
+
                                 </div>
+
                                 <span class="text-[10px] font-bold text-slate-400 uppercase tracking-tighter italic">
                                     Hace {{ $denuncia->created_at->diffForHumans(null, true) }}
                                 </span>
@@ -104,6 +106,7 @@
                                         <h2 class="text-xl font-black text-slate-900 leading-tight mb-3 group-hover:text-[#fc5648] transition-colors line-clamp-2">
                                             {{ $denuncia->titulo }}
                                         </h2>
+                                         
                                         <p class="text-slate-600 text-sm leading-relaxed line-clamp-3 mb-4">
                                             {{ $denuncia->descripcion }}
                                         </p>
@@ -112,14 +115,14 @@
 
                                     <div class="space-y-4">
                                         <div class="flex items-center gap-3">
-                                            <div class="w-8 h-8 bg-slate-100 rounded-full flex items-center justify-center text-slate-500 font-bold text-xs uppercase">
-                                                {{ substr($denuncia->nombre ?? 'V', 0, 1) }}
-                                            </div>
                                             <p class="text-xs font-bold text-slate-500">
                                                 Por <span class="text-slate-800">{{ $denuncia->nombre ?? 'Vecino Anónimo' }}</span>
                                             </p>
                                         </div>
                                         
+                                        <span class="text-[10px] font-black text-slate-600 pr-10 leading-tight ">
+                                        🗓️ Fecha: {{ $denuncia->created_at->format('d-m-Y') }}
+                                        </span>
                                         <a href="{{ route('denuncia.show', $denuncia) }}" 
                                            class="w-full block text-center bg-slate-50 hover:bg-[#fc5648] hover:text-white text-slate-900 font-bold py-3 rounded-xl text-xs uppercase tracking-widest transition-all">
                                             Analizar Reporte Completo

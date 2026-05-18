@@ -63,6 +63,9 @@
                         <time class="text-xs text-slate-400 uppercase tracking-widest">
                             {{ $denuncia->approved_at?->diffForHumans() ?? $denuncia->created_at->diffForHumans() }}
                         </time>
+                        <span class="text-[12px] font-black text-slate-600 leading-tight group-hover:text-[#fc5648] transition-colors line-clamp-2">
+                            Fecha: {{ $denuncia->created_at->format('d-m-Y') }}
+                        </span>
                     </div>
 
                     <h1 class="text-2xl font-black text-slate-900 tracking-tight mb-4">{{ $denuncia->titulo }}</h1>
@@ -150,6 +153,7 @@
                 <span class="inline-flex items-center gap-1.5 bg-green-50 text-green-700 text-xs font-bold px-3 py-1.5 rounded-full border border-green-100">
                     <span class="w-1.5 h-1.5 bg-green-500 rounded-full"></span>Verificado
                 </span>
+                
                 <time class="text-xs text-slate-400 uppercase tracking-widest self-center">{{ $denuncia->approved_at?->diffForHumans() ?? $denuncia->created_at->diffForHumans() }}</time>
             </div>
             <h1 class="text-2xl font-black text-slate-900 mb-4">{{ $denuncia->titulo }}</h1>
@@ -157,6 +161,9 @@
                 <svg class="w-4 h-4 text-[#fc5648]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
                 <span class="text-sm font-bold text-slate-700">{{ $denuncia->ubicacion }}</span>
             </div>
+            <span class="text-[12px] font-black mb-5 text-slate-600 leading-tight group-hover:text-[#fc5648] transition-colors line-clamp-2">
+                Fecha: {{ $denuncia->created_at->format('d-m-Y') }}
+            </span>
             <div class="text-slate-600 text-base leading-relaxed whitespace-pre-line mb-6">{{ $denuncia->descripcion }}</div>
             <div class="flex items-center justify-between pt-4 border-t border-slate-100 mb-4">
                 <div class="flex items-center gap-2">
