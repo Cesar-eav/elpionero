@@ -73,17 +73,16 @@
                         <h3 class="font-semibold text-gray-800 mb-2">
                             🗑️ Eliminar correos del listado
                         </h3>
-                        <div class="flex gap-2">
-                            <input
-                                type="text"
+                        <div class="space-y-2">
+                            <textarea
                                 id="input-eliminar"
-                                placeholder="Escribe el correo a eliminar..."
-                                class="flex-1 px-3 py-2 border border-red-300 rounded-lg focus:ring-2 focus:ring-red-500 focus:border-red-500 text-sm"
-                                onkeypress="if(event.key === 'Enter') eliminarCorreo()">
+                                rows="4"
+                                placeholder="Pega uno o varios correos a eliminar (uno por línea, o separados por coma/espacio)..."
+                                class="w-full px-3 py-2 border border-red-300 rounded-lg focus:ring-2 focus:ring-red-500 focus:border-red-500 text-sm font-mono resize-y"></textarea>
                             <button
                                 onclick="eliminarCorreo()"
-                                class="bg-red-600 hover:bg-red-700 text-white font-semibold py-2 px-4 rounded-lg transition-colors text-sm">
-                                Eliminar
+                                class="w-full bg-red-600 hover:bg-red-700 text-white font-semibold py-2 px-4 rounded-lg transition-colors text-sm">
+                                Eliminar del listado
                             </button>
                         </div>
                         <div id="correos-eliminados-container" class="mt-3" style="display: none;">
@@ -464,37 +463,48 @@
 
         function eliminarCorreo() {
             const input = document.getElementById('input-eliminar');
-            const correoAEliminar = input.value.trim().toLowerCase();
+            const textoIngresado = input.value.trim();
 
-            if (!correoAEliminar) {
-                alert('Por favor, escribe un correo para eliminar.');
+            if (!textoIngresado) {
+                alert('Por favor, ingresa uno o más correos para eliminar.');
                 return;
             }
 
-            // Verificar si el correo existe en la lista
-            const indice = correosGlobales.indexOf(correoAEliminar);
-            if (indice === -1) {
-                mostrarNotificacion('El correo no se encuentra en el listado', 'info');
+            // Extraer todos los correos del texto ingresado
+            const regexEmail = /\b[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Z|a-z]{2,}\b/g;
+            const correosDetectados = textoIngresado.match(regexEmail) || [];
+            const correosAEliminar = [...new Set(correosDetectados.map(e => e.toLowerCase()))];
+
+            if (correosAEliminar.length === 0) {
+                mostrarNotificacion('No se detectaron correos válidos en el texto ingresado', 'info');
                 return;
             }
 
-            // Eliminar el correo de la lista global
-            correosGlobales.splice(indice, 1);
-
-            // Agregar a la lista de eliminados
-            if (!correosEliminados.includes(correoAEliminar)) {
-                correosEliminados.push(correoAEliminar);
-            }
+            let eliminados = 0;
+            correosAEliminar.forEach(correo => {
+                const indice = correosGlobales.indexOf(correo);
+                if (indice !== -1) {
+                    correosGlobales.splice(indice, 1);
+                    eliminados++;
+                }
+                if (!correosEliminados.includes(correo)) {
+                    correosEliminados.push(correo);
+                }
+            });
 
             // Actualizar la vista
             mostrarGrupos(correosGlobales);
             actualizarListaEliminados();
             actualizarEstadisticas();
 
-            // Limpiar input
+            // Limpiar textarea
             input.value = '';
 
-            mostrarNotificacion('Correo eliminado del listado', 'success');
+            if (eliminados > 0) {
+                mostrarNotificacion(`${eliminados} correo(s) eliminado(s) del listado`, 'success');
+            } else {
+                mostrarNotificacion(`Ninguno de los ${correosAEliminar.length} correo(s) estaba en el listado`, 'info');
+            }
         }
 
         function actualizarListaEliminados() {
