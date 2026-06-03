@@ -9,6 +9,16 @@
     <title>{{ $articulo->titulo }} - El Pionero de Valparaíso</title>
     @vite(['resources/css/app.css', 'resources/js/app.js'])
     @commenterStyles
+    <style>
+        .contenido-articulo img {
+            max-width: 100%;
+            height: auto;
+            display: block;
+            margin: 1.5rem auto;
+            border-radius: 6px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.12);
+        }
+    </style>
 
     @if (app()->environment('production'))
         <script type="text/javascript">
@@ -95,7 +105,7 @@
                         </div>
 
                         <!-- Contenido del artículo -->
-                        <div class="text-gray-800 text-base leading-relaxed prose prose-lg max-w-none">
+                        <div class="text-gray-800 text-base leading-relaxed prose prose-lg max-w-none contenido-articulo">
                             {!! $articulo->contenido !!}
                         </div>
 

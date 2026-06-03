@@ -84,6 +84,7 @@ Route::prefix('entrevistas')->group(function () {
 // Rutas API para Cable a Tierra
 Route::prefix('cable-a-tierra')->group(function () {
     Route::get('/', [CableATierraApiController::class, 'index']);
+    Route::post('/upload-imagen', [CableATierraApiController::class, 'uploadImagen']);
     Route::get('/{cableATierra}', [CableATierraApiController::class, 'show']);
     Route::post('/', [CableATierraApiController::class, 'store']);
     Route::put('/{cableATierra}', [CableATierraApiController::class, 'update']);

@@ -105,6 +105,19 @@ class CableATierraApiController extends Controller
         return response()->json($cableATierra);
     }
 
+    public function uploadImagen(Request $request)
+    {
+        $request->validate([
+            'imagen' => 'required|image|mimes:jpeg,jpg,png,gif|max:5120'
+        ]);
+
+        $path = $request->file('imagen')->store('cable-a-tierra/contenido', 'public');
+
+        return response()->json([
+            'url' => asset('storage/' . $path)
+        ]);
+    }
+
     public function destroy(CableATierra $cableATierra)
     {
         // Eliminar imagen móvil si existe
