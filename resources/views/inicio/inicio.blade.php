@@ -241,10 +241,13 @@
                             <img src="{{ asset('storage/publicidad_movil_2.png') }}" alt="Anuncio Mediano"
                                 class="w-full rounded border shadow  block md:hidden" />
                         </div>
-                        {{-- DESTACADA --}}
-                        <section class="mt-4">
+                        {{-- DESTACADA + ÚLTIMO CABLE A TIERRA --}}
+                        <section class="mt-4 flex flex-col md:flex-row gap-4">
+
+                        {{-- Destacada (2/3 en desktop) --}}
+                        <div class="w-full md:w-2/3 flex">
                             <a href="{{ url('articulo/' . $destacada->slug) }}"
-                               class="group block md:flex md:flex-row rounded-xl overflow-hidden shadow-lg hover:shadow-xl transition-all duration-300 bg-white">
+                               class="group flex flex-col md:flex-row w-full rounded-xl overflow-hidden shadow-lg hover:shadow-xl transition-all duration-300 bg-white">
 
                                 {{-- Imagen --}}
                                 <div class="relative w-full aspect-[4/3] md:aspect-auto md:w-2/5 md:flex-shrink-0 overflow-hidden
@@ -253,10 +256,9 @@
                                     @if ($destacada->columnista && $destacada->columnista->foto)
                                         <img src="{{ asset('storage/' . $destacada->columnista->foto) }}"
                                             alt="{{ $destacada->columnista->nombre }}"
-                                            class="w-full h-full object-cover object-top group-hover:scale-105 transition-transform duration-500" />
+                                            class="absolute inset-0 w-full h-full object-cover object-top group-hover:scale-105 transition-transform duration-500" />
                                     @endif
 
-                                    {{-- Badge --}}
                                     <span class="absolute top-3 left-3 z-10 bg-[#fc5648] text-white text-[10px] font-bold uppercase tracking-widest px-2.5 py-1 rounded shadow">
                                         Destacada
                                     </span>
@@ -281,13 +283,13 @@
                                 {{-- Texto (solo desktop) --}}
                                 <div class="hidden md:flex md:w-3/5 flex-col justify-center px-8 py-8 border-l-4 border-[#fc5648]">
                                     <div class="h-1 w-10 bg-[#eba81d] rounded-full mb-4"></div>
-                                    <p class="text-xs text-gray-400 uppercase tracking-widest mb-3">
+                                    <p class="text-xs text-gray-700 font-semibold uppercase tracking-widest mb-3">
                                         {{ $destacada->revista->titulo ?? '' }}
                                     </p>
                                     <h3 class="text-3xl font-bold text-black leading-tight mb-4">
                                         {{ $destacada->titulo }}
                                     </h3>
-                                    <p class="text-gray-600 text-sm leading-relaxed line-clamp-4 mb-5">
+                                    <p class="text-gray-800 text-sm leading-relaxed line-clamp-4 mb-5">
                                         {{ Str::limit(strip_tags($destacada->contenido), 280) }}
                                     </p>
                                     @if ($destacada->autor || ($destacada->columnista && $destacada->columnista->nombre))
@@ -301,6 +303,54 @@
                                 </div>
 
                             </a>
+                        </div>
+
+                        {{-- Último Cable a Tierra (1/3 en desktop) --}}
+                        @if ($ultimoCableATierra)
+                        <div class="w-full md:w-1/3 flex">
+                            <a href="{{ url('cable-a-tierra/' . $ultimoCableATierra->slug) }}"
+                               class="group flex flex-col w-full rounded-xl overflow-hidden shadow-lg hover:shadow-xl transition-all duration-300 bg-white">
+
+                                {{-- Imagen --}}
+                                <div class="relative w-full aspect-video overflow-hidden bg-gray-200">
+                                    @if ($ultimoCableATierra->imagen_desktop)
+                                        <img src="{{ asset('storage/' . $ultimoCableATierra->imagen_desktop) }}"
+                                             alt="{{ $ultimoCableATierra->titulo }}"
+                                             class="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"/>
+                                    @elseif ($ultimoCableATierra->imagen)
+                                        <img src="{{ asset('storage/' . $ultimoCableATierra->imagen) }}"
+                                             alt="{{ $ultimoCableATierra->titulo }}"
+                                             class="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"/>
+                                    @else
+                                        <div class="absolute inset-0 bg-gradient-to-br from-[#fc5648] to-[#eba81d] flex items-center justify-center">
+                                            <span class="text-white text-3xl font-bold">CT</span>
+                                        </div>
+                                    @endif
+                                    <span class="absolute top-3 left-3 bg-[#fc5648] text-white text-[10px] font-bold uppercase tracking-widest px-2.5 py-1 rounded shadow">
+                                        Cable a Tierra
+                                    </span>
+                                </div>
+
+                                {{-- Texto --}}
+                                <div class="flex flex-col flex-1 p-4 border-t-4 border-[#fc5648]">
+                                    @if ($ultimoCableATierra->autor)
+                                        <p class="text-xs text-gray-700 font-semibold uppercase tracking-widest mb-1">
+                                            {{ $ultimoCableATierra->autor }}
+                                        </p>
+                                    @endif
+                                    <h3 class="text-base font-bold text-black leading-snug mb-2 group-hover:text-[#fc5648] transition-colors line-clamp-3">
+                                        {{ $ultimoCableATierra->titulo }}
+                                    </h3>
+                                    <p class="text-sm text-gray-800 leading-relaxed line-clamp-3 mb-3">
+                                        {{ Str::limit(strip_tags($ultimoCableATierra->resumen), 120) }}
+                                    </p>
+                                    <span class="mt-auto text-xs text-[#fc5648] font-semibold">Leer más →</span>
+                                </div>
+
+                            </a>
+                        </div>
+                        @endif
+
                         </section>
                         <div>
                             <img src="{{ asset('storage/cafe.png') }}" alt="Anuncio Mediano"

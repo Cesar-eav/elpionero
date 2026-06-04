@@ -38,8 +38,10 @@ class InicioController extends Controller
         $destacada = $articulosDestacados->values()->get($indice)
             ?? $columnas->sortByDesc('created_at')->first();
 
+        $ultimoCableATierra = CableATierra::latest('fecha_publicacion')->first();
+
         return view('inicio.inicio', compact([
-            'columnas', 'noticias', 'destacada', 'ultimasDenuncias'
+            'columnas', 'noticias', 'destacada', 'ultimasDenuncias', 'ultimoCableATierra'
         ]));
     }
 
