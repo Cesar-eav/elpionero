@@ -23,6 +23,7 @@ class CableATierra extends Model implements CommentableContract
         'contenido',
         'imagen',
         'imagen_desktop',
+        'video_youtube',
         'fecha_publicacion'
     ];
 

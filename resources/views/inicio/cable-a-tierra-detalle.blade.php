@@ -104,6 +104,28 @@
                             @endif
                         </div>
 
+                        <!-- Video YouTube -->
+                        @if ($articulo->video_youtube)
+                            @php
+                                preg_match('/(?:youtube\.com\/(?:watch\?v=|embed\/|shorts\/)|youtu\.be\/)([A-Za-z0-9_-]{11})/', $articulo->video_youtube, $m);
+                                $embedId = $m[1] ?? null;
+                            @endphp
+                            @if ($embedId)
+                                <div class="mb-6">
+                                    <div class="relative w-full" style="padding-bottom: 56.25%;">
+                                        <iframe
+                                            class="absolute inset-0 w-full h-full rounded-lg shadow"
+                                            src="https://www.youtube.com/embed/{{ $embedId }}"
+                                            title="{{ $articulo->titulo }}"
+                                            frameborder="0"
+                                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                                            allowfullscreen>
+                                        </iframe>
+                                    </div>
+                                </div>
+                            @endif
+                        @endif
+
                         <!-- Contenido del artículo -->
                         <div class="text-gray-800 text-base leading-relaxed prose prose-lg max-w-none contenido-articulo">
                             {!! $articulo->contenido !!}

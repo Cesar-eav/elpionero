@@ -46,10 +46,10 @@ class CableATierraApiController extends Controller
             'contenido' => 'required|string',
             'imagen' => 'nullable|image|mimes:jpeg,jpg,png,gif|max:2048',
             'imagen_desktop' => 'nullable|image|mimes:jpeg,jpg,png,gif|max:2048',
+            'video_youtube' => 'nullable|string|max:500',
             'fecha_publicacion' => 'required|date'
         ]);
 
-        // Generar slug
         $validated['slug'] = Str::slug($validated['titulo']);
 
         // Manejar imagen móvil
@@ -76,10 +76,10 @@ class CableATierraApiController extends Controller
             'contenido' => 'required|string',
             'imagen' => 'nullable|image|mimes:jpeg,jpg,png,gif|max:2048',
             'imagen_desktop' => 'nullable|image|mimes:jpeg,jpg,png,gif|max:2048',
+            'video_youtube' => 'nullable|string|max:500',
             'fecha_publicacion' => 'required|date'
         ]);
 
-        // Actualizar slug si cambió el título
         $validated['slug'] = Str::slug($validated['titulo']);
 
         // Manejar imagen móvil

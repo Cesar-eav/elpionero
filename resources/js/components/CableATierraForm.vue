@@ -76,6 +76,16 @@
                             class="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500"/>
                     </div>
 
+                    <!-- Video YouTube -->
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-1">Video de YouTube (opcional)</label>
+                        <input v-model="form.video_youtube" type="text"
+                            class="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500"
+                            placeholder="https://www.youtube.com/watch?v=... o https://youtu.be/..."/>
+                        <p v-if="youtubeEmbedUrl" class="text-xs text-green-600 mt-1">✓ Video detectado</p>
+                        <p v-else-if="form.video_youtube" class="text-xs text-red-500 mt-1">URL de YouTube no reconocida</p>
+                    </div>
+
                     <!-- Editor Quill -->
                     <div>
                         <label class="block text-sm font-medium text-gray-700 mb-1">Contenido <span class="text-red-500">*</span></label>
@@ -185,6 +195,7 @@ export default {
                 autor: '',
                 resumen: '',
                 contenido: '',
+                video_youtube: '',
                 fecha_publicacion: new Date().toISOString().split('T')[0]
             },
             imageFile: null,
@@ -200,6 +211,13 @@ export default {
     computed: {
         isEdit() {
             return this.articulo !== null;
+        },
+        youtubeEmbedUrl() {
+            const url = this.form.video_youtube?.trim();
+            if (!url) return null;
+            // youtube.com/watch?v=ID  |  youtu.be/ID  |  youtube.com/embed/ID
+            const match = url.match(/(?:youtube\.com\/(?:watch\?v=|embed\/|shorts\/)|youtu\.be\/)([A-Za-z0-9_-]{11})/);
+            return match ? `https://www.youtube.com/embed/${match[1]}` : null;
         },
         cantidadParrafos() {
             const matches = this.form.contenido.match(/<\/(p|h[1-6]|li)>/gi);
@@ -238,6 +256,7 @@ export default {
             this.form.titulo = this.articulo.titulo || '';
             this.form.autor = this.articulo.autor || '';
             this.form.resumen = this.articulo.resumen || '';
+            this.form.video_youtube = this.articulo.video_youtube || '';
             this.form.fecha_publicacion = this.articulo.fecha_publicacion || new Date().toISOString().split('T')[0];
 
             if (this.articulo.contenido) {
@@ -392,6 +411,7 @@ export default {
                 formData.append('autor', this.form.autor || '');
                 formData.append('resumen', this.form.resumen);
                 formData.append('contenido', contenidoFinal);
+                formData.append('video_youtube', this.form.video_youtube || '');
                 formData.append('fecha_publicacion', this.form.fecha_publicacion);
                 if (this.imageFile)        formData.append('imagen', this.imageFile);
                 if (this.imageDesktopFile) formData.append('imagen_desktop', this.imageDesktopFile);
