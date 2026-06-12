@@ -52,6 +52,16 @@
                             {{ $articulos->count() }} {{ Str::plural('columna', $articulos->count()) }}
                         </span>
                     </div>
+
+                    @if ($revista->slug === 'especial-paseo-wheelwright-entre-el-potencial-y-el-olvido')
+                        <a href="https://elpionerodevalpo.cl/pdf/01_paseo_wWheelwright.pdf/download"
+                           class="inline-flex items-center gap-2 mt-4 px-4 py-2 bg-[#fc5648] text-white text-sm font-semibold rounded-lg hover:bg-[#d94439] transition-colors shadow">
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/>
+                            </svg>
+                            Descargar PDF
+                        </a>
+                    @endif
                 </div>
             </div>
         </div>
