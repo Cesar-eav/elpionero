@@ -41,16 +41,21 @@ class CableATierraApiController extends Controller
     {
         $validated = $request->validate([
             'titulo' => 'required|string|max:255',
+            'slug' => 'nullable|string|max:255',
             'autor' => 'nullable|string|max:255',
             'resumen' => 'required|string',
             'contenido' => 'required|string',
             'imagen' => 'nullable|image|mimes:jpeg,jpg,png,gif|max:2048',
             'imagen_desktop' => 'nullable|image|mimes:jpeg,jpg,png,gif|max:2048',
             'video_youtube' => 'nullable|string|max:500',
-            'fecha_publicacion' => 'required|date'
+            'fecha_publicacion' => 'required|date',
+            'publicado' => 'nullable|boolean',
         ]);
 
-        $validated['slug'] = Str::slug($validated['titulo']);
+        $validated['slug'] = $request->filled('slug')
+            ? Str::slug($request->slug)
+            : Str::slug($validated['titulo']);
+        $validated['publicado'] = $request->boolean('publicado', true);
 
         // Manejar imagen móvil
         if ($request->hasFile('imagen')) {
@@ -71,16 +76,21 @@ class CableATierraApiController extends Controller
     {
         $validated = $request->validate([
             'titulo' => 'required|string|max:255',
+            'slug' => 'nullable|string|max:255',
             'autor' => 'nullable|string|max:255',
             'resumen' => 'required|string',
             'contenido' => 'required|string',
             'imagen' => 'nullable|image|mimes:jpeg,jpg,png,gif|max:2048',
             'imagen_desktop' => 'nullable|image|mimes:jpeg,jpg,png,gif|max:2048',
             'video_youtube' => 'nullable|string|max:500',
-            'fecha_publicacion' => 'required|date'
+            'fecha_publicacion' => 'required|date',
+            'publicado' => 'nullable|boolean',
         ]);
 
-        $validated['slug'] = Str::slug($validated['titulo']);
+        $validated['slug'] = $request->filled('slug')
+            ? Str::slug($request->slug)
+            : Str::slug($validated['titulo']);
+        $validated['publicado'] = $request->boolean('publicado', true);
 
         // Manejar imagen móvil
         if ($request->hasFile('imagen')) {

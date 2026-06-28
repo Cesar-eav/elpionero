@@ -1,5 +1,17 @@
 <template>
     <div class="cable-a-tierra-manager">
+
+        <!-- ─── Editor de artículo (pantalla completa) ─── -->
+        <CableATierraForm
+            v-if="showModal"
+            :articulo="selectedArticulo"
+            @close="closeModal"
+            @saved="handleSaved"
+        />
+
+        <!-- ─── Lista (oculta mientras el editor está abierto) ─── -->
+        <template v-if="!showModal">
+
         <!-- Header con botón crear y búsqueda -->
         <div class="mb-4 flex gap-4 items-center">
             <button
@@ -150,13 +162,7 @@
             </div>
         </div>
 
-        <!-- Modal de formulario -->
-        <CableATierraForm
-            v-if="showModal"
-            :articulo="selectedArticulo"
-            @close="closeModal"
-            @saved="handleSaved"
-        />
+        </template><!-- /v-if="!showModal" -->
     </div>
 </template>
 

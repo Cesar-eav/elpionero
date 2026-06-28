@@ -24,10 +24,12 @@ class CableATierra extends Model implements CommentableContract
         'imagen',
         'imagen_desktop',
         'video_youtube',
-        'fecha_publicacion'
+        'fecha_publicacion',
+        'publicado',
     ];
 
     protected $casts = [
         'fecha_publicacion' => 'date:Y-m-d',
+        'publicado' => 'boolean',
     ];
 }

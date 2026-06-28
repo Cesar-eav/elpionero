@@ -38,7 +38,7 @@ class InicioController extends Controller
         $destacada = $articulosDestacados->values()->get($indice)
             ?? $columnas->sortByDesc('created_at')->first();
 
-        $ultimoCableATierra = CableATierra::latest('fecha_publicacion')->first();
+        $ultimoCableATierra = CableATierra::where('publicado', true)->latest('fecha_publicacion')->first();
 
         return view('inicio.inicio', compact([
             'columnas', 'noticias', 'destacada', 'ultimasDenuncias', 'ultimoCableATierra'
@@ -98,7 +98,7 @@ class InicioController extends Controller
 
     public function cableATierra()
     {
-        $articulos = CableATierra::latest('fecha_publicacion')
+        $articulos = CableATierra::where('publicado', true)->latest('fecha_publicacion')
             ->paginate(12);
 
         return view('inicio.cable-a-tierra', compact('articulos'));
@@ -106,8 +106,9 @@ class InicioController extends Controller
 
     public function showCableATierra($slug)
     {
-        $articulo = CableATierra::where('slug', $slug)->firstOrFail();
+        $articulo = CableATierra::where('slug', $slug)->where('publicado', true)->firstOrFail();
         $otrosArticulos = CableATierra::where('id', '!=', $articulo->id)
+            ->where('publicado', true)
             ->latest('fecha_publicacion')
             ->limit(4)
             ->get();
