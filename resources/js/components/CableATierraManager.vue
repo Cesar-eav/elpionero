@@ -7,6 +7,7 @@
             :articulo="selectedArticulo"
             @close="closeModal"
             @saved="handleSaved"
+            @refreshed="handleRefreshed"
         />
 
         <!-- ─── Lista (oculta mientras el editor está abierto) ─── -->
@@ -279,6 +280,9 @@ export default {
         },
         handleSaved() {
             this.closeModal();
+            this.loadArticulos(this.pagination.current_page);
+        },
+        handleRefreshed() {
             this.loadArticulos(this.pagination.current_page);
         },
         deleteArticulo(id) {

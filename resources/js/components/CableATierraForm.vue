@@ -24,14 +24,31 @@
                         </span>
                     </div>
                 </div>
-                <button type="submit" :disabled="saving"
-                    class="inline-flex items-center gap-2 bg-gray-900 text-white text-sm font-bold px-5 py-2.5 rounded-xl hover:bg-gray-800 transition-colors disabled:opacity-60">
-                    <svg v-if="saving" class="animate-spin h-4 w-4 flex-shrink-0" fill="none" viewBox="0 0 24 24">
-                        <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"/>
-                        <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z"/>
-                    </svg>
-                    {{ saving ? 'Guardando…' : 'Guardar cambios' }}
-                </button>
+                <div class="flex items-center gap-3">
+                    <span v-if="saveStatus === 'success'"
+                        class="text-sm text-green-600 font-medium flex items-center gap-1">
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"/>
+                        </svg>
+                        Guardado
+                    </span>
+                    <button type="button" @click="showPreview = true"
+                        class="inline-flex items-center gap-1.5 border border-gray-200 text-gray-500 text-sm font-medium px-4 py-2 rounded-xl hover:bg-gray-50 transition-colors">
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/>
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"/>
+                        </svg>
+                        Ver preview
+                    </button>
+                    <button type="submit" :disabled="saving"
+                        class="inline-flex items-center gap-2 bg-gray-900 text-white text-sm font-bold px-5 py-2.5 rounded-xl hover:bg-gray-800 transition-colors disabled:opacity-60">
+                        <svg v-if="saving" class="animate-spin h-4 w-4 flex-shrink-0" fill="none" viewBox="0 0 24 24">
+                            <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"/>
+                            <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z"/>
+                        </svg>
+                        {{ saving ? 'Guardando…' : 'Guardar cambios' }}
+                    </button>
+                </div>
             </div>
 
             <!-- ═══ BLOQUE 2 — Título · Resumen · Portada ═══ -->
@@ -228,8 +245,9 @@
                     <div class="space-y-0.5 flex-1 min-h-0">
                         <template v-for="(block, i) in blocksPreview" :key="'block-' + i">
                             <div class="flex items-start gap-1.5 py-1">
-                                <span class="flex-shrink-0 w-5 h-5 rounded-full bg-[#fc5648] text-white text-[9px] font-bold flex items-center justify-center">
-                                    {{ i + 1 > 9 ? '…' : i + 1 }}
+                                <span class="flex-shrink-0 rounded-full bg-[#fc5648] text-white font-bold flex items-center justify-center"
+                                    :class="(i + 1) > 9 ? 'w-6 h-6 text-[7px]' : 'w-5 h-5 text-[9px]'">
+                                    {{ i + 1 }}
                                 </span>
                                 <span class="text-[10px] text-gray-500 leading-snug">
                                     {{ block.length > 80 ? block.slice(0, 80) + '…' : block }}
@@ -261,6 +279,69 @@
 
             </div>
         </form>
+
+        <!-- ═══ MODAL PREVIEW ═══ -->
+        <Teleport to="body">
+            <div v-if="showPreview"
+                class="fixed inset-0 bg-black bg-opacity-70 z-50 overflow-y-auto flex items-start justify-center py-8 px-4"
+                @click.self="showPreview = false">
+                <div class="w-full max-w-3xl bg-white rounded-2xl shadow-2xl overflow-hidden">
+
+                    <!-- Barra de preview -->
+                    <div class="bg-gray-900 px-6 py-3 flex items-center justify-between sticky top-0 z-10">
+                        <div class="flex items-center gap-2 text-sm">
+                            <span class="w-2 h-2 rounded-full flex-shrink-0"
+                                :class="form.publicado ? 'bg-green-400' : 'bg-yellow-400'"/>
+                            <span class="text-gray-300 font-medium">Preview</span>
+                            <span class="text-gray-500">—</span>
+                            <span :class="form.publicado ? 'text-green-400' : 'text-yellow-400'">
+                                {{ form.publicado ? 'Publicado' : 'Borrador' }}
+                            </span>
+                        </div>
+                        <button type="button" @click="showPreview = false"
+                            class="text-gray-400 hover:text-white transition-colors p-1 rounded">
+                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+                            </svg>
+                        </button>
+                    </div>
+
+                    <!-- Contenido del artículo -->
+                    <div class="p-8 lg:p-12">
+                        <p class="text-xs font-black uppercase tracking-widest text-[#fc5648] mb-5">Cable a Tierra</p>
+
+                        <h1 class="text-3xl lg:text-4xl font-black text-gray-900 leading-tight mb-5">
+                            {{ form.titulo || 'Sin título' }}
+                        </h1>
+
+                        <div class="flex flex-wrap items-center gap-x-3 gap-y-1 text-sm text-gray-400 mb-8 pb-8 border-b border-gray-100">
+                            <span v-if="form.autor" class="font-medium text-gray-600">{{ form.autor }}</span>
+                            <span v-if="form.autor && form.fecha_publicacion" class="w-1 h-1 rounded-full bg-gray-300 flex-shrink-0"/>
+                            <span v-if="form.fecha_publicacion">{{ formatPreviewDate(form.fecha_publicacion) }}</span>
+                        </div>
+
+                        <p v-if="form.resumen"
+                            class="text-lg text-gray-600 leading-relaxed mb-8 pl-4 border-l-4 border-[#fc5648] italic">
+                            {{ form.resumen }}
+                        </p>
+
+                        <div v-if="youtubeEmbedUrl" class="mb-8 rounded-xl overflow-hidden" style="aspect-ratio:16/9">
+                            <iframe :src="youtubeEmbedUrl" class="w-full h-full" frameborder="0"
+                                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                                allowfullscreen/>
+                        </div>
+
+                        <div class="prose prose-lg max-w-none
+                            prose-headings:font-black prose-headings:text-gray-900
+                            prose-p:text-gray-700 prose-p:leading-relaxed
+                            prose-a:text-[#fc5648] prose-a:no-underline hover:prose-a:underline
+                            prose-img:rounded-xl prose-img:mx-auto prose-img:my-6
+                            prose-blockquote:border-[#fc5648] prose-blockquote:text-gray-500"
+                            v-html="previewContenidoNumbered"/>
+                    </div>
+                </div>
+            </div>
+        </Teleport>
     </div>
 </template>
 
@@ -274,7 +355,7 @@ export default {
     props: {
         articulo: { type: Object, default: null }
     },
-    emits: ['close', 'saved'],
+    emits: ['close', 'saved', 'refreshed'],
     data() {
         return {
             form: {
@@ -294,12 +375,18 @@ export default {
             imageDesktopPreview: null,
             quillInstance: null,
             saving: false,
+            saveStatus: null,
+            savedArticuloId: null,
+            showPreview: false,
             imagenesContenido: [],
         };
     },
     computed: {
         isEdit() {
-            return this.articulo !== null;
+            return this.articulo !== null || this.savedArticuloId !== null;
+        },
+        currentArticuloId() {
+            return this.articulo?.id ?? this.savedArticuloId;
         },
         youtubeEmbedUrl() {
             const url = this.form.video_youtube?.trim();
@@ -377,6 +464,53 @@ export default {
             return [...beyondEnd, ...autoNoBlocks].map(img => ({
                 ...img, idx: this.imagenesContenido.indexOf(img)
             }));
+        },
+        // Igual que buildContenidoFinal pero usa preview (base64/url) para mostrar imágenes no guardadas aún
+        previewContenido() {
+            const total = this.cantidadParrafos;
+            const active = this.imagenesContenido.filter(s => s.preview && !s.marcarEliminar);
+            const withPos = active.filter(s => s.posicion).sort((a, b) => Number(a.posicion) - Number(b.posicion));
+            const autoImgs = active.filter(s => !s.posicion);
+
+            const byBlock = {};
+            withPos.forEach(s => {
+                const p = Number(s.posicion);
+                if (!byBlock[p]) byBlock[p] = [];
+                byBlock[p].push(s.url || s.preview);
+            });
+            if (autoImgs.length > 0 && total > 0) {
+                const intervalo = Math.floor(total / (autoImgs.length + 1));
+                autoImgs.forEach((s, i) => {
+                    const pos = Math.min((i + 1) * (intervalo || 1), total);
+                    if (!byBlock[pos]) byBlock[pos] = [];
+                    byBlock[pos].push(s.url || s.preview);
+                });
+            }
+
+            let n = 0;
+            let result = this.form.contenido.replace(/<\/(p|h[1-6]|li)>/gi, match => {
+                n++;
+                const imgs = byBlock[n] || [];
+                return match + imgs.map(src =>
+                    `<img src="${src}" alt="" style="max-width:100%;height:auto;display:block;margin:1.5rem auto;border-radius:0.75rem;">`
+                ).join('');
+            });
+            if (autoImgs.length > 0 && total === 0) {
+                result += autoImgs.map(s =>
+                    `<img src="${s.url || s.preview}" alt="" style="max-width:100%;height:auto;display:block;margin:1.5rem auto;border-radius:0.75rem;">`
+                ).join('');
+            }
+            return result;
+        },
+        previewContenidoNumbered() {
+            let n = 0;
+            return this.previewContenido.replace(
+                /<(p|h[1-6]|li)([^>]*)>/gi,
+                (_, tag, attrs) => {
+                    n++;
+                    return `<${tag}${attrs}><span class="preview-para-num">${n}</span>`;
+                }
+            );
         },
     },
     mounted() {
@@ -457,20 +591,29 @@ export default {
         extraerImagenes(html) {
             const slots = [];
             let n = 0;
+            // * en lugar de + para que n cuente TODOS los párrafos, no solo los que tienen imágenes
             const textoSolo = html.replace(
-                /<\/(p|h[1-6]|li)>((?:\s*<img\b[^>]*\/?>)+)/gi,
+                /<\/(p|h[1-6]|li)>((?:\s*<img\b[^>]*\/?>)*)/gi,
                 (_, tag, imgGroup) => {
                     n++;
-                    const imgRe = /<img\b[^>]*\/?>/gi;
-                    let m;
-                    while ((m = imgRe.exec(imgGroup)) !== null) {
-                        const src = (m[0].match(/src="([^"]+)"/i) || [])[1];
-                        if (src) slots.push({ archivo: null, preview: src, posicion: n, url: src, marcarEliminar: false });
+                    if (imgGroup.trim()) {
+                        const imgRe = /<img\b[^>]*\/?>/gi;
+                        let m;
+                        while ((m = imgRe.exec(imgGroup)) !== null) {
+                            const src = (m[0].match(/src="([^"]+)"/i) || [])[1];
+                            if (src) slots.push({ archivo: null, preview: src, posicion: n, url: src, marcarEliminar: false });
+                        }
                     }
                     return `</${tag}>`;
                 }
             );
             return { textoSolo, slots };
+        },
+
+        formatPreviewDate(dateStr) {
+            if (!dateStr) return '';
+            const d = new Date(dateStr + 'T00:00:00');
+            return d.toLocaleDateString('es-CL', { day: 'numeric', month: 'long', year: 'numeric' });
         },
 
         generarSlug(titulo) {
@@ -625,12 +768,22 @@ export default {
                 if (this.imageFile) formData.append('imagen', this.imageFile);
                 if (this.imageDesktopFile) formData.append('imagen_desktop', this.imageDesktopFile);
 
-                const url = this.isEdit ? `/api/cable-a-tierra/${this.articulo.id}` : '/api/cable-a-tierra';
-                if (this.isEdit) formData.append('_method', 'PUT');
+                const url = this.currentArticuloId
+                    ? `/api/cable-a-tierra/${this.currentArticuloId}`
+                    : '/api/cable-a-tierra';
+                if (this.currentArticuloId) formData.append('_method', 'PUT');
 
-                await axios.post(url, formData, { headers: { 'Content-Type': 'multipart/form-data' } });
-                alert(this.isEdit ? 'Artículo actualizado exitosamente' : 'Artículo creado exitosamente');
-                this.$emit('saved');
+                const response = await axios.post(url, formData, { headers: { 'Content-Type': 'multipart/form-data' } });
+
+                // Si era nuevo, guardar el ID para que los próximos guardados sean PUT
+                if (!this.currentArticuloId) {
+                    this.savedArticuloId = response.data.id;
+                    this.form.slug = response.data.slug || this.form.slug;
+                }
+
+                this.saveStatus = 'success';
+                setTimeout(() => { this.saveStatus = null; }, 3000);
+                this.$emit('refreshed');
             } catch (error) {
                 console.error('Error al guardar:', error);
                 if (error.response?.data?.errors) {
@@ -660,4 +813,22 @@ export default {
     border-color: #e5e7eb;
 }
 :deep(.ql-editor) { min-height: 400px; }
+
+:deep(.preview-para-num) {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 18px;
+    height: 18px;
+    min-width: 18px;
+    border-radius: 50%;
+    background: #fc5648;
+    color: white;
+    font-size: 9px;
+    font-weight: 700;
+    margin-right: 5px;
+    vertical-align: middle;
+    line-height: 1;
+    flex-shrink: 0;
+}
 </style>
