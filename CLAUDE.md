@@ -58,7 +58,7 @@ content: [
 | `Columnista` | columnistas | nombre, email, foto, bio, participa_proximo_numero | hasMany(Articulo) |
 | `Editorial` | editorials | revista_id, titulo, slug, contenido | belongsTo(Revista) |
 | `Entrevista` | entrevistas | titulo, slug, entrevistado, cargo, contenido, imagen, imagen_desktop, fecha_publicacion | — |
-| `CableATierra` | cable_a_tierra | titulo, slug, autor, resumen, contenido, imagen, imagen_desktop, **video_youtube**, fecha_publicacion | — |
+| `CableATierra` | cable_a_tierra | titulo, slug, autor (nombres unidos, derivado), **autores** (json `[{nombre, foto}]`), resumen, contenido, imagen, imagen_desktop, **video_youtube**, fecha_publicacion | — |
 | `Noticia` | noticias | titulo, slug, resumen, cuerpo, imagen, fecha_publicacion | — |
 | `Denuncia` | denuncias | titulo, slug, nombre, descripcion, ubicacion, imagen1-4, estado (enum), approved_at | — |
 | `Atractivo` | atractivos | user_id, categoria_id, title, description, tags(json), image, galeria(json), ciudad, lat, lng, horario | belongsTo(User), belongsTo(Categoria) |
@@ -222,6 +222,7 @@ Imágenes en disco `public`. Paths guardados relativos (sin `/storage/`), se sir
 | Portadas revistas | `portadas/` |
 | Cable a Tierra (portada) | `cable-a-tierra/` |
 | Cable a Tierra (contenido) | `cable-a-tierra/contenido/` |
+| Cable a Tierra (fotos autores) | `cable-a-tierra/autores/` |
 | Entrevistas | `entrevistas/` |
 | Atractivos | (variable) |
 

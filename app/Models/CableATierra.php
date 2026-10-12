@@ -19,6 +19,7 @@ class CableATierra extends Model implements CommentableContract
         'titulo',
         'slug',
         'autor',
+        'autores',
         'resumen',
         'contenido',
         'imagen',
@@ -31,5 +32,6 @@ class CableATierra extends Model implements CommentableContract
     protected $casts = [
         'fecha_publicacion' => 'date:Y-m-d',
         'publicado' => 'boolean',
+        'autores' => 'array',
     ];
 }

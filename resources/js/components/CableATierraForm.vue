@@ -71,10 +71,47 @@
                         </div>
                     </div>
                     <div>
-                        <label class="text-[10px] font-black uppercase tracking-widest text-gray-400 block mb-2">Autor</label>
-                        <input v-model="form.autor" type="text"
-                            class="w-full text-sm border-0 border-b border-gray-200 focus:border-[#fc5648] focus:ring-0 pb-1 outline-none placeholder-gray-300"
-                            placeholder="Nombre del autor (opcional)"/>
+                        <div class="flex items-center justify-between mb-2">
+                            <label class="text-[10px] font-black uppercase tracking-widest text-gray-400">
+                                Autores <span v-if="autores.length" class="font-medium normal-case tracking-normal">({{ autores.length }})</span>
+                            </label>
+                            <button v-if="autores.length < 10" type="button" @click="addAutor"
+                                class="text-[11px] font-semibold text-[#fc5648] hover:text-[#d94439] transition-colors">
+                                + Añadir autor
+                            </button>
+                        </div>
+                        <p v-if="!autores.length" class="text-xs text-gray-300">Sin autor (opcional)</p>
+                        <div v-for="(autor, i) in autores" :key="autor.key" class="flex items-center gap-3 py-1.5">
+                            <div class="relative flex-shrink-0">
+                                <label class="block cursor-pointer group" title="Foto del autor (opcional)">
+                                    <img v-if="autorFotoSrc(autor)" :src="autorFotoSrc(autor)"
+                                        class="w-10 h-10 rounded-full object-cover ring-2 ring-white shadow-sm"/>
+                                    <span v-else
+                                        class="w-10 h-10 rounded-full border-2 border-dashed border-gray-300 group-hover:border-[#fc5648] text-gray-300 group-hover:text-[#fc5648] flex items-center justify-center transition-colors">
+                                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 9a2 2 0 012-2h.93a2 2 0 001.664-.89l.812-1.22A2 2 0 0110.07 4h3.86a2 2 0 011.664.89l.812 1.22A2 2 0 0018.07 7H19a2 2 0 012 2v9a2 2 0 01-2 2H5a2 2 0 01-2-2V9z"/>
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 13a3 3 0 11-6 0 3 3 0 016 0z"/>
+                                        </svg>
+                                    </span>
+                                    <input type="file" accept="image/jpeg,image/jpg,image/png,image/gif"
+                                        @change="onAutorFotoChange($event, i)" class="hidden"/>
+                                </label>
+                                <button v-if="autorFotoSrc(autor)" type="button" @click="removeAutorFoto(i)"
+                                    title="Quitar foto"
+                                    class="absolute -top-1 -right-1 bg-gray-500 hover:bg-red-500 text-white rounded-full w-4 h-4 flex items-center justify-center text-[9px] leading-none transition-colors">
+                                    ✕
+                                </button>
+                            </div>
+                            <input v-model="autor.nombre" type="text"
+                                class="flex-1 min-w-0 text-sm border-0 border-b border-gray-200 focus:border-[#fc5648] focus:ring-0 pb-1 outline-none placeholder-gray-300"
+                                placeholder="Nombre del autor"/>
+                            <button type="button" @click="removeAutor(i)" title="Quitar autor"
+                                class="flex-shrink-0 text-gray-300 hover:text-red-500 transition-colors p-1">
+                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+                                </svg>
+                            </button>
+                        </div>
                     </div>
                     <div>
                         <label class="text-[10px] font-black uppercase tracking-widest text-gray-400 block mb-2">Fecha</label>
@@ -314,10 +351,15 @@
                             {{ form.titulo || 'Sin título' }}
                         </h1>
 
-                        <div class="flex flex-wrap items-center gap-x-3 gap-y-1 text-sm text-gray-400 mb-8 pb-8 border-b border-gray-100">
-                            <span v-if="form.autor" class="font-medium text-gray-600">{{ form.autor }}</span>
-                            <span v-if="form.autor && form.fecha_publicacion" class="w-1 h-1 rounded-full bg-gray-300 flex-shrink-0"/>
-                            <span v-if="form.fecha_publicacion">{{ formatPreviewDate(form.fecha_publicacion) }}</span>
+                        <div class="mb-8 pb-8 border-b border-gray-100">
+                            <div v-if="autoresValidos.length" class="flex flex-wrap items-center gap-x-5 gap-y-3 mb-3">
+                                <div v-for="autor in autoresValidos" :key="'pa-' + autor.key" class="flex items-center gap-2">
+                                    <img v-if="autorFotoSrc(autor)" :src="autorFotoSrc(autor)"
+                                        class="w-10 h-10 rounded-full object-cover"/>
+                                    <span class="text-sm font-medium text-gray-600">{{ autor.nombre.trim() }}</span>
+                                </div>
+                            </div>
+                            <span v-if="form.fecha_publicacion" class="text-sm text-gray-400">{{ formatPreviewDate(form.fecha_publicacion) }}</span>
                         </div>
 
                         <p v-if="form.resumen"
@@ -361,7 +403,6 @@ export default {
             form: {
                 titulo: '',
                 slug: '',
-                autor: '',
                 resumen: '',
                 contenido: '',
                 video_youtube: '',
@@ -379,6 +420,8 @@ export default {
             savedArticuloId: null,
             showPreview: false,
             imagenesContenido: [],
+            autores: [], // {key, nombre, foto (path guardado), fotoFile, fotoPreview}
+            autorKeySeq: 0,
         };
     },
     computed: {
@@ -393,6 +436,9 @@ export default {
             if (!url) return null;
             const match = url.match(/(?:youtube\.com\/(?:watch\?v=|embed\/|shorts\/)|youtu\.be\/)([A-Za-z0-9_-]{11})/);
             return match ? `https://www.youtube.com/embed/${match[1]}` : null;
+        },
+        autoresValidos() {
+            return this.autores.filter(a => a.nombre.trim());
         },
         cantidadParrafos() {
             const matches = this.form.contenido.match(/<\/(p|h[1-6]|li)>/gi);
@@ -573,7 +619,10 @@ export default {
         loadArticuloData() {
             this.form.titulo = this.articulo.titulo || '';
             this.form.slug = this.articulo.slug || '';
-            this.form.autor = this.articulo.autor || '';
+            const autores = this.articulo.autores?.length
+                ? this.articulo.autores
+                : (this.articulo.autor ? [{ nombre: this.articulo.autor, foto: null }] : []);
+            this.autores = autores.map(a => this.nuevoAutor(a.nombre, a.foto));
             this.form.resumen = this.articulo.resumen || '';
             this.form.video_youtube = this.articulo.video_youtube || '';
             this.form.fecha_publicacion = this.articulo.fecha_publicacion || new Date().toISOString().split('T')[0];
@@ -631,6 +680,44 @@ export default {
             if (!this.slugEdited) {
                 this.form.slug = this.generarSlug(this.form.titulo);
             }
+        },
+
+        nuevoAutor(nombre = '', foto = null) {
+            return { key: ++this.autorKeySeq, nombre: nombre || '', foto, fotoFile: null, fotoPreview: null };
+        },
+
+        addAutor() {
+            if (this.autores.length < 10) this.autores.push(this.nuevoAutor());
+        },
+
+        removeAutor(i) {
+            this.autores.splice(i, 1);
+        },
+
+        autorFotoSrc(autor) {
+            return autor.fotoPreview || (autor.foto ? `/storage/${autor.foto}` : null);
+        },
+
+        onAutorFotoChange(event, i) {
+            const file = event.target.files[0];
+            event.target.value = '';
+            if (!file) return;
+            if (file.size > 2 * 1024 * 1024) { alert('Máximo 2MB'); return; }
+            if (!['image/jpeg', 'image/jpg', 'image/png', 'image/gif'].includes(file.type)) {
+                alert('Solo JPG, PNG o GIF'); return;
+            }
+            const autor = this.autores[i];
+            autor.fotoFile = file;
+            const r = new FileReader();
+            r.onload = e => { autor.fotoPreview = e.target.result; };
+            r.readAsDataURL(file);
+        },
+
+        removeAutorFoto(i) {
+            const autor = this.autores[i];
+            autor.foto = null;
+            autor.fotoFile = null;
+            autor.fotoPreview = null;
         },
 
         toggleSlotEliminar(i) {
@@ -759,7 +846,11 @@ export default {
                 const formData = new FormData();
                 formData.append('titulo', this.form.titulo);
                 formData.append('slug', this.form.slug);
-                formData.append('autor', this.form.autor || '');
+                this.autoresValidos.forEach((autor, i) => {
+                    formData.append(`autores[${i}][nombre]`, autor.nombre.trim());
+                    formData.append(`autores[${i}][foto]`, autor.foto || '');
+                    if (autor.fotoFile) formData.append(`autores[${i}][foto_file]`, autor.fotoFile);
+                });
                 formData.append('resumen', this.form.resumen);
                 formData.append('contenido', contenidoFinal);
                 formData.append('video_youtube', this.form.video_youtube || '');
@@ -780,6 +871,13 @@ export default {
                     this.savedArticuloId = response.data.id;
                     this.form.slug = response.data.slug || this.form.slug;
                 }
+
+                // Sincronizar autores con lo guardado (fotos ya subidas → path), sin perder filas vacías
+                const guardados = response.data.autores || [];
+                this.autoresValidos.forEach((autor, i) => {
+                    autor.foto = guardados[i]?.foto ?? null;
+                    autor.fotoFile = null;
+                });
 
                 this.saveStatus = 'success';
                 setTimeout(() => { this.saveStatus = null; }, 3000);
