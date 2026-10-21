@@ -16,6 +16,7 @@ use App\Http\Controllers\PdfTrackingController;
 
 use App\Http\Controllers\AtractivoController;
 use App\Http\Controllers\DenunciaController;
+use App\Http\Controllers\PaseoContactoController;
 
 
 
@@ -45,6 +46,11 @@ Route::get('/limpiador-correos', function () {
 Route::get('/cuidemoselpaseo', function () {
     return view('paseo.index');
 })->name('paseo.index');
+
+// Formulario "Únete / pide información" del Paseo: llega por Telegram
+Route::post('/cuidemoselpaseo/contacto', [PaseoContactoController::class, 'store'])
+    ->middleware('throttle:5,10')
+    ->name('paseo.contacto');
 
 // Galería del Paseo: los textos están en resources/data/paseo-galeria.php y la fecha sale del nombre de cada foto
 Route::get('/cuidemoselpaseo/galeria', function () {

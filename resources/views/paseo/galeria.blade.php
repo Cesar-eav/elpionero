@@ -488,6 +488,8 @@ section { padding-block: clamp(34px, 6vw, 72px); }
 })();
 </script>
 
+@include('paseo.partials.contacto-flotante')
+
 </body>
 
 </html>

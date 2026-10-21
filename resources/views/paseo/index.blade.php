@@ -616,8 +616,9 @@ blockquote cite { display: block; margin-top: 6px; font-family: var(--f-body); f
         <p>Nuestra petición central es que la entidad que administre el Parque Barón se haga cargo también de la mantención del Paseo Wheelwright.</p>
         <div class="card contact" id="contacto">
           <h3>Contáctanos</h3>
-          <p>¿Quieres sumarte, aportar información o conversar con nosotros? Escríbenos por Instagram.</p>
-          <a class="btn" href="https://www.instagram.com/cuidemospaseowheelwright/" target="_blank" rel="noopener noreferrer"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/></svg> @cuidemospaseowheelwright</a>
+          <p>¿Quieres sumarte, aportar información o conversar con nosotros? Déjanos tus datos o escríbenos por Instagram.</p>
+          <button type="button" class="btn" data-abrir-contacto style="border:0;cursor:pointer;font:inherit;font-weight:700">Escríbenos aquí</button>
+          <a class="btn" style="margin-left:8px" href="https://www.instagram.com/cuidemospaseowheelwright/" target="_blank" rel="noopener noreferrer"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/></svg> @cuidemospaseowheelwright</a>
         </div>
       </div>
       <ul class="fronts">
@@ -719,6 +720,8 @@ blockquote cite { display: block; margin-top: 6px; font-family: var(--f-body); f
   });
 })();
 </script>
+
+@include('paseo.partials.contacto-flotante')
 
 </body>
 
