@@ -41,6 +41,52 @@ Route::get('/limpiador-correos', function () {
     return view('limpiador-correos');
 })->name('limpiador.correos');
 
+// Sección especial Paseo
+Route::get('/cuidemoselpaseo', function () {
+    return view('paseo.index');
+})->name('paseo.index');
+
+// Galería del Paseo: los textos están en resources/data/paseo-galeria.php y la fecha sale del nombre de cada foto
+Route::get('/cuidemoselpaseo/galeria', function () {
+    $salas = require resource_path('data/paseo-galeria.php');
+    $web = 'cuidemos_el_paseo/galeria/web/';
+
+    $todas = collect($salas)->flatMap(function ($sala) use ($web) {
+        return array_map(function ($foto) use ($sala, $web) {
+            $nombre = pathinfo($foto['f'], PATHINFO_FILENAME);
+            preg_match('/IMG_(\d{8})_(\d{6})/', $nombre, $m);
+            [$w, $h] = @getimagesize(public_path($web . $nombre . '-800.webp')) ?: [800, 600];
+
+            return $foto + [
+                'fecha' => \Carbon\Carbon::createFromFormat('YmdHis', $m[1] . $m[2])->locale('es'),
+                'src' => asset($web . $nombre . '-800.webp'),
+                'src2' => asset($web . $nombre . '-1800.webp'),
+                'w' => $w,
+                'h' => $h,
+                'sn' => $sala['num'],
+                'sala' => $sala['titulo'],
+            ];
+        }, $sala['fotos']);
+    })
+        // Numeración global en orden cronológico, la que recorre el visor
+        ->sortBy('fecha')->values()
+        ->map(fn ($foto, $i) => $foto + ['i' => $i])
+        ->keyBy('f');
+
+    foreach ($salas as $s => $sala) {
+        $salas[$s]['fotos'] = array_map(fn ($foto) => $todas[$foto['f']], $sala['fotos']);
+        // Fecha de apertura de la etapa: la de su primera foto
+        $salas[$s]['apertura'] = collect($salas[$s]['fotos'])->min('fecha');
+        if (isset($sala['diptico'])) {
+            $salas[$s]['diptico']['a'] = $todas[$sala['diptico']['a']];
+            $salas[$s]['diptico']['b'] = $todas[$sala['diptico']['b']];
+        }
+    }
+    $todas = $todas->values();
+
+    return view('paseo.galeria', ['salas' => $salas, 'todas' => $todas]);
+})->name('paseo.galeria');
+
 // Rutas de Juegos
 Route::get('/juegos', function () {
     return view('juegos.index');

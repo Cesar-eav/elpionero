@@ -24,3 +24,7 @@ yarn-error.log
 /.nova
 /.vscode
 /.zed
+
+# Cuidemos el Paseo: imágenes y videos se suben por FTP
+/public/cuidemos_el_paseo
+/public/logo_cuidemoselpaseo.jpeg
