@@ -7,7 +7,7 @@
 
     <title>Cuidemos el Paseo Wheelwright</title>
     <link rel="icon" type="image/jpeg" href="{{ asset('logo_cuidemoselpaseo.jpeg') }}">
-    <meta name="description" content="Estado, cronograma, ideas y fuentes sobre el Paseo Wheelwright de Valparaíso, cerrado formalmente desde julio de 2026 tras el temporal, aunque la gente sigue transitando.">
+    <meta name="description" content="Estado, cronograma, ideas y fuentes sobre el Paseo Wheelwright de Valparaíso, cerrado formalmente desde julio de 2026 tras el temporal, aunque uno de sus accesos sigue abierto y sin señalización.">
     <meta property="og:type" content="website">
     <meta property="og:title" content="Cuidemos el Paseo Wheelwright">
     <meta property="og:description" content="Estado, cronograma, ideas y fuentes sobre el Paseo Wheelwright de Valparaíso.">
@@ -128,7 +128,9 @@ section h2 { font-size: clamp(1.7rem, 4.2vw, 2.5rem); font-weight: 800; font-str
 
 /* Estado */
 .status h2 { margin-top: 12px; }
-.status > p { max-width: 64ch; margin-top: 12px; color: var(--ink-2); }
+/* Mismas columnas que los indicadores, para que el texto no quede cargado a un lado en escritorio */
+.status-text { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 250px), 1fr)); gap: 12px 22px; margin-top: 12px; }
+.status-text p { color: var(--ink-2); }
 .meters { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 250px), 1fr)); gap: 22px; margin-top: 26px; }
 .meter { min-width: 0; }
 .m-num { font-family: var(--f-display); font-weight: 800; font-stretch: 108%; font-size: 2.1rem; line-height: 1; font-variant-numeric: tabular-nums; }
@@ -151,7 +153,23 @@ section h2 { font-size: clamp(1.7rem, 4.2vw, 2.5rem); font-weight: 800; font-str
   content: ""; position: absolute; left: 9px; top: 12px; bottom: 12px; width: 2px;
   background: repeating-linear-gradient(180deg, var(--lane-dash) 0 9px, transparent 9px 18px);
 }
+/* Cada año es un bloque: la etiqueta se monta sobre la línea del tiempo y el panel agrupa sus eventos */
+.yr { position: relative; padding: 12px 14px 14px 0; }
+.yr + .yr { margin-top: 22px; }
+.yr::before {
+  content: ""; position: absolute; left: 26px; right: 0; top: 0; bottom: 0; border-radius: 16px;
+  background: color-mix(in srgb, var(--card-solid) 38%, transparent); border: 1px solid var(--line);
+}
+.yr-h { position: relative; z-index: 2; margin: 0 0 14px; line-height: 1; }
+.yr-h span {
+  display: inline-block; padding: 7px 14px; border-radius: 999px;
+  background: var(--btn-bg); color: var(--btn-fg);
+  font-family: var(--f-display); font-weight: 800; font-stretch: 108%; font-size: 1.35rem;
+  font-variant-numeric: tabular-nums; letter-spacing: .01em;
+}
+.yr-evs { list-style: none; margin: 0; padding: 0; position: relative; }
 .ev { position: relative; padding-left: 42px; padding-bottom: 16px; --t: var(--blue); }
+.ev:last-child { padding-bottom: 0; }
 .ev[data-t="mar"] { --t: var(--rust); }
 .ev[data-t="ciu"] { --t: var(--ink-2); }
 .ev::before {
@@ -165,7 +183,7 @@ section h2 { font-size: clamp(1.7rem, 4.2vw, 2.5rem); font-weight: 800; font-str
   color: var(--t); border: 1px solid currentColor; border-radius: 999px; padding: 1px 10px;
   font-size: .74rem; font-weight: 700; letter-spacing: .06em; text-transform: uppercase;
 }
-.ev-card h3 { font-size: 1.22rem; font-weight: 700; font-stretch: 100%; line-height: 1.2; }
+.ev-card h4 { margin: 0; font-family: var(--f-display); text-wrap: balance; color: var(--ink); font-size: 1.22rem; font-weight: 700; font-stretch: 100%; line-height: 1.2; }
 .ev-card p { margin-top: 8px; }
 .ev-card .src { margin-top: 10px; }
 .ev.next .ev-card { border-style: dashed; }
@@ -287,9 +305,9 @@ blockquote cite { display: block; margin-top: 6px; font-family: var(--f-body); f
 @endfor
   </div>
   <div class="wrap">
-    <p class="eyebrow">Movimiento ciudadano · Valparaíso</p>
+    <p class="eyebrow"> <b>Movimiento ciudadano</b> · Valparaíso</p>
     <h1>Cuidemos el Paseo Wheelwright</h1>
-    <p class="lead">Un paseo de cerca de 1,7 kilómetros frente al mar, entre el Muelle Barón y Caleta Portales. Queremos que esté abierto, seguro y mantenido todo el año.</p>
+    <p class="lead">Un paseo de cerca de 1,7 kilómetros frente al mar, entre el Muelle Barón y Caleta Portales. Queremos que esté abierto, seguro y bien mantenido todo el año.</p>
   </div>
 </header>
 
@@ -300,8 +318,11 @@ blockquote cite { display: block; margin-top: 6px; font-family: var(--f-body); f
   <div class="wrap">
     <div class="card status">
       <span class="pill">Estado al 21 de octubre de 2026</span>
-      <h2>Cerrado en el papel, transitado en la práctica</h2>
-      <p>El paseo fue cerrado indefinidamente a fines de julio por los severos daños del temporal, pero solo de manera formal: se instalaron vallas en un extremo y no en el otro, el que colinda con el futuro Parque Barón, y por ahí la gente sigue entrando. Se anunció una inversión para repararlo, sin monto ni plazo conocidos, y a la fecha no hay avances.</p>
+      <h2><A:link></A:link>Años de abandono</h2>
+      <div class="status-text">
+      <p>A fines de 2024, fuertes marejadas destruyeron parte del paseo y, hasta la fecha, la Dirección de Obras Portuarias del MOP <b>aún no publica una licitación para repararlo.</b> A esta inacción estatal se suma el descuido municipal: pasan meses sin que se limpie la arena de la ciclovía y del paso peatonal, mientras falta la mitad de las luminarias. En la práctica, se trata de un espacio público completamente abandonado.</p>
+      <p>Para nuestro movimiento, el paseo es un <b>espacio público fundamental para el desplazamiento y la recreación;</b> un punto de encuentro directo con el mar que ofrece una alternativa segura frente al constante peligro que representa la avenida España para peatones y ciclistas.</p>
+      </div>
       <div class="meters">
         <div class="meter" style="--c: var(--blue)">
           <div class="m-num">580 m <small>de 1.300 m</small></div>
@@ -334,103 +355,165 @@ blockquote cite { display: block; margin-top: 6px; font-family: var(--f-body); f
     </div>
 
     <ol class="timeline">
-      <li class="ev" data-t="obra"><article class="card ev-card">
-        <header><time>Ago 2004</time><span class="tag">Paseo y obras</span></header>
-        <h3>La Empresa Portuaria pide el paseo en comodato</h3>
-        <p>El directorio de la Empresa Portuaria Valparaíso acuerda pedir en comodato, por 90 años, el sector del Paseo Wheelwright. Hoy queda por aclarar quién es titular del terreno.</p>
-        <p class="src">Fuente: <a href="https://www.mundomaritimo.cl/noticias/editor/1982" target="_blank" rel="noopener noreferrer">MundoMarítimo, desde El Mercurio de Valparaíso, 13 ago 2004</a></p>
-      </article></li>
+      <li class="yr">
+        <h3 class="yr-h"><span>2004</span></h3>
+        <ol class="yr-evs">
+          <li class="ev" data-t="obra"><article class="card ev-card">
+            <header><time>Ago 2004</time><span class="tag">Paseo y obras</span></header>
+            <h4>La Empresa Portuaria pide el paseo en comodato</h4>
+            <p>El directorio de la Empresa Portuaria Valparaíso acuerda pedir en comodato, por 90 años, el sector del Paseo Wheelwright. Hoy queda por aclarar quién es titular del terreno.</p>
+            <p class="src">Fuente: <a href="https://www.mundomaritimo.cl/noticias/editor/1982" target="_blank" rel="noopener noreferrer">MundoMarítimo, desde El Mercurio de Valparaíso, 13 ago 2004</a></p>
+          </article></li>
+        </ol>
+      </li>
 
-      <li class="ev" data-t="obra"><article class="card ev-card">
-        <header><time>2005–2006</time><span class="tag">Paseo y obras</span></header>
-        <h3>Empiezan las obras: 1.722 metros de paseo</h3>
-        <p>Las obras comienzan años antes de la inauguración. El Ministerio de Obras Públicas construye el paseo entre el sector Barón y Caleta Portales.</p>
-        <p class="src">Fuente: <a href="https://www.maritimoportuario.cl/mp/invierten-588-millones-para-recuperar-paseo-wheelwright-en-valparaiso/" target="_blank" rel="noopener noreferrer">Marítimo Portuario, ene 2017</a></p>
-      </article></li>
+      <li class="yr">
+        <h3 class="yr-h"><span>2005–2006</span></h3>
+        <ol class="yr-evs">
+          <li class="ev" data-t="obra"><article class="card ev-card">
+            <header><time>2005–2006</time><span class="tag">Paseo y obras</span></header>
+            <h4>Se construye el paseo</h4>
+            <p>El paseo, de 1.722 metros, se construye en tres etapas durante 2005 y 2006.</p>
+            <p class="src">Fuentes: <a href="https://www.maritimoportuario.cl/mp/invierten-588-millones-para-recuperar-paseo-wheelwright-en-valparaiso/" target="_blank" rel="noopener noreferrer">Marítimo Portuario, 16 ene 2017</a> · <a href="https://www.latercera.com/noticia/inauguran-paseo-peatonal-wheelwright-en-valparaiso/" target="_blank" rel="noopener noreferrer">La Tercera, 13 may 2008</a></p>
+          </article></li>
+        </ol>
+      </li>
 
-      <li class="ev" data-t="obra"><article class="card ev-card">
-        <header><time>2008</time><span class="tag">Paseo y obras</span></header>
-        <h3>Se inaugura el Paseo Wheelwright</h3>
-        <p>El paseo se inaugura en 2008, tras unos años de obras. El Pionero de Valparaíso registra la ceremonia oficial en mayo de ese año.</p>
-        <p class="src">Fuente: <a href="{{ route('revista.show', 'especial-paseo-wheelwright-entre-el-potencial-y-el-olvido') }}">El Pionero de Valparaíso, especial de enero de 2026</a></p>
-      </article></li>
+      <li class="yr">
+        <h3 class="yr-h"><span>2007</span></h3>
+        <ol class="yr-evs">
+          <li class="ev" data-t="obra"><article class="card ev-card">
+            <header><time>Ene 2007</time><span class="tag">Paseo y obras</span></header>
+            <h4>Se licita la habilitación del paseo entre Caleta Portales y el Muelle Barón</h4>
+            <p>La Dirección de Obras Portuarias licita una pasarela sobre la línea del tren para unir la avenida España con el paseo, junto con obras para mejorar el paseo costero. Mercado Público la muestra como cerrada, sin publicar a quién se adjudicó.</p>
+            <p class="src">Fuente: <a href="https://www.mercadopublico.cl/Procurement/Modules/RFB/DetailsAcquisition.aspx?idlicitacion=1267-34-LP06" target="_blank" rel="noopener noreferrer">Mercado Público, licitación 1267-34-LP06</a></p>
+          </article></li>
+        </ol>
+      </li>
 
-      <li class="ev" data-t="mar"><article class="card ev-card">
-        <header><time>Ago 2015</time><span class="tag">Marejadas y daños</span></header>
-        <h3>El temporal destruye parte del paseo</h3>
-        <p>El temporal que golpeó el litoral central daña infraestructura y defensas costeras del Wheelwright.</p>
-        <p class="src">Fuente: <a href="https://www.maritimoportuario.cl/mp/invierten-588-millones-para-recuperar-paseo-wheelwright-en-valparaiso/" target="_blank" rel="noopener noreferrer">Marítimo Portuario, ene 2017</a></p>
-      </article></li>
+      <li class="yr">
+        <h3 class="yr-h"><span>2008</span></h3>
+        <ol class="yr-evs">
+          <li class="ev" data-t="obra"><article class="card ev-card">
+            <header><time>13 may 2008</time><span class="tag">Paseo y obras</span></header>
+            <h4>Se inaugura el Paseo Wheelwright</h4>
+            <p>El ministro de Obras Públicas, Sergio Bitar, y el alcalde Aldo Cornejo entregan oficialmente el paseo, con una inversión total de $2.516 millones.</p>
+            <p class="src">Fuentes: <a href="https://www.latercera.com/noticia/inauguran-paseo-peatonal-wheelwright-en-valparaiso/" target="_blank" rel="noopener noreferrer">La Tercera, 13 may 2008</a> · <a href="{{ route('revista.show', 'especial-paseo-wheelwright-entre-el-potencial-y-el-olvido') }}">El Pionero de Valparaíso, especial de enero de 2026</a></p>
+          </article></li>
+        </ol>
+      </li>
 
-      <li class="ev" data-t="obra"><article class="card ev-card">
-        <header><time>15 mar 2016</time><span class="tag">Paseo y obras</span></header>
-        <h3>El MOP anuncia obras de emergencia</h3>
-        <p>Inversión de $1.150 millones en tres obras del borde costero regional. Para el Wheelwright se destinan $600 millones, con un plazo de 240 días.</p>
-        <p class="src">Fuente: <a href="https://www.mediabanco.com/ministro-undurraga-anuncia-inversion-1-150-millones-pesos-reparar-danos-ocasionados-marejadas-borde-costero-la-region-valparaiso/" target="_blank" rel="noopener noreferrer">Comunicado del MOP vía Mediabanco</a></p>
-      </article></li>
+      <li class="yr">
+        <h3 class="yr-h"><span>2015</span></h3>
+        <ol class="yr-evs">
+          <li class="ev" data-t="mar"><article class="card ev-card">
+            <header><time>Ago 2015</time><span class="tag">Marejadas y daños</span></header>
+            <h4>El temporal destruye parte del paseo</h4>
+            <p>El temporal que golpeó el litoral central daña infraestructura y defensas costeras del Wheelwright.</p>
+            <p class="src">Fuente: <a href="https://www.maritimoportuario.cl/mp/invierten-588-millones-para-recuperar-paseo-wheelwright-en-valparaiso/" target="_blank" rel="noopener noreferrer">Marítimo Portuario, ene 2017</a></p>
+          </article></li>
+        </ol>
+      </li>
 
-      <li class="ev" data-t="obra"><article class="card ev-card">
-        <header><time>Ene – feb 2017</time><span class="tag">Paseo y obras</span></header>
-        <h3>Se adjudica la reparación por $588 millones</h3>
-        <p>Plazo de 150 días, cerca de cinco meses. Incluye reparar el pavimento y los decks de madera, y reconstruir muros de enrocado y hormigón para proteger el sector de socavones.</p>
-        <p class="src">Fuentes: <a href="https://www.maritimoportuario.cl/mp/invierten-588-millones-para-recuperar-paseo-wheelwright-en-valparaiso/" target="_blank" rel="noopener noreferrer">Marítimo Portuario</a> · <a href="https://www.radiofestival.cl/inicio-de-obras-de-conservacion-de-paseo-wheelwright-en-valparaiso/" target="_blank" rel="noopener noreferrer">Radio Festival</a></p>
-      </article></li>
+      <li class="yr">
+        <h3 class="yr-h"><span>2016</span></h3>
+        <ol class="yr-evs">
+          <li class="ev" data-t="obra"><article class="card ev-card">
+            <header><time>15 mar 2016</time><span class="tag">Paseo y obras</span></header>
+            <h4>El MOP anuncia obras de emergencia</h4>
+            <p>Inversión de $1.150 millones en tres obras del borde costero regional. Para el Wheelwright se destinan $600 millones, con un plazo de 240 días.</p>
+            <p class="src">Fuente: <a href="https://www.mediabanco.com/ministro-undurraga-anuncia-inversion-1-150-millones-pesos-reparar-danos-ocasionados-marejadas-borde-costero-la-region-valparaiso/" target="_blank" rel="noopener noreferrer">Comunicado del MOP vía Mediabanco</a></p>
+          </article></li>
+        </ol>
+      </li>
 
-      <li class="ev" data-t="obra"><article class="card ev-card">
-        <header><time>2017 · aprox.</time><span class="tag">Paseo y obras</span></header>
-        <h3>Termina la primera etapa; se licita una segunda</h3>
-        <p>El MOP informa más de $1.100 millones invertidos en total y una segunda etapa cercana a $400 millones. Las cifras difieren de otras notas, por eso pediremos los contratos.</p>
-        <p class="src">Fuente: <a href="https://www.maritimoportuario.cl/mp/concluye-primera-etapa-de-reparacion-en-paseo-wheelwright-debido-a-marejadas/" target="_blank" rel="noopener noreferrer">Marítimo Portuario</a></p>
-      </article></li>
+      <li class="yr">
+        <h3 class="yr-h"><span>2017</span></h3>
+        <ol class="yr-evs">
+          <li class="ev" data-t="obra"><article class="card ev-card">
+            <header><time>Ene – feb 2017</time><span class="tag">Paseo y obras</span></header>
+            <h4>Se adjudica la reparación por $588 millones</h4>
+            <p>La obra se adjudica a Francisco Huenchunir Díaz por $588.004.902, con un plazo de 150 días, cerca de cinco meses. Incluye reparar el pavimento y los decks de madera, y reconstruir muros de enrocado y hormigón para proteger el sector de socavones.</p>
+            <p class="src">Fuentes: <a href="https://www.mercadopublico.cl/Procurement/Modules/RFB/DetailsAcquisition.aspx?idlicitacion=1267-22-LR16" target="_blank" rel="noopener noreferrer">Mercado Público, licitación 1267-22-LR16</a> · <a href="https://www.maritimoportuario.cl/mp/invierten-588-millones-para-recuperar-paseo-wheelwright-en-valparaiso/" target="_blank" rel="noopener noreferrer">Marítimo Portuario</a> · <a href="https://www.radiofestival.cl/inicio-de-obras-de-conservacion-de-paseo-wheelwright-en-valparaiso/" target="_blank" rel="noopener noreferrer">Radio Festival</a></p>
+          </article></li>
 
-      <li class="ev" data-t="obra"><article class="card ev-card">
-        <header><time>Inicios de 2023 · aprox.</time><span class="tag">Paseo y obras</span></header>
-        <h3>Obras de conservación del MOP</h3>
-        <p>El MOP inicia trabajos de conservación en el paseo por $558 millones.</p>
-        <p class="src">Fuentes: <a href="https://radiosomos.cl/region/valparaiso-ministerio-de-obras-publicas-inicio-mejoras-en-el-paseo-wheelwright-de-valparaiso/" target="_blank" rel="noopener noreferrer">Radio Somos</a> · <a href="https://www.radiofestival.cl/mop-comenzo-obras-de-mantencion-en-paseo-wheelwright-de-valparaiso/" target="_blank" rel="noopener noreferrer">Radio Festival</a></p>
-      </article></li>
+          <li class="ev" data-t="obra"><article class="card ev-card">
+            <header><time>11 oct 2017</time><span class="tag">Paseo y obras</span></header>
+            <h4>Termina la primera etapa y se adjudica una segunda por $338 millones</h4>
+            <p>La segunda etapa se adjudica a INCOSS Ingenieros Constructores por $337.645.269, bajo el presupuesto de $438 millones. Incluye escaños de hormigón, pintura de barandas y sombreaderos de madera. El MOP habla de más de $1.100 millones invertidos en total, pero las dos adjudicaciones suman $926 millones, por eso pediremos los contratos.</p>
+            <p class="src">Fuentes: <a href="https://www.mercadopublico.cl/Procurement/Modules/RFB/DetailsAcquisition.aspx?idlicitacion=1267-9-O117" target="_blank" rel="noopener noreferrer">Mercado Público, licitación 1267-9-O117</a> · <a href="https://www.maritimoportuario.cl/mp/concluye-primera-etapa-de-reparacion-en-paseo-wheelwright-debido-a-marejadas/" target="_blank" rel="noopener noreferrer">Marítimo Portuario</a></p>
+          </article></li>
+        </ol>
+      </li>
 
-      <li class="ev" data-t="mar"><article class="card ev-card">
-        <header><time>Dic 2024 – ene 2025</time><span class="tag">Marejadas y daños</span></header>
-        <h3>Marejadas anormales dañan el paseo</h3>
-        <p>El MOP informó que el fenómeno se prolongaba hasta el 6 de enero. El ingeniero Mauricio Molina lo describe como la marejada más fuerte en 50 años desde el Pacífico Norte; es una afirmación del experto, por contrastar con registros oficiales.</p>
-        <p class="src">Fuente: <a href="https://www.mercuriovalpo.cl/impresa/2025/01/05/full/cuerpo-principal/8" target="_blank" rel="noopener noreferrer">El Mercurio de Valparaíso, 5 ene 2025</a></p>
-      </article></li>
+      <li class="yr">
+        <h3 class="yr-h"><span>2023</span></h3>
+        <ol class="yr-evs">
+          <li class="ev" data-t="obra"><article class="card ev-card">
+            <header><time>Mar 2023</time><span class="tag">Paseo y obras</span></header>
+            <h4>Obras de conservación del MOP</h4>
+            <p>El MOP inicia trabajos de conservación por $558 millones entre Caleta Portales y la zona de miradores: pavimentos, iluminación, mobiliario y una rampa de acceso universal a la playa. Coinciden con la licitación 1267-22-O122, publicada en julio de 2022 con un presupuesto de $407,7 millones y tres ofertas. Mercado Público no publica a quién se adjudicó ni por qué el monto anunciado es mayor.</p>
+            <p class="src">Fuentes: <a href="https://www.mercadopublico.cl/Procurement/Modules/RFB/DetailsAcquisition.aspx?idlicitacion=1267-22-O122" target="_blank" rel="noopener noreferrer">Mercado Público, licitación 1267-22-O122</a> · <a href="https://radiosomos.cl/region/valparaiso-ministerio-de-obras-publicas-inicio-mejoras-en-el-paseo-wheelwright-de-valparaiso/" target="_blank" rel="noopener noreferrer">Radio Somos</a> · <a href="https://www.radiofestival.cl/mop-comenzo-obras-de-mantencion-en-paseo-wheelwright-de-valparaiso/" target="_blank" rel="noopener noreferrer">Radio Festival</a></p>
+          </article></li>
+        </ol>
+      </li>
 
-      <li class="ev" data-t="obra"><article class="card ev-card">
-        <header><time>5 ene 2025</time><span class="tag">Paseo y obras</span></header>
-        <h3>El MOP dice que el paseo está bajo tuición municipal</h3>
-        <p>La Dirección de Obras Portuarias señala que el paseo está bajo tuición municipal y anuncia trabajos de conservación mayor para mediados de 2025. Nunca se ejecutaron obras.</p>
-        <p class="src">Fuentes: <a href="https://www.mercuriovalpo.cl/impresa/2025/01/05/full/cuerpo-principal/8" target="_blank" rel="noopener noreferrer">El Mercurio de Valparaíso</a> · <a href="https://cpichile.org/mop-evalua-proyectos-para-afrontar-danos-en-borde-costero/" target="_blank" rel="noopener noreferrer">CPI Chile (republicación)</a></p>
-      </article></li>
+      <li class="yr">
+        <h3 class="yr-h"><span>2024</span></h3>
+        <ol class="yr-evs">
+          <li class="ev" data-t="mar"><article class="card ev-card">
+            <header><time>Dic 2024 – ene 2025</time><span class="tag">Marejadas y daños</span></header>
+            <h4>Marejadas anormales dañan el paseo</h4>
+            <p>El Centro Meteorológico Marítimo de Valparaíso, de la Armada, emite un aviso de marejadas anormales de Arica al golfo de Arauco entre el 27 y el 31 de diciembre, con mayor intensidad del 28 al 30, y un segundo aviso para el 1 y 2 de enero. El ingeniero Mauricio Molina lo describe como la marejada más fuerte en 50 años desde el Pacífico Norte.</p>
+            <p class="src">Fuentes: <a href="https://www.radioagricultura.cl/noticias/nacional/armada-emite-aviso-de-marejadas-anormales_20241226/" target="_blank" rel="noopener noreferrer">Radio Agricultura, 26 dic 2024</a> · <a href="https://www.t13.cl/noticia/el-tiempo/nacional/armada-emite-nuevo-aviso-marejadas-para-gran-parte-costa-chile-30-12-2024" target="_blank" rel="noopener noreferrer">T13, 30 dic 2024</a> · <a href="https://www.mercuriovalpo.cl/impresa/2025/01/05/full/cuerpo-principal/8" target="_blank" rel="noopener noreferrer">El Mercurio de Valparaíso, 5 ene 2025</a></p>
+          </article></li>
+        </ol>
+      </li>
 
-      <li class="ev" data-t="ciu"><article class="card ev-card">
-        <header><time>Oct – nov 2025</time><span class="tag">Ciudadanía</span></header>
-        <h3>Se documenta el abandono y el municipio interviene 580 m</h3>
-        <p>El municipio, junto a voluntarios, interviene 580 m del paseo. Quedan sin atender 720 m de los 1.300 m en mal estado.</p>
-        <p class="src">Fuente: <a href="{{ route('revista.show', 'especial-paseo-wheelwright-entre-el-potencial-y-el-olvido') }}">El Pionero de Valparaíso, especial de enero de 2026</a> · <a href="{{ route('paseo.galeria') }}#registro">Ver las fotos →</a></p>
-      </article></li>
+      <li class="yr">
+        <h3 class="yr-h"><span>2025</span></h3>
+        <ol class="yr-evs">
+          <li class="ev" data-t="obra"><article class="card ev-card">
+            <header><time>5 ene 2025</time><span class="tag">Paseo y obras</span></header>
+            <h4>El MOP dice que el paseo está bajo tuición municipal</h4>
+            <p>La Dirección de Obras Portuarias señala que el paseo está bajo tuición municipal y anuncia trabajos de conservación mayor para mediados de 2025. Las obras no fueron ejecutadas.</p>
+            <p class="src">Fuentes: <a href="https://www.mercuriovalpo.cl/impresa/2025/01/05/full/cuerpo-principal/8" target="_blank" rel="noopener noreferrer">El Mercurio de Valparaíso</a> · <a href="https://cpichile.org/mop-evalua-proyectos-para-afrontar-danos-en-borde-costero/" target="_blank" rel="noopener noreferrer">CPI Chile (republicación)</a></p>
+          </article></li>
 
-      <li class="ev" data-t="ciu"><article class="card ev-card">
-        <header><time>Ene 2026</time><span class="tag">Ciudadanía</span></header>
-        <h3>Especial del paseo y entrevista a Mauricio Molina</h3>
-        <p>El Pionero de Valparaíso publica un diagnóstico del paseo. Molina, ingeniero civil oceánico y creador del Sistema de Alerta de Marejadas, propone infraestructura dañable, presupuesto anual de mantención y un fondo de reparación inmediata.</p>
-        <p class="src">Fuente: <a href="{{ route('revista.show', 'especial-paseo-wheelwright-entre-el-potencial-y-el-olvido') }}">El Pionero de Valparaíso</a></p>
-      </article></li>
+          <li class="ev" data-t="ciu"><article class="card ev-card">
+            <header><time>Oct – nov 2025</time><span class="tag">Ciudadanía</span></header>
+            <h4>Se documenta el abandono y el municipio interviene 580 m</h4>
+            <p>El municipio, junto a voluntarios, interviene 580 m del paseo. Quedan sin atender 720 m de los 1.300 m en mal estado.</p>
+            <p class="src">Fuente: <a href="{{ route('revista.show', 'especial-paseo-wheelwright-entre-el-potencial-y-el-olvido') }}">El Pionero de Valparaíso, especial de enero de 2026</a> · <a href="{{ route('paseo.galeria') }}#registro">Ver las fotos →</a></p>
+          </article></li>
+        </ol>
+      </li>
 
-      <li class="ev" data-t="mar"><article class="card ev-card">
-        <header><time>Jul 2026</time><span class="tag">Marejadas y daños</span></header>
-        <h3>El temporal deja el paseo cerrado, pero solo formalmente</h3>
-        <p>El paseo se cierra indefinidamente por riesgo para la seguridad de las personas, tras los severos daños que dejó el temporal. Las vallas se pusieron en un extremo y no en el otro, el que colinda con el futuro Parque Barón, así que la gente sigue transitando.</p>
-        <p class="src">Fuentes: <a href="https://www.theclinic.cl/2026/07/26/cierran-el-paseo-wheelwright-de-valparaiso-hasta-nuevo-aviso-ingresar-al-sector-representa-un-riesgo-para-la-seguridad/" target="_blank" rel="noopener noreferrer">The Clinic, 26 jul</a> · <a href="https://www.biobiochile.cl/noticias/nacional/region-de-valparaiso/2026/07/27/paseo-wheelwright-en-valparaiso-permanecera-cerrado-indefinidamente-tras-severos-danos-por-temporal.shtml" target="_blank" rel="noopener noreferrer">BioBioChile, 27 jul</a></p>
-      </article></li>
+      <li class="yr">
+        <h3 class="yr-h"><span>2026</span></h3>
+        <ol class="yr-evs">
+          <li class="ev" data-t="ciu"><article class="card ev-card">
+            <header><time>Ene 2026</time><span class="tag">Ciudadanía</span></header>
+            <h4>Especial del paseo y entrevista a Mauricio Molina</h4>
+            <p>El Pionero de Valparaíso publica un diagnóstico del paseo. Molina, ingeniero civil oceánico y creador del Sistema de Alerta de Marejadas, propone infraestructura dañable, presupuesto anual de mantención y un fondo de reparación inmediata.</p>
+            <p class="src">Fuente: <a href="{{ route('revista.show', 'especial-paseo-wheelwright-entre-el-potencial-y-el-olvido') }}">El Pionero de Valparaíso</a></p>
+          </article></li>
 
-      <li class="ev" data-t="mar"><article class="card ev-card">
-        <header><time>17 oct 2026</time><span class="tag">Marejadas y daños</span></header>
-        <h3>Daños a la vista y reparación sin avances visibles</h3>
-        <p>Se anunció una inversión para reparar el paseo, sin monto ni plazo conocidos, y no se ven avances. El reportaje muestra daños graves a la vista.</p>
-        <p class="src">Fuente: <a href="https://www.meganoticias.cl/nacional/534153-tradicional-paseo-costero-wheelwright-valparaiso-presenta-graves-danos-marejadas-temporales-video-17-10-2026.html" target="_blank" rel="noopener noreferrer">Meganoticias, 17 oct 2026</a></p>
-      </article></li>
+          <li class="ev" data-t="mar"><article class="card ev-card">
+            <header><time>Jul 2026</time><span class="tag">Marejadas y daños</span></header>
+            <h4>El temporal deja el paseo cerrado, pero solo formalmente</h4>
+            <p>El municipio cierra el paseo indefinidamente por riesgo para la seguridad de las personas, tras los severos daños que dejó el temporal. Pone vallas en un extremo, pero deja abierto el otro, junto al futuro Parque Barón, sin ningún aviso de que no se debe entrar.</p>
+            <p class="src">Fuentes: <a href="https://www.theclinic.cl/2026/07/26/cierran-el-paseo-wheelwright-de-valparaiso-hasta-nuevo-aviso-ingresar-al-sector-representa-un-riesgo-para-la-seguridad/" target="_blank" rel="noopener noreferrer">The Clinic, 26 jul</a> · <a href="https://www.biobiochile.cl/noticias/nacional/region-de-valparaiso/2026/07/27/paseo-wheelwright-en-valparaiso-permanecera-cerrado-indefinidamente-tras-severos-danos-por-temporal.shtml" target="_blank" rel="noopener noreferrer">BioBioChile, 27 jul</a></p>
+          </article></li>
+
+          <li class="ev" data-t="mar"><article class="card ev-card">
+            <header><time>17 oct 2026</time><span class="tag">Marejadas y daños</span></header>
+            <h4>Daños a la vista y reparación sin avances visibles</h4>
+            <p>Se anunció una inversión para reparar el paseo, sin monto ni plazo conocidos, y no se ven avances. El reportaje muestra daños graves a la vista.</p>
+            <p class="src">Fuente: <a href="https://www.meganoticias.cl/nacional/534153-tradicional-paseo-costero-wheelwright-valparaiso-presenta-graves-danos-marejadas-temporales-video-17-10-2026.html" target="_blank" rel="noopener noreferrer">Meganoticias, 17 oct 2026</a></p>
+          </article></li>
+        </ol>
+      </li>
     </ol>
 
     <div class="card open-q">
@@ -438,7 +521,8 @@ blockquote cite { display: block; margin-top: 6px; font-family: var(--f-body); f
       <ul>
         <li>¿Quién es hoy titular del terreno del paseo?</li>
         <li>¿Qué entidad administrará el Parque Barón? Proponemos que esa misma entidad se haga cargo de la mantención del paseo.</li>
-        <li>¿Cuánto costó y qué incluyó cada obra de 2016–2017, 2023 y 2025? Las cifras publicadas no coinciden.</li>
+        <li>¿Cuánto costaron al final las obras de 2016–2017? Conocemos los montos adjudicados, pero no los contratos ni sus modificaciones.</li>
+        <li>¿Quién ejecutó las obras de 2023 y por qué se anunciaron $558 millones si la licitación tenía un presupuesto de $407,7 millones? ¿Qué se hizo en 2025?</li>
         <li>¿Qué obras, plazo y monto tendrá la reparación de 2026, y con qué criterios de diseño frente al oleaje?</li>
       </ul>
       <p class="src" style="margin-top:14px">Las vamos a consultar mediante solicitudes de acceso a la información pública (Ley 20.285) y publicaremos las respuestas.</p>
@@ -608,6 +692,7 @@ blockquote cite { display: block; margin-top: 6px; font-family: var(--f-body); f
       <div class="card">
         <h3>Obras del MOP en el paseo</h3>
         <ul>
+          <li><a href="https://www.latercera.com/noticia/inauguran-paseo-peatonal-wheelwright-en-valparaiso/" target="_blank" rel="noopener noreferrer"><span class="l-title">Inauguran el paseo peatonal Wheelwright</span><span class="l-meta">La Tercera · 13 may 2008</span></a></li>
           <li><a href="https://www.mediabanco.com/ministro-undurraga-anuncia-inversion-1-150-millones-pesos-reparar-danos-ocasionados-marejadas-borde-costero-la-region-valparaiso/" target="_blank" rel="noopener noreferrer"><span class="l-title">Anuncio de $1.150 millones para el borde costero</span><span class="l-meta">Comunicado MOP vía Mediabanco · 15 mar 2016</span></a></li>
           <li><a href="https://www.maritimoportuario.cl/mp/invierten-588-millones-para-recuperar-paseo-wheelwright-en-valparaiso/" target="_blank" rel="noopener noreferrer"><span class="l-title">$588 millones para recuperar el paseo</span><span class="l-meta">Marítimo Portuario · ene 2017</span></a></li>
           <li><a href="https://www.maritimoportuario.cl/mp/concluye-primera-etapa-de-reparacion-en-paseo-wheelwright-debido-a-marejadas/" target="_blank" rel="noopener noreferrer"><span class="l-title">Termina la primera etapa de reparación</span><span class="l-meta">Marítimo Portuario · 2017 aprox.</span></a></li>
@@ -615,6 +700,16 @@ blockquote cite { display: block; margin-top: 6px; font-family: var(--f-body); f
           <li><a href="https://radiosomos.cl/region/valparaiso-ministerio-de-obras-publicas-inicio-mejoras-en-el-paseo-wheelwright-de-valparaiso/" target="_blank" rel="noopener noreferrer"><span class="l-title">Conservación de $558 millones</span><span class="l-meta">Radio Somos · 2023 aprox.</span></a></li>
           <li><a href="https://www.mercuriovalpo.cl/impresa/2025/01/05/full/cuerpo-principal/8" target="_blank" rel="noopener noreferrer"><span class="l-title">El MOP evalúa proyectos tras las marejadas</span><span class="l-meta">El Mercurio de Valparaíso · 5 ene 2025</span></a></li>
         </ul>
+      </div>
+      <div class="card">
+        <h3>Licitaciones en Mercado Público</h3>
+        <ul>
+          <li><a href="https://www.mercadopublico.cl/Procurement/Modules/RFB/DetailsAcquisition.aspx?idlicitacion=1267-34-LP06" target="_blank" rel="noopener noreferrer"><span class="l-title">Habilitación del paseo y pasarela sobre la vía férrea</span><span class="l-meta">1267-34-LP06 · cerrada, sin adjudicación publicada · 2007</span></a></li>
+          <li><a href="https://www.mercadopublico.cl/Procurement/Modules/RFB/DetailsAcquisition.aspx?idlicitacion=1267-22-LR16" target="_blank" rel="noopener noreferrer"><span class="l-title">Conservación del paseo, primera etapa</span><span class="l-meta">1267-22-LR16 · adjudicada · $588 millones · 2016–2017</span></a></li>
+          <li><a href="https://www.mercadopublico.cl/Procurement/Modules/RFB/DetailsAcquisition.aspx?idlicitacion=1267-9-O117" target="_blank" rel="noopener noreferrer"><span class="l-title">Conservación del paseo, segunda etapa</span><span class="l-meta">1267-9-O117 · adjudicada · $338 millones · 2017</span></a></li>
+          <li><a href="https://www.mercadopublico.cl/Procurement/Modules/RFB/DetailsAcquisition.aspx?idlicitacion=1267-22-O122" target="_blank" rel="noopener noreferrer"><span class="l-title">Conservación y accesibilidad, Caleta Portales a miradores</span><span class="l-meta">1267-22-O122 · cerrada, sin adjudicación publicada · 2022</span></a></li>
+        </ul>
+        <p class="src" style="margin-top:12px">Al buscar "Wheelwright" aparecen otras licitaciones que no son del paseo: la Plaza Wheelwright del barrio puerto, frente a la Aduana, el bandejón de la avenida Errázuriz y el Paseo Wheelwright de Caldera, en la Región de Atacama.</p>
       </div>
       <div class="card">
         <h3>Marejadas y ciencia</h3>
@@ -679,11 +774,14 @@ blockquote cite { display: block; margin-top: 6px; font-family: var(--f-body); f
 (function () {
   var chips = document.querySelectorAll('.chip[data-f]');
   var items = document.querySelectorAll('.ev');
+  var years = document.querySelectorAll('.yr');
   chips.forEach(function (c) {
     c.addEventListener('click', function () {
       var f = c.getAttribute('data-f');
       chips.forEach(function (x) { x.setAttribute('aria-pressed', x === c ? 'true' : 'false'); });
       items.forEach(function (li) { li.hidden = !(f === 'all' || li.getAttribute('data-t') === f); });
+      // Oculta el año completo si el filtro no deja ningún evento en él
+      years.forEach(function (y) { y.hidden = !y.querySelector('.ev:not([hidden])'); });
     });
   });
 })();
