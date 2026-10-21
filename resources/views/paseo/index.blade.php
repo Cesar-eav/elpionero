@@ -76,7 +76,24 @@
 }
 .dots button:hover::before { background: rgba(255, 255, 255, .9); }
 .dots button[aria-current="true"]::before { width: 22px; background: var(--yellow); }
+/* Flechas tenues de avance y retroceso */
+.hero { touch-action: pan-y; }
+.arrow {
+  position: absolute; z-index: 3; top: 50%; transform: translateY(-50%);
+  width: 44px; height: 44px; padding: 0; border: 0; border-radius: 50%; cursor: pointer;
+  display: grid; place-items: center; color: #fff;
+  background: rgba(4, 20, 38, .22); opacity: .5; transition: opacity .2s ease, background-color .2s ease;
+}
+.arrow:hover, .arrow:focus-visible { opacity: .95; background: rgba(4, 20, 38, .5); }
+.arrow.prev { left: max(8px, env(safe-area-inset-left, 0px)); }
+.arrow.next { right: max(8px, env(safe-area-inset-right, 0px)); }
+.arrow svg { width: 22px; height: 22px; }
+@media (max-width: 760px) {
+  .arrow { width: 36px; height: 36px; opacity: .4; }
+  .arrow svg { width: 18px; height: 18px; }
+}
 @media (prefers-reduced-motion: reduce) {
+  .arrow { transition: none; }
   .slide { transition: none; }
   .slide.on { animation: none; }
   .dots button::before { transition: none; }
@@ -262,6 +279,8 @@ blockquote cite { display: block; margin-top: 6px; font-family: var(--f-body); f
     <div class="slide" data-s="{{ $i }}"></div>
 @endfor
   </div>
+  <button type="button" class="arrow prev" aria-label="Foto anterior"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 5l-7 7 7 7"/></svg></button>
+  <button type="button" class="arrow next" aria-label="Foto siguiente"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 5l7 7-7 7"/></svg></button>
   <div class="dots" role="group" aria-label="Elegir foto">
 @for ($i = 2; $i <= 10; $i++)
     <button type="button" aria-label="Foto {{ $i - 1 }}" aria-current="{{ $i === 2 ? 'true' : 'false' }}"></button>
@@ -700,6 +719,21 @@ blockquote cite { display: block; margin-top: 6px; font-family: var(--f-body); f
   dots.forEach(function (d, k) {
     d.addEventListener('click', function () { show(k); start(); });
   });
+  var n = slides.length;
+  document.querySelector('.hero .arrow.prev').addEventListener('click', function () { show((i - 1 + n) % n); start(); });
+  document.querySelector('.hero .arrow.next').addEventListener('click', function () { show((i + 1) % n); start(); });
+  // Deslizar con el dedo: solo si el gesto es claramente horizontal
+  var hero = document.querySelector('.hero');
+  var x0 = 0, y0 = 0;
+  hero.addEventListener('touchstart', function (e) {
+    x0 = e.touches[0].clientX; y0 = e.touches[0].clientY;
+  }, { passive: true });
+  hero.addEventListener('touchend', function (e) {
+    var dx = e.changedTouches[0].clientX - x0, dy = e.changedTouches[0].clientY - y0;
+    if (Math.abs(dx) < 40 || Math.abs(dx) < Math.abs(dy) * 1.5) return;
+    show(dx < 0 ? (i + 1) % n : (i - 1 + n) % n);
+    start();
+  }, { passive: true });
   load(1);
   start();
 })();
