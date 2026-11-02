@@ -164,13 +164,25 @@ return [
         'corto' => 'Cierre',
         'titulo' => 'Con el paseo cerrado',
         'periodo' => 'Octubre 2026',
-        'texto' => 'Desde fines de julio de 2026 el paseo está cerrado indefinidamente. Las fotos del 18 de octubre muestran personas barriendo arena de la ciclovía, bicicletas apoyadas en la baranda y el deck con tramos desnivelados.',
+        'texto' => 'Desde fines de julio de 2026 el paseo está cerrado indefinidamente. El 18 de octubre, personas barriendo arena de la ciclovía y el deck con tramos desnivelados. El 28, tramos acordonados con cinta de peligro y sacos de arena, un sector donde el piso colapsó y barandas oxidadas sobre las rocas.',
+        'por_dia' => true,
         'anchas' => true, // fotos panorámicas: cada una ocupa dos columnas del mosaico
         'fotos' => [
             ['f' => 'Photos-1-001/IMG_20261018_114102500_HDR_AE.jpg', 't' => 'Barriendo arena de la ciclovía', 'd' => 'Una persona barre arena y gravilla sobre la ciclovía, junto al deck. Pasan un ciclista y un corredor.'],
             ['f' => 'Photos-1-001/IMG_20261018_114123797_HDR_AE.jpg', 't' => 'Arena junto al cerco', 'd' => 'Una persona con casco barre la arena acumulada junto al cerco. Dos bicicletas están apoyadas en la baranda del deck, con la bahía al fondo.', 'dest' => true],
             // Aparece un niño (de espaldas): confirmar que están de acuerdo con publicar la foto
             ['f' => 'Photos-1-001/IMG_20261018_115315908_HDR_AE.jpg', 't' => 'Ciclovía con gravilla y restos de pavimento', 'd' => 'Un adulto y un niño en patines caminan por un tramo de ciclovía con gravilla y restos de pavimento. A la derecha, el deck con tablones desnivelados.'],
+            ['f' => 'Photos-1-002/IMG_20261028_153330693_HDR_AE.jpg', 't' => 'Estructura oxidada frente a la ciclovía', 'd' => 'Una estructura de fierro oxidado, con planchas de zinc colgando, frente a una bodega con grafitis. Al pie, escombros junto a la ciclovía azul.'],
+            ['f' => 'Photos-1-002/IMG_20261028_153419215_HDR_AE.jpg', 't' => 'Tramo acordonado junto al muro', 'd' => 'Caballetes de madera envueltos en cinta de peligro y sacos de arena cierran un tramo del piso junto al muro, frente al mar.'],
+            ['f' => 'Photos-1-002/IMG_20261028_153550578_HDR_AE.jpg', 't' => 'Del deck al pavimento', 'd' => 'Los tablones gastados del deck, con los pernos a la vista, y más allá baldosas que faltan en el pavimento.'],
+            ['f' => 'Photos-1-002/IMG_20261028_153855376_HDR_AE.jpg', 't' => 'Muro sin revestimiento', 'd' => 'Un tramo del muro con grafitis perdió su revestimiento y deja ver la base; los restos quedaron en el suelo. Al fondo, dos personas caminan junto a la baranda.'],
+            ['f' => 'Photos-1-002/IMG_20261028_153922365_HDR_AE.jpg', 't' => 'Grafiti descascarado', 'd' => 'Un trozo del revestimiento se desprendió del muro pintado y dejó a la vista la cuadrícula de abajo.'],
+            ['f' => 'Photos-1-002/IMG_20261028_154052802_HDR_AE.jpg', 't' => 'Hormigón quebrado, fierros a la vista', 'd' => 'Una viga de hormigón partida, con los fierros oxidados expuestos, y trozos de concreto esparcidos por el piso.'],
+            ['f' => 'Photos-1-002/IMG_20261028_154103417_HDR_AE.jpg', 't' => 'Ciclovía azul y maleza', 'd' => 'La ciclovía azul junto al cerco del tren. La vegetación crece sobre el borde y hay trozos de concreto sueltos.'],
+            ['f' => 'Photos-1-002/IMG_20261028_154702655_HDR_AE.jpg', 't' => 'Hoyo acordonado', 'd' => 'Un hoyo en el piso, rodeado de caballetes con cinta de peligro y sacos de arena. Junto a la baranda, un tramo de deck desarmado y un panel de madera de pie.'],
+            ['f' => 'Photos-1-002/IMG_20261028_155111232_HDR_AE.jpg', 't' => 'Baranda oxidada sobre las rocas', 'd' => 'La baranda celeste, descascarada y oxidada, con su base metálica corroída sobre las rocas.'],
+            ['f' => 'Photos-1-002/IMG_20261028_155119116_HDR_AE.jpg', 't' => 'Baranda corroída en la esquina', 'd' => 'La baranda en una esquina del borde: pintura saltada, barrotes oxidados y la base de metal corroída.'],
+            ['f' => 'Photos-1-002/IMG_20261028_155210233_HDR_AE.jpg', 't' => 'Piso colapsado junto al muro', 'd' => 'Un tramo del paseo colapsó junto al muro: losas partidas, escombros y caballetes caídos con restos de cinta. Al fondo, la pérgola con bancas.'],
         ],
     ],
 ];

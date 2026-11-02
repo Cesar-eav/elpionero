@@ -26,7 +26,7 @@
         ['d' => '2025-11-15', 't' => 'Intervención de 580 m', 'fila' => 1],
         ['d' => '2026-01-10', 't' => 'Especial El Pionero', 'fila' => 2],
         ['d' => '2026-07-26', 't' => 'Cierre del paseo', 'fila' => 1],
-        ['d' => '2026-10-21', 't' => 'Hoy', 'fila' => 2, 'fin' => true],
+        ['d' => '2026-11-02', 't' => 'Hoy', 'fila' => 2, 'fin' => true],
     ];
     // Datos que recorre el visor, en orden cronológico
     $visor = $todas->map(fn ($f) => ['src' => $f['src2'], 't' => $f['t'], 'd' => $f['d'], 'f' => $corta($f['fecha']), 's' => $f['sala']])->values();
