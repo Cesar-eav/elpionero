@@ -8,6 +8,7 @@ use App\Models\Entrevista;
 use App\Models\CableATierra;
 use App\Models\Revista;
 use App\Models\Denuncia;
+use App\Support\Pindoor;
 
 
 use Illuminate\Http\Request;
@@ -40,8 +41,10 @@ class InicioController extends Controller
 
         $ultimoCableATierra = CableATierra::where('publicado', true)->latest('fecha_publicacion')->first();
 
+        $panoramasPindoor = Pindoor::panoramas(4);
+
         return view('inicio.inicio', compact([
-            'columnas', 'noticias', 'destacada', 'ultimasDenuncias', 'ultimoCableATierra'
+            'columnas', 'noticias', 'destacada', 'ultimasDenuncias', 'ultimoCableATierra', 'panoramasPindoor'
         ]));
     }
 

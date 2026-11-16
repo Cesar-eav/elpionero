@@ -185,7 +185,7 @@ resources/views/
 ├── auth/                login, register, etc.
 ├── denuncia/            formulario, show, index, gracias
 ├── juegos/              trivia, wordle, crucigrama, sopa de letras
-├── labrujula/           index, panoramas, show (atractivos con mapa)
+├── labrujula/           index, panoramas, show (sin uso: las rutas redirigen a Pindoor)
 ├── noticias.blade.php
 ├── noticia-detalle.blade.php
 ├── dashboard-vue.blade.php  ← Punto de entrada SPA admin
@@ -244,7 +244,20 @@ php artisan route:clear
 | Editoriales | `/editoriales` | Editoriales por revista |
 | Entrevistas | `/entrevistas` | Entrevistas |
 | Cable a Tierra | `/cable-a-tierra` | Columnas con imagen y video YouTube |
-| La Brújula | `/labrujula` | Mapa de atractivos de Valparaíso |
+| La Brújula | `/labrujula` | **Redirige 301 a pindoor.cl** (ver «Pindoor» abajo) |
 | Denuncias | `/denuncias` | Denuncias ciudadanas |
 | Juegos | `/juegos` | Trivia, Wordle, Crucigrama |
 | Búsqueda | `/buscar` | Búsqueda en todos los contenidos |
+
+---
+
+## Pindoor (sitio hermano, `https://pindoor.cl`, repo `../pindoor.cl`)
+
+Toda la integración pasa por `App\Support\Pindoor` (URL en `config('services.pindoor.url')`, env `PINDOOR_URL`). Objetivo: SEO de Pindoor.
+
+- **La Brújula vieja → 301 a Pindoor** (`routes/web.php`): `/labrujula`, `/atractivos/{slug}` (→ `/lugar/{slug}`; Pindoor resuelve el slug viejo sin sufijo `-{id}`), `/atractivos/categoria|ciudad/{x}`, `/panoramas`. Los nombres de ruta se mantienen.
+- **Autoenlazado**: `Pindoor::enlazar($html)` enlaza la primera mención de cada lugar (lista de `pindoor.cl/lugares.json`) a su ficha, máx. 5 en el texto, sin tocar títulos, enlaces ni atributos; sin coincidencias devuelve el HTML original. Se usa en las 5 vistas de detalle (noticia, columna, Cable a Tierra, entrevista, editorial) junto al recuadro `<x-lugares-pindoor>`.
+- **Home**: bloque «Panoramas en Valparaíso» con `Pindoor::panoramas()` (feed Atom de Pindoor) + JSON-LD `NewsMediaOrganization` con Pindoor como `subOrganization`.
+- Si Pindoor no responde: timeout 3 s, reintento en 10 min y se usa la última copia buena (`*.respaldo` en caché). Nunca rompe la página.
+- Tests: `tests/Feature/PindoorTest.php` (sin BD, `Http::fake`).
+

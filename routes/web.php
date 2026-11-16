@@ -106,12 +106,14 @@ Route::get('/juegos/trivia', function () {
     return view('juegos.trivia');
 })->name('juegos.trivia');
 
-// Rutas públicas para Atractivos (La Brújula)
-Route::get('/labrujula', [AtractivoController::class, 'index'])->name('atractivos.index');
-Route::get('/atractivos/{atractivo}', [AtractivoController::class, 'show'])->name('atractivos.show');
-Route::get('/atractivos/categoria/{categoria}', [AtractivoController::class, 'filtrarPorCategoria'])->name('atractivos.categoria');
-Route::get('/atractivos/ciudad/{ciudad}', [AtractivoController::class, 'filtrarPorCiudad'])->name('atractivos.ciudad');
-Route::get('/panoramas', [AtractivoController::class, 'panoramas'])->name('atractivos.panoramas');
+// La Brújula pasó a ser Pindoor: las URLs viejas redirigen con 301 a su equivalente allá, para que
+// Google traspase la autoridad acumulada y no haya contenido duplicado compitiendo con Pindoor.
+// Pindoor resuelve los slugs viejos sin el sufijo «-{id}» (PuntoInteresController::show).
+Route::get('/labrujula', fn () => redirect()->away(config('services.pindoor.url') . '/', 301))->name('atractivos.index');
+Route::get('/atractivos/categoria/{categoria}', fn (string $categoria) => redirect()->away(config('services.pindoor.url') . '/atractivos/categoria/' . rawurlencode($categoria), 301))->name('atractivos.categoria');
+Route::get('/atractivos/ciudad/{ciudad}', fn (string $ciudad) => redirect()->away(config('services.pindoor.url') . '/atractivos/ciudad/' . rawurlencode($ciudad), 301))->name('atractivos.ciudad');
+Route::get('/atractivos/{atractivo}', fn (string $atractivo) => redirect()->away(config('services.pindoor.url') . '/lugar/' . rawurlencode($atractivo), 301))->name('atractivos.show');
+Route::get('/panoramas', fn () => redirect()->away(config('services.pindoor.url') . '/panoramas', 301))->name('atractivos.panoramas');
 
 Route::get('/juegos/portle', function () {
     return view('juegos.wordle');

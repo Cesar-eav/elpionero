@@ -6,7 +6,7 @@
         <a href="{{ url('/') }}" class="hover:text-white transition-colors flex items-center gap-1">
             Inicio
         </a>
-<a href="https://www.pindoor.cl" target="_blank" class="bg-red text-white transition-colors">Pin<span class="text-[#fc5648]">door</span></a>
+<a href="{{ \App\Support\Pindoor::url() }}" target="_blank" rel="noopener" title="Pindoor, guía turística de Valparaíso" class="bg-red text-white transition-colors">Pin<span class="text-[#fc5648]">door</span><span class="sr-only">: guía turística de Valparaíso</span></a>
         <!-- Búsqueda escritorio -->
         <form action="{{ route('buscar') }}" method="GET" class="hidden md:block">
             <div class="relative flex">

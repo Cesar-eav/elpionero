@@ -33,6 +33,11 @@ return [
         'chat_id' => env('TELEGRAM_CHAT_ID'),
     ],
 
+    // Sitio hermano: guía turística de Valparaíso (enlaces, redirecciones de La Brújula y lugares)
+    'pindoor' => [
+        'url' => rtrim(env('PINDOOR_URL', 'https://pindoor.cl'), '/'),
+    ],
+
     'slack' => [
         'notifications' => [
             'bot_user_oauth_token' => env('SLACK_BOT_USER_OAUTH_TOKEN'),

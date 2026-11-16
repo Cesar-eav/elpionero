@@ -97,9 +97,11 @@
                                 </div>
                             </div>
 
+                            @php($pindoor = \App\Support\Pindoor::enlazar($articulo->contenido))
                             <div class="text-gray-800 text-base leading-relaxed prose prose-p:mb-4 prose-headings:mb-3 prose-headings:mt-6 prose-ul:mb-4 prose-ol:mb-4 max-w-none whitespace-pre-line">
-                                {!! $articulo->contenido !!}
+                                {!! $pindoor['html'] !!}
                             </div>
+                            <x-lugares-pindoor :lugares="$pindoor['lugares']" />
                         </article>
                     <div class="mt-6 bg-white border border-gray-300 rounded-lg p-6 shadow-sm">
                         <x-commenter::index :model="$articulo" /> 

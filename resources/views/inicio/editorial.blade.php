@@ -55,9 +55,11 @@
 
                         <!-- Contenido de la editorial -->
                         {{-- ql-editor --}}
+                        @php($pindoor = \App\Support\Pindoor::enlazar($editorial->contenido))
                         <div class="text-gray-800 text-base leading-relaxed prose prose-lg max-w-none">
-                            {!! $editorial->contenido !!}
+                            {!! $pindoor['html'] !!}
                         </div>
+                        <x-lugares-pindoor :lugares="$pindoor['lugares']" />
 
                         <!-- Botón volver -->
                         <div class="mt-8 pt-6 border-t border-gray-200">

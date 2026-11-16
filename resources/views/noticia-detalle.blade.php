@@ -140,9 +140,11 @@
                     @endif
 
                     <!-- Contenido completo -->
+                    @php($pindoor = \App\Support\Pindoor::enlazar($noticia->cuerpo))
                     <div class="text-gray-800 text-base leading-relaxed prose prose-lg max-w-none">
-                        {!! $noticia->cuerpo !!}
+                        {!! $pindoor['html'] !!}
                     </div>
+                    <x-lugares-pindoor :lugares="$pindoor['lugares']" />
 
                     <!-- Botón volver -->
                     <div class="mt-8 pt-6 border-t border-gray-200">

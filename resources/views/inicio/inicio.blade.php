@@ -39,6 +39,30 @@
     <meta property="twitter:description" content="Revista digital con columnas y miradas diversas sobre la ciudad puerto" />
     <meta property="twitter:image" content="{{ asset('storage/Portada_Diciembre.jpg') }}" />
 
+    <!-- Datos estructurados: El Pionero y su proyecto hermano Pindoor -->
+    @php
+        $jsonLdPionero = [
+            '@context' => 'https://schema.org',
+            '@type' => 'NewsMediaOrganization',
+            'name' => 'El Pionero de Valparaíso',
+            'url' => config('app.url'),
+            'description' => 'Revista digital con columnas y miradas diversas sobre la ciudad puerto',
+            'areaServed' => ['@type' => 'City', 'name' => 'Valparaíso'],
+            'sameAs' => [
+                'https://www.instagram.com/elpionerodevalparaiso/',
+                'https://www.facebook.com/elpionerodv/',
+                'https://x.com/elpionerovalpo',
+            ],
+            'subOrganization' => [
+                '@type' => 'Organization',
+                'name' => 'Pindoor',
+                'url' => \App\Support\Pindoor::url(),
+                'description' => 'Guía turística de Valparaíso: lugares, panoramas, rutas y experiencias',
+            ],
+        ];
+    @endphp
+    <script type="application/ld+json">{!! json_encode($jsonLdPionero, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES | JSON_HEX_TAG) !!}</script>
+
     @vite(['resources/css/app.css', 'resources/js/app.js'])
     @if (app()->environment('production'))
         <script type="text/javascript">
@@ -122,13 +146,13 @@
     <!-- PANEL 2: Secciones (Pindoor + Juegos) -->
     <div class="p-4 md:w-[30%] flex flex-col justify-center gap-2">
       <p class="text-[11px] font-semibold uppercase tracking-wider text-gray-400 mb-1">Secciones</p>
-      <a href="https://www.pindoor.cl" target="_blank"
+      <a href="{{ \App\Support\Pindoor::url() }}" target="_blank" rel="noopener"
          class="group flex items-center gap-3 p-3 rounded-xl border border-blue-100 bg-blue-50 hover:bg-blue-100 transition"
       >
         <div class="w-10 h-10 rounded-lg bg-blue-600 flex items-center justify-center text-xl shrink-0">🧭</div>
         <div class="min-w-0">
           <p class="text-sm font-bold text-gray-900 leading-tight">Pin<span class="text-[#fc5648]">door</span></p>
-          <p class="text-xs text-gray-500 leading-tight truncate">Tesoros de Valparaíso</p>
+          <p class="text-xs text-gray-500 leading-tight truncate">Guía turística de Valparaíso</p>
         </div>
         <svg class="w-4 h-4 text-gray-400 ml-auto shrink-0 group-hover:translate-x-0.5 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
@@ -396,6 +420,41 @@
                     @else
                         <p>No hay artículos en esta revista.</p>
                     @endif
+
+                    {{-- PANORAMAS EN PINDOOR (feed de pindoor.cl, App\Support\Pindoor::panoramas) --}}
+                    @if (!empty($panoramasPindoor))
+                        <section class="rounded-xl border border-blue-100 bg-white p-4 md:p-5 shadow-sm" aria-labelledby="panoramas-pindoor">
+                            <div class="flex flex-wrap items-end justify-between gap-2 border-b pb-2 mb-4">
+                                <div>
+                                    <h2 id="panoramas-pindoor" class="text-xl font-black text-slate-900">Panoramas en <span class="text-[#fc5648]">Valparaíso</span></h2>
+                                    <p class="text-xs text-gray-600">Agenda cultural de la ciudad en <a href="{{ \App\Support\Pindoor::url() }}" target="_blank" rel="noopener" class="font-semibold text-gray-900 hover:underline">Pin<span class="text-[#fc5648]">door</span></a>, la guía de Valparaíso</p>
+                                </div>
+                                <a href="{{ \App\Support\Pindoor::url('panoramas/hoy') }}" target="_blank" rel="noopener"
+                                   class="text-xs font-bold text-[#fc5648] hover:underline uppercase tracking-widest">Qué hacer hoy →</a>
+                            </div>
+                            <ul class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                                @foreach ($panoramasPindoor as $panorama)
+                                    <li>
+                                        <a href="{{ $panorama['url'] }}" target="_blank" rel="noopener"
+                                           class="group flex gap-3 h-full rounded-lg border border-slate-100 bg-slate-50 p-3 hover:border-[#fc5648] hover:bg-white transition-colors">
+                                            <span class="w-9 h-9 rounded-lg bg-blue-600 flex items-center justify-center text-base shrink-0" aria-hidden="true">🎭</span>
+                                            <span class="min-w-0">
+                                                <span class="block text-sm font-bold text-slate-900 leading-tight line-clamp-2 group-hover:text-[#fc5648] transition-colors">{{ $panorama['titulo'] }}</span>
+                                                @if ($panorama['resumen'])
+                                                    <span class="block text-xs text-slate-500 leading-snug line-clamp-2 mt-0.5">{{ $panorama['resumen'] }}</span>
+                                                @endif
+                                            </span>
+                                        </a>
+                                    </li>
+                                @endforeach
+                            </ul>
+                            <p class="mt-3 text-right">
+                                <a href="{{ \App\Support\Pindoor::url('panoramas/fin-de-semana') }}" target="_blank" rel="noopener"
+                                   class="text-xs font-semibold text-slate-600 hover:text-[#fc5648]">Panoramas para este fin de semana en Valparaíso →</a>
+                            </p>
+                        </section>
+                    @endif
+
                         <div>
                             <img src="{{ asset('storage/publicidad_desk_2.png') }}" alt="Anuncio Mediano"
                                 class="w-full rounded border shadow  md:block hidden" />

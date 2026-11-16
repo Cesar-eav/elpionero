@@ -89,6 +89,9 @@
         <div class="text-sm mt-6 md:mt-0 font-light text-center md:text-right">
             <p class="text-gray-300">&copy; {{ date('Y') }} El Pionero de Valparaíso</p>
             <p class="text-gray-400">Todos los derechos reservados</p>
+            <p class="text-gray-400 mt-2">Proyecto hermano:
+                <a href="{{ \App\Support\Pindoor::url() }}" target="_blank" rel="noopener" class="text-white hover:text-[#fc5648] transition-colors">Pindoor, guía turística de Valparaíso</a>
+            </p>
         </div>
     </div>
 
