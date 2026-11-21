@@ -126,12 +126,51 @@ section h2 { font-size: clamp(1.7rem, 4.2vw, 2.5rem); font-weight: 800; font-str
   padding: 4px 12px; border-radius: 999px; background: var(--yellow); color: var(--on-yellow);
 }
 
-/* Estado */
+/* Estado: diagnóstico y cifras a la izquierda, propuestas a la derecha.
+   En celular se apila y las propuestas van antes que las cifras. */
+.status { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.08fr); grid-template-areas: "intro props" "data props"; gap: 8px clamp(24px, 4vw, 48px); align-items: start; }
+.status-intro { grid-area: intro; }
+.status-data { grid-area: data; }
+.props { grid-area: props; }
 .status h2 { margin-top: 12px; }
-/* Mismas columnas que los indicadores, para que el texto no quede cargado a un lado en escritorio */
-.status-text { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 250px), 1fr)); gap: 12px 22px; margin-top: 12px; }
-.status-text p { color: var(--ink-2); }
-.meters { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 250px), 1fr)); gap: 22px; margin-top: 26px; }
+.status-intro p { color: var(--ink-2); margin-top: 12px; }
+.status-intro p:first-of-type { color: var(--ink); font-size: 1.12rem; }
+.meters { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 200px), 1fr)); gap: 22px; margin-top: 18px; }
+@media (max-width: 820px) {
+  .status { grid-template-columns: minmax(0, 1fr); grid-template-areas: "intro" "props" "data"; gap: 24px; }
+  .meters { margin-top: 0; }
+}
+
+/* Propuestas: tarjetas numeradas, con "hoy" frente a "proponemos" */
+.props-h { display: flex; align-items: center; gap: 10px; font-family: var(--f-mono); font-size: .8rem; font-weight: 500; letter-spacing: .08em; text-transform: uppercase; color: var(--ink-2); }
+.props-h::after { content: ""; flex: 1; height: 1px; background: var(--line); }
+.props ol { list-style: none; margin: 14px 0 0; padding: 0; display: grid; gap: 14px; counter-reset: prop; }
+.prop {
+  position: relative; overflow: hidden; counter-increment: prop;
+  background: var(--card-solid); border: 1px solid var(--line); border-radius: 16px;
+  padding: clamp(18px, 3vw, 24px) clamp(18px, 3vw, 26px) clamp(18px, 3vw, 22px) clamp(22px, 3.4vw, 30px);
+  box-shadow: 0 10px 28px -18px rgba(10, 37, 64, .45);
+}
+.prop::before { content: ""; position: absolute; inset: 0 auto 0 0; width: 6px; background: var(--c); }
+.prop::after {
+  content: counter(prop, decimal-leading-zero); position: absolute; top: 6px; right: 14px;
+  font-family: var(--f-display); font-weight: 900; font-stretch: 112%; font-size: 4.4rem; line-height: 1;
+  color: var(--c); opacity: .14; pointer-events: none;
+}
+.prop-top { display: flex; align-items: center; gap: 12px; padding-right: 64px; }
+.prop-ic { flex: none; width: 44px; height: 44px; border-radius: 12px; display: grid; place-items: center; background: var(--c); color: var(--card-solid); }
+.prop-ic svg { width: 24px; height: 24px; }
+.prop h3 { font-family: var(--f-display); font-weight: 800; font-stretch: 104%; font-size: clamp(1.18rem, 2.4vw, 1.36rem); line-height: 1.12; }
+.prop > p { margin-top: 12px; }
+.prop-vs { display: grid; grid-template-columns: auto minmax(0, 1fr); gap: 4px 10px; margin: 14px 0 0; padding-top: 12px; border-top: 1px dashed var(--line); font-size: .94rem; }
+.prop-vs dt { font-family: var(--f-mono); font-size: .72rem; font-weight: 500; letter-spacing: .06em; text-transform: uppercase; padding-top: 3px; color: var(--ink-2); }
+.prop-vs dt.yes { color: var(--c); }
+.prop-vs dd { margin: 0; color: var(--ink-2); }
+.prop-more { display: inline-block; margin-top: 12px; font-weight: 700; color: var(--c); text-decoration: none; }
+.prop-more:hover { text-decoration: underline; }
+.props-cta { display: flex; flex-wrap: wrap; align-items: center; gap: 4px 14px; margin-top: 4px; }
+.props-cta .btn { border: 0; cursor: pointer; font: inherit; font-weight: 700; }
+.props-cta span { margin-top: 16px; font-size: .92rem; color: var(--ink-2); }
 .meter { min-width: 0; }
 .m-num { font-family: var(--f-display); font-weight: 800; font-stretch: 108%; font-size: 2.1rem; line-height: 1; font-variant-numeric: tabular-nums; }
 .m-num small { font-family: var(--f-body); font-weight: 600; font-size: .95rem; color: var(--ink-2); font-stretch: 100%; }
@@ -317,12 +356,47 @@ blockquote cite { display: block; margin-top: 6px; font-family: var(--f-body); f
 <section id="estado">
   <div class="wrap">
     <div class="card status">
-      <span class="pill">Estado al 21 de octubre de 2026</span>
-      <h2><A:link></A:link>Años de abandono</h2>
-      <div class="status-text">
-      <p>A fines de 2024, fuertes marejadas destruyeron parte del paseo y, hasta la fecha, la Dirección de Obras Portuarias del MOP <b>aún no publica una licitación para repararlo.</b> A esta inacción estatal se suma el descuido municipal: pasan meses sin que se limpie la arena de la ciclovía y del paso peatonal, mientras falta la mitad de las luminarias. En la práctica, se trata de un espacio público completamente abandonado.</p>
-      <p>Para nuestro movimiento, el paseo es un <b>espacio público fundamental para el desplazamiento y la recreación;</b> un punto de encuentro directo con el mar que ofrece una alternativa segura frente al constante peligro que representa la avenida España para peatones y ciclistas.</p>
+      <div class="status-intro">
+        <span class="pill">Estado al 21 de octubre de 2026</span>
+        <h2>Un paseo que se puede recuperar</h2>
+        <p>El paseo es un <b>espacio público clave para moverse y disfrutar del mar,</b> y una alternativa segura a la avenida España para peatones y ciclistas.</p>
+        <p>Hoy está en deuda: las marejadas de fines de 2024 dañaron parte de la estructura, la reparación aún no se licita y la mantención diaria no alcanza. Hay arena sobre la ciclovía y la mitad de las luminarias apagadas.</p>
       </div>
+
+      <div class="props">
+        <h3 class="props-h">Lo que proponemos</h3>
+        <ol>
+          <li class="prop" style="--c: var(--blue)">
+            <div class="prop-top">
+              <span class="prop-ic" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14.7 6.3a4 4 0 0 0-5.4 5.4L3 18l3 3 6.3-6.3a4 4 0 0 0 5.4-5.4l-2.6 2.6-2.4-.6-.6-2.4z"/></svg></span>
+              <h3>Una sola administración para el borde</h3>
+            </div>
+            <p>Que la mantención del paseo quede a cargo de <b>quien administre el Parque Barón,</b> con presupuesto propio y estándares claros de limpieza, iluminación y seguridad.</p>
+            <dl class="prop-vs">
+              <dt>Hoy</dt><dd>Depende del municipio, que no ha logrado sostenerla.</dd>
+              <dt class="yes">Propuesta</dt><dd>Un responsable, recursos asegurados y metas que se puedan revisar.</dd>
+            </dl>
+          </li>
+          <li class="prop" style="--c: var(--teal)">
+            <div class="prop-top">
+              <span class="prop-ic" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 7c2.5-2 4.5-2 7 0s4.5 2 7 0 4.5-2 6 0"/><path d="M2 13c2.5-2 4.5-2 7 0s4.5 2 7 0 4.5-2 6 0"/><path d="M5 21v-5M12 21v-5M19 21v-5"/></svg></span>
+              <h3>Obras que conviven con el mar</h3>
+            </div>
+            <p>Estructuras <b>permeables, que dejen pasar el agua y se reparen rápido</b> cuando algo se dañe, junto con alertas por marejada para cerrar a tiempo.</p>
+            <dl class="prop-vs">
+              <dt>No</dt><dd>Muros que devuelven la ola y terminan quitándonos la playa.</dd>
+              <dt class="yes">Sí</dt><dd>Rejillas, decks y reposición en días, no en años.</dd>
+            </dl>
+            <a class="prop-more" href="#ideas">Cómo funciona →</a>
+          </li>
+        </ol>
+        <div class="props-cta">
+          <button type="button" class="btn" data-abrir-contacto>Apoya estas propuestas</button>
+          <span>Súmate al movimiento o envíanos información.</span>
+        </div>
+      </div>
+
+      <div class="status-data">
       <div class="meters">
         <div class="meter" style="--c: var(--blue)">
           <div class="m-num">580 m <small>de 1.300 m</small></div>
@@ -336,6 +410,7 @@ blockquote cite { display: block; margin-top: 6px; font-family: var(--f-body); f
           <p>Estaban apagadas en noviembre de 2025. En diciembre, 44 seguían sin funcionar.</p>
           <p class="src">Fuente: El Pionero de Valparaíso, especial de enero de 2026</p>
         </div>
+      </div>
       </div>
     </div>
   </div>
