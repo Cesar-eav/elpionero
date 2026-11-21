@@ -179,6 +179,20 @@ section h2 { font-size: clamp(1.7rem, 4.2vw, 2.5rem); font-weight: 800; font-str
 .meter p { margin-top: 10px; font-size: .96rem; color: var(--ink-2); }
 .src { font-size: .88rem; color: var(--ink-2); }
 
+/* Adelanto del manifiesto: los principios como lista numerada que enlaza a cada uno */
+#manifiesto { padding-top: 0; }
+.manif { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: clamp(20px, 4vw, 44px); align-items: center; }
+.manif .btn { margin-top: 20px; }
+.manif-list { list-style: none; margin: 0; padding: 0; counter-reset: m; border-top: 1px solid var(--line); }
+.manif-list li { counter-increment: m; border-bottom: 1px solid var(--line); }
+.manif-list a {
+  display: flex; align-items: baseline; gap: 14px; padding: 11px 2px; text-decoration: none;
+  font-family: var(--f-display); font-weight: 700; font-size: 1.12rem; color: var(--ink);
+}
+.manif-list a::before { content: counter(m, decimal-leading-zero); font-family: var(--f-mono); font-weight: 500; font-size: .82rem; color: var(--blue); }
+.manif-list a:hover { text-decoration: underline; }
+@media (max-width: 820px) { .manif { grid-template-columns: minmax(0, 1fr); } }
+
 /* Cronograma */
 .filters { display: flex; flex-wrap: wrap; gap: 8px; margin: 22px 0 30px; }
 .chip {
@@ -318,6 +332,7 @@ blockquote cite { display: block; margin-top: 6px; font-family: var(--f-body); f
     <a class="brand" href="#top"><img src="{{ asset('logo_cuidemoselpaseo.jpeg') }}" alt="Movimiento Cuidemos el Paseo Wheelwright" width="44" height="44"><span class="full">Cuidemos el Paseo Wheelwright</span></a>
     <nav class="topnav" aria-label="Secciones">
       <a href="#estado">Estado hoy</a>
+      <a href="#manifiesto">Manifiesto</a>
       <a href="#cronograma">Cronograma</a>
       <a href="#galeria">Galería</a>
       <a href="#ideas">Ideas</a>
@@ -412,6 +427,24 @@ blockquote cite { display: block; margin-top: 6px; font-family: var(--f-body); f
         </div>
       </div>
       </div>
+    </div>
+  </div>
+</section>
+
+<section id="manifiesto">
+  <div class="wrap">
+    <div class="manif">
+      <div>
+        <p class="eyebrow">Manifiesto</p>
+        <h2>El borde del mar es de todos</h2>
+        <p class="sec-intro">Qué es para nosotros el Paseo Wheelwright y los principios que debe cumplir cualquier solución, venga de donde venga.</p>
+        <a class="btn" href="{{ route('paseo.manifiesto') }}">Leer el manifiesto →</a>
+      </div>
+      <ol class="manif-list">
+@foreach (require resource_path('data/paseo-manifiesto.php') as $p)
+        <li><a href="{{ route('paseo.manifiesto') }}#p-{{ $p['id'] }}">{{ $p['titulo'] }}</a></li>
+@endforeach
+      </ol>
     </div>
   </div>
 </section>

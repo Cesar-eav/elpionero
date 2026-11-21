@@ -52,6 +52,11 @@ Route::post('/cuidemoselpaseo/contacto', [PaseoContactoController::class, 'store
     ->middleware('throttle:5,10')
     ->name('paseo.contacto');
 
+// Manifiesto del Paseo: los principios están en resources/data/paseo-manifiesto.php
+Route::get('/cuidemoselpaseo/manifiesto', function () {
+    return view('paseo.manifiesto');
+})->name('paseo.manifiesto');
+
 // Galería del Paseo: los textos están en resources/data/paseo-galeria.php y la fecha sale del nombre de cada foto
 Route::get('/cuidemoselpaseo/galeria', function () {
     $salas = require resource_path('data/paseo-galeria.php');
