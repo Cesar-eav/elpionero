@@ -375,7 +375,7 @@ blockquote cite { display: block; margin-top: 6px; font-family: var(--f-body); f
         <span class="pill">Estado al 21 de octubre de 2026</span>
         <h2>Un paseo que se puede recuperar</h2>
         <p>El paseo es un <b>espacio público clave para moverse y disfrutar del mar,</b> y una alternativa segura a la avenida España para peatones y ciclistas.</p>
-        <p>Hoy está en deuda: las marejadas de fines de 2024 dañaron parte de la estructura, la reparación aún no se licita y la mantención diaria no alcanza. Hay arena sobre la ciclovía y la mitad de las luminarias apagadas.</p>
+        <p>Hoy está cerrado: las marejadas de fines de 2024 dañaron parte de la estructura, la reparación aún no se licita y la mantención diaria no alcanza. Ante el deterioro por negligencia, el Municipio cerró el Paseo instalando rejas, dejandonos sin alternativa segura para transitar.</p>
       </div>
 
       <div class="props">
@@ -642,14 +642,14 @@ blockquote cite { display: block; margin-top: 6px; font-family: var(--f-body); f
   <div class="wrap">
     <p class="eyebrow">Galería</p>
     <h2>El paseo, foto a foto</h2>
-    <p class="sec-intro">Más de 80 fotografías, de marzo de 2023 a octubre de 2026, ordenadas en cinco etapas: antes, durante y después de la intervención de noviembre, y con el paseo cerrado.</p>
+    <p class="sec-intro">Más de 80 fotografías, de marzo de 2023 a noviembre de 2026, ordenadas en cinco etapas: antes, durante y después de la intervención de noviembre, y con el paseo cerrado.</p>
     <div class="teaser">
 @foreach ([
     ['senales', '01', 'Señales tempranas', 'Mar 2023 – mar 2024', 'IMG_20240312_172124'],
     ['registro', '02', 'Recorrer y registrar', 'Oct – nov 2025', 'IMG_20251012_164445656_HDR'],
     ['intervencion', '03', 'La intervención', 'Nov 2025', 'IMG_20251123_171251174_HDR'],
     ['despues', '04', 'Lo que quedó', 'Dic 2025 – ene 2026', 'IMG_20260120_191547533_HDR'],
-    ['cierre', '05', 'Con el paseo cerrado', 'Oct 2026', 'IMG_20261018_114123797_HDR_AE'],
+    ['cierre', '05', 'Con el paseo cerrado', 'Oct – nov 2026', 'IMG_20261018_114123797_HDR_AE'],
 ] as [$id, $num, $titulo, $periodo, $foto])
       <a class="card t-sala" href="{{ route('paseo.galeria') }}#{{ $id }}">
         <img src="{{ asset('cuidemos_el_paseo/galeria/web/' . $foto . '-800.webp') }}" alt="" loading="lazy" decoding="async">

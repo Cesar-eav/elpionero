@@ -163,8 +163,8 @@ return [
         'num' => '05',
         'corto' => 'Cierre',
         'titulo' => 'Con el paseo cerrado',
-        'periodo' => 'Octubre 2026',
-        'texto' => 'Desde fines de julio de 2026 el paseo está cerrado indefinidamente. El 18 de octubre, personas barriendo arena de la ciclovía y el deck con tramos desnivelados. El 28, tramos acordonados con cinta de peligro y sacos de arena, un sector donde el piso colapsó y barandas oxidadas sobre las rocas.',
+        'periodo' => 'Octubre – noviembre 2026',
+        'texto' => 'Desde fines de julio de 2026 el paseo está cerrado indefinidamente. El 18 de octubre, personas barriendo arena de la ciclovía y el deck con tramos desnivelados. El 28, tramos acordonados con cinta de peligro y sacos de arena, un sector donde el piso colapsó y barandas oxidadas sobre las rocas. El 10 de noviembre, una reja con un letrero de peligro estructural cierra la entrada al deck.',
         'por_dia' => true,
         'anchas' => true, // fotos panorámicas: cada una ocupa dos columnas del mosaico
         'fotos' => [
