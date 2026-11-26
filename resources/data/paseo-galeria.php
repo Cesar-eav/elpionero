@@ -4,8 +4,9 @@
  * Galería "El paseo, foto a foto" (/cuidemoselpaseo/galeria).
  *
  * Cada etapa sigue el cronograma. La fecha de cada foto y el sello de cada etapa NO se escriben aquí:
- * se lee del nombre del archivo (IMG_AAAAMMDD_HHMMSS...). Las versiones web se generan en
+ * se lee del nombre del archivo (AAAAMMDD_HHMMSS, con o sin prefijo IMG_). Las versiones web se generan en
  * public/cuidemos_el_paseo/galeria/web/<nombre>-800.webp y -1800.webp.
+ * Un .mp4 es un video: esos webp son su póster y el video se sirve desde web/<nombre>.mp4 (H.264).
  *
  * f    ruta relativa a public/cuidemos_el_paseo/galeria
  * t    título corto de la cartela
@@ -23,8 +24,8 @@ return [
         'num' => '01', // clave interna (colores de la regla de tiempo); no se muestra
         'corto' => 'Señales',
         'titulo' => 'Señales tempranas',
-        'periodo' => 'Marzo 2023 – marzo 2024',
-        'texto' => 'Dos años antes de la intervención, el deterioro ya era visible: tablones que faltan en la plataforma de la playa, baldosas sueltas, máquinas de ejercicio desarmadas y arena que cubre la ciclovía.',
+        'periodo' => 'Marzo 2023 – enero 2025',
+        'texto' => 'Dos años antes de la intervención, el deterioro ya era visible: tablones que faltan en la plataforma de la playa, baldosas sueltas, máquinas de ejercicio desarmadas y arena que cubre la ciclovía. A fines de 2024 llegaron las marejadas: olas por encima de la baranda, adoquines arrancados y, una semana después, el paseo tapado de arena.',
         'fotos' => [
             ['f' => $antes . 'IMG_20230310_164935.jpg', 't' => 'Plataforma de madera junto a la playa', 'd' => 'Plataforma sobre la arena, al pie de los arcos del paseo. Falta un tramo de tablones al centro.'],
             ['f' => $antes . 'IMG_20230310_173009.jpg', 't' => 'Tablones faltantes y rayados', 'd' => 'El borde de la plataforma, rayado, y el hueco donde faltan tablones.'],
@@ -38,6 +39,9 @@ return [
             ['f' => $antes . 'IMG_20240311_113953_4.jpg', 't' => 'Pavimento quebrado bajo la arena', 'd' => 'Bajo la arena asoman las grietas del pavimento.'],
             ['f' => $antes . 'IMG_20240312_172124.jpg', 't' => 'Una grieta de lado a lado', 'd' => 'Una grieta con arena cruza todo el ancho del paseo, mientras la gente sigue caminando.', 'dest' => true],
             ['f' => $antes . 'IMG_20240312_172339.jpg', 't' => 'Pavimento roto junto a la rejilla', 'd' => 'Losa quebrada al costado de una rejilla metálica.'],
+            ['f' => '20241229_113859.jpg', 't' => 'El paseo después de la ola', 'd' => 'El paseo mojado, con adoquines arrancados y piedras y arena sobre la ciclovía. Al fondo, una ola revienta contra el borde.'],
+            ['f' => 'videos/20241229_114029_marejada.mp4', 't' => 'Olas sobre la baranda', 'd' => 'Seis tomas de la misma mañana: las olas pasan por encima de la baranda y el agua corre por el paseo mientras algunas personas caminan y pedalean por el borde. Video: Cuidemos el Paseo Wheelwright.'],
+            ['f' => '20250105_114004.jpg', 't' => 'El paseo bajo la arena', 'd' => 'Una semana después, una capa de arena cubre todo el ancho del paseo junto al cerco del tren. Bajo la pérgola, tablones sueltos sobre el deck.'],
         ],
     ],
     [
@@ -163,15 +167,20 @@ return [
         'num' => '05',
         'corto' => 'Cierre',
         'titulo' => 'Con el paseo cerrado',
-        'periodo' => 'Octubre – noviembre 2026',
-        'texto' => 'Desde fines de julio de 2026 el paseo está cerrado indefinidamente. El 18 de octubre, personas barriendo arena de la ciclovía y el deck con tramos desnivelados. El 28, tramos acordonados con cinta de peligro y sacos de arena, un sector donde el piso colapsó y barandas oxidadas sobre las rocas. El 10 de noviembre, una reja con un letrero de peligro estructural cierra la entrada al deck.',
+        'periodo' => 'Agosto – noviembre 2026',
+        'texto' => 'Desde fines de julio de 2026 el paseo está cerrado indefinidamente. El 2 de agosto, barreras de hormigón y un letrero de tránsito suspendido cortan el paso; el 22, un socavón queda acordonado junto a la ciclovía. El 18 de octubre, un letrero municipal anuncia el mejoramiento estructural «programado para el primer semestre de 2026» y hay personas barriendo arena de la ciclovía y el deck con tramos desnivelados. El 28, tramos acordonados con cinta de peligro y sacos de arena, un sector donde el piso colapsó y barandas oxidadas sobre las rocas. El 10 de noviembre, una reja con un letrero de peligro estructural cierra la entrada al deck.',
         'por_dia' => true,
         'anchas' => true, // fotos panorámicas: cada una ocupa dos columnas del mosaico
         'fotos' => [
+            ['f' => '20260802_103845.jpg', 't' => 'Barreras y tránsito suspendido', 'd' => 'Barreras de hormigón con grafitis cruzan el paseo mojado. Un letrero naranjo dice «Peligro, suspendido tránsito». Detrás sigue la ciclovía, junto al mar.'],
+            ['f' => 'Fotos/20260822_103432.jpg', 't' => 'Socavón acordonado', 'd' => 'Un socavón abierto bajo el piso, entre la ciclovía y una rejilla metálica, rodeado de tablones y cinta de peligro. Al fondo, una persona camina junto al cerco del tren.'],
+            ['f' => 'Fotos/20260913_113009.jpg', 't' => 'Barreras frente al mar', 'd' => 'Barreras de hormigón amarillas, con grafitis, cruzan el paseo junto a un quiosco azul y las palmeras. Unos ciclistas se detienen ante ellas y dos personas caminan hacia la baranda.'],
+            ['f' => 'Fotos/20261018_112429.jpg', 't' => 'Letrero del mejoramiento estructural', 'd' => 'Un letrero municipal en un poste: «Mejoramiento estructural del Paseo Wheelwright. Corresponde a un trabajo programado para el primer semestre de 2026, a cargo de la Dirección de Obras Portuarias del Ministerio de Obras Públicas».'],
             ['f' => 'Photos-1-001/IMG_20261018_114102500_HDR_AE.jpg', 't' => 'Barriendo arena de la ciclovía', 'd' => 'Una persona barre arena y gravilla sobre la ciclovía, junto al deck. Pasan un ciclista y un corredor.'],
             ['f' => 'Photos-1-001/IMG_20261018_114123797_HDR_AE.jpg', 't' => 'Arena junto al cerco', 'd' => 'Una persona con casco barre la arena acumulada junto al cerco. Dos bicicletas están apoyadas en la baranda del deck, con la bahía al fondo.', 'dest' => true],
             // Aparece un niño (de espaldas): confirmar que están de acuerdo con publicar la foto
             ['f' => 'Photos-1-001/IMG_20261018_115315908_HDR_AE.jpg', 't' => 'Ciclovía con gravilla y restos de pavimento', 'd' => 'Un adulto y un niño en patines caminan por un tramo de ciclovía con gravilla y restos de pavimento. A la derecha, el deck con tablones desnivelados.'],
+            ['f' => 'Fotos/20261025_114717.jpg', 't' => 'Las barreras, al sol', 'd' => 'Las mismas barreras de hormigón con grafitis cierran el paseo bajo el letrero de ciclovía. Detrás, algunas personas caminan por el tramo junto al mar; a la derecha, una malla naranja cuelga del cerco.'],
             ['f' => 'Photos-1-002/IMG_20261028_153330693_HDR_AE.jpg', 't' => 'Estructura oxidada frente a la ciclovía', 'd' => 'Una estructura de fierro oxidado, con planchas de zinc colgando, frente a una bodega con grafitis. Al pie, escombros junto a la ciclovía azul.'],
             ['f' => 'Photos-1-002/IMG_20261028_153419215_HDR_AE.jpg', 't' => 'Tramo acordonado junto al muro', 'd' => 'Caballetes de madera envueltos en cinta de peligro y sacos de arena cierran un tramo del piso junto al muro, frente al mar.'],
             ['f' => 'Photos-1-002/IMG_20261028_153550578_HDR_AE.jpg', 't' => 'Del deck al pavimento', 'd' => 'Los tablones gastados del deck, con los pernos a la vista, y más allá baldosas que faltan en el pavimento.'],
@@ -183,6 +192,9 @@ return [
             ['f' => 'Photos-1-002/IMG_20261028_155111232_HDR_AE.jpg', 't' => 'Baranda oxidada sobre las rocas', 'd' => 'La baranda celeste, descascarada y oxidada, con su base metálica corroída sobre las rocas.'],
             ['f' => 'Photos-1-002/IMG_20261028_155119116_HDR_AE.jpg', 't' => 'Baranda corroída en la esquina', 'd' => 'La baranda en una esquina del borde: pintura saltada, barrotes oxidados y la base de metal corroída.'],
             ['f' => 'Photos-1-002/IMG_20261028_155210233_HDR_AE.jpg', 't' => 'Piso colapsado junto al muro', 'd' => 'Un tramo del paseo colapsó junto al muro: losas partidas, escombros y caballetes caídos con restos de cinta. Al fondo, la pérgola con bancas.'],
+            // Aparece un hombre con el rostro visible (borde derecho): confirmar que está de acuerdo con publicar la foto
+            ['f' => '20261110_153703.jpg', 't' => 'Paseo cerrado por peligro estructural', 'd' => 'Una reja cierra el paso entre el muro bajo frente a las rocas y la bodega con grafitis. El letrero dice «Paseo Wheelwright cerrado peligro estructural».'],
+            ['f' => 'IMG_20261110_153946153_HDR_AE.jpg', 't' => 'Reja en la entrada del deck', 'd' => 'Una reja de malla metálica, con restos de cinta de peligro, cierra el acceso al deck. Un letrero rojo dice «Paseo Wheelwright cerrado peligro estructural». Detrás, el deck vacío entre la baranda celeste y el muro.'],
         ],
     ],
 ];

@@ -2,6 +2,13 @@
 @php
     // Fecha corta para las notas: "12 oct 2025 · 16:42"
     $corta = fn (Carbon $f) => str_replace('.', '', $f->isoFormat('D MMM YYYY')) . ' · ' . $f->format('H:i');
+    // "12 fotos" o "12 fotos y 1 video"
+    $cuenta = function ($piezas) {
+        $piezas = collect($piezas);
+        $v = $piezas->whereNotNull('video')->count();
+        $n = $piezas->count() - $v;
+        return $n . ($n === 1 ? ' foto' : ' fotos') . ($v ? ' y ' . $v . ($v === 1 ? ' video' : ' videos') : '');
+    };
     $color = ['01' => 'var(--teal)', '02' => 'var(--blue)', '03' => 'var(--yellow)', '04' => 'var(--rust)', '05' => 'var(--ink-2)'];
 
     // Regla de tiempo: vista completa 2023–2026 y ampliación de oct 2025 a ene 2026
@@ -29,7 +36,7 @@
         ['d' => '2026-11-21', 't' => 'Hoy', 'fila' => 2, 'fin' => true],
     ];
     // Datos que recorre el visor, en orden cronológico
-    $visor = $todas->map(fn ($f) => ['src' => $f['src2'], 't' => $f['t'], 'd' => $f['d'], 'f' => $corta($f['fecha']), 's' => $f['sala']])->values();
+    $visor = $todas->map(fn ($f) => ['src' => $f['src2'], 'v' => $f['video'], 't' => $f['t'], 'd' => $f['d'], 'f' => $corta($f['fecha']), 's' => $f['sala']])->values();
     $portada = $todas->firstWhere('f', 'Antes de la intervencion de noviembre 2025/IMG_20251005_134449258_HDR.jpg');
 @endphp
 <!DOCTYPE html>
@@ -41,7 +48,7 @@
 
     <title>Galería · Cuidemos el Paseo Wheelwright</title>
     <link rel="icon" type="image/jpeg" href="{{ asset('logo_cuidemoselpaseo.jpeg') }}">
-    <meta name="description" content="{{ $todas->count() }} fotografías del Paseo Wheelwright de Valparaíso entre marzo de 2023 y octubre de 2026, ordenadas por etapas: antes, durante y después de la intervención de noviembre de 2025, y con el paseo cerrado.">
+    <meta name="description" content="{{ ucfirst($cuenta($todas)) }} del Paseo Wheelwright de Valparaíso entre marzo de 2023 y noviembre de 2026, ordenadas por etapas: antes, durante y después de la intervención de noviembre de 2025, y con el paseo cerrado.">
     <meta property="og:type" content="website">
     <meta property="og:title" content="El paseo, foto a foto · Cuidemos el Paseo Wheelwright">
     <meta property="og:description" content="Bitácora fotográfica del Paseo Wheelwright, de 2023 a 2026.">
@@ -130,6 +137,12 @@ section { padding-block: clamp(34px, 6vw, 72px); }
 .obra img { display: block; width: 100%; height: 100%; object-fit: cover; transition: transform .5s ease; }
 .obra:hover img { transform: scale(1.025); }
 .obra:focus-visible { outline: 3px solid var(--yellow); outline-offset: 3px; }
+/* Marca de video sobre el póster */
+.obra .play {
+  position: absolute; left: 10px; bottom: 10px; padding: 5px 10px; border-radius: 999px;
+  background: rgba(6, 14, 24, .78); color: #fff; font-family: var(--f-mono); font-size: .78rem; font-weight: 500;
+}
+.obra:hover .play { background: rgba(6, 14, 24, .92); }
 @media (prefers-reduced-motion: reduce) { .obra img { transition: none; } .obra:hover img { transform: none; } }
 
 /* Foto clave: foto grande con su nota al costado */
@@ -181,7 +194,8 @@ section { padding-block: clamp(34px, 6vw, 72px); }
 .visor[open] { display: grid; grid-template-rows: auto minmax(0, 1fr) auto; }
 .v-top { display: flex; justify-content: space-between; align-items: center; gap: 12px; padding: 12px max(16px, env(safe-area-inset-left, 0px)); font-family: var(--f-mono); font-size: .86rem; }
 .v-img { display: grid; place-items: center; min-height: 0; padding-inline: 56px; }
-.v-img img { max-width: 100%; max-height: 100%; object-fit: contain; }
+.v-img img, .v-img video { max-width: 100%; max-height: 100%; object-fit: contain; }
+.v-img [hidden] { display: none; }
 .v-pie { padding: 12px max(16px, env(safe-area-inset-left, 0px)) max(18px, env(safe-area-inset-bottom, 0px)); max-width: 820px; margin-inline: auto; width: 100%; }
 .v-pie strong { display: block; font-family: var(--f-display); font-size: 1.2rem; }
 .v-pie time { font-family: var(--f-mono); font-size: .84rem; color: #A9C4DA; }
@@ -225,11 +239,11 @@ section { padding-block: clamp(34px, 6vw, 72px); }
   <div>
     <p class="eyebrow">Bitácora fotográfica · Paseo Wheelwright</p>
     <h1>El paseo, foto a foto</h1>
-    <p class="sub">{{ $todas->count() }} fotografías · marzo 2023 – octubre 2026</p>
+    <p class="sub">{{ $cuenta($todas) }} · marzo 2023 – noviembre 2026</p>
     <p class="intro">Cinco etapas siguen el estado del paseo: las primeras señales de deterioro, el registro de octubre de 2025, la intervención de noviembre, lo que quedó después y el paseo ya cerrado. Toca cualquier foto para verla en grande.</p>
     <ol class="recorrido">
 @foreach ($salas as $sala)
-      <li><a href="#{{ $sala['id'] }}"><span class="r-n">{{ str_replace('.', '', collect($sala['fotos'])->min('fecha')->locale('es')->isoFormat("MMM 'YY")) }}</span><span class="r-t">{{ $sala['titulo'] }}</span><span class="r-c">{{ count($sala['fotos']) }} fotos</span></a></li>
+      <li><a href="#{{ $sala['id'] }}"><span class="r-n">{{ str_replace('.', '', collect($sala['fotos'])->min('fecha')->locale('es')->isoFormat("MMM 'YY")) }}</span><span class="r-t">{{ $sala['titulo'] }}</span><span class="r-c">{{ $cuenta($sala['fotos']) }}</span></a></li>
 @endforeach
     </ol>
   </div>
@@ -319,7 +333,7 @@ section { padding-block: clamp(34px, 6vw, 72px); }
       <h2 id="{{ $sala['id'] }}-t">{{ $sala['titulo'] }}</h2>
       <p class="periodo">{{ $sala['periodo'] }}</p>
       <p class="texto">{{ $sala['texto'] }}</p>
-      <p class="cuenta">{{ count($sala['fotos']) }} fotografías</p>
+      <p class="cuenta">{{ $cuenta($sala['fotos']) }}</p>
     </div>
 
     <div>
@@ -358,7 +372,7 @@ section { padding-block: clamp(34px, 6vw, 72px); }
 
   @foreach ($grupos as $grupo)
     @if (! empty($sala['por_dia']))
-      <h3 class="dia"><strong>{{ ucfirst($grupo[0]['fecha']->isoFormat('dddd D [de] MMMM')) }}</strong><span>{{ $grupo->count() }} {{ $grupo->count() === 1 ? 'foto' : 'fotos' }}</span></h3>
+      <h3 class="dia"><strong>{{ ucfirst($grupo[0]['fecha']->isoFormat('dddd D [de] MMMM')) }}</strong><span>{{ $cuenta($grupo) }}</span></h3>
     @endif
       <div class="mosaico">
     @foreach ($grupo as $f)
@@ -368,8 +382,11 @@ section { padding-block: clamp(34px, 6vw, 72px); }
         $xl = ! $vertical && (++$nh % 7 === 0 || ! empty($sala['anchas']));
     @endphp
         <figure class="{{ $vertical ? 'v' : '' }}{{ $xl ? 'xl' : '' }}">
-          <button class="obra" type="button" data-i="{{ $f['i'] }}" aria-label="Ampliar: {{ $f['t'] }}">
+          <button class="obra" type="button" data-i="{{ $f['i'] }}" aria-label="{{ $f['video'] ? 'Ver video' : 'Ampliar' }}: {{ $f['t'] }}">
             <img src="{{ $f['src'] }}" srcset="{{ $f['src'] }} 800w, {{ $f['src2'] }} 1800w" sizes="{{ $xl ? '(max-width: 560px) 100vw, 560px' : '(max-width: 560px) 50vw, 280px' }}" alt="{{ $f['d'] }}" width="{{ $f['w'] }}" height="{{ $f['h'] }}" loading="lazy" decoding="async">
+      @if ($f['video'])
+            <span class="play" aria-hidden="true">▶ Video</span>
+      @endif
           </button>
           <figcaption><span>{{ $f['t'] }}</span><time datetime="{{ $f['fecha']->toIso8601String() }}">{{ $corta($f['fecha']) }}</time></figcaption>
         </figure>
@@ -397,47 +414,65 @@ section { padding-block: clamp(34px, 6vw, 72px); }
   <div class="wrap">
     <div class="lane" role="presentation"></div>
     <p><span class="name">Cuidemos el Paseo Wheelwright</span> · Valparaíso · <a href="https://www.instagram.com/cuidemospaseowheelwright/" target="_blank" rel="noopener noreferrer">Instagram @cuidemospaseowheelwright</a></p>
-    <p>La fecha y la hora de cada foto vienen del archivo original. Las notas describen lo que se ve en la imagen.</p>
+    <p>La fecha y la hora de cada foto y video vienen del archivo original. Las notas describen lo que se ve en la imagen.</p>
   </div>
 </footer>
 
-<dialog class="visor" aria-label="Visor de fotos">
+<dialog class="visor" aria-label="Visor de fotos y videos">
   <div class="v-top">
     <span class="v-cuenta"></span>
     <button class="v-btn v-cerrar" type="button" aria-label="Cerrar">✕ Cerrar</button>
   </div>
-  <div class="v-img"><img alt=""></div>
+  <div class="v-img"><img alt=""><video controls playsinline muted preload="none" hidden></video></div>
   <div class="v-pie" aria-live="polite">
     <span class="eyebrow v-sala" style="color:#A9C4DA"></span>
     <strong class="v-t"></strong>
     <time class="v-f"></time>
     <p class="v-d"></p>
   </div>
-  <button class="v-btn v-nav v-prev" type="button" aria-label="Foto anterior">←</button>
-  <button class="v-btn v-nav v-next" type="button" aria-label="Foto siguiente">→</button>
+  <button class="v-btn v-nav v-prev" type="button" aria-label="Anterior">←</button>
+  <button class="v-btn v-nav v-next" type="button" aria-label="Siguiente">→</button>
 </dialog>
 
 <script>
-// Visor: recorre todas las fotos en orden cronológico
+// Visor: recorre todas las fotos y videos en orden cronológico
 (function () {
   var fotos = @json($visor);
   var dlg = document.querySelector('.visor');
   if (!dlg || typeof dlg.showModal !== 'function') return;
   var img = dlg.querySelector('.v-img img');
+  var vid = dlg.querySelector('.v-img video');
   var q = function (s) { return dlg.querySelector(s); };
   var i = 0;
+  function parar() {
+    if (!vid.hidden) { vid.pause(); vid.removeAttribute('src'); vid.load(); }
+  }
   function show(k) {
+    parar();
     i = (k + fotos.length) % fotos.length;
     var f = fotos[i];
-    img.src = f.src;
-    img.alt = f.d;
+    img.hidden = !!f.v;
+    vid.hidden = !f.v;
+    if (f.v) {
+      // El video parte sin sonido; los controles permiten activarlo
+      img.removeAttribute('src');
+      vid.poster = f.src;
+      vid.src = f.v;
+      vid.setAttribute('aria-label', f.d);
+      var p = vid.play();
+      if (p && p.catch) p.catch(function () {});
+    } else {
+      img.src = f.src;
+      img.alt = f.d;
+    }
     q('.v-t').textContent = f.t;
     q('.v-f').textContent = f.f;
     q('.v-d').textContent = f.d;
     q('.v-sala').textContent = f.s;
-    q('.v-cuenta').textContent = 'Foto ' + (i + 1) + ' de ' + fotos.length;
-    // Precarga la siguiente para que el cambio sea inmediato
-    new Image().src = fotos[(i + 1) % fotos.length].src;
+    q('.v-cuenta').textContent = (i + 1) + ' de ' + fotos.length;
+    // Precarga la siguiente foto para que el cambio sea inmediato
+    var sig = fotos[(i + 1) % fotos.length];
+    if (!sig.v) new Image().src = sig.src;
   }
   document.querySelectorAll('.obra[data-i]').forEach(function (b) {
     b.addEventListener('click', function () {
@@ -448,6 +483,7 @@ section { padding-block: clamp(34px, 6vw, 72px); }
   q('.v-prev').addEventListener('click', function () { show(i - 1); });
   q('.v-next').addEventListener('click', function () { show(i + 1); });
   q('.v-cerrar').addEventListener('click', function () { dlg.close(); });
+  dlg.addEventListener('close', parar);
   // Clic fuera de la foto y del pie cierra el visor
   dlg.addEventListener('click', function (e) { if (e.target === dlg || e.target === q('.v-img')) dlg.close(); });
   dlg.addEventListener('keydown', function (e) {

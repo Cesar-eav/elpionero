@@ -57,6 +57,17 @@ Route::get('/cuidemoselpaseo/manifiesto', function () {
     return view('paseo.manifiesto');
 })->name('paseo.manifiesto');
 
+// Documentos del Paseo y del Parque Barón, explicados: textos en resources/data/paseo-documentos.php y
+// paseo-glosario.php; los PDF están en public/cuidemos_el_paseo/documentos/ (se suben por FTP)
+Route::get('/cuidemoselpaseo/documentos', function () {
+    return view('paseo.documentos', ['carpetas' => \App\Support\PaseoDocumentos::carpetas()]);
+})->name('paseo.documentos');
+
+// Propuesta: que la institución del Parque Barón se haga cargo del Paseo (puntos en resources/data/paseo-propuesta.php)
+Route::get('/cuidemoselpaseo/propuesta', function () {
+    return view('paseo.propuesta', ['puntos' => require resource_path('data/paseo-propuesta.php')]);
+})->name('paseo.propuesta');
+
 // Galería del Paseo: los textos están en resources/data/paseo-galeria.php y la fecha sale del nombre de cada foto
 Route::get('/cuidemoselpaseo/galeria', function () {
     $salas = require resource_path('data/paseo-galeria.php');
@@ -65,7 +76,8 @@ Route::get('/cuidemoselpaseo/galeria', function () {
     $todas = collect($salas)->flatMap(function ($sala) use ($web) {
         return array_map(function ($foto) use ($sala, $web) {
             $nombre = pathinfo($foto['f'], PATHINFO_FILENAME);
-            preg_match('/IMG_(\d{8})_(\d{6})/', $nombre, $m);
+            // AAAAMMDD_HHMMSS, con o sin prefijo IMG_
+            preg_match('/(\d{8})_(\d{6})/', $nombre, $m);
             [$w, $h] = @getimagesize(public_path($web . $nombre . '-800.webp')) ?: [800, 600];
 
             return $foto + [
@@ -76,6 +88,8 @@ Route::get('/cuidemoselpaseo/galeria', function () {
                 'h' => $h,
                 'sn' => $sala['num'],
                 'sala' => $sala['titulo'],
+                // Videos: los webp son el póster y el video va en web/<nombre>.mp4
+                'video' => str_ends_with($foto['f'], '.mp4') ? asset($web . $nombre . '.mp4') : null,
             ];
         }, $sala['fotos']);
     })

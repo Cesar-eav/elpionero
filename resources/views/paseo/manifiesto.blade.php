@@ -123,6 +123,7 @@ section h2 { font-size: clamp(1.7rem, 4.2vw, 2.5rem); font-weight: 800; font-str
 .p p { margin-top: 10px; }
 .p .vs { margin-top: 12px; padding-top: 10px; border-top: 1px dashed var(--line); font-size: .94rem; color: var(--ink-2); }
 .p .vs b { font-family: var(--f-mono); font-size: .72rem; font-weight: 500; letter-spacing: .06em; text-transform: uppercase; color: var(--c); margin-right: 6px; }
+.p .mas { margin-top: 10px; font-weight: 700; }
 
 /* Compromiso y cierre */
 .comp { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.1fr); gap: clamp(20px, 4vw, 44px); align-items: start; margin-top: 26px; }
@@ -148,6 +149,7 @@ section h2 { font-size: clamp(1.7rem, 4.2vw, 2.5rem); font-weight: 800; font-str
       <a href="#no-aceptamos">Lo que no aceptamos</a>
       <a href="#soluciones">Hacia dónde</a>
       <a href="#compromiso">Nuestro compromiso</a>
+      <a href="{{ route('paseo.propuesta') }}">Propuesta →</a>
     </nav>
   </div>
 </div>
@@ -181,7 +183,7 @@ section h2 { font-size: clamp(1.7rem, 4.2vw, 2.5rem); font-weight: 800; font-str
       </li>
       <li class="decl">
         <span class="pre">Segundo</span>
-        <h3>Punto de conexión Valparaíso-Viña</h3>
+        <h3>Punto de conexión seguro Valparaíso-Viña</h3>
         <p>Cerca de 1,7 kilómetros entre el Muelle Barón y Caleta Portales para caminar, pedalear o patinar lejos de los autos. Cuando se cierra, la única alternativa es la avenida España para ir entre Viña y Valparaíso.</p>
       </li>
       <li class="decl">
@@ -250,6 +252,9 @@ section h2 { font-size: clamp(1.7rem, 4.2vw, 2.5rem); font-weight: 800; font-str
         <h3>{{ $p['titulo'] }}</h3>
         <p>{{ $p['texto'] }}</p>
         <p class="vs"><b>En vez de</b>{{ $p['en_vez_de'] }}</p>
+@isset ($p['mas'])
+        <p class="mas"><a href="{{ route($p['mas']['ruta']) }}">{{ $p['mas']['texto'] }} →</a></p>
+@endisset
       </li>
 @endforeach
     </ol>

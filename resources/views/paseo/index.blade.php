@@ -193,6 +193,16 @@ section h2 { font-size: clamp(1.7rem, 4.2vw, 2.5rem); font-weight: 800; font-str
 .manif-list a:hover { text-decoration: underline; }
 @media (max-width: 820px) { .manif { grid-template-columns: minmax(0, 1fr); } }
 
+/* Documentos y propuesta: dos puertas a las páginas para leer y aprender */
+#documentos { padding-top: 0; }
+.puertas { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; margin-top: 22px; }
+.puerta { display: flex; flex-direction: column; gap: 10px; border-top: 6px solid var(--c); }
+.puerta h3 { font-size: clamp(1.25rem, 2.6vw, 1.5rem); font-weight: 800; font-stretch: 104%; line-height: 1.12; }
+.puerta p { color: var(--ink-2); }
+.puerta ul { margin: 0; padding-left: 1.1em; display: grid; gap: 4px; font-size: .96rem; }
+.puerta .btn { align-self: flex-start; margin-top: auto; }
+@media (max-width: 820px) { .puertas { grid-template-columns: minmax(0, 1fr); } }
+
 /* Cronograma */
 .filters { display: flex; flex-wrap: wrap; gap: 8px; margin: 22px 0 30px; }
 .chip {
@@ -340,6 +350,7 @@ blockquote cite { display: block; margin-top: 6px; font-family: var(--f-body); f
       <a href="#enlaces">Enlaces</a>
       <a href="#nosotros">Quiénes somos</a>
       <a href="#contacto">Contacto</a>
+      <a href="{{ route('paseo.documentos') }}">Documentos →</a>
     </nav>
   </div>
 </div>
@@ -445,6 +456,36 @@ blockquote cite { display: block; margin-top: 6px; font-family: var(--f-body); f
         <li><a href="{{ route('paseo.manifiesto') }}#p-{{ $p['id'] }}">{{ $p['titulo'] }}</a></li>
 @endforeach
       </ol>
+    </div>
+  </div>
+</section>
+
+<section id="documentos">
+  <div class="wrap">
+    <p class="eyebrow">Documentos y propuesta</p>
+    <h2>Leímos los documentos oficiales</h2>
+    <p class="sec-intro">El convenio del Parque Barón, las actas de su Comité de Gestión, el informe de SENAPRED sobre las marejadas y los planos del Paseo, explicados en lenguaje simple y con un glosario.</p>
+    <div class="puertas">
+      <div class="card puerta" style="--c: var(--blue)">
+        <h3>Lo que dicen los documentos</h3>
+        <p>Cada documento con su ficha: qué es, quién lo firma, lo más importante y qué tiene que ver con el Paseo.</p>
+        <ul>
+          <li>El daño de julio de 2026, calificado como «Muy Grave».</li>
+          <li>Quién es dueño, quién mantiene y quién decide en el parque.</li>
+          <li>Cómo está construido el Paseo, tramo por tramo.</li>
+        </ul>
+        <a class="btn" href="{{ route('paseo.documentos') }}">Ver los documentos →</a>
+      </div>
+      <div class="card puerta" style="--c: var(--teal)">
+        <h3>Un solo borde, un solo responsable</h3>
+        <p>Ocho razones, con citas de esos documentos, para que la institución del Parque Barón se haga cargo también del Paseo.</p>
+        <ul>
+          <li>El convenio ya promete «consolidar un paseo costero».</li>
+          <li>La herramienta para sumarlo ya existe.</li>
+          <li>Qué le pedimos al Comité de Gestión, paso a paso.</li>
+        </ul>
+        <a class="btn" href="{{ route('paseo.propuesta') }}">Leer la propuesta →</a>
+      </div>
     </div>
   </div>
 </section>
@@ -608,6 +649,13 @@ blockquote cite { display: block; margin-top: 6px; font-family: var(--f-body); f
           </article></li>
 
           <li class="ev" data-t="mar"><article class="card ev-card">
+            <header><time>17 jul 2026</time><span class="tag">Marejadas y daños</span></header>
+            <h4>Obras Portuarias califica el daño como «Muy Grave»</h4>
+            <p>En el informe del MOP del 24 de julio, la Dirección de Obras Portuarias registra que las marejadas «generaron socavones y pérdida de sustentación del paseo peatonal, comprometiendo la seguridad de usuarios». Los reportes de SENAPRED suman daños en rellenos, parrillas de acero y pavimento.</p>
+            <p class="src">Fuente: <a href="{{ route('paseo.documentos') }}#doc-oficio-236">Oficio N° 236 de SENAPRED, pág. 186</a></p>
+          </article></li>
+
+          <li class="ev" data-t="mar"><article class="card ev-card">
             <header><time>Jul 2026</time><span class="tag">Marejadas y daños</span></header>
             <h4>El temporal deja el paseo cerrado, pero solo formalmente</h4>
             <p>El municipio cierra el paseo indefinidamente por riesgo para la seguridad de las personas, tras los severos daños que dejó el temporal. Pone vallas en un extremo, pero deja abierto el otro, junto al futuro Parque Barón, sin ningún aviso de que no se debe entrar.</p>
@@ -620,6 +668,13 @@ blockquote cite { display: block; margin-top: 6px; font-family: var(--f-body); f
             <p>Se anunció una inversión para reparar el paseo, sin monto ni plazo conocidos, y no se ven avances. El reportaje muestra daños graves a la vista.</p>
             <p class="src">Fuente: <a href="https://www.meganoticias.cl/nacional/534153-tradicional-paseo-costero-wheelwright-valparaiso-presenta-graves-danos-marejadas-temporales-video-17-10-2026.html" target="_blank" rel="noopener noreferrer">Meganoticias, 17 oct 2026</a></p>
           </article></li>
+
+          <li class="ev" data-t="ciu"><article class="card ev-card">
+            <header><time>Nov 2026</time><span class="tag">Ciudadanía</span></header>
+            <h4>Llegan las respuestas por Transparencia</h4>
+            <p>SENAPRED responde con sus reportes de las marejadas; Bienes Nacionales, con las inscripciones y el mapa de concesiones marítimas del borde; y la SEREMI de Vivienda entrega el convenio del Parque Barón, el acta de entrega del terreno y las actas de su Comité de Gestión. Los publicamos explicados.</p>
+            <p class="src">Fuente: <a href="{{ route('paseo.documentos') }}">Lo que dicen los documentos</a></p>
+          </article></li>
         </ol>
       </li>
     </ol>
@@ -627,8 +682,8 @@ blockquote cite { display: block; margin-top: 6px; font-family: var(--f-body); f
     <div class="card open-q">
       <h3>Lo que todavía no sabemos</h3>
       <ul>
-        <li>¿Quién es hoy titular del terreno del paseo?</li>
-        <li>¿Qué entidad administrará el Parque Barón? Proponemos que esa misma entidad se haga cargo de la mantención del paseo.</li>
+        <li>¿Quién tiene la concesión del terreno del paseo? Según <a href="{{ route('paseo.documentos') }}#doc-ord-4614">Bienes Nacionales</a>, es terreno de playa fiscal, que no se puede vender y cuyo uso entrega la Subsecretaría para las Fuerzas Armadas; falta saber a nombre de quién está la concesión.</li>
+        <li>¿Qué entidad administrará el Parque Barón? El convenio de 2019 deja la mantención a cargo del SERVIU, con un Comité de Gestión que decide, y en 2026 se licita su conservación y seguridad, pero el modelo de gestión no venía entre los documentos entregados. Proponemos que <a href="{{ route('paseo.propuesta') }}">ese mismo sistema se haga cargo del paseo</a>.</li>
         <li>¿Cuánto costaron al final las obras de 2016–2017? Conocemos los montos adjudicados, pero no los contratos ni sus modificaciones.</li>
         <li>¿Quién ejecutó las obras de 2023 y por qué se anunciaron $558 millones si la licitación tenía un presupuesto de $407,7 millones? ¿Qué se hizo en 2025?</li>
         <li>¿Qué obras, plazo y monto tendrá la reparación de 2026, y con qué criterios de diseño frente al oleaje?</li>
@@ -862,7 +917,7 @@ blockquote cite { display: block; margin-top: 6px; font-family: var(--f-body); f
         </li>
         <li class="card">
           <h3>Información pública</h3>
-          <p>Pedimos por transparencia contratos, estudios, gastos y registros de marejadas, y publicamos lo que obtengamos.</p>
+          <p>Pedimos por transparencia contratos, estudios, gastos y registros de marejadas, y publicamos lo que obtengamos. <a href="{{ route('paseo.documentos') }}">Ver lo que hemos obtenido</a>.</p>
         </li>
       </ul>
     </div>
@@ -874,7 +929,7 @@ blockquote cite { display: block; margin-top: 6px; font-family: var(--f-body); f
   <div class="wrap">
     <div class="lane" role="presentation"></div>
     <p><span class="name">Cuidemos el Paseo Wheelwright</span> · Valparaíso · <a href="https://www.instagram.com/cuidemospaseowheelwright/" target="_blank" rel="noopener noreferrer">Instagram @cuidemospaseowheelwright</a></p>
-    <p>Página informativa del movimiento. Las cifras y fechas provienen de las fuentes enlazadas; las marcadas como aproximadas o por contrastar se confirmarán con solicitudes de información pública. Actualizada el 21 de octubre de 2026.</p>
+    <p>Página informativa del movimiento. Las cifras y fechas provienen de las fuentes enlazadas; las marcadas como aproximadas o por contrastar se confirmarán con solicitudes de información pública. Actualizada el 26 de noviembre de 2026.</p>
   </div>
 </footer>
 
@@ -947,7 +1002,8 @@ blockquote cite { display: block; margin-top: 6px; font-family: var(--f-body); f
 // Marca en la barra la sección visible
 (function () {
   var nav = document.querySelector('.topnav');
-  var links = document.querySelectorAll('.topnav a');
+  // Solo los enlaces internos: el de Documentos lleva a otra página
+  var links = document.querySelectorAll('.topnav a[href^="#"]');
   if (!('IntersectionObserver' in window)) return;
   var obs = new IntersectionObserver(function (entries) {
     entries.forEach(function (e) {

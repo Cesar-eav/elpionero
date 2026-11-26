@@ -28,6 +28,8 @@ return [
         'titulo' => 'Un solo responsable',
         'texto' => 'Que quien administre el Parque Barón se haga cargo también del paseo, con metas de limpieza, iluminación y seguridad que cualquiera pueda revisar.',
         'en_vez_de' => 'Responsabilidades repartidas en que nadie responde.',
+        // Enlace opcional a una página que desarrolla el principio
+        'mas' => ['texto' => 'Por qué y cómo hacerlo: la propuesta', 'ruta' => 'paseo.propuesta'],
     ],
     [
         'id' => 'alerta',

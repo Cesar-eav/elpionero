@@ -1,0 +1,1 @@
+@props(['id']){{ \App\Support\PaseoGlosario::boton($id, $slot) }}{{-- Término del glosario del Paseo: <x-paseo.termino id="as-built">planos as built</x-paseo.termino>. Sin texto usa el nombre del término. Todo en una línea y sin salto final: si no, queda un espacio antes de la puntuación. --}}
